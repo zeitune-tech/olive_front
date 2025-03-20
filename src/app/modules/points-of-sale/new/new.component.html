@@ -1,0 +1,107 @@
+<div class="w-full"  *transloco="let t">
+
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('point-of-sale.new.title') }}
+        </h1>
+        <!-- Description -->
+        <p class="text-sm md:text-base text-gray-600">
+            {{ t('point-of-sale.new.description') }}
+        </p>
+    </div>
+
+    <form [formGroup]="formGroup" 
+        class="w-full sm:max-w-4xl bg-card p-4 rounded-xl mx-auto"
+    >
+        <div class="flex flex-col mb-6 text-center text-primary">
+            <h1 class="text-2xl font-bold">
+                {{ t('point-of-sale.new.form-title') }}
+            </h1>
+            <p class="text-sm text-gray-600">
+                {{ t('point-of-sale.new.form-description') }}
+            </p>
+        </div>
+
+
+    
+        <div class="space-y-6 mt-4">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>
+                    {{ t('point-of-sale.new.form-name') }}
+                </mat-label>
+                <input
+                    id="name"
+                    matInput
+                    [formControlName]="'name'">
+                <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
+                    {{ t('point-of-sale.new.form-name-required') }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>
+                    {{ t('point-of-sale.new.form-type') }}
+                </mat-label>
+                <mat-select [formControlName]="'type'">
+                    <mat-option *ngFor="let type of types" [value]="type.value">
+                        {{ t(type.label) }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>
+                    {{ t('point-of-sale.new.form-email') }}
+                </mat-label>
+                <input
+                    id="email"
+                    matInput
+                    [formControlName]="'email'">
+                <mat-error *ngIf="formGroup.get('email')?.hasError('required')">
+                    {{ t('point-of-sale.new.form-email-required') }}
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('email')?.hasError('email')">
+                    {{ t('point-of-sale.new.form-email-invalid') }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>
+                    {{ t('point-of-sale.new.form-phone') }}
+                </mat-label>
+                <input
+                    id="phone"
+                    matInput
+                    [formControlName]="'phone'">
+            </mat-form-field>
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>
+                    {{ t('point-of-sale.new.form-address') }}
+                </mat-label>
+                <input
+                    id="address"
+                    matInput
+                    [formControlName]="'address'">
+            </mat-form-field>
+        </div>
+    
+        <div class="flex items-center gap-4 justify-end">
+            <div>
+                {{t(message)}}
+            </div>
+            <button
+                class="mat-button-large mt-6"
+                mat-button
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="formGroup.invalid || formGroup.disabled"
+                (click)="onSubmit()">
+                <span *ngIf="!formGroup.disabled">
+                    {{ t('point-of-sale.new.form-submit') }}
+                </span>
+                <mat-progress-spinner
+                    *ngIf="formGroup.disabled"
+                    [diameter]="24"
+
+                    [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,21 @@
+<div class="px-4 w-full mb-4" *transloco="let t">
+    <button
+        (click)="navigateToDashboard()"
+        class="w-full bg-opacity-10 rounded-md flex items-center justify-center h-10"
+        [class.bg-accent]="!isActive()"
+        [class.bg-primary]="isActive()"
+    > 
+        <mat-icon [svgIcon]="'fluent:grid'" class="text-primary dark:text-white size-6"
+            [class.text-primary]="isActive()"
+            [class.text-accent]="!isActive()"
+        ></mat-icon>
+        @if (isClassyLayout) {
+            <span class="ml-2  font-bold"
+                [class.text-primary]="isActive()"
+                [class.text-accent]="!isActive()"
+            >
+                {{ t('sidebar.dashboard') }}
+            </span>
+        }
+    </button>
+</div>

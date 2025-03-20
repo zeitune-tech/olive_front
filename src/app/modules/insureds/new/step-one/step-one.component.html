@@ -1,0 +1,88 @@
+<!-- Sign in form -->
+<form
+    class="mt-8 space-y-6"
+    #form
+    [formGroup]="formGroup"
+    *transloco="let t">
+    
+    <div class="flex flex-col gap-6">
+        <mat-form-field class="w-full" appearance="outline">
+            <mat-label>
+                {{ t('employee.new.form-first-name') }}
+            </mat-label>
+            <input
+                id="first-name"
+                matInput
+                [formControlName]="'firstName'">
+            <mat-error *ngIf="formGroup.get('firstName')?.hasError('required')">
+                {{ t('employee.new.form-first-name-required') }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline">
+            <mat-label>
+                {{ t('employee.new.form-last-name') }}
+            </mat-label>
+            <input
+                id="last-name"
+                matInput
+                [formControlName]="'lastName'">
+            <mat-error *ngIf="formGroup.get('lastName')?.hasError('required')">
+                {{ t('employee.new.form-last-name-required') }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline">
+            <mat-label>
+                {{ t('employee.new.form-phone') }}
+            </mat-label>
+            <input
+                id="phone"
+                matInput
+                [formControlName]="'phone'">
+        </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline">
+            <mat-label>
+                {{ t('employee.new.form-address') }}
+            </mat-label>
+            <input
+                id="address"
+                matInput
+                [formControlName]="'address'">
+        </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline">
+            <mat-label>
+                {{ t('employee.new.form-profession') }}
+            </mat-label>
+            <input
+                id="profession"
+                matInput
+                [formControlName]="'profession'">
+        </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline">
+            <mat-label>
+                {{ t('employee.new.form-email') }}
+            </mat-label>
+            <input
+                id="email"
+                matInput
+                [formControlName]="'email'">
+            <mat-error *ngIf="formGroup.get('email')?.hasError('required')">
+                {{ t('employee.new.form-email-required') }}
+            </mat-error>
+            <mat-error *ngIf="formGroup.get('email')?.hasError('email')">
+                {{ t('employee.new.form-email-invalid') }}
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+    
+    <!-- Submit button -->
+    <button mat-button matStepperNext
+        class="mat-button-large  mt-6"
+        mat-flat-button
+        [color]="'primary'"
+        [disabled]="formGroup.invalid"
+        (click)="onNext()"
+        >
+            Suivant
+    </button>
+</form>

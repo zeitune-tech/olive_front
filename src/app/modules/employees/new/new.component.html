@@ -1,0 +1,112 @@
+<div class="w-full pb-10"  *transloco="let t">
+
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('employee.new.title') }}
+        </h1>
+        <!-- Description -->
+        <p class="text-sm md:text-base text-gray-600">
+            {{ t('employee.new.description') }}
+        </p>
+    </div>
+
+
+    <mat-vertical-stepper  #stepper class="mt-8 rounded-md" [selectedIndex]="selectedIndex">
+        <mat-step [stepControl]="formStepOne">
+            <ng-template matStepLabel>
+                <!-- Informations personnelles -->
+                <div class="flex flex-col items-start">
+                    <div class="text-lg font-semibold">Informations personnelles</div>
+                    <div class="text-sm text-gray-500">Renseignez vos informations personnelles</div>
+                </div>
+            </ng-template>
+            <new-employee-step-one (formReady)="onStepOneNext($event)" ></new-employee-step-one>
+        </mat-step>
+        @if (currentIsCompanyEmployee) {
+            <mat-step [stepControl]="formStepTwo">
+                <ng-template matStepLabel>
+                    <div class="flex flex-col items-start">
+                        <div class="text-lg font-semibold">Niveau d'accès</div>
+                        <div class="text-sm text-gray-500">Choisissez le niveau d'accès de l'utilisateur</div>
+                    </div>
+                </ng-template>
+                <new-employee-step-two (formReady)="onStepTwoNext($event)" ></new-employee-step-two>
+            </mat-step>
+            @if (newHasPointOfSaleAccessLevel) {
+                <mat-step [stepControl]="formStepThree">
+                    <ng-template matStepLabel>
+                        <div class="flex flex-col items-start">
+                            <div class="text-lg font-semibold">Point de vente</div>
+                            <div class="text-sm text-gray-500">Choisissez le point de vente de l'utilisateur</div>
+                        </div>
+                    </ng-template>
+                    <new-employee-step-three (formReady)="onStepThreeNext($event)" ></new-employee-step-three>
+                </mat-step>
+            }
+        }
+        <mat-step [stepControl]="formStepFour">
+            <ng-template matStepLabel>
+                <div class="flex flex-col items-start">
+                    <div class="text-lg font-semibold">Rôle</div>
+                    <div class="text-sm text-gray-500">Choisissez le rôle de l'utilisateur</div>
+                </div>
+            </ng-template>
+            <new-employee-step-four (formReady)="onStepFourNext($event)" ></new-employee-step-four>
+        </mat-step>
+        <mat-step [stepControl]="formStepFive">
+            <ng-template matStepLabel>
+                <div class="flex flex-col items-start">
+                    <div class="text-lg font-semibold">Confirmation</div>
+                    <div class="text-sm text-gray-500">Vérifiez les informations saisies</div>
+                </div>
+            </ng-template>
+            <div class="flex flex-col gap-4 py-4">
+                <div class="text-lg font-semibold">Informations personnelles</div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex gap-6">
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">Nom</div>
+                            <div>{{ data.lastName }}</div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">Prénom</div>
+                            <div>{{ data.firstName }}</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">Email</div>
+                            <div>{{ data.email }}</div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">Téléphone</div>
+                            <div>{{ data.phone }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-lg font-semibold">Profil et accès</div>
+                <div class="flex flex-col gap-2 w-full">
+                    <div class="flex gap-6">
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">Profil</div>
+                            <div>{{ data.roleName }}</div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">Niveau d'accès</div>
+                            <div>{{ data.managementEntityName }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button mat-button matStepperPrevious class="mat-button-large mt-6" mat-flat-button [color]="'primary'">
+                    Précédent
+                </button>
+                <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="confirm()">
+                    Créer
+                </button>
+            </div>
+        </mat-step>
+        <!-- -->
+    </mat-vertical-stepper>
+</div>
