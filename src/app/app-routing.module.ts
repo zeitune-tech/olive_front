@@ -4,16 +4,10 @@ import { NoAuthGuard } from './core/auth/guards/noAuth.guard';
 import { LayoutComponent } from './layout/layout.component';
 import { AuthGuard } from './core/auth/guards/auth.guard';
 import { InitialDataResolver } from './app.resolver';
-import { PermissionsGuard } from './core/permissions/permissions.guard';
 import { PERMISSIONS } from '@core/permissions/permissions.data';
-import { DashboardResolver } from './modules/dashboard/dashboard.resolver';
-import { InsuredsResolver } from './modules/insureds/insureds.resolver';
-import { EmployeesResolver } from './modules/employees/employees.resolver';
-import { AttestationsResolver } from './modules/attestations/attestations.resolver';
-import { PointsOfSaleResolver } from './modules/points-of-sale/points-of-sale.resolver';
-import { DemandsResolver } from './modules/demands/demands.resolver';
-import { CompaniesResolver } from './modules/companies/companies.resolver';
-import { EntitiesSuperiorResolver } from './modules/entities-superior/entities-superior.resolver';
+import { DashboardResolver } from './modules/admin/dashboard/dashboard.resolver';
+import { PointsOfSaleResolver } from './modules/admin/points-of-sale/points-of-sale.resolver';
+import { CompaniesResolver } from './modules/admin/companies/companies.resolver';
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy       : PreloadAllModules,
@@ -22,10 +16,10 @@ const routerConfig: ExtraOptions = {
 
 
 const routes: Routes = [
-    {path: '', pathMatch : 'full', redirectTo: 'dashboard'},
+    {path: '', pathMatch : 'full', redirectTo: 'home'},
     
-    {path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'dashboard'},
-    {path: 'signed-up-redirect', pathMatch: 'full', redirectTo: 'dashboard'},
+    {path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'home'},
+    {path: 'signed-up-redirect', pathMatch: 'full', redirectTo: 'home'},
 
     {
         path: '',
@@ -61,100 +55,20 @@ const routes: Routes = [
         },
         children   : [
             {
-                path: 'dashboard', 
-                canActivate: [],
-                canActivateChild: [],
-                data: { 
-                    permission: "USER"
-                }, 
-                resolve: {
-                    data: DashboardResolver
-                },
-                loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
-            },
-            {
-                path: 'entities-superior',
+                path: 'home',
                 canActivate: [],
                 canActivateChild: [],
                 data: {
-                    permission: PERMISSIONS.USER
+                    layout: 'custom',
                 },
-                resolve: {
-                    data: EntitiesSuperiorResolver
-                },
-                loadChildren: () => import('./modules/entities-superior/entities-superior.module').then(m => m.EntitiesSuperiorModule)
+                loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
             },
             {
-                path: 'companies',
+                path: 'administration',
                 canActivate: [],
                 canActivateChild: [],
-                data: {
-                    permission: PERMISSIONS.USER
-                },
-                resolve: {
-                    CompaniesResolver
-                },
-                loadChildren: () => import('./modules/companies/companies.module').then(m => m.CompaniesModule)
-            },
-            {
-                path: 'demands',
-                canActivate: [],
-                canActivateChild: [],
-                data: {
-                    permission: PERMISSIONS.USER
-                },
-                resolve: {
-                    DemandsResolver
-                },
-                loadChildren: () => import('./modules/demands/demands.module').then(m => m.DemandsModule)
-            },
-            {
-                path: 'points-of-sale',
-                canActivate: [],
-                canActivateChild: [],
-                data: {
-                    permission: PERMISSIONS.USER
-                },
-                resolve: {
-                    data: PointsOfSaleResolver
-                },
-                loadChildren: () => import('./modules/points-of-sale/points-of-sale.module').then(m => m.PointsOfSaleModule)
-            },
-            {
-                path: 'attestations',
-                canActivate: [],
-                canActivateChild: [],
-                data: {
-                    permission: PERMISSIONS.USER
-                },
-                resolve: {
-                    data: AttestationsResolver
-                },
-                loadChildren: () => import('./modules/attestations/attestations.module').then(m => m.AttestationsModule)
-            },
-            {
-                path: 'employees',
-                canActivate: [],
-                canActivateChild: [],
-                data: {
-                    permission: PERMISSIONS.USER
-                },
-                resolve: {
-                    data: EmployeesResolver
-                },
-                loadChildren: () => import('./modules/employees/employees.module').then(m => m.EmployeesModule)
-            },
-            {
-                path: 'insureds',
-                canActivate: [],
-                canActivateChild: [],
-                data: {
-                    permission: PERMISSIONS.USER
-                },
-                resolve: {
-                    data: InsuredsResolver
-                },
-                loadChildren: () => import('./modules/insureds/insureds.module').then(m => m.InsuredsModule)
+                data: {},
+                loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
             },
             
             // 404 & Catch all

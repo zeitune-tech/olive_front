@@ -1,421 +1,367 @@
 {
-    "welcome-back": "Welcome back",
-    "Project": "Project",
-    "Analytics": "Analytics",
-    "registration": {
-        "user-registration": {
-            "hero": {
-                "title": "Welcome to User Registration",
-                "message": "Please fill the form to register"
-            },
-            "form-title": "Sign Up",
-            "form-subtitle": "Already have an account?",
-            "form-subtitle-link": "Sign In",
-            "form": {
-                "name": "Name",
-                "name-required": "Name is required",
-                "email": "Email",
-                "email-required": "Email is required",
-                "email-invalid": "Email is invalid",
-                "password": "Password",
-                "password-required": "Password is required",
-                "confirm-password": "Confirm Password",
-                "confirm-password-required": "Confirm Password is required",
-                "submit": "Create your free account"
-            }
-        },
-        "complaint-registration": {
-            "step-one": {
-                "title": "Business Information",
-                "subtitle": "Let's start with the basic information about your business.",
-                "message": "You can always change this information later or complete it in your account settings with more details like your logo, business hours, and more.",
-                "form": {
-                    "name": "Business Name",
-                    "name-required": "Business Name is required",
-                    "email": "Business Email",
-                    "email-required": "Business Email is required",
-                    "email-invalid": "Business Email is invalid",
-                    "phone": "Business Phone",
-                    "phone-required": "Business Phone is required",
-                    "address": "Business Address",
-                    "address-required": "Business Address is required",
-                    "city": "City",
-                    "city-required": "City is required",
-                    "state": "State",
-                    "state-required": "State is required",
-                    "zip": "Zip",
-                    "zip-required": "Zip is required",
-                    "country": "Country",
-                    "country-required": "Country is required",
-                    "submit": "Next",
-                    "cancel": "Cancel"
-                }
-            },
-            "step-two": {
-                "title": "Add a point of sale",
-                "subtitle": "Point of Sale refers to one or more checkout locations in your business.",
-                "message": "First, let's add one point of sale. You can always add more later in your account settings.",
-                "form": {
-                    "name": "Point of Sale Name",
-                    "name-required": "Point of Sale Name is required",
-                    "submit": "Next",
-                    "previous": "Previous"
-                }
-            },
-            "step-three": {
-                "title": "Terms and Conditions",
-                "subtitle": "Please read and accept our terms and conditions to complete your registration.",
-                "message": "",
-                "form": {
-                    "terms": "I agree to the terms and conditions",
-                    "terms-required": "You must agree to the terms and conditions",
-                    "privacy": "I agree to the privacy policy",
-                    "privacy-required": "You must agree to the privacy policy",
-                    "submit": "Complete Registration",
-                    "previous": "Previous"
-                }
-            },
-            "step-four": {
-                "title": "Registration Completed",
-                "subtitle": "You have successfully completed the registration process.",
-                "message": "You can now start using our services and manage your business.",
-                "form": {
-                    "login": "Login",
-                    "login-link": "Sign In"
-                }
-            }
-        }
+  "auth": {
+    "sign_in": {
+      "title": "Sign In",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "email_required": "Email is required",
+      "email_invalid": "Email is invalid",
+      "password": "Password",
+      "password_required": "Password is required",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "no_account": "No account?",
+      "sign_up": "Sign up",
+      "sign_in": "Sign in",
+      "error": "Incorrect email or password"
     },
-    "sign-in": {
-        "hero": {
-            "title": "Welcome back",
-            "message": "Please sign in to your account"
-        },
-        "form-title": "Sign In",
-        "form": {
-            "email": "Email",
-            "email-required": "Email is required",
-            "email-invalid": "Email is invalid",
-            "password": "Password",
-            "password-required": "Password is required",
-            "submit": "Sign In"
-        }
+    "sign_up": {
+      "title": "Sign Up",
+      "subtitle": "Already have an account?",
+      "first_name": "First name",
+      "first_name_required": "First name is required",
+      "last_name": "Last name",
+      "last_name_required": "Last name is required",
+      "email": "Email",
+      "email_required": "Email is required",
+      "email_invalid": "Email is invalid",
+      "password": "Password",
+      "password_required": "Password is required",
+      "password_min": "Password must be at least 6 characters",
+      "password_confirmation": "Confirm password",
+      "password_confirmation_required": "Password confirmation is required",
+      "password_confirmation_same": "Passwords must match",
+      "sign_up": "Sign up",
+      "already_account": "Already have an account?",
+      "sign_in": "Sign in"
     },
-    "pre-admin": {
-        "sidebar": {
-            "dashboard": "Dashboard",
-            "overview": {
-                "title": "Overview",
-                "business": "Business",
-                "point-of-sale": "Point of Sale"
-            },
-            "users": {
-                "title": "Staff And Permissions",
-                "staff": "Staff",
-                "profiles": "Profile"
-            }
-        },
-        "dashboard": {
-            "title": "Welcome to Admin Panel",
-            "message": "Please sign in to your account"
-        },
-        "business": {
-            "title": "Business",
-            "message": "Please sign in to your account"
-        }
+    "forgot_password": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email to reset your password",
+      "email": "Email",
+      "email_required": "Email is required",
+      "email_invalid": "Email is invalid",
+      "send": "Send reset link",
+      "back": "Back to sign in",
+      "back_to": "Back to",
+      "sign_in": "Sign in"
     },
-    "app": {
-        "sidebar": {
-            "dashboard": "Dashboard",
-            "inventory": {
-                "title": "Inventory",
-                "products": "Products",
-                "categories": "Categories"
-            },
-            "orders": {
-                "title": "Orders",
-                "invoice": "New Invoice",
-                "invoice-history": "Invoice History"
-            },
-            "promotions-and-visibilities": {
-                "title": "Promotions & Visibilities",
-                "promotions": "Promotion & Discounts",
-                "gallery": "Gallery"
-            }
-        },
-        "dashboard": {
-            "title": "Welcome to Admin Panel"
-        },
-        "inventory": {
-            "products": {
-                "stats" : {
-                    "title": "Products Stats",
-                    "total": "Total Products",
-                    "in-stock": "In Stock Products",
-                    "out-of-stock": "Out of Stock Products",
-                    "low-stock": "Low Stock Products"
-                },
-                "table-card": {
-                    "title": "Products",
-                    "name": "Name",
-                    "category": "Category",
-                    "price": "Price",
-                    "stock": "Stock",
-                    "status": "Status",
-                    "actions": "Actions",
-                    "edit": "Edit",
-                    "delete": "Delete"
-                },
-                "form": {
-                    "title": "Add Product",
-                    "name": "Name",
-                    "name-required": "Name is required",
-                    "category": "Category",
-                    "category-required": "Category is required",
-                    "price": "Price",
-                    "price-required": "Price is required",
-                    "stock": "Stock",
-                    "stock-required": "Stock is required",
-                    "status": "Status",
-                    "status-required": "Status is required",
-                    "submit": "Add Product",
-                    "cancel": "Cancel"
-                },
-                "edit-form": {
-                    "title": "Edit Product",
-                    "name": "Name",
-                    "name-required": "Name is required",
-                    "category": "Category",
-                    "category-required": "Category is required",
-                    "price": "Price",
-                    "price-required": "Price is required",
-                    "stock": "Stock",
-                    "stock-required": "Stock is required",
-                    "status": "Status",
-                    "status-required": "Status is required",
-                    "submit": "Edit Product",
-                    "cancel": "Cancel"
-                },
-                "delete": {
-                    "title": "Delete Product",
-                    "message": "Are you sure you want to delete this product?",
-                    "cancel": "Cancel",
-                    "delete": "Delete"
-                }
-            },
-            "categories": {
-                "table-card": {
-                    "title": "Categories",
-                    "name": "Name",
-                    "description": "Description",
-                    "actions": "Actions",
-                    "edit": "Edit",
-                    "delete": "Delete"
-                },
-                "form": {
-                    "title": "Add Category",
-                    "name": "Name",
-                    "name-required": "Name is required",
-                    "description": "Description",
-                    "description-required": "Description is required",
-                    "submit": "Add Category",
-                    "cancel": "Cancel"
-                },
-                "edit-form": {
-                    "title": "Edit Category",
-                    "name": "Name",
-                    "name-required": "Name is required",
-                    "description": "Description",
-                    "description-required": "Description is required",
-                    "submit": "Edit Category",
-                    "cancel": "Cancel"
-                },
-                "delete": {
-                    "title": "Delete Category",
-                    "message": "Are you sure you want to delete this category?",
-                    "cancel": "Cancel",
-                    "delete": "Delete"
-                }
-            }
-        },
-        "invoice": {
-            "invoice": {
-                "search": {
-                    "title": "Search Product",
-                    "message": "Please search for a product to add to the invoice",
-                    "search": "Search",
-                    "cancel": "Cancel"
-                },
-                "form": {
-                    "title": "New Invoice",
-                    "customer": "Customer",
-                    "customer-required": "Customer is required",
-                    "product": "Product",
-                    "product-required": "Product is required",
-                    "quantity": "Quantity",
-                    "quantity-required": "Quantity is required",
-                    "submit": "Add Product",
-                    "cancel": "Cancel"
-                },
-                "table-card": {
-                    "title": "Invoice",
-                    "customer": "Customer",
-                    "product": "Product",
-                    "quantity": "Quantity",
-                    "total": "Total",
-                    "actions": "Actions",
-                    "edit": "Edit",
-                    "delete": "Delete"
-                },
-                "edit-form": {
-                    "title": "Edit Invoice",
-                    "customer": "Customer",
-                    "customer-required": "Customer is required",
-                    "product": "Product",
-                    "product-required": "Product is required",
-                    "quantity": "Quantity",
-                    "quantity-required": "Quantity is required",
-                    "submit": "Edit Invoice",
-                    "cancel": "Cancel"
-                },
-                "delete": {
-                    "title": "Delete Invoice",
-                    "message": "Are you sure you want to delete this invoice?",
-                    "cancel": "Cancel",
-                    "delete": "Delete"
-                }
-            },
-            "invoice-list": {
-                "table-card": {
-                    "title": "Invoice List",
-                    "customer": "Customer",
-                    "product": "Product",
-                    "quantity": "Quantity",
-                    "total": "Total",
-                    "actions": "Actions",
-                    "edit": "Edit",
-                    "delete": "Delete"
-                }
-            }
-        },
-        "promotion-and-visibilities": {
-            "promotion": {
-                "table-card": {
-                    "title": "Promotion & Discounts",
-                    "name": "Name",
-                    "description": "Description",
-                    "discount": "Discount",
-                    "status": "Status",
-                    "actions": "Actions",
-                    "edit": "Edit",
-                    "delete": "Delete"
-                },
-                "form": {
-                    "title": "Add Promotion & Discounts",
-                    "name": "Name",
-                    "name-required": "Name is required",
-                    "description": "Description",
-                    "description-required": "Description is required",
-                    "discount": "Discount",
-                    "discount-required": "Discount is required",
-                    "status": "Status",
-                    "status-required": "Status is required",
-                    "submit": "Add Promotion & Discounts",
-                    "cancel": "Cancel"
-                },
-                "edit-form": {
-                    "title": "Edit Promotion & Discounts",
-                    "name": "Name",
-                    "name-required": "Name is required",
-                    "description": "Description",
-                    "description-required": "Description is required",
-                    "discount": "Discount",
-                    "discount-required": "Discount is required",
-                    "status": "Status",
-                    "status-required": "Status is required",
-                    "submit": "Edit Promotion & Discounts",
-                    "cancel": "Cancel"
-                },
-                "delete": {
-                    "title": "Delete Promotion & Discounts",
-                    "message": "Are you sure you want to delete this promotion & discounts?",
-                    "cancel": "Cancel",
-                    "delete": "Delete"
-                }
-            },
-            "galery": {}
-        }
+    "reset_password": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password",
+      "password": "New password",
+      "password_required": "Password is required",
+      "password_min": "Password must be at least 6 characters",
+      "password_confirmation": "Confirm password",
+      "password_confirmation_required": "Password confirmation is required",
+      "password_confirmation_same": "Passwords must match",
+      "reset": "Reset password",
+      "back": "Back to sign in",
+      "back_to": "Back to",
+      "sign_in": "Sign in"
     },
-    "items-per-page": "Items per page",
-    "range-label": "Items {{start}} - {{end}} of {{total}}",
-    "office": {
-        "sidebar": {
-            "dashboard": "Dashboard",
-            "pointages": {
-                "title": "Time Tracking",
-                "current-pointages": "Current Time",
-                "history": "History"
-            },
-            "payment": {
-                "title": "Payments",
-                "this-month": "This Month",
-                "taxes": "Taxes",
-                "history": "History"
-            },
-            "invoicing": {
-                "title": "Invoicing",
-                "internal": "My Company",
-                "external": "Client"
-            },
-            "parameter": {
-                "title": "Settings",
-                "calculation-base": "Calculation Bases"
-            }
-        }
-    },
-    "calendar": {
-        "daily": "Daily",
-        "weekly": "Weekly",
-        "monthly": "Monthly",
-        "monthly-by-default": "Default View",
-        "monthly-by-day": "Daily View",
-        "monthly-by-week": "Weekly View"
-    },
-    "tables": {
-        "payment": {
-            "firstname": "First Name",
-            "lastname": "Last Name",
-            "category": "Category",
-            "totalHours": "Total Hours",
-            "normalHours": "Normal Hours",
-            "extraHours": "Extra Hours",
-            "totalPay": "Total Pay",
-            "format": "Display Format",
-            "month-format": "Monthly Format",
-            "search": "Search member..."
-        }
-    },
-    "team": {
-        "select-team": "Select Team",
-        "no-teams": "No teams found",
-        "name": "Team Name",
-        "description": "Description"
-    },
-    "button": {
-        "change-team": "Change Team",
-        "add-member": "Add Member",
-        "submit": "Submit",
-        "cancel": "Cancel"
-    },
-    "input-placeholder": {
-        "search": "Search member..."
-    },
-    "dialog": {
-        "team": {
-            "title": "Team Selection",
-            "search": "Search team",
-            "select": "Select",
-            "cancel": "Cancel"
-        }
+    "sign_out": {
+      "title": "Sign Out",
+      "description": "Do you really want to sign out?",
+      "redirecting": "Signing out...",
+      "seconds": "seconds",
+      "back": "Back to sign in",
+      "back_to": "Back to",
+      "sign_in": "Sign in"
     }
+  },
+  "home": {
+    "title": "Hello",
+    "description": "Welcome to Olive Insurance, Please choose a module to start",
+    "modules": {
+      "administration": "Administration",
+      "eploitation_auto": "Exploitation Auto",
+      "insureds": "Insureds",
+      "parameters_auto": "Parameters Auto"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "products": {
+      "title": "My Products",
+      "list": "Product List",
+      "new": "Add a Product"
+    },
+    "market-level-organization": {
+      "title": "Market Organizations",
+      "list": "Market Organization List"
+    },
+    "companies": {
+      "title": "Companies",
+      "linked": "Linked Companies",
+      "list": "Company List"
+    },
+    "points-of-sale": {
+      "title": "Points of Sale",
+      "points-of-sale": {
+        "list": "Points of Sale List",
+        "broker": "Linked Points of Sale",
+        "new": "Create Point of Sale"
+      },
+      "company-level-organization": {
+        "title": "Internal Organization",
+        "list": "Internal Organization List",
+        "new": "Create Internal Organization"
+      }
+    },
+    "profiles": {
+      "title": "User Profiles",
+      "list": "Profile List",
+      "new": "Create Profile"
+    },
+    "users": {
+      "title": "User Spaces",
+      "list": "User List",
+      "new": "Create User"
+    }
+  },
+  "calendar": {
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "0": "Sunday",
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec",
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December",
+      "0": "January",
+      "1": "February",
+      "2": "March",
+      "3": "April",
+      "4": "May",
+      "5": "June",
+      "6": "July",
+      "7": "August",
+      "8": "September",
+      "9": "October",
+      "10": "November",
+      "11": "December"
+    },
+    "today": "Today",
+    "clear": "Clear",
+    "close": "Close",
+    "previous-month": "Previous month",
+    "next-month": "Next month",
+    "previous-year": "Previous year",
+    "next-year": "Next year",
+    "previous-decade": "Previous decade",
+    "next-decade": "Next decade",
+    "previous-century": "Previous century",
+    "next-century": "Next century",
+    "daily": "Today",
+    "weekly": "This week",
+    "monthly": "This month",
+    "monthly-by-default": "Total for the month",
+    "monthly-by-day": "Daily",
+    "monthly-by-week": "Weekly"
+  },
+  "notifications": {
+    "no-notifications": "No notifications",
+    "no-notifications-description": "You have no notifications at the moment"
+  },
+  "user": {
+    "welcome": "Welcome",
+    "connected": "Connected as",
+    "profile": {
+      "title": "Profile",
+      "description": "Personal information"
+    },
+    "logout": {
+      "title": "Logout",
+      "description": "Do you really want to logout?"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Overview of your account"
+  },
+  "insured": {
+    "title": "Insureds",
+    "description": "Manage insured individuals",
+    "table": {
+      "title": "Insured list",
+      "description": "List of all insured individuals",
+      "search": "Search for an insured",
+      "no-data": "No results found",
+      "no-data-description": "No insured individuals found at the moment"
+    },
+    "new": {
+      "title": "Create an insured",
+      "description": "Add a new insured individual"
+    }
+  },
+  "entity-superior": {
+    "title": "Market Organization",
+    "description": "Manage market organizations",
+    "linked-list-title": "Linked Market Organizations",
+    "linked-list-description": "Manage linked market organizations",
+    "table": {
+      "title": "Market organizations list",
+      "description": "List of all market organizations",
+      "search": "Search for a market entity",
+      "no-data": "No results found",
+      "no-data-description": "No market entity found at the moment",
+      "linked": "Linked",
+      "demand": "Make a request",
+      "demand-description": "Request to link this market entity",
+      "demand-attestation": "Request attestation",
+      "demand-attestation-description": "Request an attestation from this market entity"
+    },
+    "columns": {
+      "logo": "Logo",
+      "name": "Name",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "linked": "Linked",
+      "description": "Description",
+      "created-at": "Created on",
+      "updated-at": "Updated on"
+    },
+    "actions": {
+      "demand": "Make a request",
+      "attribute-attestation": "Assign attestation"
+    }
+  },
+  "company": {
+    "title": "Companies",
+    "linked-list-title": "Linked Companies",
+    "description": "Manage companies",
+    "linked-list-description": "Manage linked companies",
+    "table": {
+      "title": "Company list",
+      "description": "List of all companies",
+      "search": "Search for a company",
+      "no-data": "No results found",
+      "no-data-description": "No companies found at the moment",
+      "demand": "Make a request",
+      "demand-description": "Request for this company",
+      "attribute-attestation": "Assign attestation",
+      "attribute-attestation-description": "Assign a batch of attestations to this company"
+    },
+    "columns": {
+      "logo": "Logo",
+      "name": "Name",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "linked": "Linked",
+      "description": "Description",
+      "created-at": "Created on",
+      "updated-at": "Updated on"
+    },
+    "actions": {
+      "demand": "Make a request",
+      "attribute-attestation": "Assign attestation"
+    }
+  },
+  "point-of-sale": {
+    "title": "Points of Sale",
+    "description": "Manage points of sale",
+    "linked-list-title": "Linked Points of Sale",
+    "linked-list-description": "Manage linked points of sale",
+    "table": {
+      "title": "Points of sale list",
+      "description": "List of all points of sale",
+      "search": "Search for a point of sale",
+      "no-data": "No results found",
+      "no-data-description": "No point of sale found at the moment",
+      "demand": "Make a request",
+      "demand-description": "Request for this point of sale",
+      "attribute-attestation": "Assign attestation",
+      "attribute-attestation-description": "Assign a batch of attestations to this point of sale"
+    },
+    "columns": {
+      "logo": "Logo",
+      "name": "Name",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "linked": "Linked",
+      "type": "Type",
+      "description": "Description",
+      "created-at": "Created on",
+      "updated-at": "Updated on"
+    },
+    "types": {
+      "GENERAL_AGENT": "General Agent",
+      "BROKER": "Broker",
+      "DIRECT_OFFICE": "Direct Office"
+    },
+    "new": {
+      "title": "Add a new point of sale",
+      "description": "Create a new point of sale",
+      "form-title": "Fill in the point of sale information",
+      "form-description": "Point of sale information",
+      "form-name": "Point of sale name",
+      "form-name-required": "Name is required",
+      "form-address": "Point of sale address",
+      "form-address-required": "Address is required",
+      "form-phone": "Point of sale phone",
+      "form-phone-required": "Phone is required",
+      "form-email": "Point of sale email",
+      "form-email-required": "Email is required",
+      "form-email-invalid": "Email is invalid",
+      "form-submit": "Create point of sale",
+      "form-type-general-agent": "General Agent",
+      "form-type-broker": "Broker",
+      "form-type-direct-office": "Direct Office",
+      "form-type-required": "Type is required",
+      "form-type": "Point of sale type",
+      "form-logo": "Logo",
+      "form-logo-required": "Logo is required",
+      "form-logo-invalid": "Logo is invalid",
+      "form-logo-description": "Click to add a logo"
+    },
+    "actions": {
+      "demand": "Make a request",
+      "attribute-attestation": "Assign attestation",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  }
 }

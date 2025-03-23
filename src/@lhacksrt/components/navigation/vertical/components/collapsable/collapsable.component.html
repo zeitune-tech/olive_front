@@ -18,16 +18,16 @@
         </ng-container>
 
         <!-- Title & Subtitle -->
-        <div class="vertical-navigation-item-title-wrapper">
+        <div class="vertical-navigation-item-title-wrapper" *transloco="let t;">
             <div class="vertical-navigation-item-title">
                 <span [ngClass]="item.classes?.title">
-                    {{item.title}}
+                    {{t(item.title || '')}}
                 </span>
             </div>
             <ng-container *ngIf="item.subtitle">
                 <div class="vertical-navigation-item-subtitle">
                     <span [ngClass]="item.classes?.subtitle">
-                        {{item.subtitle}}
+                        {{t(item.subtitle)}}
                     </span>
                 </div>
             </ng-container>

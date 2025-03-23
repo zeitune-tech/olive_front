@@ -1,0 +1,85 @@
+<div class="w-full pb-10"  *transloco="let t">
+
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('product.new.title') }}
+        </h1>
+        <!-- Description -->
+        <p class="text-sm md:text-base text-gray-600">
+            {{ t('product.new.description') }}
+        </p>
+    </div>
+
+    <!-- Form -->
+
+    <form [formGroup]="formGroup" 
+        class="w-full sm:max-w-4xl bg-card p-4 rounded-xl mx-auto"
+    >
+        <div class="flex flex-col mb-6 text-center text-primary">
+            <h1 class="text-2xl font-bold">
+                {{ t('product.new.form-title') }}
+            </h1>
+            <p class="text-sm text-gray-600">
+                {{ t('product.new.form-description') }}
+            </p>
+        </div>
+
+        <div class="flex flex-col gap-6">
+            <!-- Name -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('product.new.name') }}</mat-label>
+                <input matInput formControlName="name" />
+                <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
+                    {{ t('product.new.name-required') }}
+                </mat-error>
+            </mat-form-field>
+            <!-- Description -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('product.new.description') }}</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+                <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
+                    {{ t('product.new.description-required') }}
+                </mat-error>
+            </mat-form-field>
+            <!-- Category -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('product.new.category') }}</mat-label>
+                <input matInput formControlName="category" />
+                <mat-error *ngIf="formGroup.get('category')?.hasError('required')">
+                    {{ t('product.new.category-required') }}
+                </mat-error>
+            </mat-form-field>
+            <!-- Branch -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('product.new.branch') }}</mat-label>
+                <input matInput formControlName="branch" />
+                <mat-error *ngIf="formGroup.get('branch')?.hasError('required')">
+                    {{ t('product.new.branch-required') }}
+                </mat-error>
+            </mat-form-field>
+            
+            <!-- Submit Button -->
+            <div class="flex items-center gap-4 justify-end">
+                <div>
+                    {{t(message)}}
+                </div>
+                <button
+                    class="mat-button-large mt-6"
+                    mat-button
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="formGroup.invalid || formGroup.disabled"
+                    (click)="onSubmit()">
+                    <span *ngIf="!formGroup.disabled">
+                        {{ t('point-of-sale.new.form-submit') }}
+                    </span>
+                    <mat-progress-spinner
+                        *ngIf="formGroup.disabled"
+                        [diameter]="24"
+    
+                        [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -24,16 +24,17 @@ import { CommonModule } from '@angular/common';
     declarations: [
         CustomLayoutComponent
     ],
-    imports     : [
-        MatButtonModule,
-        RouterModule,
-        LoadingBarModule,
-        NotificationsModule,
-        UserModule,
-        SharedModule,
-        HeaderModule,
-        CommonModule
-    ],
+    imports: [
+    MatButtonModule,
+    RouterModule,
+    LoadingBarModule,
+    NotificationsModule,
+    UserModule,
+    LanguagesModule,
+    SharedModule,
+    HeaderModule,
+    CommonModule,
+],
     exports     : [
         CustomLayoutComponent
     ]

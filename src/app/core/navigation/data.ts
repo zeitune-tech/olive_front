@@ -5,217 +5,186 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 
 export const defaultNavigation: NavigationItem[] = [
     {
-        id: 'insureds',
-        title: 'sidebar.insureds',
-        type: 'group',
+        id: 'products',
+        title: 'sidebar.products.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_INSUREDS,
+        link: '/administration/dashboard',
+        permission: PERMISSIONS.VIEW_PRODUCTS,
         children: [
             {
-                id: 'insureds-list',
-                title: 'sidebar.insureds-list',
+                id: 'products.list',
+                title: 'sidebar.products.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/insureds/list',
-                permission: PERMISSIONS.VIEW_INSUREDS
+                link: '/administration/products/list',
+                permission: PERMISSIONS.VIEW_PRODUCTS
             },
             {
-                id: 'insureds-new',
-                title: 'sidebar.insureds-new',
+                id: 'products-new',
+                title: 'sidebar.products.new',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/insureds/new',
-                permission: PERMISSIONS.CREATE_INSURED
+                link: '/administration/products/new',
+                permission: PERMISSIONS.CREATE_PRODUCTS
             }
         ]
     },
     {
-        id: 'entities-superior',
-        title: 'sidebar.entities-superior',
-        type: 'group',
+        id: 'market-level-organization',
+        title: 'sidebar.market-level-organization.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_ENTITIES_SUPERIOR,
+        permission: PERMISSIONS.VIEW_ALL_MARKET_LEVEL_ORGANIZATION,
         children: [
             {
-                id: 'entities-superior-linked',
-                title: 'sidebar.entities-superior-linked',
+                id: 'market-level-organization.list',
+                title: 'sidebar.market-level-organization.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/entities-superior/linked',
-                permission: PERMISSIONS.VIEW_ENTITIES_SUPERIOR
+                link: '/administration/market-level-organization/list',
+                permission: PERMISSIONS.VIEW_ALL_MARKET_LEVEL_ORGANIZATION
             },
-            {
-                id: 'entities-superior-list',
-                title: 'sidebar.entities-superior-list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/entities-superior/list',
-                permission: PERMISSIONS.VIEW_LINKED_ENTITIES_SUPERIOR
-            }
+
         ]
     },
     {
         id: 'companies',
-        title: 'sidebar.companies',
-        type: 'group',
+        title: 'sidebar.companies.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
         permission: PERMISSIONS.VIEW_COMPANIES,
         children: [
             {
                 id: 'companies-linked',
-                title: 'sidebar.companies-linked',
+                title: 'sidebar.companies.linked',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/companies/linked',
+                link: '/administration/companies/linked',
                 permission: PERMISSIONS.VIEW_LINKED_COMPANIES
             },
             {
-                id: 'companies-list',
-                title: 'sidebar.companies-list',
+                id: 'companies.list',
+                title: 'sidebar.companies..list',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/companies/list',
+                link: '/administration/companies/list',
                 permission: PERMISSIONS.VIEW_COMPANIES
             }
         ]
     },
     {
         id: 'points-of-sale',
-        title: 'sidebar.points-of-sale',
-        type: 'group',
+        title: 'sidebar.points-of-sale.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_POINTS_OF_SALE,
+        permission: PERMISSIONS.VIEW_ALL_COMPANY_POINTS_OF_SALE,
         children: [
             {
                 id: 'points-of-sale-list',
-                title: 'sidebar.points-of-sale-list',
+                title: 'sidebar.points-of-sale.points-of-sale.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/points-of-sale/list',
-                permission: PERMISSIONS.VIEW_POINTS_OF_SALE
+                link: '/administration/points-of-sale/list',
+                permission: PERMISSIONS.VIEW_ALL_COMPANY_POINTS_OF_SALE
             },
             {
                 id: 'points-of-sale-broker',
-                title: 'sidebar.points-of-sale-broker',
+                title: 'sidebar.points-of-sale.points-of-sale.broker',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/points-of-sale/broker',
-                permission: PERMISSIONS.VIEW_BROKER_POINTS_OF_SALE
+                link: '/administration/points-of-sale/broker',
+                permission: PERMISSIONS.VIEW_LINKED_BROKERS
             },
             {
                 id: 'points-of-sale-new',
-                title: 'sidebar.points-of-sale-new',
+                title: 'sidebar.points-of-sale.points-of-sale.new',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/points-of-sale/new',
-                permission: PERMISSIONS.CREATE_POINT_OF_SALE
+                link: '/administration/points-of-sale/new',
+                permission: PERMISSIONS.CREATE_COMPANY_POINTS_OF_SALE
+            },
+            {
+                id: 'company-level-organization-list',
+                title: 'sidebar.points-of-sale.company-level-organization.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/administration/company-level-organization/list',
+                permission: PERMISSIONS.VIEW_ALL_COMPANY_LEVEL_ORGANIZATION
+            },
+            {
+                id: 'company-level-organization-new',
+                title: 'sidebar.points-of-sale.company-level-organization.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/administration/company-level-organization/new',
+                permission: PERMISSIONS.CREATE_COMPANY_LEVEL_ORGANIZATION
             }
         ]
     },
     {
-        id: 'attestations',
-        title: 'sidebar.attestations',
-        type: 'group',
+        id: 'profiles',
+        title: 'sidebar.profiles.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_ATTESTATIONS,
+        permission: PERMISSIONS.VIEW_PROFILES,
         children: [
             {
-                id: 'attestations-list',
-                title: 'sidebar.attestations-list',
+                id: 'profiles-list',
+                title: 'sidebar.profiles.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/attestations/list',
-                permission: PERMISSIONS.VIEW_ATTESTATIONS
+                link: '/administration/profiles/list',
+                permission: PERMISSIONS.VIEW_PROFILES
             },
             {
-                id: 'attestations-new',
-                title: 'sidebar.attestations-new',
+                id: 'profiles-new',
+                title: 'sidebar.profiles.new',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/attestations/new',
-                permission: PERMISSIONS.GENERATE_ATTESTATION
-            },
-            {
-                id: 'attestations-attribute',
-                title: 'sidebar.attestations-attribute',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/attestations/attribute',
-                permission: PERMISSIONS.ATTRIBUTE_ATTESTATION
+                link: '/administration/profiles/new',
+                permission: PERMISSIONS.CREATE_PROFILES
             }
         ]
     },
     {
-        id: 'demands',
-        title: 'sidebar.demands',
-        type: 'group',
+        id: 'users',
+        title: 'sidebar.users.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_DEMANDS,
+        permission: PERMISSIONS.VIEW_USERS,
         children: [
             {
-                id: 'demands-list',
-                title: 'sidebar.demands-list',
+                id: 'users-list',
+                title: 'sidebar.users.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/demands/list',
-                permission: PERMISSIONS.VIEW_DEMANDS
-            }
-        ]
-    },
-    {
-        id: 'employees',
-        title: 'sidebar.employees',
-        type: 'group',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_EMPLOYEES,
-        children: [
-            {
-                id: 'employees-list',
-                title: 'sidebar.employees-list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/employees/list',
-                permission: PERMISSIONS.VIEW_EMPLOYEES
+                link: '/administration/users/list',
+                permission: PERMISSIONS.VIEW_USERS
             },
             {
-                id: 'employees-new',
-                title: 'sidebar.employees-new',
+                id: 'users-new',
+                title: 'sidebar.users.new',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/employees/new',
-                permission: PERMISSIONS.CREATE_EMPLOYEE
-            },
-            {
-                id: 'employees-roles',
-                title: 'sidebar.employees-roles',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/employees/roles',
-                permission: PERMISSIONS.UPDATE_EMPLOYEE_ROLE
+                link: '/administration/users/new',
+                permission: PERMISSIONS.CREATE_USERS
             }
         ]
     }
 ];
 export const compactNavigation: NavigationItem[] = [
     {
-        id: 'insureds',
-        title: 'sidebar.insureds',
+        id: 'market-level-organization',
+        title: 'sidebar.market-level-organization',
         type: 'aside',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_INSUREDS,
-        children: []
-    },
-    {
-        id: 'entities-superior',
-        title: 'sidebar.entities-superior',
-        type: 'aside',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_ENTITIES_SUPERIOR,
+        permission: PERMISSIONS.VIEW_ALL_MARKET_LEVEL_ORGANIZATION,
         children: []
     },
     {
         id: 'companies',
-        title: 'sidebar.companies',
+        title: 'sidebar.companies.',
         type: 'aside',
         icon: 'fluent:people-team',
         permission: PERMISSIONS.VIEW_COMPANIES,
@@ -226,31 +195,15 @@ export const compactNavigation: NavigationItem[] = [
         title: 'sidebar.points-of-sale',
         type: 'aside',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_POINTS_OF_SALE,
+        permission: PERMISSIONS.VIEW_COMPANY_POINTS_OF_SALE,
         children: []
     },
     {
-        id: 'attestations',
-        title: 'sidebar.attestations',
+        id: 'users',
+        title: 'sidebar.users',
         type: 'aside',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_ATTESTATIONS,
-        children: []
-    },
-    {
-        id: 'demands',
-        title: 'sidebar.demands',
-        type: 'aside',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_DEMANDS,
-        children: []
-    },
-    {
-        id: 'employees',
-        title: 'sidebar.employees',
-        type: 'aside',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_EMPLOYEES,
+        permission: PERMISSIONS.VIEW_USERS,
         children: []
     }
 ];

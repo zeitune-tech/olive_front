@@ -1,0 +1,29 @@
+<div class="w-full flex flex-col items-center justify-center mt-12" *transloco="let t">
+    <div class="w-1/2">
+        <div class="w-full flex items-center justify-center">
+            <h1 class="text-3xl font-bold text-center">
+                {{ t('home.title') }} <span class="text-4xl">{{ user.firstName + " " + user.lastName }}</span>
+            </h1>
+        </div>
+        <div class="w-full flex items-center justify-center mt-4">
+            <p class="text-lg text-center">
+                {{ t('home.description') }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Choose module -->
+    <div class="mt-10 mx-auto w-fit gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-gutter">
+        @for (module of modules; track $index) {
+            <div [ngClass]="module.cssClass" (click)="navigate(module.route)">
+                <div class="w-full h-36 overflow-hidden text-primary bg-[#AFC3C8] flex items-center justify-center">
+                    <img class="object-cover h-32 relative" [src]="'assets/img/icons/'+module.icon" [alt]="module.title">
+                </div>
+                <div class=" text-center">
+                    <h2 class="text-lg font-semibold my-2">{{ t(module.title) }}</h2>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
