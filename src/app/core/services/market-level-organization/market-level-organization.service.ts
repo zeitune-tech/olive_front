@@ -3,15 +3,17 @@ import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { MarketLevelOrganization } from "./market-level-organization.interface";
+import { RequestMetadata } from "../common.interface";
 
 @Injectable()
 export class MarketLevelOrganizationService {
 
-    baseUrl = environment.base_url;
+    baseUrl = environment.base_url + '/market-level-organizations';
     private _myMarketLevelOrganization: ReplaySubject<MarketLevelOrganization> = new ReplaySubject<MarketLevelOrganization>(1);
-    private _entitySuperior: ReplaySubject<MarketLevelOrganization> = new ReplaySubject<MarketLevelOrganization>(1);
-    private _entitiesSuperior: ReplaySubject<MarketLevelOrganization[]> = new ReplaySubject<MarketLevelOrganization[]>(1);
-    private _entitiesSuperiorLinked: ReplaySubject<MarketLevelOrganization[]> = new ReplaySubject<MarketLevelOrganization[]>(1);
+    private _marketLevelOrganization: ReplaySubject<MarketLevelOrganization> = new ReplaySubject<MarketLevelOrganization>(1);
+    private _marketLevelOrganizations: ReplaySubject<MarketLevelOrganization[]> = new ReplaySubject<MarketLevelOrganization[]>(1);
+    private _marketLevelOrganizationLinked: ReplaySubject<MarketLevelOrganization[]> = new ReplaySubject<MarketLevelOrganization[]>(1);
+    private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
 
     set myMarketLevelOrganization(value: MarketLevelOrganization) {
         this._myMarketLevelOrganization.next(value);
@@ -22,27 +24,35 @@ export class MarketLevelOrganizationService {
     }
 
     set entitySuperior(value: MarketLevelOrganization) {
-        this._entitySuperior.next(value);
+        this._marketLevelOrganization.next(value);
     }
 
-    get entitySuperior$() {
-        return this._entitySuperior.asObservable();
+    get marketLevelOrganizations$() {
+        return this._marketLevelOrganizations.asObservable();
     }
 
-    set entitiesSuperior(value: MarketLevelOrganization[]) {
-        this._entitiesSuperior.next(value);
+    set marketLevelOrganizations(value: MarketLevelOrganization[]) {
+        this._marketLevelOrganizations.next(value);
     }
 
-    get entitiesSuperior$() {
-        return this._entitiesSuperior.asObservable();
+    get marketLevelOrganization$() {
+        return this._marketLevelOrganization.asObservable();
     }
 
-    set entitiesSuperiorLinked(value: MarketLevelOrganization[]) {
-        this._entitiesSuperiorLinked.next(value);
+    set marketLevelOrganizationLinked(value: MarketLevelOrganization[]) {
+        this._marketLevelOrganizationLinked.next(value);
     }
 
-    get entitiesSuperiorLinked$() {
-        return this._entitiesSuperiorLinked.asObservable();
+    get marketLevelOrganizationLinked$() {
+        return this._marketLevelOrganizationLinked.asObservable();
+    }
+
+    get metadata$() {
+        return this._metadata.asObservable();
+    }
+
+    set metadata(value: RequestMetadata) {
+        this._metadata.next(value);
     }
 
     constructor(
@@ -60,19 +70,22 @@ export class MarketLevelOrganizationService {
         );
     }
 
-    getEntitiesSuperior(): Observable<MarketLevelOrganization[]> {
-        return this._httpClient.get<MarketLevelOrganization[]>(`${this.baseUrl}/entities-superior/all`)
+    getAll(): Observable<MarketLevelOrganization[]> {
+        return this._httpClient.get<MarketLevelOrganization[]>(`${this.baseUrl}`)
         .pipe(
-            tap((entitiesSuperior) => {
-                this.entitiesSuperior = entitiesSuperior;
-                return (entitiesSuperior);
+            tap((response : any) => {
+                this.marketLevelOrganizations = response?.content.map((marketLevelOrganization: MarketLevelOrganization) => {
+                    return marketLevelOrganization
+                });
+                this.metadata = response;
+                return (response);
             }),
             catchError(() => of([] as MarketLevelOrganization[]))
         );
     }
 
-    getMarketLevelOrganization(id: number): Observable<MarketLevelOrganization> {
-        return this._httpClient.get<MarketLevelOrganization>(`${this.baseUrl}/entities-superior/${id}`)
+    get(id: number): Observable<MarketLevelOrganization> {
+        return this._httpClient.get<MarketLevelOrganization>(`${this.baseUrl}/${id}`)
         .pipe(
             tap((entitySuperior) => {
                 this.entitySuperior = entitySuperior;
@@ -82,25 +95,4 @@ export class MarketLevelOrganizationService {
         );
     }
 
-    getEntitiesSuperiorLinked(): Observable<MarketLevelOrganization[]> {
-        return this._httpClient.get<MarketLevelOrganization[]>(`${this.baseUrl}/entities-superior`)
-        .pipe(
-            tap((entitiesSuperior) => {
-                this.entitiesSuperiorLinked = entitiesSuperior;
-                return (entitiesSuperior);
-            }),
-            catchError(() => of([] as MarketLevelOrganization[]))
-        );
-    }
-
-    updateMarketLevelOrganization(entitySuperior: MarketLevelOrganization): Observable<MarketLevelOrganization> {
-        return this._httpClient.put<MarketLevelOrganization>(`${this.baseUrl}/entities-superior/${entitySuperior.id}`, entitySuperior)
-        .pipe(
-            tap((entitySuperior) => {
-                this.entitySuperior = entitySuperior;
-                return (entitySuperior);
-            }),
-            catchError(() => of({} as MarketLevelOrganization))
-        );
-    }
 }

@@ -7,12 +7,14 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Company } from "@core/services/company/company.interface";
 import { CompanyService } from "@core/services/company/company.service";
+import { animations } from "@lhacksrt/animations";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: "app-companies-list",
     templateUrl: "./list.component.html",
+    animations: animations
 })
 export class CompaniesListComponent {
     

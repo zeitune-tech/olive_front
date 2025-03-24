@@ -6,8 +6,14 @@ import { environment } from '@env/environment';
 
 @Injectable()
 export class UserService{
+
+    baseUrl = environment.base_url + '/users';
+
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
     private _hasEntity: boolean = false;
+
+    private _users: ReplaySubject<User[]> = new ReplaySubject<User[]>(1);
+    private _metadata: ReplaySubject<any> = new ReplaySubject<any>(1);
 
     /**
      * Constructor
@@ -32,6 +38,22 @@ export class UserService{
         return this._user.asObservable();
     }
 
+    set users(value: User[]) {
+        this._users.next(value);
+    }
+
+    get users$(): Observable<User[]> {
+        return this._users.asObservable();
+    }
+
+    set metadata(value: any) {
+        this._metadata.next(value);
+    }
+
+    get metadata$(): Observable<any> {
+        return this._metadata.asObservable();
+    }
+
     hasEntity(): Observable<boolean> {
         return of(this._hasEntity)
     }
@@ -54,6 +76,20 @@ export class UserService{
             }),
             catchError(() => of({} as User))
         );
+    }
+
+    getAll(): Observable<User[]> {
+        return this._httpClient.get<User[]>(`${this.baseUrl}`)
+            .pipe(
+                tap((response: any) => {
+                    this.users = response.content?.map((user: User) => {
+                        return user;
+                    });
+                    this.metadata = response;
+                    return response;
+                }),
+                catchError(() => of([] as User[]))
+            );
     }
 
     /**

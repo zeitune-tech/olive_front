@@ -12,8 +12,8 @@ export class PointsOfSaleNewComponent {
     loading = false;
 
     types = [
-        { value: 'GENERAL_AGENT', label: 'point-of-sale.new.form-type-general-agent' },
-        { value: 'DIRECT_OFFICE', label: 'point-of-sale.new.form-type-direct-office' },
+        { value: 'GENERAL_AGENT', label: 'entities.point_of_sale.form.fields.type.options.GENERAL_AGENT' },
+        { value: 'DIRECT_OFFICE', label: 'entities.point_of_sale.form.fields.type.options.DIRECT_OFFICE' },
     ];
 
     formGroup!: UntypedFormGroup;
@@ -68,12 +68,12 @@ export class PointsOfSaleNewComponent {
             pos
         ).subscribe({
             next: (pointOfSale: PointOfSale) => {
-                this.message = 'point-of-sale.new.success';
+                this.message = 'point_of_sale.successfields..;.'
                 this.formGroup.reset();
                 this.formGroup.enable();
             },
             error: (error) => {
-                this.message = 'point-of-sale.new.error';
+                this.message = 'point_of_sale.errorfields..;.'                
                 this.formGroup.enable();
             }
         });

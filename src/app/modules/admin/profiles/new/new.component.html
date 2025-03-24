@@ -2,11 +2,11 @@
 
     <div class="flex flex-col mb-10">
         <h1 class="text-2xl md:text-4xl font-bold py-4">
-            {{ t('profiles.new.title') }}
+            {{ t('entities.profile.form.title') }}
         </h1>
         <!-- Description -->
         <p class="text-sm md:text-base text-gray-600">
-            {{ t('profiles.new.description') }}
+            {{ t('entities.profile.form.description') }}
         </p>
     </div>
 
@@ -17,10 +17,10 @@
                 <!-- Informations personnelles -->
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('profiles.new.step-one-title') }}
+                        {{ t('entities.profile.form.step_one_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('profiles.new.step-one-description') }}
+                        {{ t('entities.profile.form.step_one_description') }}
                     </div>
                 </div>
             </ng-template>
@@ -31,10 +31,10 @@
             <ng-template matStepLabel>
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('profiles.new.step-four-title') }}
+                        {{ t('entities.profile.form.step_two_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('profiles.new.step-four-description') }}
+                        {{ t('entities.profile.form.step_two_description') }}
                     </div>
                 </div>
             </ng-template>
@@ -44,28 +44,28 @@
             <ng-template matStepLabel>
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('profiles.new.step-three-title') }}
+                        {{ t('entities.profile.form.step_three_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('profiles.new.step-three-description') }}
+                        {{ t('entities.profile.form.step_three_description') }}
                     </div>
                 </div>
             </ng-template>
             <div class="flex flex-col gap-4 py-4">
                 <div class="text-lg font-semibold">
-                    {{t('profiles.new.step-three-summary')}}
+                    {{t('entities.profile.form.step_three_summary')}}
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="flex gap-6">
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('profiles.new.step-three-name')}}
+                                {{t('entities.profile.form.step_three_name')}}
                             </div>
                             <div>{{ data.name }}</div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('profiles.new.step-three-description')}}
+                                {{t('entities.profile.form.step_three_description')}}
                             </div>
                             <div>{{ data.description }}</div>
                         </div>
@@ -73,12 +73,12 @@
                     <div class="flex gap-6">
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('profiles.new.step-three-points-of-sale')}}
+                                {{t('entities.profile.form.step_three_permissions')}}
                             </div>
                             <div>
-                                <ng-container *ngFor="let pointOfSale of data.pointsOfSale; let i = index">
-                                    <span>{{ pointOfSale.name }}</span>
-                                    <span *ngIf="i < data.pointOfSales.length - 1">, </span>
+                                <ng-container *ngFor="let permission of data.permissions; let i = index">
+                                    <span>{{ permission.name }}</span>
+                                    <span *ngIf="i < data.permissions.length - 1">, </span>
                                 </ng-container>
                             </div>
                         </div>
@@ -87,10 +87,10 @@
             </div>
             <div class="flex justify-end">
                 <button mat-button matStepperPrevious class="mat-button-large mt-6" mat-flat-button [color]="'primary'">
-                    {{ t('profiles.new.step-three-previous') }}
+                    {{ t('entities.profile.form.step_three_previous') }}
                 </button>
                 <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="confirm()">
-                    {{ t('profiles.new.step-three-create') }}
+                    {{ t('entities.profile.form.step_three_create') }}
                 </button>
             </div>
         </mat-step>

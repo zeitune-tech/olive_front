@@ -17,7 +17,6 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
-import { NewRoleComponent } from "./new-role/new-role.component";
 import { StepOneComponent } from "./new/step-one/step-one.component";
 import { StepTwoComponent } from "./new/step-two/step-two.component";
 import { MatStepperModule } from "@angular/material/stepper";
@@ -33,14 +32,12 @@ import { ConfirmDialogComponent } from "@shared/components/confirm-dialog/confir
     declarations: [
         UsersListComponent,
         UsersNewComponent,
-        NewRoleComponent,
         StepOneComponent,
         StepTwoComponent,
         StepThreeComponent,
         StepFourComponent,
         StepFiveComponent,
         ConfirmDialogComponent,
-        NewRoleComponent
     ],
     imports: [
         RouterModule.forChild(routes),

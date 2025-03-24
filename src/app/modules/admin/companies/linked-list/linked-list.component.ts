@@ -10,13 +10,14 @@ import { CompanyService } from "@core/services/company/company.service";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { PermissionsService } from "@core/permissions/permissions.service";
-import { PERMISSIONS } from "@core/permissions/permissions.data";
 import { UserService } from "@core/services/user/user.service";
 import { User } from "@core/services/user/user.interface";
+import { animations } from "@lhacksrt/animations";
 
 @Component({
     selector: "app-linked-companies-list",
     templateUrl: "./linked-list.component.html",
+    animations: animations
 })
 export class LinkedCompaniesListComponent {
 

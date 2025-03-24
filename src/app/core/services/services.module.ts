@@ -4,7 +4,6 @@ import { UserService } from './user/user.service';
 import { ManagementEntityService } from './management-entity/management-entity.service';
 import { CompanyService } from './company/company.service';
 import { PointOfSaleService } from './point-of-sale/point-of-sale.service';
-import { AttestationService } from './attestation/attestation.service';
 import { EmployeeService } from './employee/employee.service';
 import { InsuredService } from './insured/insured.service';
 import { DemandService } from './demand/demand.service';
@@ -21,7 +20,6 @@ import { MarketLevelOrganizationService } from './market-level-organization/mark
         CompanyService,
         MarketLevelOrganizationService,
         PointOfSaleService,
-        AttestationService,
         EmployeeService,
         InsuredService,
         DemandService

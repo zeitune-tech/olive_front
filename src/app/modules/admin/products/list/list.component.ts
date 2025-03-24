@@ -7,12 +7,14 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Product } from "@core/services/product/product.interface";
 import { ProductService } from "@core/services/product/product.service";
+import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: "app-products-list",
     templateUrl: "./list.component.html",
+    animations: animations
 })
 export class ProductsListComponent {
 
@@ -22,10 +24,10 @@ export class ProductsListComponent {
     tableOptions: TableOptions<Product> = {
         title: '',
         columns: [
-            { label: 'product.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'product.columns.description', property: 'description', type: 'text', visible: true },
-            { label: 'product.columns.category', property: 'branch', type: 'text', visible: true },
-            { label: 'product.columns.category', property: 'category', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.description', property: 'description', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.branch', property: 'branch', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.category', property: 'category', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'product.columns.logo',

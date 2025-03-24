@@ -7,12 +7,15 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Profile } from "@core/services/profile/profile.interface";
 import { ProfileService } from "@core/services/profile/profile.service";
+import { TranslocoService } from "@jsverse/transloco";
+import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: "app-profiles-list",
     templateUrl: "./list.component.html",
+    animations: animations
 })
 export class ProfilesListComponent {
 
@@ -22,12 +25,12 @@ export class ProfilesListComponent {
     tableOptions: TableOptions<Profile> = {
         title: '',
         columns: [
-            { label: 'profile.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'profile.columns.description', property: 'description', type: 'text', visible: true },
-            { label: 'profile.columns.permissions', property: 'permissions', type: 'text', visible: true },
+            { label: 'entities.profile.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.profile.table.columns.description', property: 'description', type: 'text', visible: true },
+            { label: 'entities.profile.table.columns.permissions_count', property: 'permissions', type: 'text', visible: true },
         ],
         imageOptions: {
-            label: 'profile.columns.logo',
+            label: 'entities.profile.table.columns.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },
@@ -40,6 +43,17 @@ export class ProfilesListComponent {
             
             if (property === 'permissions') {
                 return element[property].length;
+            }
+
+            if (property === 'description') {
+                if (element[property] === "profile.admin_description") {
+
+                    return this._translateService.translate('entities.profile.table.columns.admin_description');
+                }
+            
+                if (element[property].length > 50) {
+                    return element[property].substring(0, 50) + '...';
+                }
             }
             return element[property];
         },
@@ -56,6 +70,7 @@ export class ProfilesListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _profileService: ProfileService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) {}
 
@@ -91,7 +106,7 @@ export class ProfilesListComponent {
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
+        // columns.push('actions');
         return columns;
     }
 

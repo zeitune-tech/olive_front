@@ -1,0 +1,241 @@
+{
+  "auth": {
+    "sign_in": {
+      "title": "Se connecter",
+      "subtitle": "Connectez-vous à votre compte",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "password": "Mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "remember_me": "Se souvenir de moi",
+      "forgot_password": "Mot de passe oublié ?",
+      "no_account": "Pas de compte ?",
+      "sign_up": "S'inscrire",
+      "sign_in": "Se connecter",
+      "error": "Email ou mot de passe incorrect"
+    },
+    "sign_up": {
+      "title": "S'inscrire",
+      "subtitle": "Vous avez déjà un compte ?",
+      "first_name": "Prénom",
+      "first_name_required": "Le prénom est requis",
+      "last_name": "Nom",
+      "last_name_required": "Le nom est requis",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "password": "Mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "password_min": "Le mot de passe doit contenir au moins 6 caractères",
+      "password_confirmation": "Confirmer le mot de passe",
+      "password_confirmation_required": "La confirmation du mot de passe est requise",
+      "password_confirmation_same": "Les mots de passe doivent être identiques",
+      "sign_up": "S'inscrire",
+      "already_account": "Déjà un compte ?",
+      "sign_in": "Se connecter"
+    },
+    "forgot_password": {
+      "title": "Mot de passe oublié",
+      "subtitle": "Entrez votre email pour réinitialiser votre mot de passe",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "send": "Envoyer le lien de réinitialisation",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    },
+    "reset_password": {
+      "title": "Réinitialiser le mot de passe",
+      "subtitle": "Entrez votre nouveau mot de passe",
+      "password": "Nouveau mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "password_min": "Le mot de passe doit contenir au moins 6 caractères",
+      "password_confirmation": "Confirmer le mot de passe",
+      "password_confirmation_required": "La confirmation du mot de passe est requise",
+      "password_confirmation_same": "Les mots de passe doivent être identiques",
+      "reset": "Réinitialiser le mot de passe",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    },
+    "sign_out": {
+      "title": "Déconnexion",
+      "description": "Voulez-vous vraiment vous déconnecter ?",
+      "redirecting": "Déconnexion en cours...",
+      "seconds": "secondes",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    }
+  },
+  "home": {
+    "title": "Bonjour",
+    "description": "Bienvenue sur Olive Insurance, Veillez choisir un module pour commencer",
+    "modules": {
+      "administration": "Administration",
+      "productions_auto": "Exploitation Auto",
+      "insureds": "Assurés",
+      "parameters_auto": "Paramètrage Auto"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "products": {
+      "title": "Produits",
+      "list": "Mes des produits",
+        "new": "Ajouter un produit"
+    },
+    "market-level-organization": {
+      "title": "Organisations Marché",
+      "list": "Liste des organisations marché"
+    },
+    "companies": {
+      "title": "Compagnies",
+      "linked": "Compagnies liées",
+      "list": "Liste des compagnies"
+    },
+    "points-of-sale": {
+      "title": "Points de vente",
+      "points-of-sale": {
+        "list": "Mes points de vente",
+        "broker": "Liste des courtiers",
+        "new": "Ajouter un point de vente"
+      },
+      "company-level-organization": {
+        "list": "Organisation Compagnie",
+        "new": "Ajouter une organisation Comp."
+      }
+    },
+    "profiles": {
+      "title": "Profils Utilisateurs",
+      "list": "Liste des profils",
+      "new": "Ajouter un profil"
+    },
+    "users": {
+      "title": "Espaces Utilisateurs",
+      "list": "Liste des utilisateurs",
+      "new": "Ajouter un utilisateur"
+    }
+  },
+
+  "notifications": {
+    "no-notifications": "Pas de notifications",
+    "no-notifications-description": "Vous n'avez pas de notifications pour le moment"
+  },
+  "user": {
+    "welcome": "Bienvenue",
+    "connected": "Connecté en tant que",
+    "profile": {
+      "title": "Profil",
+      "description": "Informations personnelles"
+    },
+    "logout": {
+      "title": "Déconnexion",
+      "description": "Voulez-vous vraiment vous déconnecter ?"
+    }
+  },
+
+  "dashboard": {
+    "title": "Tableau de bord",
+    "description": "Vue d'ensemble de votre compte"
+  },
+  "company": {
+    "title": "Compagnies",
+    "linked-list-title": "Compagnies liées",
+    "description": "Gestion des compagnies",
+    "linked-list-description": "Gestion des compagnies liées",
+    "table": {
+      "title": "Liste des compagnies",
+      "description": "Liste de toutes les compagnies",
+      "search": "Rechercher une compagnie",
+      "no-data": "Aucun résultat trouvé",
+      "no-data-description": "Aucune compagnie trouvée pour le moment",
+      "demand": "Faire une demande",
+      "demand-description": "Faire une demande pour cette compagnie",
+      "attribute-attestation": "Attribuer une attestation",
+      "attribute-attestation-description": "Attribuer un lot d'attestations à cette compagnie"
+    },
+    "columns": {
+      "logo": "Logo",
+      "name": "Nom",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email",
+      "linked": "Liée",
+      "description": "Description",
+      "created-at": "Créé le",
+      "updated-at": "Modifié le"
+    },
+    "actions": {
+      "demand": "Faire une demande",
+      "attribute-attestation": "Attribuer une attestation"
+    }
+  },
+  "point-of-sale": {
+    "title": "Points de vente",
+    "description": "Gestion des points de vente",
+    "linked-list-title": "Points de vente liés",
+    "linked-list-description": "Gestion des points de vente liés",
+    "table": {
+      "title": "Liste des points de vente",
+      "description": "Liste de tous les points de vente",
+      "search": "Rechercher un point de vente",
+      "no-data": "Aucun résultat trouvé",
+      "no-data-description": "Aucun point de vente trouvé pour le moment",
+      "demand": "Faire une demande",
+      "demand-description": "Faire une demande pour ce point de vente",
+      "attribute-attestation": "Attribuer une attestation",
+      "attribute-attestation-description": "Attribuer un lot d'attestations à ce point de vente"
+    },
+    "columns": {
+      "logo": "Logo",
+      "name": "Nom",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email",
+      "linked": "Liée",
+      "type": "Type",
+      "description": "Description",
+      "created-at": "Créé le",
+      "updated-at": "Modifié le"
+    },
+    "types": {
+      "GENERAL_AGENT": "Agent général",
+      "BROKER": "Courtier",
+      "DIRECT_OFFICE": "Bureau direct"
+    },
+    "new": {
+      "title": "Ajouter un nouveau point de vente",
+      "description": "Ajouter un nouveau point de vente",
+      "form-title": "Remplissez les informations du point de vente",
+      "form-description": "Informations du point de vente",
+      "form-name": "Nom du point de vente",
+      "form-name-required": "Le nom est requis",
+      "form-address": "Adresse du point de vente",
+      "form-address-required": "L'adresse est requise",
+      "form-phone": "Téléphone du point de vente",
+      "form-phone-required": "Le téléphone est requis",
+      "form-email": "Email du point de vente",
+      "form-email-required": "L'email est requis",
+      "form-email-invalid": "L'email est invalide",
+      "form-submit": "Ajouter le point de vente",
+      "form-type-general-agent": "Agent général",
+      "form-type-broker": "Courtier",
+      "form-type-direct-office": "Bureau direct",
+      "form-type-required": "Le type est requis",
+      "form-type": "Type de point de vente",
+      "form-logo": "Logo",
+      "form-logo-required": "Le logo est requis",
+      "form-logo-invalid": "Le logo est invalide",
+      "form-logo-description": "Cliquez pour ajouter un logo"
+    },
+    "actions": {
+      "demand": "Faire une demande",
+      "attribute-attestation": "Attribuer une attestation",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    }
+  }
+}

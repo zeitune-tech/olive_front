@@ -7,12 +7,14 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Permission } from "@core/services/profile/profile.interface";
 import { ProfileService } from "@core/services/profile/profile.service";
 import { TranslocoService } from "@jsverse/transloco";
+import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: "app-profiles-new-step-two",
     templateUrl: "./step-two.component.html",
+    animations: animations
 })
 export class ProfilesNewStepTwoComponent {
 
@@ -46,10 +48,7 @@ export class ProfilesNewStepTwoComponent {
         private formBuilder: FormBuilder
     ) { 
         this.formGroup = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            phone: [''],
+            search: ['', Validators.required],
         });
     }
 

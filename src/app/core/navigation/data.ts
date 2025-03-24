@@ -32,14 +32,14 @@ export const defaultNavigation: NavigationItem[] = [
     },
     {
         id: 'market-level-organization',
-        title: 'sidebar.market-level-organization.title',
+        title: 'sidebar.market_level_organization.title',
         type: 'collapsable',
         icon: 'fluent:people-team',
         permission: PERMISSIONS.VIEW_ALL_MARKET_LEVEL_ORGANIZATION,
         children: [
             {
                 id: 'market-level-organization.list',
-                title: 'sidebar.market-level-organization.list',
+                title: 'sidebar.market_level_organization.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/administration/market-level-organization/list',
@@ -75,14 +75,14 @@ export const defaultNavigation: NavigationItem[] = [
     },
     {
         id: 'points-of-sale',
-        title: 'sidebar.points-of-sale.title',
+        title: 'sidebar.points_of_sale.title',
         type: 'collapsable',
         icon: 'fluent:people-team',
         permission: PERMISSIONS.VIEW_ALL_COMPANY_POINTS_OF_SALE,
         children: [
             {
                 id: 'points-of-sale-list',
-                title: 'sidebar.points-of-sale.points-of-sale.list',
+                title: 'sidebar.points_of_sale.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/administration/points-of-sale/list',
@@ -90,7 +90,7 @@ export const defaultNavigation: NavigationItem[] = [
             },
             {
                 id: 'points-of-sale-broker',
-                title: 'sidebar.points-of-sale.points-of-sale.broker',
+                title: 'sidebar.points_of_sale.broker',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/administration/points-of-sale/broker',
@@ -98,7 +98,7 @@ export const defaultNavigation: NavigationItem[] = [
             },
             {
                 id: 'points-of-sale-new',
-                title: 'sidebar.points-of-sale.points-of-sale.new',
+                title: 'sidebar.points_of_sale.new',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/administration/points-of-sale/new',
@@ -106,7 +106,7 @@ export const defaultNavigation: NavigationItem[] = [
             },
             {
                 id: 'company-level-organization-list',
-                title: 'sidebar.points-of-sale.company-level-organization.list',
+                title: 'sidebar.company_level_organization.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/administration/company-level-organization/list',
@@ -114,7 +114,7 @@ export const defaultNavigation: NavigationItem[] = [
             },
             {
                 id: 'company-level-organization-new',
-                title: 'sidebar.points-of-sale.company-level-organization.new',
+                title: 'sidebar.company_level_organization.new',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/administration/company-level-organization/new',

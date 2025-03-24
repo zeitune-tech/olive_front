@@ -7,12 +7,14 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { PointOfSale } from "@core/services/point-of-sale/point-of-sale.interface";
 import { PointOfSaleService } from "@core/services/point-of-sale/point-of-sale.service";
+import { animations } from "@lhacksrt/animations";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: "app-points-of-sale-broker-list",
     templateUrl: "./broker.component.html",
+    animations: animations
 })
 export class BrokerPointsOfSaleListComponent {
 
@@ -22,18 +24,17 @@ export class BrokerPointsOfSaleListComponent {
     tableOptions: TableOptions<PointOfSale> = {
         title: '',
         columns: [
-            { label: 'point-of-sale.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.address', property: 'address', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.phone', property: 'phone', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.address', property: 'address', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
-            { label: 'point-of-sale.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
         ],
         renderItem: (element: PointOfSale, property: keyof PointOfSale) => {
-            
+          
             return element[property];
         },
     };
@@ -53,7 +54,7 @@ export class BrokerPointsOfSaleListComponent {
     ) {}
 
     ngOnInit(): void {
-        this._pointOfSaleService.pointsOfSaleUnlinked$
+        this._pointOfSaleService.brokers$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((data: PointOfSale[]) => {
             this.data = data;
@@ -81,7 +82,7 @@ export class BrokerPointsOfSaleListComponent {
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
+        // columns.push('actions');
         return columns;
     }
 

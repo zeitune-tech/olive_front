@@ -28,7 +28,7 @@ export class StepThreeComponent implements OnInit {
            pointOfSaleName: ['']
         });
 
-        this._pointOfSaleService.pointsOfSaleLinked$
+        this._pointOfSaleService.pointsOfSale$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((pointsOfSale) => {
             this.pointsOfSale = pointsOfSale;

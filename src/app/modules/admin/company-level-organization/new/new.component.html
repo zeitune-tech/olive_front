@@ -2,11 +2,11 @@
 
     <div class="flex flex-col mb-10">
         <h1 class="text-2xl md:text-4xl font-bold py-4">
-            {{ t('company-level-organization.new.title') }}
+            {{ t('entities.company_level_organization.form.title') }}
         </h1>
         <!-- Description -->
         <p class="text-sm md:text-base text-gray-600">
-            {{ t('company-level-organization.new.description') }}
+            {{ t('entities.company_level_organization.form.description') }}
         </p>
     </div>
 
@@ -17,10 +17,10 @@
                 <!-- Informations personnelles -->
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('company-level-organization.new.step-one-title') }}
+                        {{ t('entities.company_level_organization.form.step_one_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('company-level-organization.new.step-one-description') }}
+                        {{ t('entities.company_level_organization.form.step_one_description') }}
                     </div>
                 </div>
             </ng-template>
@@ -31,10 +31,10 @@
             <ng-template matStepLabel>
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('company-level-organization.new.step-four-title') }}
+                        {{ t('entities.company_level_organization.form.step_two_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('company-level-organization.new.step-four-description') }}
+                        {{ t('entities.company_level_organization.form.step_two_description') }}
                     </div>
                 </div>
             </ng-template>
@@ -44,28 +44,28 @@
             <ng-template matStepLabel>
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('company-level-organization.new.step-three-title') }}
+                        {{ t('entities.company_level_organization.form.step_three_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('company-level-organization.new.step-three-description') }}
+                        {{ t('entities.company_level_organization.form.step_three_description') }}
                     </div>
                 </div>
             </ng-template>
             <div class="flex flex-col gap-4 py-4">
                 <div class="text-lg font-semibold">
-                    {{t('company-level-organization.new.step-three-summary')}}
+                    {{t('entities.company_level_organization.form.step_three_summary')}}
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="flex gap-6">
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('company-level-organization.new.step-three-name')}}
+                                {{t('entities.company_level_organization.form.step_three_name')}}
                             </div>
                             <div>{{ data.name }}</div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('company-level-organization.new.step-three-description')}}
+                                {{t('entities.company_level_organization.form.step_three_description')}}
                             </div>
                             <div>{{ data.description }}</div>
                         </div>
@@ -73,7 +73,7 @@
                     <div class="flex gap-6">
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('company-level-organization.new.step-three-points-of-sale')}}
+                                {{t('entities.company_level_organization.form.step_three_points-of-sale')}}
                             </div>
                             <div>
                                 <ng-container *ngFor="let pointOfSale of data.pointsOfSale; let i = index">
@@ -87,10 +87,10 @@
             </div>
             <div class="flex justify-end">
                 <button mat-button matStepperPrevious class="mat-button-large mt-6" mat-flat-button [color]="'primary'">
-                    {{ t('company-level-organization.new.step-three-previous') }}
+                    {{ t('entities.company_level_organization.form.step_three_previous') }}
                 </button>
                 <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="confirm()">
-                    {{ t('company-level-organization.new.step-three-create') }}
+                    {{ t('entities.company_level_organization.form.step_three_create') }}
                 </button>
             </div>
         </mat-step>

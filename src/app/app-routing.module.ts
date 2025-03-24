@@ -5,7 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { AuthGuard } from './core/auth/guards/auth.guard';
 import { InitialDataResolver } from './app.resolver';
 import { PERMISSIONS } from '@core/permissions/permissions.data';
-import { DashboardResolver } from './modules/admin/dashboard/dashboard.resolver';
+import { DashboardResolver } from './modules/dashboard/dashboard.resolver';
 import { PointsOfSaleResolver } from './modules/admin/points-of-sale/points-of-sale.resolver';
 import { CompaniesResolver } from './modules/admin/companies/companies.resolver';
 
@@ -62,6 +62,13 @@ const routes: Routes = [
                     layout: 'custom',
                 },
                 loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
+            },
+            {
+                path: 'dashboard',
+                canActivate: [],
+                canActivateChild: [],
+                data: {},
+                loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule),
             },
             {
                 path: 'administration',

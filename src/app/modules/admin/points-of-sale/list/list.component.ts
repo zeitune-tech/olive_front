@@ -24,22 +24,22 @@ export class PointsOfSaleListComponent {
     tableOptions: TableOptions<PointOfSale> = {
         title: '',
         columns: [
-            { label: 'point-of-sale.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.address', property: 'address', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.type', property: 'type', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.phone', property: 'phone', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.address', property: 'address', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.type', property: 'type', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
-            { label: 'point-of-sale.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'point-of-sale.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) },
-            { label: 'point-of-sale.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
+            { label: 'entities.point_of_sale.table.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
+            { label: 'entities.point_of_sale.table.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) },
+            { label: 'entities.point_of_sale.table.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
         ],
         renderItem: (element: PointOfSale, property: keyof PointOfSale) => {
             if (property === 'type') {
-                return this._translateService.translate(`point-of-sale.types.${element[property]}`);
+                return this._translateService.translate(`entities.point_of_sale.table.types.${element[property]}`);
             }
             return element[property];
         },
@@ -61,7 +61,7 @@ export class PointsOfSaleListComponent {
     ) {}
 
     ngOnInit(): void {
-        this._pointOfSaleService.pointsOfSaleLinked$
+        this._pointOfSaleService.pointsOfSale$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((data: PointOfSale[]) => {
             this.data = data;
@@ -103,7 +103,7 @@ export class PointsOfSaleListComponent {
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
+        // columns.push('actions');
         return columns;
     }
 

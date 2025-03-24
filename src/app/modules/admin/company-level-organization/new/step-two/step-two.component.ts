@@ -54,10 +54,7 @@ export class CompanyLevelOrganizationNewStepTwoComponent {
         private formBuilder: FormBuilder
     ) { 
         this.formGroup = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            phone: [''],
+            search: ['', Validators.required],
         });
     }
 
@@ -67,7 +64,7 @@ export class CompanyLevelOrganizationNewStepTwoComponent {
 
 
     ngOnInit(): void {
-        this._pointOfSaleService.pointsOfSaleLinked$
+        this._pointOfSaleService.pointsOfSale$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((data: PointOfSale[]) => {
             this.data = data;

@@ -60,7 +60,7 @@ export class LinkedMarketLevelOrganizationListComponent {
     ) {}
 
     ngOnInit(): void {
-        this._marketLevelOrganizationService.entitiesSuperiorLinked$
+        this._marketLevelOrganizationService.marketLevelOrganizationLinked$
         .subscribe((data: MarketLevelOrganization[]) => {
             this.data = data;
             this.dataSource.data = data;

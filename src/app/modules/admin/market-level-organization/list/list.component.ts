@@ -24,11 +24,11 @@ export class MarketLevelOrganizationListComponent {
     tableOptions: TableOptions<MarketLevelOrganization> = {
         title: '',
         columns: [
-            { label: 'company.columns.logo', property: 'logo', type: 'image', visible: true },
-            { label: 'entity-superior.columns.name', property: 'name', type: 'text', visible: true},
-            { label: 'entity-superior.columns.email', property: 'email', type: 'text', visible: true},
-            { label: 'entity-superior.columns.phone', property: 'phone', type: 'text', visible: true},
-            { label: 'entity-superior.columns.address', property: 'address', type: 'text', visible: true},
+            { label: 'entities.management_entity.table.columns.logo', property: 'logo', type: 'image', visible: true },
+            { label: 'entities.management_entity.table.columns.name', property: 'name', type: 'text', visible: true},
+            { label: 'entities.management_entity.table.columns.email', property: 'email', type: 'text', visible: true},
+            { label: 'entities.management_entity.table.columns.phone', property: 'phone', type: 'text', visible: true},
+            { label: 'entities.management_entity.table.columns.address', property: 'address', type: 'text', visible: true},
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
@@ -36,7 +36,7 @@ export class MarketLevelOrganizationListComponent {
             { label: 'entity-superior.actions.demand', icon: 'message', action: this.editItem.bind(this), cssClasses: ['bg-primary-200', 'text-primary'] },
         ],
         imageOptions: {
-            label: 'company.columns.logo',
+            label: 'entities.management_entity.table.columns.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },
@@ -61,11 +61,11 @@ export class MarketLevelOrganizationListComponent {
     ) {}
 
     ngOnInit(): void {
-        this._entitySuperiorService.entitiesSuperior$
+        this._entitySuperiorService.marketLevelOrganizations$
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((entitiesSuperior: MarketLevelOrganization[]) => {
-            this.data = entitiesSuperior;
-            this.dataSource.data = entitiesSuperior;
+        .subscribe((marketLevelOrganizations: MarketLevelOrganization[]) => {
+            this.data = marketLevelOrganizations;
+            this.dataSource.data = marketLevelOrganizations;
             this._changeDetectorRef.detectChanges();
         });
     }
@@ -99,7 +99,7 @@ export class MarketLevelOrganizationListComponent {
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
+        // columns.push('actions');
         return columns;
     }
 

@@ -5,27 +5,28 @@
     import { MatPaginator } from "@angular/material/paginator";
     import { MatSort } from "@angular/material/sort";
     import { MatTableDataSource } from "@angular/material/table";
-    import { Employee } from "@core/services/employee/employee.inteface";
-    import { EmployeeService } from "@core/services/employee/employee.service";
+import { User } from "@core/services/user/user.interface";
+    import { UserService } from "@core/services/user/user.service";
+import { animations } from "@lhacksrt/animations";
     import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
     import { Subject, takeUntil } from "rxjs";
 
     @Component({
         selector: "app-users-list",
         templateUrl: "./list.component.html",
+        animations: animations
     })
     export class UsersListComponent {
     
     private _unsubscribeAll: Subject<any> = new Subject<any>();
         
-    tableOptions: TableOptions<Employee> = {
+    tableOptions: TableOptions<User> = {
         title: '',
         columns: [
-            { label: 'employee.columns.first-name', property: 'firstName', type: 'text', visible: true },
-            { label: 'employee.columns.last-name', property: 'lastName', type: 'text', visible: true },
-            { label: 'employee.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'employee.columns.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'employee.columns.management-entity', property: 'managementEntity', type: 'text', visible: true },
+            { label: 'user.columns.first-name', property: 'firstName', type: 'text', visible: true },
+            { label: 'user.columns.last-name', property: 'lastName', type: 'text', visible: true },
+            { label: 'user.columns.email', property: 'email', type: 'text', visible: true },
+            { label: 'user.columns.management-entity', property: 'managementEntity', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
@@ -33,7 +34,7 @@
             { label: 'company.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
             { label: 'company.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) }
         ],
-        renderItem: (element: Employee, property: keyof Employee) => {
+        renderItem: (element: User, property: keyof User) => {
             
             if (property === 'managementEntity') {
                 return element.managementEntity?.name;
@@ -41,25 +42,25 @@
             return element[property];
         },
     };
-    data: Employee[] = [];
+    data: User[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Employee> = new MatTableDataSource();
-    selection = new SelectionModel<Employee>(true, []);
+    dataSource: MatTableDataSource<User> = new MatTableDataSource();
+    selection = new SelectionModel<User>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _employeeService: EmployeeService,
+        private _userService: UserService,
         private _dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
-        this._employeeService.employees$
+        this._userService.users$
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: Employee[]) => {
+        .subscribe((data: User[]) => {
             this.data = data;
             this.dataSource.data = data;
             this._changeDetectorRef.detectChanges();
@@ -80,16 +81,16 @@
     }
 
     /**
-        * Edit Employee Employee
+        * Edit User User
         */
-    editItem(item: Employee | null): void {
+    editItem(item: User | null): void {
         
     }
 
     /**
-        * Delete Employee Employee
+        * Delete User User
         */
-    deleteItem(item: Employee): void {
+    deleteItem(item: User): void {
         
     }
     
@@ -97,7 +98,7 @@
         return this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
     }
 
-    trackByProperty(index: number, column: TableColumn<Employee>) {
+    trackByProperty(index: number, column: TableColumn<User>) {
         return column.property;
     }
 }

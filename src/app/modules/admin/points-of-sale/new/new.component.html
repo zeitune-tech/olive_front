@@ -2,11 +2,11 @@
 
     <div class="flex flex-col mb-10">
         <h1 class="text-2xl md:text-4xl font-bold py-4">
-            {{ t('point-of-sale.new.title') }}
+            {{ t('entities.point_of_sale.form.subtitle') }}
         </h1>
         <!-- Description -->
         <p class="text-sm md:text-base text-gray-600">
-            {{ t('point-of-sale.new.description') }}
+            {{ t('entities.point_of_sale.form.subtitle') }}
         </p>
     </div>
 
@@ -15,10 +15,10 @@
     >
         <div class="flex flex-col mb-6 text-center text-primary">
             <h1 class="text-2xl font-bold">
-                {{ t('point-of-sale.new.form-title') }}
+                {{ t('entities.point_of_sale.form.title') }}
             </h1>
             <p class="text-sm text-gray-600">
-                {{ t('point-of-sale.new.form-description') }}
+                {{ t('entities.point_of_sale.form.subtitle') }}
             </p>
         </div>
 
@@ -27,19 +27,19 @@
         <div class="space-y-6 mt-4">
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('point-of-sale.new.form-name') }}
+                    {{ t('entities.point_of_sale.form.fields.name.label') }}
                 </mat-label>
                 <input
                     id="name"
                     matInput
                     [formControlName]="'name'">
                 <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
-                    {{ t('point-of-sale.new.form-name-required') }}
+                    {{ t('form.errors.required') }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('point-of-sale.new.form-type') }}
+                    {{ t('entities.point_of_sale.form.fields.type.label') }}
                 </mat-label>
                 <mat-select [formControlName]="'type'">
                     <mat-option *ngFor="let type of types" [value]="type.value">
@@ -49,22 +49,22 @@
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('point-of-sale.new.form-email') }}
+                    {{ t('entities.point_of_sale.form.fields.email.label') }}
                 </mat-label>
                 <input
                     id="email"
                     matInput
                     [formControlName]="'email'">
                 <mat-error *ngIf="formGroup.get('email')?.hasError('required')">
-                    {{ t('point-of-sale.new.form-email-required') }}
+                    {{ t('form.errors.required') }}
                 </mat-error>
                 <mat-error *ngIf="formGroup.get('email')?.hasError('email')">
-                    {{ t('point-of-sale.new.form-email-invalid') }}
+                    {{ t('form.errors.required') }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('point-of-sale.new.form-phone') }}
+                    {{ t('entities.point_of_sale.form.fields.phone.label') }}
                 </mat-label>
                 <input
                     id="phone"
@@ -73,7 +73,7 @@
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('point-of-sale.new.form-address') }}
+                    {{ t('entities.point_of_sale.form.fields.address.label') }}
                 </mat-label>
                 <input
                     id="address"
@@ -94,7 +94,7 @@
                 [disabled]="formGroup.invalid || formGroup.disabled"
                 (click)="onSubmit()">
                 <span *ngIf="!formGroup.disabled">
-                    {{ t('point-of-sale.new.form-submit') }}
+                    {{ t('form.actions.save') }}
                 </span>
                 <mat-progress-spinner
                     *ngIf="formGroup.disabled"

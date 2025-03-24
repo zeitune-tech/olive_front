@@ -7,12 +7,14 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { CompanyLevelOrganization } from "@core/services/company-level-organization/company-level-organization.interface";
 import { CompanyLevelOrganizationService } from "@core/services/company-level-organization/company-level-organization.service";
+import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: "app-company-level-organization-list",
     templateUrl: "./list.component.html",
+    animations: animations
 })
 export class CompanyLevelOrganizationListComponent {
 
@@ -22,8 +24,8 @@ export class CompanyLevelOrganizationListComponent {
     tableOptions: TableOptions<CompanyLevelOrganization> = {
         title: '',
         columns: [
-            { label: 'company-level-organization.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'company-level-organization.columns.points-of-sale', property: 'pointsOfSale', type: 'text', visible: true },
+            { label: 'entities.company_level_organization.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.company_level_organization.table.columns.points_of_sale_count', property: 'pointsOfSale', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],

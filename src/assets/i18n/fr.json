@@ -1,540 +1,335 @@
 {
-  "auth": {
-    "sign_in": {
-      "title": "Se connecter",
-      "subtitle": "Connectez-vous à votre compte",
-      "email": "Email",
-      "email_required": "L'email est requis",
-      "email_invalid": "L'email est invalide",
-      "password": "Mot de passe",
-      "password_required": "Le mot de passe est requis",
-      "remember_me": "Se souvenir de moi",
-      "forgot_password": "Mot de passe oublié ?",
-      "no_account": "Pas de compte ?",
-      "sign_up": "S'inscrire",
-      "sign_in": "Se connecter",
-      "error": "Email ou mot de passe incorrect"
-    },
-    "sign_up": {
-      "title": "S'inscrire",
-      "subtitle": "Vous avez déjà un compte ?",
-      "first_name": "Prénom",
-      "first_name_required": "Le prénom est requis",
-      "last_name": "Nom",
-      "last_name_required": "Le nom est requis",
-      "email": "Email",
-      "email_required": "L'email est requis",
-      "email_invalid": "L'email est invalide",
-      "password": "Mot de passe",
-      "password_required": "Le mot de passe est requis",
-      "password_min": "Le mot de passe doit contenir au moins 6 caractères",
-      "password_confirmation": "Confirmer le mot de passe",
-      "password_confirmation_required": "La confirmation du mot de passe est requise",
-      "password_confirmation_same": "Les mots de passe doivent être identiques",
-      "sign_up": "S'inscrire",
-      "already_account": "Déjà un compte ?",
-      "sign_in": "Se connecter"
-    },
-    "forgot_password": {
-      "title": "Mot de passe oublié",
-      "subtitle": "Entrez votre email pour réinitialiser votre mot de passe",
-      "email": "Email",
-      "email_required": "L'email est requis",
-      "email_invalid": "L'email est invalide",
-      "send": "Envoyer le lien de réinitialisation",
-      "back": "Retour à la connexion",
-      "back_to": "Retour à",
-      "sign_in": "Se connecter"
-    },
-    "reset_password": {
-      "title": "Réinitialiser le mot de passe",
-      "subtitle": "Entrez votre nouveau mot de passe",
-      "password": "Nouveau mot de passe",
-      "password_required": "Le mot de passe est requis",
-      "password_min": "Le mot de passe doit contenir au moins 6 caractères",
-      "password_confirmation": "Confirmer le mot de passe",
-      "password_confirmation_required": "La confirmation du mot de passe est requise",
-      "password_confirmation_same": "Les mots de passe doivent être identiques",
-      "reset": "Réinitialiser le mot de passe",
-      "back": "Retour à la connexion",
-      "back_to": "Retour à",
-      "sign_in": "Se connecter"
-    },
-    "sign_out": {
-      "title": "Déconnexion",
-      "description": "Voulez-vous vraiment vous déconnecter ?",
-      "redirecting": "Déconnexion en cours...",
-      "seconds": "secondes",
-      "back": "Retour à la connexion",
-      "back_to": "Retour à",
-      "sign_in": "Se connecter"
-    }
-  },
-  "home": {
-    "title": "Bonjour",
-    "description": "Bienvenue sur Olive Insurance, Veillez choisir un module pour commencer",
-    "modules": {
-      "administration": "Administration",
-      "productions_auto": "Exploitation Auto",
-      "insureds": "Assurés",
-      "parameters_auto": "Paramètrage Auto"
-    }
-  },
   "sidebar": {
     "dashboard": "Tableau de bord",
-    "products": {
-      "title": "Produits",
-      "list": "Mes des produits",
-        "new": "Ajouter un produit"
-    },
-    "market-level-organization": {
-      "title": "Organisations Marché",
-      "list": "Liste des organisations marché"
+    "management_entities": {
+      "title": "Entités de gestion",
+      "list": "Liste des entités",
+      "new": "Ajouter une entité"
     },
     "companies": {
       "title": "Compagnies",
       "linked": "Compagnies liées",
-      "list": "Liste des compagnies"
+      "list": "Liste des compagnies",
+      "new": "Ajouter une compagnie"
     },
-    "points-of-sale": {
+    "market_level_organization": {
+      "title": "Organisations niveau marché",
+      "list": "Liste des organisations niveau marché"
+    },
+    "points_of_sale": {
       "title": "Points de vente",
-      "points-of-sale": {
-        "list": "Mes points de vente",
-        "broker": "Liste des courtiers",
-        "new": "Ajouter un point de vente"
-      },
-      "company-level-organization": {
-        "list": "Organisation Compagnie",
-        "new": "Ajouter une organisation Comp."
-      }
+      "broker": "Liste des courtiers",
+      "list": "Liste des points de vente",
+      "new": "Ajouter un point de vente"
+    },
+    "company_level_organization": {
+      "title": "Organisation par compagnie",
+      "list": "Liste des organisations",
+      "new": "Ajouter une organisation"
+    },
+    "users": {
+      "title": "Utilisateurs",
+      "list": "Liste des utilisateurs",
+      "new": "Ajouter un utilisateur"
     },
     "profiles": {
-      "title": "Profils Utilisateurs",
+      "title": "Profils utilisateurs",
       "list": "Liste des profils",
       "new": "Ajouter un profil"
     },
-    "users": {
-      "title": "Espaces Utilisateurs",
-      "list": "Liste des utilisateurs",
-      "new": "Ajouter un utilisateur"
+    "products": {
+      "title": "Produits",
+      "list": "Liste des produits",
+      "new": "Ajouter un produit"
     }
   },
-
-  "calendar": {
-    "days": {
-      "mon": "Lun",
-      "tue": "Mar",
-      "wed": "Mer",
-      "thu": "Jeu",
-      "fri": "Ven",
-      "sat": "Sam",
-      "sun": "Dim",
-      "monday": "Lundi",
-      "tuesday": "Mardi",
-      "wednesday": "Mercredi",
-      "thursday": "Jeudi",
-      "friday": "Vendredi",
-      "saturday": "Samedi",
-      "sunday": "Dimanche",
-      "0": "Dimanche",
-      "1": "Lundi",
-      "2": "Mardi",
-      "3": "Mercredi",
-      "4": "Jeudi",
-      "5": "Vendredi",
-      "6": "Samedi"
+  "form": {
+    "errors": {
+      "required": "Ce champ est requis",
+      "email_invalid": "Format d'adresse e-mail invalide",
+      "min_length": "Ce champ doit contenir au moins {min} caractères",
+      "password_mismatch": "Les mots de passe doivent être identiques"
     },
-    "months": {
-      "jan": "Jan",
-      "feb": "Fév",
-      "mar": "Mar",
-      "apr": "Avr",
-      "jun": "Juin",
-      "jul": "Juil",
-      "aug": "Août",
-      "sep": "Sep",
-      "oct": "Oct",
-      "nov": "Nov",
-      "dec": "Déc",
-      "january": "Janvier",
-      "february": "Février",
-      "march": "Mars",
-      "april": "Avril",
-      "may": "Mai",
-      "june": "Juin",
-      "july": "Juillet",
-      "august": "Août",
-      "september": "Septembre",
-      "october": "Octobre",
-      "november": "Novembre",
-      "december": "Décembre",
-      "0": "Janvier",
-      "1": "Février",
-      "2": "Mars",
-      "3": "Avril",
-      "4": "Mai",
-      "5": "Juin",
-      "6": "Juillet",
-      "7": "Août",
-      "8": "Septembre",
-      "9": "Octobre",
-      "10": "Novembre",
-      "11": "Décembre"
+    "actions": {
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    }
+  },
+  "entities": {
+    "product": {
+        "form": {
+            "title": "Détails du produit",
+            "subtitle": "Créer ou modifier un produit",
+            "fields": {
+                "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+                "description": { "label": "Description", "placeholder": "Saisir la description" },
+                "branch": { "label": "Branche", "placeholder": "Sélectionner la branche" },
+                "category": { "label": "Classe", "placeholder": "Sélectionner la catégorie" }
+            }
+        },
+        "table": {
+            "title": "Produits",
+            "description": "Liste des produits",
+            "columns": {
+                "name": "Nom",
+                "description": "Description",
+                "branch": "Branche",
+                "category": "Classe",
+                "actions": "Actions"
+            },
+            "empty_state": "Aucun produit trouvé"
+        }
     },
-    "today": "Aujourd'hui",
-    "clear": "Effacer",
-    "close": "Fermer",
-    "previous-month": "Mois précédent",
-    "next-month": "Mois suivant",
-    "previous-year": "Année précédente",
-    "next-year": "Année suivante",
-    "previous-decade": "Décennie précédente",
-    "next-decade": "Décennie suivante",
-    "previous-century": "Siècle précédent",
-    "next-century": "Siècle suivant",
-    "daily": "Aujourd'hui",
-    "weekly": "Cette semaine",
-    "monthly": "Ce mois-ci",
-    "monthly-by-default": "Total du mois",
-    "monthly-by-day": "Journalier",
-    "monthly-by-week": "Hebdomadaire"
-  },
-  "notifications": {
-    "no-notifications": "Pas de notifications",
-    "no-notifications-description": "Vous n'avez pas de notifications pour le moment"
-  },
-  "user": {
-    "welcome": "Bienvenue",
-    "connected": "Connecté en tant que",
+    "branch": {
+        "form": {
+            "title": "Détails de la branche",
+            "subtitle": "Créer ou modifier une branche"
+        },
+        "table": {
+            "title": "Branches",
+            "description": "Liste des branches",
+            "columns": {
+                "name": "Nom",
+                "description": "Description",
+                "actions": "Actions"
+            },
+            "empty_state": "Aucune branche trouvée"
+        }
+    },
+    "category": {
+        "form": {
+            "title": "Détails de la catégorie",
+            "subtitle": "Créer ou modifier une catégorie"
+        },
+        "table": {
+            "title": "Catégories",
+            "description": "Liste des catégories",
+            "columns": {
+                "name": "Nom",
+                "description": "Description",
+                "actions": "Actions"
+            },
+            "empty_state": "Aucune catégorie trouvée"
+        }
+    },
+    "management_entity": {
+      "form": {
+        "title": "Détails de l'entité de gestion",
+        "subtitle": "Créer ou modifier une entité de gestion",
+        "fields": {
+            "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+            "email": { "label": "E-mail", "placeholder": "Saisir l'adresse e-mail" },
+            "phone": { "label": "Téléphone", "placeholder": "Saisir le numéro de téléphone" },
+            "address": { "label": "Adresse", "placeholder": "Saisir l'adresse" },
+            "logo": { "label": "Logo", "placeholder": "Télécharger le logo" },
+            "level": {
+                "label": "Niveau de l'entité",
+                "placeholder": "Sélectionner le niveau de l'entité",
+                "options": {
+                    "ENTITY_SUPERIOR": "Entité Supérieure",
+                    "COMPANY": "Entreprise",
+                    "POINT_OF_SALE": "Point de vente"
+                }
+            }
+        }
+      },
+      "table": {
+        "title": "Entités de gestion",
+        "description": "Liste des entités de gestion",
+        "columns": {
+          "id": "Identifiant",
+          "name": "Nom",
+          "email": "Email",
+          "phone": "Téléphone",
+          "logo": "Logo",
+          "address": "Adresse",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune entité trouvée"
+      }
+    },
+    "company": {
+      "form": {
+        "title": "Détails de la compagnie",
+        "subtitle": "Créer ou modifier une compagnie"
+      },
+      "table": {
+        "title": "Liste des compagnies",
+        "description": "Gestion des compagnies",
+        "columns": {
+          "name": "Nom",
+          "email": "Email",
+          "phone": "Téléphone",
+          "linked": "Liée",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune compagnie trouvée"
+      }
+    },
+    "market_level_organization": {
+      "form": {
+        "title": "Organisation niveau marché",
+        "subtitle": "Créer ou modifier une organisation niveau marché"
+      },
+      "table": {
+        "title": "Organisations niveau marché",
+        "description": "Liste des organisations niveau marché",
+        "columns": {
+          "name": "Nom",
+          "points_of_sale_count": "Nombre de points de vente",
+          "createdAt": "Créé le",
+          "updatedAt": "Mis à jour le",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune organisation trouvée"
+      }
+    },
+    "point_of_sale": {
+      "form": {
+        "title": "Détails du point de vente",
+        "subtitle": "Créer ou modifier un point de vente",
+        "fields": {
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "email": { "label": "E-mail", "placeholder": "Saisir l'adresse e-mail" },
+          "phone": { "label": "Téléphone", "placeholder": "Saisir le numéro de téléphone" },
+          "address": { "label": "Adresse", "placeholder": "Saisir l'adresse" },
+          "type": {
+            "label": "Type",
+            "placeholder": "Sélectionner le type",
+            "options": {
+              "GENERAL_AGENT": "Agent général",
+              "BROKER": "Courtier",
+              "DIRECT_OFFICE": "Bureau direct"
+            }
+          }
+        }
+      },
+      "table": {
+        "title": "Liste des points de vente",
+        "description": "Gestion des points de vente",
+        "columns": {
+          "name": "Nom",
+          "email": "Email",
+          "phone": "Téléphone",
+          "address": "Adresse",
+          "type": "Type",
+          "linked": "Lié",
+          "actions": "Actions"
+        },
+        "broker": {
+          "title": "Liste des courtiers",
+          "description": "Liste des courtiers"
+        },
+        "empty_state": "Aucun point de vente trouvé"
+      }
+    },
+    "user": {
+      "form": {
+        "title": "Détails utilisateur",
+        "subtitle": "Créer ou modifier un utilisateur"
+      },
+      "table": {
+        "title": "Utilisateurs",
+        "description": "Liste des utilisateurs enregistrés",
+        "columns": {
+          "name": "Nom",
+          "email": "Email",
+          "entityAccessLevel": "Niveau d'accès",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucun utilisateur trouvé"
+      }
+    },
     "profile": {
-      "title": "Profil",
-      "description": "Informations personnelles"
+      "form": {
+        "title": "Détails du profil",
+        "subtitle": "Créer ou modifier un profil utilisateur",
+        "fields": {
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "description": { "label": "Description", "placeholder": "Saisir la description" },
+          "permissions": { "label": "Permissions", "placeholder": "Sélectionner les permissions" }
+        }
+      },
+      "table": {
+        "title": "Profils utilisateurs",
+        "description": "Liste des profils",
+        "columns": {
+          "name": "Nom du profil",
+          "description": "Description",
+          "permissions_count": "Nombre de permissions",
+          "admin_description": "Possède tous les droits sur cette entité de gestion",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucun profil trouvé"
+      }
     },
-    "logout": {
-      "title": "Déconnexion",
-      "description": "Voulez-vous vraiment vous déconnecter ?"
+    "company_level_organization": {
+      "form": {
+        "title": "Organisation niveau compagnie",
+        "subtitle": "Gérer l'organisation des points de vente par groupe"
+      },
+      "table": {
+        "title": "Organisation niveau compagnie",
+        "description": "Liste des organisations niveau compagnie",
+        "columns": {
+          "name": "Nom",
+          "points_of_sale_count": "Nombre de points de vente",
+          "createdAt": "Créé le",
+          "updatedAt": "Mis à jour le",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune organisation trouvée"
+      }
     }
   },
-
-  "dashboard": {
-    "title": "Tableau de bord",
-    "description": "Vue d'ensemble de votre compte"
-  },
-
-  "insured": {
-    "title": "Assurés",
-    "description": "Gestion des assurés",
-    "table": {
-      "title": "Liste des assurés",
-      "description": "Liste de tous les assurés",
-      "search": "Rechercher un assuré",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucun assuré trouvé pour le moment"
+  "enums": {
+    "managementEntityLevel": {
+      "ENTITY_SUPERIOR": "Entité supérieure",
+      "COMPANY": "Entreprise",
+      "POINT_OF_SALE": "Point de vente"
     },
-    "new": {
-      "title": "Ajouter un assuré",
-      "description": "Ajouter un nouvel assuré"
-    }
-  },
-  "entity-superior": {
-    "title": "Organisation Marché",
-    "description": "Gestion des organisations marché",
-    "linked-list-title": "Organisation Marché liées",
-    "linked-list-description": "Gestion des organisations marché liées",
-    "table": {
-      "title": "Liste des organisations marché",
-      "description": "Liste de toutes les organisations marché",
-      "search": "Rechercher une entité supérieure",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucune entité supérieure trouvée pour le moment",
-      "linked": "Liée",
-      "demand": "Faire une demande",
-      "demand-description": "Faire une demande pour lier cette entité supérieure",
-      "demand-attestation": "Faire une demande d'attestation",
-      "demand-attestation-description": "Faire une demande d'attestation à cette entité supérieure"
-    },
-    "columns": {
-      "logo": "Logo",
-      "name": "Nom",
-      "address": "Adresse",
-      "phone": "Téléphone",
-      "email": "Email",
-      "linked": "Liée",
-      "description": "Description",
-      "created-at": "Créé le",
-      "updated-at": "Modifié le"
-    },
-    "actions": {
-      "demand": "Faire une demande",
-      "attribute-attestation": "Attribuer une attestation"
-    }
-  },
-  "company": {
-    "title": "Compagnies",
-    "linked-list-title": "Compagnies liées",
-    "description": "Gestion des compagnies",
-    "linked-list-description": "Gestion des compagnies liées",
-    "table": {
-      "title": "Liste des compagnies",
-      "description": "Liste de toutes les compagnies",
-      "search": "Rechercher une compagnie",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucune compagnie trouvée pour le moment",
-      "demand": "Faire une demande",
-      "demand-description": "Faire une demande pour cette compagnie",
-      "attribute-attestation": "Attribuer une attestation",
-      "attribute-attestation-description": "Attribuer un lot d'attestations à cette compagnie"
-    },
-    "columns": {
-      "logo": "Logo",
-      "name": "Nom",
-      "address": "Adresse",
-      "phone": "Téléphone",
-      "email": "Email",
-      "linked": "Liée",
-      "description": "Description",
-      "created-at": "Créé le",
-      "updated-at": "Modifié le"
-    },
-    "actions": {
-      "demand": "Faire une demande",
-      "attribute-attestation": "Attribuer une attestation"
-    }
-  },
-  "point-of-sale": {
-    "title": "Points de vente",
-    "description": "Gestion des points de vente",
-    "linked-list-title": "Points de vente liés",
-    "linked-list-description": "Gestion des points de vente liés",
-    "table": {
-      "title": "Liste des points de vente",
-      "description": "Liste de tous les points de vente",
-      "search": "Rechercher un point de vente",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucun point de vente trouvé pour le moment",
-      "demand": "Faire une demande",
-      "demand-description": "Faire une demande pour ce point de vente",
-      "attribute-attestation": "Attribuer une attestation",
-      "attribute-attestation-description": "Attribuer un lot d'attestations à ce point de vente"
-    },
-    "columns": {
-      "logo": "Logo",
-      "name": "Nom",
-      "address": "Adresse",
-      "phone": "Téléphone",
-      "email": "Email",
-      "linked": "Liée",
-      "type": "Type",
-      "description": "Description",
-      "created-at": "Créé le",
-      "updated-at": "Modifié le"
-    },
-    "types": {
+    "point_of_saleType": {
       "GENERAL_AGENT": "Agent général",
       "BROKER": "Courtier",
       "DIRECT_OFFICE": "Bureau direct"
     },
-    "new": {
-      "title": "Ajouter un nouveau point de vente",
-      "description": "Ajouter un nouveau point de vente",
-      "form-title": "Remplissez les informations du point de vente",
-      "form-description": "Informations du point de vente",
-      "form-name": "Nom du point de vente",
-      "form-name-required": "Le nom est requis",
-      "form-address": "Adresse du point de vente",
-      "form-address-required": "L'adresse est requise",
-      "form-phone": "Téléphone du point de vente",
-      "form-phone-required": "Le téléphone est requis",
-      "form-email": "Email du point de vente",
-      "form-email-required": "L'email est requis",
-      "form-email-invalid": "L'email est invalide",
-      "form-submit": "Ajouter le point de vente",
-      "form-type-general-agent": "Agent général",
-      "form-type-broker": "Courtier",
-      "form-type-direct-office": "Bureau direct",
-      "form-type-required": "Le type est requis",
-      "form-type": "Type de point de vente",
-      "form-logo": "Logo",
-      "form-logo-required": "Le logo est requis",
-      "form-logo-invalid": "Le logo est invalide",
-      "form-logo-description": "Cliquez pour ajouter un logo"
-    },
-    "actions": {
-      "demand": "Faire une demande",
-      "attribute-attestation": "Attribuer une attestation",
-      "edit": "Modifier",
-      "delete": "Supprimer"
+    "linkedStatus": {
+      "true": "Lié",
+      "false": "Non lié"
     }
   },
-  "demand": {
-    "title": "Demandes",
-    "description": "Gestion des demandes",
-    "table": {
-      "title": "Liste des demandes",
-      "description": "Liste de toutes les demandes",
-      "search": "Rechercher une demande",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucune demande trouvée pour le moment"
-    },
-    "form": {
-      "type": "Type",
-      "type-required": "Le type est requis",
-      "message": "Message",
-      "message-required": "Le message est requis",
-      "submit": "Envoyer la demande"
-    },
-    "columns": {
-      "name": "Nom",
-      "description": "Description",
-      "created-at": "Créé le",
-      "updated-at": "Modifié le"
-    },
-    "types": {
-      "partner": "Partenaire",
-      "attestation": "Attestation",
-      "other": "Autre"
+  "common": {
+    "search": "Rechercher",
+    "no_data": "Aucun résultat trouvé",
+    "no_data_description": "Aucune donnée disponible actuellement"
+  },
+  "notifications": {
+    "no_notifications": "Aucune notification",
+    "no_notifications_description": "Vous n'avez pas de notifications actuellement"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "description": "Vue d'ensemble de votre compte"
+  },
+  "home": {
+    "title": "Bonjour",
+    "description": "Bienvenue sur Olive Insurance, veuillez choisir un module pour commencer",
+    "modules": {
+      "administration": "Administration",
+      "productions_auto": "Exploitation Auto",
+      "insureds": "Assurés",
+      "parameters_auto": "Paramétrage Auto"
     }
   },
-  "employee": {
-    "title": "Employés et profils",
-    "description": "Gestion des employés et des profils",
-    "new": {
-      "title": "Ajouter un employé",
-      "description": "Ajouter un nouvel employé",
-      "form-title": "Remplissez les informations de l'employé",
-      "form-description": "Informations de l'employé",
-      "form-first-name": "Prénom",
-      "form-first-name-required": "Le prénom est requis",
-      "form-last-name": "Nom",
-      "form-last-name-required": "Le nom est requis",
-      "form-email": "Email",
-      "form-email-required": "L'email est requis",
-      "form-email-invalid": "L'email est invalide",
-      "form-phone": "Téléphone",
-      "form-phone-required": "Le téléphone est requis",
-      "form-role": "Profil",
-      "form-role-required": "Le profil est requis",
-      "form-password-title": "Le mot de passe par défaut est",
-      "form-password-description": "Demandez à l'employé de changer son mot de passe lors de la première connexion",
-      "form-password-min": "Le mot de passe doit contenir au moins 6 caractères",
-      "form-access-level": "Niveau d'accès",
-      "form-access-level-required": "Le niveau d'accès est requis",
-      "form-access-level-description": "Niveau d'accès de l'employé",
-      "form-access-level-entreprise": "Entreprise",
-      "form-access-level-entreprise-description": "L'employé a accès aux informations de l'entreprise",
-      "form-access-level-point-of-sale": "Point de vente",
-      "form-access-level-point-of-sale-description": "L'employé a accès uniquement aux informations du point de vente",
-      "form-point-of-sale": "Point de vente",
-      "form-submit": "Ajouter l'employé"
-    },
-    "table": {
-      "title": "Liste des employés",
-      "description": "Liste de tous les employés",
-      "search": "Rechercher un employé",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucun employé trouvé pour le moment"
-    },
-    "columns": {
-      "first-name": "Prénom",
-      "last-name": "Nom",
-      "email": "Email",
-      "role": "Rôle",
-      "phone": "Téléphone",
-      "created-at": "Créé le",
-      "updated-at": "Modifié le"
-    }
-  },
-  "role": {
-    "title": "Profile des employés",
-    "description": "Gestion des profils des employés",
-    "new-role": "Ajouter un profil",
-    "table": {
-      "title": "Liste des profils",
-      "description": "Liste de tous les profils",
-      "search": "Rechercher un profil",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucun profil trouvé pour le moment"
-    },
-    "columns": {
-      "name": "Nom",
-      "description": "Description",
-      "permissions": "Permissions",
-      "created-at": "Créé le",
-      "updated-at": "Modifié le"
-    },
-    "actions": {
-      "edit": "Modifier",
-      "delete": "Supprimer"
-    }
-  },
-  "operation": {
-    "title": "Opérations",
-    "description": "Gestion des opérations",
-    "table": {
-      "title": "Liste des opérations",
-      "description": "Liste de toutes les opérations",
-      "search": "Rechercher une opération",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucune opération trouvée pour le moment"
-    },
-    "columns": {
-      "name": "Nom",
-      "description": "Description",
-      "created-at": "Créé le",
-      "updated-at": "Modifié le"
-    }
-  },
-  "attestation": {
-    "title": "Attestations",
-    "description": "Gestion des attestations",
-    "table": {
-      "title": "Liste des attestations",
-      "description": "Liste de toutes les attestations",
-      "search": "Rechercher une attestation",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucune attestation trouvée pour le moment"
-    },
-    "columns": {
-      "prefix": "Préfixe",
-      "quantity": "Quantité",
-      "stock": "Stock",
-      "branch": "Branche",
-      "startDate": "Date de début",
-      "endDate": "Date de fin",
-      "created-at": "Créé le",
-      "updated-at": "Modifié le"
-    },
-    "new": {
-      "title": "Générer des attestations",
-      "form-title": "Remplissez les informations de l'attestation",
-      "form-description": "Informations de l'attestation",
-      "form-prefix": "Préfixe",
-      "form-prefix-required": "Le préfixe est requis",
-      "form-quantity": "Quantité",
-      "form-quantity-required": "La quantité est requise",
-      "form-secret": "Secret",
-      "form-secret-required": "Le secret est requis",
-      "form-start-date": "Date de début",
-      "form-start-date-required": "La date de début est requise",
-      "form-end-date": "Date de fin",
-      "form-end-date-required": "La date de fin est requise",
-      "description": "Générer des attestations pour les assurés",
-      "search": "Rechercher un assuré",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucun assuré trouvé pour le moment",
-      "generate": "Générer",
-      "generate-all": "Générer tout",
-      "generate-all-description": "Générer toutes les attestations pour les assurés"
-    },
-    "attribute": {
-      "title": "Attribuer des attestations",
-      "description": "Attribuer des attestations aux assurés",
-      "search": "Rechercher un assuré",
-      "no-data": "Aucun résultat trouvé",
-      "no-data-description": "Aucun assuré trouvé pour le moment",
-      "attribute": "Attribuer",
-      "attribute-all": "Attribuer tout",
-      "attribute-all-description": "Attribuer toutes les attestations aux assurés"
+  "user": {
+    "welcome": "Bienvenue",
+    "connected": "Connecté en tant que",
+    "logout": {
+      "title": "Déconnexion",
+      "description": "Voulez-vous vraiment vous déconnecter ?",
+      "redirecting": "Déconnexion en cours..."
     }
   }
 }

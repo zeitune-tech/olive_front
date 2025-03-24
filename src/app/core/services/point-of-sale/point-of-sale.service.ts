@@ -3,25 +3,18 @@ import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { PointOfSale } from "./point-of-sale.interface";
+import { RequestMetadata } from "../common.interface";
 
 
 @Injectable()
 export class PointOfSaleService {
 
-    baseUrl = environment.base_url;
-    private _myPointOfSale: ReplaySubject<PointOfSale> = new ReplaySubject<PointOfSale>(1);
+    private baseUrl = environment.base_url + '/points-of-sale';
+    private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
+    
     private _pointOfSale: ReplaySubject<PointOfSale> = new ReplaySubject<PointOfSale>(1);
     private _pointsOfSale: ReplaySubject<PointOfSale[]> = new ReplaySubject<PointOfSale[]>(1);
-    private _pointsOfSaleLinked: ReplaySubject<PointOfSale[]> = new ReplaySubject<PointOfSale[]>(1);
-    private _pointsOfSaleUnlinked: ReplaySubject<PointOfSale[]> = new ReplaySubject<PointOfSale[]>(1);
-
-    set myPointOfSale(value: PointOfSale) {
-        this._myPointOfSale.next(value);
-    }
-
-    get myPointOfSale$() {
-        return this._myPointOfSale.asObservable();
-    }
+    private _brokers: ReplaySubject<PointOfSale[]> = new ReplaySubject<PointOfSale[]>(1);
 
     set pointOfSale(value: PointOfSale) {
         this._pointOfSale.next(value);
@@ -39,20 +32,20 @@ export class PointOfSaleService {
         return this._pointsOfSale.asObservable();
     }
 
-    set pointsOfSaleLinked(value: PointOfSale[]) {
-        this._pointsOfSaleLinked.next(value);
+    set brokers(value: PointOfSale[]) {
+        this._brokers.next(value);
     }
 
-    get pointsOfSaleLinked$() {
-        return this._pointsOfSaleLinked.asObservable();
+    get brokers$() {
+        return this._brokers.asObservable();
     }
 
-    set pointsOfSaleUnlinked(value: PointOfSale[]) {
-        this._pointsOfSaleUnlinked.next(value);
+    get metadata$() {
+        return this._metadata.asObservable();
     }
 
-    get pointsOfSaleUnlinked$() {
-        return this._pointsOfSaleUnlinked.asObservable();
+    set metadata(value: RequestMetadata) {
+        this._metadata.next(value);
     }
 
     constructor(
@@ -60,7 +53,7 @@ export class PointOfSaleService {
     ) { }
 
     create(pointOfSale: PointOfSale): Observable<PointOfSale> {
-        return this._httpClient.post<PointOfSale>(`${this.baseUrl}/points-of-sale`, pointOfSale)
+        return this._httpClient.post<PointOfSale>(`${this.baseUrl}`, pointOfSale)
         .pipe(
             tap((pointOfSale) => {
                 this.pointOfSale = pointOfSale;
@@ -71,7 +64,7 @@ export class PointOfSaleService {
     }
 
     get(): Observable<PointOfSale> {
-        return this._httpClient.get<PointOfSale>(`${this.baseUrl}/points-of-sale/me`)
+        return this._httpClient.get<PointOfSale>(`${this.baseUrl}/me`)
         .pipe(
             tap((pointOfSale) => {
                 this.pointOfSale = pointOfSale;
@@ -82,40 +75,32 @@ export class PointOfSaleService {
     }
 
     getAll(): Observable<PointOfSale[]> {
-        return this._httpClient.get<PointOfSale[]>(`${this.baseUrl}/points-of-sale/all`)
+        return this._httpClient.get<PointOfSale[]>(`${this.baseUrl}`)
         .pipe(
-            tap((pointsOfSale) => {
-                this.pointsOfSale = pointsOfSale;
-                return pointsOfSale;
+            tap((response: any) => {
+                this.pointsOfSale = response.content?.map((pointOfSale: PointOfSale) => {
+                    return pointOfSale;
+                });
+                this.metadata = response;
+                return response;
             }),
             catchError(() => of([] as PointOfSale[]))
         );
     }
 
-    getAllLinked(): Observable<PointOfSale[]> {
-        return this._httpClient.get<PointOfSale[]>(`${this.baseUrl}/points-of-sale/linked`)
+    getBrokers(): Observable<PointOfSale[]> {
+        return this._httpClient.get<PointOfSale[]>(`${this.baseUrl}/brokers`)
         .pipe(
-            tap((pointsOfSale) => {
-                this.pointsOfSaleLinked = pointsOfSale;
-                return (pointsOfSale);
-            }),
-            catchError(() => of([] as PointOfSale[]))
-        );
-    }
-
-    getAllUnlinked(): Observable<PointOfSale[]> {
-        return this._httpClient.get<PointOfSale[]>(`${this.baseUrl}/points-of-sale/unlinked`)
-        .pipe(
-            tap((pointsOfSale) => {
-                this.pointsOfSaleUnlinked = pointsOfSale;
-                return (pointsOfSale);
+            tap((brokers) => {
+                this.brokers = brokers;
+                return brokers;
             }),
             catchError(() => of([] as PointOfSale[]))
         );
     }
 
     update(pointOfSale: PointOfSale): Observable<PointOfSale> {
-        return this._httpClient.put<PointOfSale>(`${this.baseUrl}/points-of-sale/${pointOfSale.id}`, pointOfSale)
+        return this._httpClient.put<PointOfSale>(`${this.baseUrl}/${pointOfSale.id}`, pointOfSale)
         .pipe(
             tap((pointOfSale) => {
                 return (pointOfSale);

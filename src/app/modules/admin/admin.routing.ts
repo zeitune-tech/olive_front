@@ -1,23 +1,10 @@
 import { Routes } from "@angular/router";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
-import { DashboardResolver } from "./dashboard/dashboard.resolver";
 import { CompaniesResolver } from "./companies/companies.resolver";
 import { PointsOfSaleResolver } from "./points-of-sale/points-of-sale.resolver";
 import { UsersResolver } from "./users/users.resolver";
 
 export const routes: Routes = [
-        {
-            path: 'dashboard', 
-            canActivate: [],
-            canActivateChild: [],
-            data: { 
-                permission: "USER"
-            }, 
-            resolve: {
-                data: DashboardResolver
-            },
-            loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-        },
         {
             path: 'products',
             canActivate: [],
@@ -54,9 +41,6 @@ export const routes: Routes = [
             canActivateChild: [],
             data: {
                 permission: PERMISSIONS.VIEW_COMPANY_POINTS_OF_SALE
-            },
-            resolve: {
-                data: PointsOfSaleResolver
             },
             loadChildren: () => import('./points-of-sale/points-of-sale.module').then(m => m.PointsOfSaleModule)
         },
