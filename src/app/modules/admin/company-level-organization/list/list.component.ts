@@ -34,6 +34,9 @@ export class CompanyLevelOrganizationListComponent {
         ],
         renderItem: (element: CompanyLevelOrganization, property: keyof CompanyLevelOrganization) => {
             
+            if (property === 'pointsOfSale') {
+                return element[property].length;
+            }
             return element[property];
         },
     };

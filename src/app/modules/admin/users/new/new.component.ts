@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { UntypedFormGroup, FormBuilder, Validators, NgForm } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { EmployeeService } from "@core/services/employee/employee.service";
 import { ManagementEntity } from "@core/services/management-entity/management-entity.interface";
 import { UserService } from "@core/services/user/user.service";
 import { animations } from "@lhacksrt/animations";
@@ -43,15 +42,25 @@ export class UsersNewComponent implements OnInit {
     newHasPointOfSaleAccessLevel: boolean = false;
     currentAccessLevel: string = '';
 
-    data: any = {
+    data: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        phone: string;
+        accessLevel: string;
+        pointOfSale: string;
+        profiles: {name: string, id: string}[];
+        password: string;
+        managementEntityId: string;
+        managementEntityName: string;
+    } = {
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
         accessLevel: '',
         pointOfSale: '',
-        role: '',
-        roleName: '',
+        profiles: [],
         password: 'P@sser123',
         managementEntityId: '',
         managementEntityName: ''
@@ -61,7 +70,6 @@ export class UsersNewComponent implements OnInit {
 
     constructor(
         private _userService: UserService,
-        private _employeeService: EmployeeService,
         private _dialog: MatDialog,
         private _router: Router
     ) {  }
@@ -78,8 +86,8 @@ export class UsersNewComponent implements OnInit {
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((user) => {
             if (user) {
-                this.currentIsCompanyEmployee = user.managementEntity.level === 'COMPANY';
-                this.currentAccessLevel = user.managementEntity.level;
+                this.currentIsCompanyEmployee = user.managementEntity.type === 'COMPANY';
+                this.currentAccessLevel = user.managementEntity.type;
                 this.managementEntity = user.managementEntity;
             }
         });
@@ -105,7 +113,7 @@ export class UsersNewComponent implements OnInit {
 
     getAccessLevel(): void {
         switch (this.currentAccessLevel) {
-            case 'ENTITY_SUPERIOR':
+            case 'MARKET_LEVEL_ORGANISATION':
                 this.data.accessLevel = this.ACCESS_LEVELS[0];
                 break;
             case 'COMPANY':
@@ -140,34 +148,15 @@ export class UsersNewComponent implements OnInit {
 
     onStepFourNext(fromGroup: UntypedFormGroup): void {
         this.formStepFour = fromGroup;
-        this.data.role = fromGroup.value.role;
-        this.data.roleName = fromGroup.value.roleName;
+        this.data.profiles = fromGroup.value.profiles;
     }
 
-    onStepFiveNext(fromGroup: UntypedFormGroup): void {
-        this.formStepFive = fromGroup;
-        this.confirm();
-    }
-
-
-    confirm(): void {
-        this._dialog.open(ConfirmDialogComponent, {
-            data: {
-                title: 'employee.new.confirm-dialog-title',
-                message: 'employee.new.confirm-dialog-message',
-                confirmButtonLabel: 'employee.new.confirm-dialog-confirm-button',
-                cancelButtonLabel: 'employee.new.confirm-dialog-cancel-button',
-                confirm: () => {
-                    this.save();
-                }
-            }
-        })
-    }
 
     save(): void {
-        this._employeeService.create(this.data)
+        this._userService.create(this.data)
         .subscribe(() => {
-            this._router.navigate(['/employees']);
+            this._userService.getAll().subscribe();
+            this._router.navigate(['/users/list']);
         });
     }
 }

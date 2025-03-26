@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { UntypedFormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PointOfSale } from "@core/services/point-of-sale/point-of-sale.interface";
 import { PointOfSaleService } from "@core/services/point-of-sale/point-of-sale.service";
+import { User } from "@core/services/user/user.interface";
+import { UserService } from "@core/services/user/user.service";
 
 @Component({
     selector: "app-points-of-sale-new",
@@ -10,6 +12,7 @@ import { PointOfSaleService } from "@core/services/point-of-sale/point-of-sale.s
 export class PointsOfSaleNewComponent { 
 
     loading = false;
+    user: User | null = null;
 
     types = [
         { value: 'GENERAL_AGENT', label: 'entities.point_of_sale.form.fields.type.options.GENERAL_AGENT' },
@@ -22,12 +25,16 @@ export class PointsOfSaleNewComponent {
      */
     constructor(
         private formBuilder: FormBuilder,
+        private _userService: UserService,
         private _pointOfSaleService: PointOfSaleService,
     ) { 
+        this._userService.user$.subscribe((user: User) => {
+            this.user = user;
+        });
         this.formGroup = this.formBuilder.group({
             name: ['', Validators.required],
             email: ['', [Validators.email]],
-            phone: [''],
+            phone: ['', Validators.required],
             address: [''],
             type: ['GENERAL_AGENT', Validators.required],
         });
@@ -68,13 +75,15 @@ export class PointsOfSaleNewComponent {
             pos
         ).subscribe({
             next: (pointOfSale: PointOfSale) => {
-                this.message = 'point_of_sale.successfields..;.'
+                this._pointOfSaleService.getAll().subscribe();
+                this.message = 'entities.point_of_sale.form.messages.success';
                 this.formGroup.reset();
                 this.formGroup.enable();
             },
             error: (error) => {
-                this.message = 'point_of_sale.errorfields..;.'                
+                this.message = 'entities.point_of_sale.form.messages.error';
                 this.formGroup.enable();
+
             }
         });
     }

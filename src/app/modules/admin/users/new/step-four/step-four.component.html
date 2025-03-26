@@ -7,16 +7,17 @@
     <div class="flex flex-col gap-4">
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('employee.new.form-access-level') }}
+                {{ t('entities.user.form.fields.profile.label') }}
             </mat-label>
-            <mat-select [formControlName]="'role'">
-                <mat-option *ngFor="let role of roles" [value]="role.id">
-                    {{ t(role.name) }}
+            <mat-select [multiple]="true" [formControlName]="'profiles'">
+                <mat-option *ngFor="let profile of profiles" [value]="profile">
+                    {{ t(profile.name) }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     </div>
 
+    
     
     <!-- Submit button -->
     <button mat-button matStepperNext
@@ -26,6 +27,6 @@
         [disabled]="formGroup.invalid"
         (click)="onNext()"
         >
-            Suivant
+        {{ t('form.actions.next') }}
     </button>
 </form>

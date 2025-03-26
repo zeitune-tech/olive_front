@@ -7,8 +7,9 @@ import { environment } from '@env/environment';
 @Injectable()
 export class UserService{
 
-    baseUrl = environment.base_url + '/users';
+    private baseUrl = environment.request_url + '/users';
 
+    private _newUser: ReplaySubject<User> = new ReplaySubject<User>(1);
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
     private _hasEntity: boolean = false;
 
@@ -36,6 +37,14 @@ export class UserService{
 
     get user$(): Observable<User> {
         return this._user.asObservable();
+    }
+
+    set newUser(value: User) {
+        this._newUser.next(value);
+    }
+
+    get newUser$(): Observable<User> {
+        return this._newUser.asObservable();
     }
 
     set users(value: User[]) {
@@ -68,7 +77,7 @@ export class UserService{
     get(): Observable<User> {
         // First try to get from the subject
       
-        return this._httpClient.get<User>(`${environment.base_url}/users/me`).pipe(
+        return this._httpClient.get<User>(`${this.baseUrl}/me`).pipe(
             tap((user) => {
                 this.user = user;
                 if (user.managementEntity)
@@ -92,13 +101,29 @@ export class UserService{
             );
     }
 
+    create(user: any): Observable<any> {
+        return this._httpClient.post<User>(`${this.baseUrl}`, {
+            firstname: user.firstName,
+            lastname: user.lastName,
+            email: user.email,
+            phone: user.phone,
+            managementEntityId: user.managementEntityId,
+            password: user.password,
+            profiles: user.profiles.map((profile: any) => profile.id),
+        }).pipe(
+            map((response) => {
+                this.newUser = response;
+            })
+        );
+    }
+
     /**
      * Update the user
      *
      * @param user
      */
-    update(user: User): Observable<any> {
-        return this._httpClient.put<User>(`${environment.base_url}/users/update`, {user}).pipe(
+    update(user: any): Observable<any> {
+        return this._httpClient.put<User>(`${this.baseUrl}/update`, {user}).pipe(
             map((response) => {
                 this._user.next(response);
             })

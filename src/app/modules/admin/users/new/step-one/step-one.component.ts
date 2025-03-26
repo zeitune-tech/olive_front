@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/f
 
 
 @Component({
-    selector   : 'new-employee-step-one',
+    selector   : 'new-user-step-one',
     templateUrl: './step-one.component.html'
 })
 export class StepOneComponent implements OnInit {

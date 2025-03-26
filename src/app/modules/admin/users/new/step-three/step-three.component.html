@@ -7,7 +7,7 @@
     <div class="flex flex-col gap-4">
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('employee.new.form-point-of-sale') }}
+                {{ t('entities.user.form.point_of_sale') }}
             </mat-label>
             <mat-select [formControlName]="'pointOfSale'">
                 <mat-option *ngFor="let pointOfSale of pointsOfSale" [value]="pointOfSale.id">
@@ -26,6 +26,6 @@
         [disabled]="formGroup.invalid"
         (click)="onNext()"
         >
-            Suivant
+        {{ t('form.actions.next') }}
     </button>
 </form>

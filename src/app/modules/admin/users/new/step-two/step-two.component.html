@@ -7,7 +7,7 @@
     <div class="flex flex-col gap-4">
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('employee.new.form-access-level') }}
+                {{ t('entities.user.form.fields.access_level') }}
             </mat-label>
             <mat-select [formControlName]="'accessLevel'">
                 <mat-option *ngFor="let accessLevel of accessLevels" [value]="accessLevel.value">
@@ -26,6 +26,6 @@
         [disabled]="formGroup.invalid"
         (click)="onNext()"
         >
-            Suivant
+        {{ t('form.actions.next') }}
     </button>
 </form>

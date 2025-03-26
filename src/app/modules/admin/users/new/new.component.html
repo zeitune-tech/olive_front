@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </ng-template>
-            <new-employee-step-one (formReady)="onStepOneNext($event)" ></new-employee-step-one>
+            <new-user-step-one (formReady)="onStepOneNext($event)" ></new-user-step-one>
         </mat-step>
         @if (currentIsCompanyEmployee) {
             <mat-step [stepControl]="formStepTwo">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </ng-template>
-                <new-employee-step-two (formReady)="onStepTwoNext($event)" ></new-employee-step-two>
+                <new-user-step-two (formReady)="onStepTwoNext($event)" ></new-user-step-two>
             </mat-step>
             @if (newHasPointOfSaleAccessLevel) {
                 <mat-step [stepControl]="formStepThree">
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </ng-template>
-                    <new-employee-step-three (formReady)="onStepThreeNext($event)" ></new-employee-step-three>
+                    <new-user-step-three (formReady)="onStepThreeNext($event)" ></new-user-step-three>
                 </mat-step>
             }
         }
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </ng-template>
-            <new-employee-step-four (formReady)="onStepFourNext($event)" ></new-employee-step-four>
+            <new-user-step-four (formReady)="onStepFourNext($event)" ></new-user-step-four>
         </mat-step>
         <mat-step [stepControl]="formStepFive">
             <ng-template matStepLabel>
@@ -123,7 +123,10 @@
                             <div class="text-sm font-semibold">
                                 {{t('entities.user.form.step_five_profile_name')}}
                             </div>
-                            <div>{{ data.roleName }}</div>
+                            <!-- Profiles -->
+                            <span *ngFor="let profile of data.profiles" class="text-sm mr-2">
+                                {{ profile.name }}
+                            </span>
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
@@ -138,7 +141,7 @@
                 <button mat-button matStepperPrevious class="mat-button-large mt-6" mat-flat-button [color]="'primary'">
                     {{t('entities.user.form.step_five_previous')}}
                 </button>
-                <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="confirm()">
+                <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="save()">
                     {{t('entities.user.form.step_five_confirm')}}
                 </button>
             </div>

@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/forms";
 
 @Component({
-    selector: 'new-employee-step-five',
+    selector: 'new-user-step-five',
     templateUrl: './step-five.component.html'
 })
 export class StepFiveComponent implements OnInit { 

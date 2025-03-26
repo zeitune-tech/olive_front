@@ -7,7 +7,7 @@ import { Company } from "./company.interface";
 @Injectable()
 export class CompanyService {
 
-    baseUrl = environment.base_url;
+    baseUrl = environment.request_url + '/companies';
     private _myCompany: ReplaySubject<Company> = new ReplaySubject<Company>(1);
     private _company: ReplaySubject<Company> = new ReplaySubject<Company>(1);
     private _companies: ReplaySubject<Company[]> = new ReplaySubject<Company[]>(1);

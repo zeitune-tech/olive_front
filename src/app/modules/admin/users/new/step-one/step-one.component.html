@@ -5,49 +5,49 @@
     [formGroup]="formGroup"
     *transloco="let t">
     
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-6">
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('employee.new.form-first-name') }}
+                {{ t('entities.user.form.fields.first_name.label') }}
             </mat-label>
             <input
                 id="first-name"
                 matInput
                 [formControlName]="'firstName'">
             <mat-error *ngIf="formGroup.get('firstName')?.hasError('required')">
-                {{ t('employee.new.form-first-name-required') }}
+                {{ t('form.errors.required') }}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('employee.new.form-last-name') }}
+                {{ t('entities.user.form.fields.last_name.label') }}
             </mat-label>
             <input
                 id="last-name"
                 matInput
                 [formControlName]="'lastName'">
             <mat-error *ngIf="formGroup.get('lastName')?.hasError('required')">
-                {{ t('employee.new.form-last-name-required') }}
+                {{ t('form.errors.required') }}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('employee.new.form-email') }}
+                {{ t('entities.user.form.fields.email.label') }}
             </mat-label>
             <input
                 id="email"
                 matInput
                 [formControlName]="'email'">
             <mat-error *ngIf="formGroup.get('email')?.hasError('required')">
-                {{ t('employee.new.form-email-required') }}
+                {{ t('form.errors.required') }}
             </mat-error>
             <mat-error *ngIf="formGroup.get('email')?.hasError('email')">
-                {{ t('employee.new.form-email-invalid') }}
+                {{ t('form.errors.email_invalid') }}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('employee.new.form-phone') }}
+                {{ t('entities.user.form.fields.phone.label') }}
             </mat-label>
             <input
                 id="phone"
@@ -65,6 +65,6 @@
         [disabled]="formGroup.invalid"
         (click)="onNext()"
         >
-            Suivant
+        {{ t('form.actions.next') }}
     </button>
 </form>

@@ -10,23 +10,16 @@
         <div class="flex items-center">
             <!-- Seach -->
             <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('permissions.table.search') }}</mat-label>
+                <mat-label>{{ t('form.fields.search') }}</mat-label>
                 <input
                     matInput
-                    placeholder="{{ t('permissions.table.search') }}"
-                    formControlName="search"
+                    placeholder="{{ t('form.fields.search') }}"
                 />
             </mat-form-field>
-            <!-- Choosed -->
-            <button
-                mat-button
-                mat-flat-button
-                [color]="'primary'"
-                (click)="preview()"
-                class="ml-4">
-                {{ t('permissions.table.choosed') }}
-            </button>
         </div>
+
+        <!-- Hidden Input for permissions -->
+        <input type="hidden" formControlName="permissions" />
 
         <!-- Table -->
         <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
@@ -90,6 +83,6 @@
         [disabled]="formGroup.invalid"
         (click)="onNext()"
         >
-        {{ t('permissions.table.next') }}
+        {{ t('form.actions.next') }}
     </button>
 </form>

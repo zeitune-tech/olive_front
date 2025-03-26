@@ -1,11 +1,5 @@
 
 
-export const ManagementEntityTypes = {
-    ENTITY_SUPERIOR: 'ENTITY_SUPERIOR',
-    COMPANY: 'COMPANY',
-    BROKER: 'POINT_OF_SALE'
-}
-
 export class ManagementEntity {
 
     id: string;
@@ -14,12 +8,12 @@ export class ManagementEntity {
     phone: string;
     address: string;
     logo: string;
-    level: "ENTITY_SUPERIOR" | "COMPANY" | "POINT_OF_SALE";
+    type: "MARKET_LEVEL_ORGANISATION" | "COMPANY" | "POINT_OF_SALE" | "BROKER" | "GENERAL_AGENT" | "DIRECT_OFFICE" | "BROKER"
 
     constructor(entity: any) {
         this.id = entity?.id || '';
         this.name = entity?.name || '';
-        this.level = entity?.level || '';
+        this.type = entity?.type || '';
         this.logo = entity?.logo || '';
         this.email = entity?.email || '';
         this.phone = entity?.phone || '';

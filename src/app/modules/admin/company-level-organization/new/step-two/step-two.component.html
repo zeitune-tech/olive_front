@@ -10,23 +10,16 @@
         <div class="flex items-center">
             <!-- Seach -->
             <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('point-of-sale.table.search') }}</mat-label>
+                <mat-label>{{ t('form.fields.search') }}</mat-label>
                 <input
                     matInput
-                    placeholder="{{ t('point-of-sale.table.search') }}"
-                    formControlName="search"
+                    placeholder="{{ t('form.fields.search') }}"
                 />
             </mat-form-field>
-            <!-- Choosed -->
-            <button
-                mat-button
-                mat-flat-button
-                [color]="'primary'"
-                (click)="preview()"
-                class="ml-4">
-                {{ t('point-of-sale.table.choosed') }}
-            </button>
         </div>
+
+        <!-- Hidden Input fro ids -->
+        <input type="hidden" formControlName="pointsOfSale" />
 
         <!-- Table -->
         <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
@@ -44,7 +37,7 @@
                     <mat-checkbox
                         (change)="toggleSelection(row)"
                         [checked]="selection.isSelected(row)"
-                        [aria-label]="t('point-of-sale.table.select-row')"
+                        [aria-label]="t('form.fields.checkbox')"
                     ></mat-checkbox>
                 </td>
             </ng-container>
@@ -71,7 +64,7 @@
             <!-- No Data Row -->
             <tr *matNoDataRow>
                 <td [attr.colspan]="visibleColumns.length" class="text-center py-4">
-                    {{ t('point-of-sale.table.no-data') }}
+                    {{ t('entities.point_of_sale.table.empty_state') }}
                 </td>
             </tr>
         </table>
@@ -90,6 +83,6 @@
         [disabled]="formGroup.invalid"
         (click)="onNext()"
         >
-        {{ t('point-of-sale.table.next') }}
+        {{ t('form.actions.next') }}
     </button>
 </form>

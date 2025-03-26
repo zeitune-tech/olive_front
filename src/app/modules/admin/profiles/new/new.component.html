@@ -85,11 +85,11 @@
                     </div>
                 </div>
             </div>
-            <div class="flex justify-end">
+            <div class="flex justify-end gap-6">
                 <button mat-button matStepperPrevious class="mat-button-large mt-6" mat-flat-button [color]="'primary'">
                     {{ t('entities.profile.form.step_three_previous') }}
                 </button>
-                <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="confirm()">
+                <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="save()">
                     {{ t('entities.profile.form.step_three_create') }}
                 </button>
             </div>

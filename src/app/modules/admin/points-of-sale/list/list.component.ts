@@ -39,7 +39,7 @@ export class PointsOfSaleListComponent {
         ],
         renderItem: (element: PointOfSale, property: keyof PointOfSale) => {
             if (property === 'type') {
-                return this._translateService.translate(`entities.point_of_sale.table.types.${element[property]}`);
+                return this._translateService.translate(`entities.point_of_sale.table.types.${element[property]?.toLocaleLowerCase()}`);
             }
             return element[property];
         },

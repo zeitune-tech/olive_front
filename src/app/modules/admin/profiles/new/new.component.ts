@@ -2,8 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { UntypedFormGroup, NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { EmployeeService } from '@core/services/employee/employee.service';
 import { ManagementEntity } from '@core/services/management-entity/management-entity.interface';
+import { ProfileService } from '@core/services/profile/profile.service';
 import { UserService } from '@core/services/user/user.service';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 import { Subject, takeUntil } from 'rxjs';
@@ -41,25 +41,21 @@ export class ProfilesNewComponent {
     newHasPointOfSaleAccessLevel: boolean = false;
     currentAccessLevel: string = '';
 
-    data: any = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        accessLevel: '',
-        pointOfSale: '',
-        role: '',
-        roleName: '',
-        password: 'P@sser123',
-        managementEntityId: '',
-        managementEntityName: ''
+    data: {
+        name: string;
+        description: string;
+        permissions: {name: string, id: string}[];
+    } = {
+        name: '',
+        description: '',
+        permissions: [],
     };
 
     managementEntity!: ManagementEntity;
 
     constructor(
         private _userService: UserService,
-        private _employeeService: EmployeeService,
+        private _profileService: ProfileService,
         private _dialog: MatDialog,
         private _router: Router
     ) {  }
@@ -75,11 +71,7 @@ export class ProfilesNewComponent {
         this._userService.user$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((user) => {
-            if (user) {
-                this.currentIsCompanyEmployee = user.managementEntity.level === 'COMPANY';
-                this.currentAccessLevel = user.managementEntity.level;
-                this.managementEntity = user.managementEntity;
-            }
+           
         });
         
     }
@@ -90,82 +82,28 @@ export class ProfilesNewComponent {
 
     onStepOneNext(fromGroup: UntypedFormGroup): void {
         this.formStepOne = fromGroup;
-        this.data.firstName = fromGroup.value.firstName;
-        this.data.lastName = fromGroup.value.lastName;
-        this.data.email = fromGroup.value.email;
-        this.data.phone = fromGroup.value.phone;
-        if (!this.currentIsCompanyEmployee) {
-            this.getAccessLevel();
-            this.data.managementEntityId = this.managementEntity.id;
-            this.data.managementEntityName = this.managementEntity.name;
-        }
+        this.data.name = fromGroup.value.name;
+        this.data.description = fromGroup.value.description;
+        
     }
 
-    getAccessLevel(): void {
-        switch (this.currentAccessLevel) {
-            case 'ENTITY_SUPERIOR':
-                this.data.accessLevel = this.ACCESS_LEVELS[0];
-                break;
-            case 'COMPANY':
-                this.data.accessLevel = this.ACCESS_LEVELS[1];
-                break;
-            case 'POINT_OF_SALE':
-                this.data.accessLevel = this.ACCESS_LEVELS[2];
-                break;
-            default:
-                break;
-        }
-    }
 
     onStepTwoNext(fromGroup: UntypedFormGroup): void {
         this.formStepTwo = fromGroup;
-        if (fromGroup.value.accessLevel === 'POINT_OF_SALE') {
-            this.newHasPointOfSaleAccessLevel = true;
-            this.data.accessLevel = this.ACCESS_LEVELS[2];
-        } else {
-            this.newHasPointOfSaleAccessLevel = false;
-            this.data.accessLevel = this.ACCESS_LEVELS[1];
-            this.data.managementEntityId = this.managementEntity.id;
-            this.data.managementEntityName = this.managementEntity.name;
-        }
+        this.data.permissions = fromGroup.value.permissions;
     }
 
-    onStepThreeNext(fromGroup: UntypedFormGroup): void {
-        this.formStepThree = fromGroup;
-        this.data.managementEntityId = fromGroup.value.pointOfSale;
-        this.data.managementEntityName = fromGroup.value.pointOfSaleName;
-    }
-
-    onStepFourNext(fromGroup: UntypedFormGroup): void {
-        this.formStepFour = fromGroup;
-        this.data.role = fromGroup.value.role;
-        this.data.roleName = fromGroup.value.roleName;
-    }
-
-    onStepFiveNext(fromGroup: UntypedFormGroup): void {
-        this.formStepFive = fromGroup;
-        this.confirm();
-    }
-
-
-    confirm(): void {
-        this._dialog.open(ConfirmDialogComponent, {
-            data: {
-                title: 'employee.new.confirm-dialog-title',
-                message: 'employee.new.confirm-dialog-message',
-                confirmButtonLabel: 'employee.new.confirm-dialog-confirm-button',
-                cancelButtonLabel: 'employee.new.confirm-dialog-cancel-button',
-                confirm: () => {
-                    this.save();
-                }
-            }
-        })
-    }
 
     save(): void {
-        this._employeeService.create(this.data)
-        .subscribe(() => {
-            this._router.navigate(['/employees']);
+        this._profileService.create(this.data)
+        .subscribe({
+            next: (profile) => {
+                this._profileService.getAll().subscribe();
+                this._router.navigate(['/administration/profiles/list']);
+            },
+            error: (error) => {
+
+            }
         });
     }
 }

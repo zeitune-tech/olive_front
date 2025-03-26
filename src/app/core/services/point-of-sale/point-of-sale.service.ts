@@ -2,19 +2,20 @@ import { Injectable } from "@angular/core";
 import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
-import { PointOfSale } from "./point-of-sale.interface";
+import { PointOfSale, BrokerPointOfSale } from "./point-of-sale.interface";
 import { RequestMetadata } from "../common.interface";
 
 
 @Injectable()
 export class PointOfSaleService {
 
-    private baseUrl = environment.base_url + '/points-of-sale';
+    private baseUrl = environment.request_url + '/points-of-sale';
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
+    private _brokersMetadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
     
     private _pointOfSale: ReplaySubject<PointOfSale> = new ReplaySubject<PointOfSale>(1);
     private _pointsOfSale: ReplaySubject<PointOfSale[]> = new ReplaySubject<PointOfSale[]>(1);
-    private _brokers: ReplaySubject<PointOfSale[]> = new ReplaySubject<PointOfSale[]>(1);
+    private _brokers: ReplaySubject<BrokerPointOfSale[]> = new ReplaySubject<BrokerPointOfSale[]>(1);
 
     set pointOfSale(value: PointOfSale) {
         this._pointOfSale.next(value);
@@ -32,7 +33,7 @@ export class PointOfSaleService {
         return this._pointsOfSale.asObservable();
     }
 
-    set brokers(value: PointOfSale[]) {
+    set brokers(value: BrokerPointOfSale[]) {
         this._brokers.next(value);
     }
 
@@ -48,6 +49,14 @@ export class PointOfSaleService {
         this._metadata.next(value);
     }
 
+    get brokersMetadata$() {
+        return this._brokersMetadata.asObservable();
+    }
+
+    set brokersMetadata(value: RequestMetadata) {
+        this._brokersMetadata.next(value);
+    }
+
     constructor(
         private _httpClient: HttpClient
     ) { }
@@ -59,7 +68,9 @@ export class PointOfSaleService {
                 this.pointOfSale = pointOfSale;
                 return (pointOfSale);
             }),
-            catchError(() => of({} as PointOfSale))
+            catchError((error) => {
+                return of(error.error);
+            })
         );
     }
 
@@ -88,14 +99,17 @@ export class PointOfSaleService {
         );
     }
 
-    getBrokers(): Observable<PointOfSale[]> {
-        return this._httpClient.get<PointOfSale[]>(`${this.baseUrl}/brokers`)
+    getBrokers(): Observable<BrokerPointOfSale[]> {
+        return this._httpClient.get<BrokerPointOfSale[]>(`${this.baseUrl}/brokers`)
         .pipe(
-            tap((brokers) => {
-                this.brokers = brokers;
-                return brokers;
+            tap((response: any) => {
+                this.brokers = response.content?.map((broker: BrokerPointOfSale) => {
+                    return broker;
+                });
+                this.brokersMetadata = response;
+                return response;
             }),
-            catchError(() => of([] as PointOfSale[]))
+            catchError(() => of([] as BrokerPointOfSale[]))
         );
     }
 

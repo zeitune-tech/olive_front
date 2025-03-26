@@ -29,6 +29,9 @@ export class ProfilesNewStepTwoComponent {
         pageSizeOptions: [5, 6, 8],
         actions: [],
         renderItem: (element: Permission, property: keyof Permission) => {
+            if (property === 'description') {
+                return this._translateService.translate(element[property]);
+            }
             return element[property];
         },
     };
@@ -48,11 +51,10 @@ export class ProfilesNewStepTwoComponent {
         private formBuilder: FormBuilder
     ) { 
         this.formGroup = this.formBuilder.group({
-            search: ['', Validators.required],
+            permissions: [[], Validators.required],
         });
     }
 
-    
     @Output() formReady = new EventEmitter<UntypedFormGroup>();
     formGroup!: UntypedFormGroup;
 
@@ -100,10 +102,14 @@ export class ProfilesNewStepTwoComponent {
         this.isAllSelected() ?
         this.selection.clear() :
         this.dataSource.data.forEach(row => this.selection.select(row));
+        // add or remove all elements from the selection
+        this.formGroup.get('permissions')?.setValue(this.selection.selected);
     }
 
     toggleSelection(row: Permission) {
         this.selection.toggle(row);
+        // add or remove the element from the selection
+        this.formGroup.get('permissions')?.setValue(this.selection.selected);
     }
 
 

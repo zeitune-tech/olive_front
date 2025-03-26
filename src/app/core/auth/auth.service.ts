@@ -174,7 +174,8 @@ export class AuthService {
             {}, 
             {
                 headers: {
-                    'Authorization': `Bearer ${this.refreshToken}`
+                    'Authorization': `Bearer ${this.refreshToken}`,
+                    'X-User-Type': 'USER'
                 }
             }
         ).pipe(

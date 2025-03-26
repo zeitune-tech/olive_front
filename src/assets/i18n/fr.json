@@ -1,4 +1,75 @@
 {
+  "auth": {
+    "sign_in": {
+      "title": "Se connecter",
+      "subtitle": "Connectez-vous à votre compte",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "password": "Mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "remember_me": "Se souvenir de moi",
+      "forgot_password": "Mot de passe oublié ?",
+      "no_account": "Pas de compte ?",
+      "sign_up": "S'inscrire",
+      "sign_in": "Se connecter",
+      "error": "Email ou mot de passe incorrect"
+    },
+    "sign_up": {
+      "title": "S'inscrire",
+      "subtitle": "Vous avez déjà un compte ?",
+      "first_name": "Prénom",
+      "first_name_required": "Le prénom est requis",
+      "last_name": "Nom",
+      "last_name_required": "Le nom est requis",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "password": "Mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "password_min": "Le mot de passe doit contenir au moins 6 caractères",
+      "password_confirmation": "Confirmer le mot de passe",
+      "password_confirmation_required": "La confirmation du mot de passe est requise",
+      "password_confirmation_same": "Les mots de passe doivent être identiques",
+      "sign_up": "S'inscrire",
+      "already_account": "Déjà un compte ?",
+      "sign_in": "Se connecter"
+    },
+    "forgot_password": {
+      "title": "Mot de passe oublié",
+      "subtitle": "Entrez votre email pour réinitialiser votre mot de passe",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "send": "Envoyer le lien de réinitialisation",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    },
+    "reset_password": {
+      "title": "Réinitialiser le mot de passe",
+      "subtitle": "Entrez votre nouveau mot de passe",
+      "password": "Nouveau mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "password_min": "Le mot de passe doit contenir au moins 6 caractères",
+      "password_confirmation": "Confirmer le mot de passe",
+      "password_confirmation_required": "La confirmation du mot de passe est requise",
+      "password_confirmation_same": "Les mots de passe doivent être identiques",
+      "reset": "Réinitialiser le mot de passe",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    },
+    "sign_out": {
+      "title": "Déconnexion",
+      "description": "Voulez-vous vraiment vous déconnecter ?",
+      "redirecting": "Déconnexion en cours...",
+      "seconds": "secondes",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    }
+  },
   "sidebar": {
     "dashboard": "Tableau de bord",
     "management_entities": {
@@ -44,6 +115,10 @@
     }
   },
   "form": {
+    "fields": {
+      "search": "Rechercher",
+      "checkboxes": "Cases à cocher"
+    },
     "errors": {
       "required": "Ce champ est requis",
       "email_invalid": "Format d'adresse e-mail invalide",
@@ -54,14 +129,19 @@
       "save": "Enregistrer",
       "cancel": "Annuler",
       "edit": "Modifier",
-      "delete": "Supprimer"
+      "delete": "Supprimer",
+      "confirm": "Confirmer",
+      "confirm_delete": "Confirmer la suppression",
+      "next": "Suivant",
+      "previous": "Précédent"
     }
   },
   "entities": {
     "product": {
         "form": {
-            "title": "Détails du produit",
-            "subtitle": "Créer ou modifier un produit",
+          "title": "Gestion des produits",
+          "subtitle": "Définir les détails du produit",
+          "description": "Créez ou modifiez les détails et classifications des produits.",
             "fields": {
                 "name": { "label": "Nom", "placeholder": "Saisir le nom" },
                 "description": { "label": "Description", "placeholder": "Saisir la description" },
@@ -70,8 +150,9 @@
             }
         },
         "table": {
-            "title": "Produits",
-            "description": "Liste des produits",
+          "title": "Liste des produits",
+          "subtitle": "Aperçu des produits",
+          "description": "Liste complète des produits proposés par la compagnie.",
             "columns": {
                 "name": "Nom",
                 "description": "Description",
@@ -116,8 +197,9 @@
     },
     "management_entity": {
       "form": {
-        "title": "Détails de l'entité de gestion",
-        "subtitle": "Créer ou modifier une entité de gestion",
+        "title": "Configuration des entités de gestion",
+        "subtitle": "Définir les détails des entités",
+        "description": "Créez ou modifiez les principales informations des entités de gestion.",
         "fields": {
             "name": { "label": "Nom", "placeholder": "Saisir le nom" },
             "email": { "label": "E-mail", "placeholder": "Saisir l'adresse e-mail" },
@@ -137,7 +219,8 @@
       },
       "table": {
         "title": "Entités de gestion",
-        "description": "Liste des entités de gestion",
+        "subtitle": "Aperçu des entités",
+        "description": "Liste de toutes les entités de gestion avec leurs informations clés.",
         "columns": {
           "id": "Identifiant",
           "name": "Nom",
@@ -152,12 +235,14 @@
     },
     "company": {
       "form": {
-        "title": "Détails de la compagnie",
-        "subtitle": "Créer ou modifier une compagnie"
+        "title": "Organisations niveau compagnie",
+        "subtitle": "Gérer les groupes organisationnels",
+        "description": "Liste et gestion des organisations niveau compagnie."
       },
       "table": {
-        "title": "Liste des compagnies",
-        "description": "Gestion des compagnies",
+        "title": "Organisations niveau compagnie",
+        "subtitle": "Gérer les groupes organisationnels",
+        "description": "Liste et gestion des organisations niveau compagnie.",
         "columns": {
           "name": "Nom",
           "email": "Email",
@@ -170,12 +255,14 @@
     },
     "market_level_organization": {
       "form": {
-        "title": "Organisation niveau marché",
-        "subtitle": "Créer ou modifier une organisation niveau marché"
+        "title": "Gestion des organisations niveau marché",
+        "subtitle": "Définir les groupes niveau marché",
+        "description": "Créez ou modifiez les organisations au niveau marché."
       },
       "table": {
         "title": "Organisations niveau marché",
-        "description": "Liste des organisations niveau marché",
+        "subtitle": "Aperçu des groupes niveau marché",
+        "description": "Liste et gestion des organisations opérant au niveau marché.",
         "columns": {
           "name": "Nom",
           "points_of_sale_count": "Nombre de points de vente",
@@ -188,8 +275,9 @@
     },
     "point_of_sale": {
       "form": {
-        "title": "Détails du point de vente",
-        "subtitle": "Créer ou modifier un point de vente",
+        "title": "Gestion des points de vente",
+        "subtitle": "Définir les détails du point de vente",
+        "description": "Créez ou modifiez les détails des points de vente.",
         "fields": {
           "name": { "label": "Nom", "placeholder": "Saisir le nom" },
           "email": { "label": "E-mail", "placeholder": "Saisir l'adresse e-mail" },
@@ -207,8 +295,9 @@
         }
       },
       "table": {
-        "title": "Liste des points de vente",
-        "description": "Gestion des points de vente",
+        "title": "Organisations niveau compagnie",
+        "subtitle": "Gérer les groupes organisationnels",
+        "description": "Liste et gestion des organisations niveau compagnie.",
         "columns": {
           "name": "Nom",
           "email": "Email",
@@ -217,6 +306,11 @@
           "type": "Type",
           "linked": "Lié",
           "actions": "Actions"
+        },
+        "types": {
+          "general_agent": "Agent général",
+          "broker": "Courtier",
+          "direct_office": "Bureau direct"
         },
         "broker": {
           "title": "Liste des courtiers",
@@ -227,16 +321,50 @@
     },
     "user": {
       "form": {
-        "title": "Détails utilisateur",
-        "subtitle": "Créer ou modifier un utilisateur"
+        "title": "Création d'utilisateur",
+        "subtitle": "Gérer les informations utilisateur",
+        "description": "Renseignez les informations personnelles, associez une compagnie, un point de vente et définissez les permissions de l'utilisateur.",
+        "step_one_title": "Informations personnelles",
+        "step_one_description": "Fournissez les informations personnelles de base de l'utilisateur.",
+        "step_two_title": "Informations sur la compagnie",
+        "step_two_description": "Associez l'utilisateur à une compagnie.",
+        "step_three_title": "Informations sur le point de vente",
+        "step_three_description": "Associez l'utilisateur à un point de vente spécifique.",
+        "step_four_title": "Permissions & accès",
+        "step_four_description": "Définissez les permissions et les droits d'accès de l'utilisateur.",
+        "step_five_title": "Résumé & confirmation",
+        "step_five_description": "Vérifiez les détails de l'utilisateur avant confirmation.",
+        "step_five_summary": "Résumé de l'utilisateur",
+        "step_five_name": "Nom",
+        "step_five_firstname": "Prénom",
+        "step_five_email": "Adresse email",
+        "step_five_phone": "Numéro de téléphone",
+        "step_five_profile": "Informations du profil",
+        "step_five_profile_name": "Nom du rôle",
+        "step_five_profile_description": "Entité de gestion",
+        "step_five_previous": "Précédent",
+        "step_five_confirm": "Confirmer & créer",
+        "fields": {
+          "first_name": { "label": "Prénom", "placeholder": "Saisir le prénom" },
+          "last_name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "email": { "label": "E-mail", "placeholder": "Saisir l'adresse e-mail" },
+          "phone": { "label": "Téléphone", "placeholder": "Saisir le numéro de téléphone" },
+          "password": { "label": "Mot de passe", "placeholder": "Saisir le mot de passe" },
+          "confirm_password": { "label": "Confirmer le mot de passe", "placeholder": "Confirmer le mot de passe" },
+          "company": { "label": "Compagnie", "placeholder": "Sélectionner la compagnie" },
+          "point_of_sale": { "label": "Point de vente", "placeholder": "Sélectionner le point de vente" },
+          "profile": { "label": "Profil", "placeholder": "Sélectionner le profil" }
+        }
       },
       "table": {
-        "title": "Utilisateurs",
-        "description": "Liste des utilisateurs enregistrés",
+        "title": "Liste des utilisateurs",
+        "subtitle": "Gérer les utilisateurs du système",
+        "description": "Liste de tous les utilisateurs enregistrés dans le système.",
         "columns": {
-          "name": "Nom",
+          "first_name": "Prénom",
+          "last_name": "Nom",
           "email": "Email",
-          "entityAccessLevel": "Niveau d'accès",
+          "management_entity": "Entité de gestion",
           "actions": "Actions"
         },
         "empty_state": "Aucun utilisateur trouvé"
@@ -244,8 +372,20 @@
     },
     "profile": {
       "form": {
-        "title": "Détails du profil",
-        "subtitle": "Créer ou modifier un profil utilisateur",
+        "title": "Création de profil",
+        "subtitle": "Définir les rôles et permissions",
+        "description": "Créez ou modifiez les profils utilisateur et attribuez des permissions.",
+        "step_one_title": "Informations du profil",
+        "step_one_description": "Saisissez les informations de base du profil.",
+        "step_two_title": "Permissions",
+        "step_two_description": "Sélectionnez les permissions à attribuer à ce profil.",
+        "step_three_title": "Résumé & confirmation",
+        "step_three_description": "Vérifiez les détails du profil avant la création.",
+        "step_three_summary": "Résumé du profil",
+        "step_three_name": "Nom du profil",
+        "step_three_permissions": "Permissions attribuées",
+        "step_three_previous": "Précédent",
+        "step_three_create": "Confirmer & créer",
         "fields": {
           "name": { "label": "Nom", "placeholder": "Saisir le nom" },
           "description": { "label": "Description", "placeholder": "Saisir la description" },
@@ -254,7 +394,8 @@
       },
       "table": {
         "title": "Profils utilisateurs",
-        "description": "Liste des profils",
+        "subtitle": "Gérer les profils et permissions",
+        "description": "Aperçu des rôles utilisateurs et de leurs permissions associées.",
         "columns": {
           "name": "Nom du profil",
           "description": "Description",
@@ -267,12 +408,30 @@
     },
     "company_level_organization": {
       "form": {
-        "title": "Organisation niveau compagnie",
-        "subtitle": "Gérer l'organisation des points de vente par groupe"
+        "title": "Création d'organisation niveau compagnie",
+        "subtitle": "Organiser les points de vente par groupe",
+        "description": "Définissez des groupes organisationnels et associez-y les points de vente.",
+        "step_one_title": "Informations de l'organisation",
+        "step_one_description": "Saisissez les détails de base pour l'organisation.",
+        "step_two_title": "Points de vente",
+        "step_two_description": "Sélectionnez les points de vente à associer à cette organisation.",
+        "step_three_title": "Résumé & confirmation",
+        "step_three_description": "Vérifiez les détails de l'organisation avant la création.",
+        "step_three_summary": "Résumé de l'organisation",
+        "step_three_name": "Nom de l'organisation",
+        "step_three_points-of-sale": "Points de vente associés",
+        "step_three_previous": "Précédent",
+        "step_three_create": "Confirmer & créer",
+        "fields": {
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "description": { "label": "Description", "placeholder": "Saisir la description" },
+          "points_of_sale": { "label": "Points de vente", "placeholder": "Sélectionner les points de vente" }
+        }
       },
       "table": {
-        "title": "Organisation niveau compagnie",
-        "description": "Liste des organisations niveau compagnie",
+        "title": "Organisations niveau compagnie",
+        "subtitle": "Gérer les groupes organisationnels",
+        "description": "Liste et gestion des organisations niveau compagnie.",
         "columns": {
           "name": "Nom",
           "points_of_sale_count": "Nombre de points de vente",
@@ -331,5 +490,48 @@
       "description": "Voulez-vous vraiment vous déconnecter ?",
       "redirecting": "Déconnexion en cours..."
     }
+  },
+  "permissions": {
+    "columns": {
+      "name": "Permission",
+      "description": "Description",
+      "actions": "Actions"
+    },
+    "view_insurance_categories": "Voir les catégories d'assurance",
+    "view_branches": "Voir les branches",
+    "view_products": "Voir les produits",
+    "create_products": "Créer des produits",
+    "update_products": "Modifier les produits",
+    "delete_products": "Supprimer les produits",
+    "affiliate_products": "Affilier des produits",
+    "view_company_details": "Voir les détails de la compagnie",
+    "update_company_details": "Modifier les détails de la compagnie",
+    "view_all_company_points_of_sale": "Voir tous les points de vente de la compagnie",
+    "create_company_points_of_sale": "Créer des points de vente pour la compagnie",
+    "view_company_point_of_sale_details": "Voir les détails du point de vente de la compagnie",
+    "update_company_point_of_sale_details": "Modifier les détails du point de vente de la compagnie",
+    "delete_company_points_of_sale": "Supprimer les points de vente de la compagnie",
+    "view_broker_details": "Voir les détails du courtier",
+    "view_all_brokers": "Voir tous les courtiers",
+    "view_linked_brokers": "Voir les courtiers liés",
+    "view_profiles": "Voir les profils",
+    "create_profiles": "Créer des profils",
+    "update_profiles": "Modifier les profils",
+    "delete_profiles": "Supprimer les profils",
+    "view_users": "Voir les utilisateurs",
+    "create_users": "Créer des utilisateurs",
+    "update_users": "Modifier les utilisateurs",
+    "delete_users": "Supprimer les utilisateurs",
+    "view_all_market_level_organization": "Voir toutes les organisations niveau marché",
+    "view_market_level_organization_details": "Voir les détails de l'organisation niveau marché",
+    "view_all_company_level_organization": "Voir toutes les organisations niveau compagnie",
+    "view_company_level_organization_details": "Voir les détails de l'organisation niveau compagnie",
+    "create_company_level_organization": "Créer une organisation niveau compagnie",
+    "update_company_level_organization_details": "Modifier l'organisation niveau compagnie",
+    "delete_company_level_organization": "Supprimer l'organisation niveau compagnie",
+    "view_restrictions": "Voir les restrictions",
+    "create_restrictions": "Créer des restrictions",
+    "update_restrictions": "Modifier les restrictions",
+    "delete_restrictions": "Supprimer les restrictions"
   }
 }

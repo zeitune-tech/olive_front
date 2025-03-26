@@ -83,7 +83,7 @@ export class AuthSignUpComponent implements OnInit {
         const entity: ManagementEntity = {
             name: this.formStepThree.value?.name || '',
             email: this.formStepThree.value?.email || '',
-            level: type,
+            type: type,
             phone: this.formStepThree.value?.phone || '',
             address: this.formStepThree.value?.address || '',
         } as ManagementEntity;

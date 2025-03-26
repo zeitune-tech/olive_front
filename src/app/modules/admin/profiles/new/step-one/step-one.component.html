@@ -8,24 +8,24 @@
     <div class="flex flex-col gap-6">
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('profiles.new.form-name') }}
+                {{ t('entities.profile.form.fields.name.label') }}
             </mat-label>
             <input
                 matInput
                 [formControlName]="'name'">
             <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
-                {{ t('profiles.new.form-name-required') }}
+                {{ t('form.errors.required') }}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('profiles.new.form-description') }}
+                {{ t('entities.profile.form.fields.description.label') }}
             </mat-label>
             <input
                 matInput
                 [formControlName]="'description'">
             <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
-                {{ t('profiles.new.form-description-required') }}
+                {{ t('form.errors.required') }}
             </mat-error>
         </mat-form-field>
     </div>
@@ -39,6 +39,6 @@
         [disabled]="formGroup.invalid"
         (click)="onNext()"
         >
-        {{ t('point-of-sale.table.next') }}
+        {{ t('form.actions.next') }}
     </button>
 </form>

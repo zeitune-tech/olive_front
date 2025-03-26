@@ -46,14 +46,18 @@ export class ProfilesListComponent {
             }
 
             if (property === 'description') {
-                if (element[property] === "profile.admin_description") {
+                if (element[property] && element[property] === "profile.admin_description") {
 
                     return this._translateService.translate('entities.profile.table.columns.admin_description');
                 }
             
-                if (element[property].length > 50) {
+                if (element[property] && element[property].length > 50) {
                     return element[property].substring(0, 50) + '...';
                 }
+            }
+
+            if (element[property] === null) {
+                return "-";
             }
             return element[property];
         },

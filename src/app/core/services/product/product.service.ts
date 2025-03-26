@@ -10,7 +10,7 @@ import { Product } from "./product.interface";
 })
 export class ProductService {
 
-    baseUrl = environment.base_url + "/products";
+    baseUrl = environment.request_url + "/products";
     private _product: ReplaySubject<Product> = new ReplaySubject<Product>(1);
     private _products: ReplaySubject<Product[]> = new ReplaySubject<Product[]>(1);
 

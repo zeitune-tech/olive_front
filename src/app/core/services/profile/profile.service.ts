@@ -10,7 +10,7 @@ import { Profile, Permission } from "./profile.interface";
 })
 export class ProfileService {
 
-    baseUrl = environment.base_url + '/profiles';
+    baseUrl = environment.request_url + '/profiles';
     private _profile: ReplaySubject<Profile> = new ReplaySubject<Profile>(1);
     private _profiles: ReplaySubject<Profile[]> = new ReplaySubject<Profile[]>(1);
 
@@ -55,8 +55,15 @@ export class ProfileService {
     ) { }
 
 
-    create(profile: Profile): Observable<Profile> {
-        return this._httpClient.post<Profile>(`${this.baseUrl}`, profile)
+    create(profile: any): Observable<Profile> {
+        return this._httpClient.post<Profile>(`${this.baseUrl}`, 
+            {
+                name: profile.name,
+                email: profile.email,
+                password: profile.password,
+                permissions: profile.permissions.map((permission: Permission) => permission.id)
+            }
+        )
             .pipe(
                 tap((profile) => {
                     this.profile = profile;

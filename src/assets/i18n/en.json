@@ -1,217 +1,510 @@
 {
-    "sidebar": {
-      "dashboard": "Dashboard",
-      "management_entities": {
-        "title": "Management Entities",
-        "list": "Entities List",
-        "new": "Add New Entity"
-      },
-      "companies": {
-        "title": "Companies",
-        "linked": "Linked Companies",
-        "list": "Companies List",
-        "new": "Add New Company"
-      },
-      "market_level_organization": {
-        "title": "Market-Level Organizations",
-        "list": "Market-Level Organizations List"
-      },
-      "points_of_sale": {
-        "title": "Points of Sale",
-        "broker": "Brokers List",
-        "list": "Points of Sale List",
-        "new": "Add New Point of Sale"
-      },
-      "company_level_organization": {
-        "title": "Company-Level Organization",
-        "list": "Organizations List",
-        "new": "Add New Organization"
-      },
-      "users": {
-        "title": "Users",
-        "list": "Users List",
-        "new": "Add New User"
-      },
-      "profiles": {
-        "title": "User Profiles",
-        "list": "Profiles List",
-        "new": "Add New Profile"
-      },
-      "products": {
-        "title": "Products",
-        "list": "Products List",
-        "new": "Add New Product"
-      }
+  "auth": {
+    "sign_in": {
+      "title": "Sign In",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "email_required": "Email is required",
+      "email_invalid": "Email is invalid",
+      "password": "Password",
+      "password_required": "Password is required",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "no_account": "No account?",
+      "sign_up": "Sign up",
+      "sign_in": "Sign in",
+      "error": "Incorrect email or password"
     },
-    "form": {
-      "errors": {
-        "required": "This field is required",
-        "email_invalid": "Invalid email format",
-        "min_length": "This field must be at least {min} characters",
-        "password_mismatch": "Passwords must match"
-      },
-      "actions": {
-        "save": "Save",
-        "cancel": "Cancel",
-        "edit": "Edit",
-        "delete": "Delete"
-      }
+    "sign_up": {
+      "title": "Sign Up",
+      "subtitle": "Already have an account?",
+      "first_name": "First name",
+      "first_name_required": "First name is required",
+      "last_name": "Last name",
+      "last_name_required": "Last name is required",
+      "email": "Email",
+      "email_required": "Email is required",
+      "email_invalid": "Email is invalid",
+      "password": "Password",
+      "password_required": "Password is required",
+      "password_min": "Password must be at least 6 characters",
+      "password_confirmation": "Confirm password",
+      "password_confirmation_required": "Password confirmation is required",
+      "password_confirmation_same": "Passwords must match",
+      "sign_up": "Sign up",
+      "already_account": "Already have an account?",
+      "sign_in": "Sign in"
     },
-    "entities": {
-      "management_entity": {
-        "form": {
-          "title": "Management Entity Details",
-          "subtitle": "Create or edit a management entity"
-        },
-        "table": {
-          "title": "Management Entities",
-          "description": "List of management entities",
-          "columns": {
-            "id": "ID",
-            "name": "Name",
-            "email": "Email",
-            "phone": "Phone",
-            "level": "Level",
-            "actions": "Actions"
-          },
-          "empty_state": "No entities found"
-        }
-      },
-      "company": {
-        "form": {
-          "title": "Company Details",
-          "subtitle": "Create or edit a company"
-        },
-        "table": {
-          "title": "Companies List",
-          "description": "Manage companies",
-          "columns": {
-            "name": "Name",
-            "email": "Email",
-            "phone": "Phone",
-            "linked": "Linked",
-            "actions": "Actions"
-          },
-          "empty_state": "No companies found"
-        }
-      },
-      "point_of_sale": {
-        "form": {
-          "title": "Point of Sale Details",
-          "subtitle": "Create or edit a point of sale"
-        },
-        "table": {
-          "title": "Points of Sale List",
-          "description": "Manage points of sale",
-          "columns": {
-            "name": "Name",
-            "email": "Email",
-            "phone": "Phone",
-            "type": "Type",
-            "linked": "Linked",
-            "actions": "Actions"
-          },
-          "empty_state": "No points of sale found"
-        }
-      },
-      "user": {
-        "form": {
-          "title": "User Details",
-          "subtitle": "Create or edit a user"
-        },
-        "table": {
-          "title": "Users",
-          "description": "Registered users list",
-          "columns": {
-            "name": "Name",
-            "email": "Email",
-            "actions": "Actions"
-          },
-          "empty_state": "No users found"
-        }
-      },
-      "profile": {
-        "form": {
-          "title": "Profile Details",
-          "subtitle": "Create or edit a user profile"
-        },
-        "table": {
-          "title": "User Profiles",
-          "description": "Profiles list",
-          "columns": {
-            "name": "Profile Name",
-            "description": "Description",
-            "actions": "Actions"
-          },
-          "empty_state": "No profiles found"
-        }
-      },
-      "company_level_organization": {
-        "form": {
-          "title": "Company-Level Organization",
-          "subtitle": "Manage company-level organizations"
-        },
-        "table": {
-          "title": "Company-Level Organizations",
-          "description": "Organizations list",
-          "columns": {
-            "name": "Name",
-            "points_of_sale_count": "Number of Points of Sale",
-            "createdAt": "Created At",
-            "updatedAt": "Updated At",
-            "actions": "Actions"
-          },
-          "empty_state": "No organizations found"
-        }
-      }
+    "forgot_password": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email to reset your password",
+      "email": "Email",
+      "email_required": "Email is required",
+      "email_invalid": "Email is invalid",
+      "send": "Send reset link",
+      "back": "Back to sign in",
+      "back_to": "Back to",
+      "sign_in": "Sign in"
     },
-    "enums": {
-      "management_entity_evel": {
-        "ENTITY_SUPERIOR": "Superior Entity",
-        "COMPANY": "Company",
-        "POINT_OF_SALE": "Point of Sale"
-      },
-      "point_of_sale_type": {
-        "GENERAL_AGENT": "General Agent",
-        "BROKER": "Broker",
-        "DIRECT_OFFICE": "Direct Office"
-      },
-      "linked_status": {
-        "true": "Linked",
-        "false": "Not Linked"
-      }
+    "reset_password": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password",
+      "password": "New password",
+      "password_required": "Password is required",
+      "password_min": "Password must be at least 6 characters",
+      "password_confirmation": "Confirm password",
+      "password_confirmation_required": "Password confirmation is required",
+      "password_confirmation_same": "Passwords must match",
+      "reset": "Reset password",
+      "back": "Back to sign in",
+      "back_to": "Back to",
+      "sign_in": "Sign in"
     },
-    "common": {
+    "sign_out": {
+      "title": "Sign Out",
+      "description": "Do you really want to sign out?",
+      "redirecting": "Signing out...",
+      "seconds": "seconds",
+      "back": "Back to sign in",
+      "back_to": "Back to",
+      "sign_in": "Sign in"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "management_entities": {
+      "title": "Management Entities",
+      "list": "Entities List",
+      "new": "Add New Entity"
+    },
+    "companies": {
+      "title": "Companies",
+      "linked": "Linked Companies",
+      "list": "Companies List",
+      "new": "Add New Company"
+    },
+    "market_level_organization": {
+      "title": "Market-Level Organizations",
+      "list": "Market-Level Organizations List"
+    },
+    "points_of_sale": {
+      "title": "Points of Sale",
+      "broker": "Brokers List",
+      "list": "Points of Sale List",
+      "new": "Add New Point of Sale"
+    },
+    "company_level_organization": {
+      "title": "Company-Level Organization",
+      "list": "Organizations List",
+      "new": "Add New Organization"
+    },
+    "users": {
+      "title": "Users",
+      "list": "Users List",
+      "new": "Add New User"
+    },
+    "profiles": {
+      "title": "User Profiles",
+      "list": "Profiles List",
+      "new": "Add New Profile"
+    },
+    "products": {
+      "title": "Products",
+      "list": "Products List",
+      "new": "Add New Product"
+    }
+  },
+  "form": {
+    "fields": {
       "search": "Search",
-      "no_data": "No results found",
-      "no_data_description": "No data available currently"
+      "checkboxes": "Checkboxes"
     },
-    "notifications": {
-      "no_notifications": "No notifications",
-      "no_notifications_description": "You have no notifications at the moment"
+    "errors": {
+      "required": "This field is required",
+      "email_invalid": "Invalid email format",
+      "min_length": "This field must contain at least {min} characters",
+      "password_mismatch": "Passwords must match"
     },
-    "dashboard": {
-      "title": "Dashboard",
-      "description": "Overview of your account"
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirm": "Confirm",
+      "confirm_delete": "Confirm Deletion",
+      "next": "Next",
+      "previous": "Previous"
+    }
+  },
+  "entities": {
+    "product": {
+      "form": {
+        "title": "Product Management",
+        "subtitle": "Define product details",
+        "description": "Create or edit product details and classifications.",
+        "fields": {
+          "name": { "label": "Name", "placeholder": "Enter name" },
+          "description": {
+            "label": "Description",
+            "placeholder": "Enter description"
+          },
+          "branch": { "label": "Branch", "placeholder": "Select branch" },
+          "category": { "label": "Category", "placeholder": "Select category" }
+        }
+      },
+      "table": {
+        "title": "Products List",
+        "subtitle": "Overview of products",
+        "description": "Comprehensive list of products offered by the company.",
+        "columns": {
+          "name": "Name",
+          "description": "Description",
+          "branch": "Branch",
+          "category": "Category",
+          "actions": "Actions"
+        },
+        "empty_state": "No products found"
+      }
     },
-    "home": {
-      "title": "Hello",
-      "description": "Welcome to Olive Insurance, please select a module to start",
-      "modules": {
-        "administration": "Administration",
-        "productions_auto": "Auto Operations",
-        "insureds": "Insureds",
-        "parameters_auto": "Auto Parameters"
+    "branch": {
+      "form": {
+        "title": "Branch Details",
+        "subtitle": "Create or edit a branch"
+      },
+      "table": {
+        "title": "Branches",
+        "description": "Branches list",
+        "columns": {
+          "name": "Name",
+          "description": "Description",
+          "actions": "Actions"
+        },
+        "empty_state": "No branches found"
+      }
+    },
+    "category": {
+      "form": {
+        "title": "Category Details",
+        "subtitle": "Create or edit a category"
+      },
+      "table": {
+        "title": "Categories",
+        "description": "Categories list",
+        "columns": {
+          "name": "Name",
+          "description": "Description",
+          "actions": "Actions"
+        },
+        "empty_state": "No categories found"
+      }
+    },
+    "management_entity": {
+      "form": {
+        "title": "Management Entity Configuration",
+        "subtitle": "Define entity details",
+        "description": "Create or edit the main details of management entities.",
+        "fields": {
+          "name": { "label": "Name", "placeholder": "Enter name" },
+          "email": { "label": "Email", "placeholder": "Enter email address" },
+          "phone": { "label": "Phone", "placeholder": "Enter phone number" },
+          "address": { "label": "Address", "placeholder": "Enter address" },
+          "logo": { "label": "Logo", "placeholder": "Upload logo" },
+          "level": {
+            "label": "Entity Level",
+            "placeholder": "Select entity level",
+            "options": {
+              "ENTITY_SUPERIOR": "Superior Entity",
+              "COMPANY": "Company",
+              "POINT_OF_SALE": "Point of Sale"
+            }
+          }
+        }
+      },
+      "table": {
+        "title": "Management Entities",
+        "subtitle": "Overview of entities",
+        "description": "List of all management entities and their key information.",
+        "columns": {
+          "id": "ID",
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "logo": "Logo",
+          "address": "Address",
+          "actions": "Actions"
+        },
+        "empty_state": "No entities found"
+      }
+    },
+    "company": {
+      "form": {
+        "title": "Company Management",
+        "subtitle": "Manage company details",
+        "description": "Add or modify company-related information."
+      },
+      "table": {
+        "title": "Companies List",
+        "subtitle": "Manage all companies",
+        "description": "Comprehensive list of companies managed by the system.",
+        "columns": {
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "linked": "Linked",
+          "actions": "Actions"
+        },
+        "empty_state": "No companies found"
+      }
+    },
+    "market_level_organization": {
+      "form": {
+        "title": "Market-Level Organization Management",
+        "subtitle": "Define market-level groups",
+        "description": "Create or modify organizations at the market-level."
+      },
+      "table": {
+        "title": "Market-Level Organizations",
+        "subtitle": "Overview of market-level groups",
+        "description": "List and manage organizations operating at market level.",
+        "columns": {
+          "name": "Name",
+          "points_of_sale_count": "Points of Sale Count",
+          "createdAt": "Created At",
+          "updatedAt": "Updated At",
+          "actions": "Actions"
+        },
+        "empty_state": "No organizations found"
+      }
+    },
+    "point_of_sale": {
+      "form": {
+        "title": "Point of Sale Management",
+        "subtitle": "Manage points of sale details",
+        "description": "Create or modify individual points of sale.",
+        "fields": {
+          "name": { "label": "Name", "placeholder": "Enter name" },
+          "email": { "label": "Email", "placeholder": "Enter email address" },
+          "phone": { "label": "Phone", "placeholder": "Enter phone number" },
+          "address": { "label": "Address", "placeholder": "Enter address" },
+          "type": {
+            "label": "Type",
+            "placeholder": "Select type",
+            "options": {
+              "GENERAL_AGENT": "General Agent",
+              "BROKER": "Broker",
+              "DIRECT_OFFICE": "Direct Office"
+            }
+          }
+        }
+      },
+      "table": {
+        "title": "Points of Sale List",
+        "subtitle": "Manage sales points",
+        "description": "Overview of all points of sale and their details.",
+        "columns": {
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "address": "Address",
+          "type": "Type",
+          "linked": "Linked",
+          "actions": "Actions"
+        },
+        "broker": {
+          "title": "Brokers List",
+          "description": "List of brokers"
+        },
+        "empty_state": "No points of sale found"
       }
     },
     "user": {
-      "welcome": "Welcome",
-      "connected": "Connected as",
-      "logout": {
-        "title": "Logout",
-        "description": "Are you sure you want to logout?",
-        "redirecting": "Logging out..."
+      "form": {
+        "title": "User Creation",
+        "subtitle": "Manage user details",
+        "description": "Fill out personal information, assign company, point of sale, and user permissions.",
+        "step_one_title": "Personal Information",
+        "step_one_description": "Provide basic personal information for the user.",
+        "step_two_title": "Company Information",
+        "step_two_description": "Assign the user to a company.",
+        "step_three_title": "Point of Sale Information",
+        "step_three_description": "Assign the user to a specific point of sale.",
+        "step_four_title": "Permissions & Access",
+        "step_four_description": "Define user permissions and access rights.",
+        "step_five_title": "Summary & Confirmation",
+        "step_five_description": "Review user details before confirmation.",
+        "step_five_summary": "User Summary",
+        "step_five_name": "Last Name",
+        "step_five_firstname": "First Name",
+        "step_five_email": "Email Address",
+        "step_five_phone": "Phone Number",
+        "step_five_profile": "Profile Information",
+        "step_five_profile_name": "Role Name",
+        "step_five_profile_description": "Management Entity",
+        "step_five_previous": "Previous",
+        "step_five_confirm": "Confirm & Create",
+        "fields": {
+          "first_name": {
+            "label": "First Name",
+            "placeholder": "Enter first name"
+          },
+          "last_name": {
+            "label": "Last Name",
+            "placeholder": "Enter last name"
+          },
+          "email": { "label": "Email", "placeholder": "Enter email address" },
+          "phone": { "label": "Phone", "placeholder": "Enter phone number" },
+          "password": { "label": "Password", "placeholder": "Enter password" },
+          "confirm_password": {
+            "label": "Confirm Password",
+            "placeholder": "Confirm password"
+          },
+          "company": { "label": "Company", "placeholder": "Select company" },
+          "point_of_sale": {
+            "label": "Point of Sale",
+            "placeholder": "Select point of sale"
+          },
+          "profile": { "label": "Profile", "placeholder": "Select profile" }
+        }
+      },
+      "table": {
+        "title": "Users List",
+        "subtitle": "Manage system users",
+        "description": "List of all registered users within the system.",
+        "columns": {
+          "first_name": "First Name",
+          "last_name": "Last Name",
+          "email": "Email",
+          "management_entity": "Management Entity",
+          "actions": "Actions"
+        },
+        "empty_state": "No users found"
+      }
+    },
+    "profile": {
+      "form": {
+        "title": "Profile Creation",
+        "subtitle": "Define user roles & permissions",
+        "description": "Create or edit user profiles and assign permissions.",
+        "step_one_title": "Profile Information",
+        "step_one_description": "Enter basic profile information.",
+        "step_two_title": "Permissions",
+        "step_two_description": "Select permissions to assign to this profile.",
+        "step_three_title": "Summary & Confirmation",
+        "step_three_description": "Review profile details before creation.",
+        "step_three_summary": "Profile Summary",
+        "step_three_name": "Profile Name",
+        "step_three_permissions": "Assigned Permissions",
+        "step_three_previous": "Previous",
+        "step_three_create": "Confirm & Create",
+        "fields": {
+          "name": { "label": "Name", "placeholder": "Enter name" },
+          "description": {
+            "label": "Description",
+            "placeholder": "Enter description"
+          },
+          "permissions": {
+            "label": "Permissions",
+            "placeholder": "Select permissions"
+          }
+        }
+      },
+      "table": {
+        "title": "User Profiles",
+        "subtitle": "Manage profiles and permissions",
+        "description": "Overview of all user roles and their associated permissions.",
+        "columns": {
+          "name": "Profile Name",
+          "description": "Description",
+          "permissions_count": "Permissions Count",
+          "admin_description": "Has full rights on this management entity",
+          "actions": "Actions"
+        },
+        "empty_state": "No profiles found"
+      }
+    },
+    "company_level_organization": {
+      "form": {
+        "title": "Company-Level Organization Creation",
+        "subtitle": "Organize points of sale by groups",
+        "description": "Define organizational groups and associate points of sale accordingly.",
+        "step_one_title": "Organization Information",
+        "step_one_description": "Enter basic details for the organization.",
+        "step_two_title": "Points of Sale",
+        "step_two_description": "Select points of sale to associate with this organization.",
+        "step_three_title": "Summary & Confirmation",
+        "step_three_description": "Review organization details before creation.",
+        "step_three_summary": "Organization Summary",
+        "step_three_name": "Organization Name",
+        "step_three_points-of-sale": "Associated Points of Sale",
+        "step_three_previous": "Previous",
+        "step_three_create": "Confirm & Create",
+        "fields": {
+          "name": { "label": "Name", "placeholder": "Enter name" },
+          "description": {
+            "label": "Description",
+            "placeholder": "Enter description"
+          },
+          "points_of_sale": {
+            "label": "Points of Sale",
+            "placeholder": "Select points of sale"
+          }
+        }
+      },
+      "table": {
+        "title": "Company-Level Organizations",
+        "subtitle": "Manage organizational groups",
+        "description": "List and manage all company-level organizations.",
+        "columns": {
+          "name": "Name",
+          "points_of_sale_count": "Points of Sale Count",
+          "createdAt": "Created At",
+          "updatedAt": "Updated At",
+          "actions": "Actions"
+        },
+        "empty_state": "No organizations found"
       }
     }
+  },
+  "enums": {
+    "managementEntityLevel": {
+      "ENTITY_SUPERIOR": "Superior Entity",
+      "COMPANY": "Company",
+      "POINT_OF_SALE": "Point of Sale"
+    },
+    "point_of_saleType": {
+      "GENERAL_AGENT": "General Agent",
+      "BROKER": "Broker",
+      "DIRECT_OFFICE": "Direct Office"
+    },
+    "linkedStatus": {
+      "true": "Linked",
+      "false": "Not linked"
+    }
+  },
+  "common": {
+    "search": "Search",
+    "no_data": "No results found",
+    "no_data_description": "No data available currently"
+  },
+  "notifications": {
+    "no_notifications": "No notifications",
+    "no_notifications_description": "You have no notifications at this time"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Overview of your account"
+  },
+  "home": {
+    "title": "Hello",
+    "description": "Welcome to Olive Insurance, please choose a module to get started"
+  },
+  "user": {
+    "welcome": "Welcome",
+    "connected": "Connected as",
+    "logout": {
+      "title": "Logout",
+      "description": "Do you really want to logout?",
+      "redirecting": "Logging out..."
+    }
   }
-  
+}

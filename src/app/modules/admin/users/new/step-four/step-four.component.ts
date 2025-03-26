@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/forms";
-import { Role } from "@core/services/employee/employee.inteface";
-import { EmployeeService } from "@core/services/employee/employee.service";
+import { Profile } from "@core/services/profile/profile.interface";
+import { ProfileService } from "@core/services/profile/profile.service";
+import { UserService } from "@core/services/user/user.service";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
-    selector: 'new-employee-step-four',
+    selector: 'new-user-step-four',
     templateUrl: './step-four.component.html'
 })
 export class StepFourComponent implements OnInit { 
@@ -14,24 +15,24 @@ export class StepFourComponent implements OnInit {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     formGroup!: UntypedFormGroup;
-    roles: Role[] = [];
+    profiles: Profile[] = [];
 
     /**
      * Constructor
      */
     constructor(
         private _formBuilder: FormBuilder,
-        private _employeeService: EmployeeService
+        private _userService: UserService,
+        private _profileService: ProfileService
 
     ) {
         this.formGroup = this._formBuilder.group({
-            role: ['', Validators.required],
-            roleName: ['']
+            profiles: [[], Validators.required],
         });
-        this._employeeService.roles$
+        this._profileService.profiles$
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((roles) => {
-            this.roles = roles;
+        .subscribe((profiles) => {
+            this.profiles = profiles;
         });
     }
 
@@ -48,7 +49,7 @@ export class StepFourComponent implements OnInit {
      * Step one next
      */
     onNext(): void {
-        this.formGroup.get('roleName')?.setValue(this.roles.find(r => r.id === this.formGroup.get('role')?.value)?.name);
+        this.formGroup.get('profileName')?.setValue(this.profiles.find(r => r.id === this.formGroup.get('profile')?.value)?.name);
         this.formReady.emit(this.formGroup);
     }
 }

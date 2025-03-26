@@ -22,18 +22,18 @@ export class CompanyLevelOrganizationNewStepTwoComponent {
     tableOptions: TableOptions<PointOfSale> = {
         title: '',
         columns: [
-            { label: 'point-of-sale.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.address', property: 'address', type: 'text', visible: true },
-            { label: 'point-of-sale.columns.type', property: 'type', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.phone', property: 'phone', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.address', property: 'address', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.table.columns.type', property: 'type', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [],
         renderItem: (element: PointOfSale, property: keyof PointOfSale) => {
             if (property === 'type') {
-                return this._translateService.translate(`point-of-sale.types.${element[property]}`);
+                return this._translateService.translate(`entities.point_of_sale.table.types.${element[property]?.toLocaleLowerCase()}`);
             }
             return element[property];
         },
@@ -54,7 +54,7 @@ export class CompanyLevelOrganizationNewStepTwoComponent {
         private formBuilder: FormBuilder
     ) { 
         this.formGroup = this.formBuilder.group({
-            search: ['', Validators.required],
+            pointsOfSale: [[], Validators.required],
         });
     }
 
@@ -106,10 +106,20 @@ export class CompanyLevelOrganizationNewStepTwoComponent {
         this.isAllSelected() ?
         this.selection.clear() :
         this.dataSource.data.forEach(row => this.selection.select(row));
+        // add the selected ids to the form
+        this.formGroup?.get('pointsOfSale')?.setValue(this.selection.selected.map(pointOfSale => ({
+            name: pointOfSale.name,
+            id: pointOfSale.id
+        })));
     }
 
     toggleSelection(row: PointOfSale) {
         this.selection.toggle(row);
+        // add the selected ids to the form
+        this.formGroup?.get('pointsOfSale')?.setValue(this.selection.selected.map(pointOfSale => ({
+            name: pointOfSale.name,
+            id: pointOfSale.id
+        })));
     }
 
 

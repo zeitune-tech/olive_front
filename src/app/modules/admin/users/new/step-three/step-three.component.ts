@@ -5,7 +5,7 @@ import { PointOfSaleService } from "@core/services/point-of-sale/point-of-sale.s
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
-    selector   : 'new-employee-step-three',
+    selector   : 'new-user-step-three',
     templateUrl: './step-three.component.html'
 })
 export class StepThreeComponent implements OnInit {

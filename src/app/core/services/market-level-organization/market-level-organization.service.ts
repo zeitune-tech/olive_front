@@ -8,7 +8,7 @@ import { RequestMetadata } from "../common.interface";
 @Injectable()
 export class MarketLevelOrganizationService {
 
-    baseUrl = environment.base_url + '/market-level-organizations';
+    baseUrl = environment.request_url + '/market-level-organizations';
     private _myMarketLevelOrganization: ReplaySubject<MarketLevelOrganization> = new ReplaySubject<MarketLevelOrganization>(1);
     private _marketLevelOrganization: ReplaySubject<MarketLevelOrganization> = new ReplaySubject<MarketLevelOrganization>(1);
     private _marketLevelOrganizations: ReplaySubject<MarketLevelOrganization[]> = new ReplaySubject<MarketLevelOrganization[]>(1);

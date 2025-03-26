@@ -2,8 +2,8 @@ import { Component, ViewChild } from "@angular/core";
 import { UntypedFormGroup, FormBuilder, Validators, NgForm } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { CompanyLevelOrganization } from "@core/services/company-level-organization/company-level-organization.interface";
 import { CompanyLevelOrganizationService } from "@core/services/company-level-organization/company-level-organization.service";
-import { EmployeeService } from "@core/services/employee/employee.service";
 import { ManagementEntity } from "@core/services/management-entity/management-entity.interface";
 import { UserService } from "@core/services/user/user.service";
 import { ConfirmDialogComponent } from "@shared/components/confirm-dialog/confirm-dialog.component";
@@ -41,26 +41,21 @@ export class CompanyLevelOrganizationNewComponent {
     newHasPointOfSaleAccessLevel: boolean = false;
     currentAccessLevel: string = '';
 
-    data: any = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        accessLevel: '',
-        pointOfSale: '',
-        role: '',
-        roleName: '',
-        password: 'P@sser123',
-        managementEntityId: '',
-        managementEntityName: ''
+    data: {
+        name: string;
+        description: string;
+        pointsOfSale: {name: string, id: string}[];
+    } = {
+        name: '',
+        description: '',
+        pointsOfSale: [],
     };
 
     managementEntity!: ManagementEntity;
 
     constructor(
         private _userService: UserService,
-        private _employeeService: EmployeeService,
-        private _dialog: MatDialog,
+        private _companyLevelOrganizationService: CompanyLevelOrganizationService,
         private _router: Router
     ) {  }
 
@@ -76,8 +71,8 @@ export class CompanyLevelOrganizationNewComponent {
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((user) => {
             if (user) {
-                this.currentIsCompanyEmployee = user.managementEntity.level === 'COMPANY';
-                this.currentAccessLevel = user.managementEntity.level;
+                this.currentIsCompanyEmployee = user.managementEntity.type === 'COMPANY';
+                this.currentAccessLevel = user.managementEntity.type;
                 this.managementEntity = user.managementEntity;
             }
         });
@@ -90,82 +85,30 @@ export class CompanyLevelOrganizationNewComponent {
 
     onStepOneNext(fromGroup: UntypedFormGroup): void {
         this.formStepOne = fromGroup;
-        this.data.firstName = fromGroup.value.firstName;
-        this.data.lastName = fromGroup.value.lastName;
-        this.data.email = fromGroup.value.email;
-        this.data.phone = fromGroup.value.phone;
-        if (!this.currentIsCompanyEmployee) {
-            this.getAccessLevel();
-            this.data.managementEntityId = this.managementEntity.id;
-            this.data.managementEntityName = this.managementEntity.name;
-        }
+        this.data.name = fromGroup.value.name;
+        this.data.description = fromGroup.value.description;
     }
 
-    getAccessLevel(): void {
-        switch (this.currentAccessLevel) {
-            case 'ENTITY_SUPERIOR':
-                this.data.accessLevel = this.ACCESS_LEVELS[0];
-                break;
-            case 'COMPANY':
-                this.data.accessLevel = this.ACCESS_LEVELS[1];
-                break;
-            case 'POINT_OF_SALE':
-                this.data.accessLevel = this.ACCESS_LEVELS[2];
-                break;
-            default:
-                break;
-        }
-    }
 
     onStepTwoNext(fromGroup: UntypedFormGroup): void {
         this.formStepTwo = fromGroup;
-        if (fromGroup.value.accessLevel === 'POINT_OF_SALE') {
-            this.newHasPointOfSaleAccessLevel = true;
-            this.data.accessLevel = this.ACCESS_LEVELS[2];
-        } else {
-            this.newHasPointOfSaleAccessLevel = false;
-            this.data.accessLevel = this.ACCESS_LEVELS[1];
-            this.data.managementEntityId = this.managementEntity.id;
-            this.data.managementEntityName = this.managementEntity.name;
-        }
-    }
-
-    onStepThreeNext(fromGroup: UntypedFormGroup): void {
-        this.formStepThree = fromGroup;
-        this.data.managementEntityId = fromGroup.value.pointOfSale;
-        this.data.managementEntityName = fromGroup.value.pointOfSaleName;
-    }
-
-    onStepFourNext(fromGroup: UntypedFormGroup): void {
-        this.formStepFour = fromGroup;
-        this.data.role = fromGroup.value.role;
-        this.data.roleName = fromGroup.value.roleName;
-    }
-
-    onStepFiveNext(fromGroup: UntypedFormGroup): void {
-        this.formStepFive = fromGroup;
-        this.confirm();
+        this.data.pointsOfSale = fromGroup.value.pointsOfSale;
     }
 
 
-    confirm(): void {
-        this._dialog.open(ConfirmDialogComponent, {
-            data: {
-                title: 'employee.new.confirm-dialog-title',
-                message: 'employee.new.confirm-dialog-message',
-                confirmButtonLabel: 'employee.new.confirm-dialog-confirm-button',
-                cancelButtonLabel: 'employee.new.confirm-dialog-cancel-button',
-                confirm: () => {
-                    this.save();
-                }
-            }
-        })
-    }
 
     save(): void {
-        this._employeeService.create(this.data)
-        .subscribe(() => {
-            this._router.navigate(['/employees']);
-        });
+        const val = confirm("Are you sure you want to save this company level organization?");
+        if (val) {
+            this._companyLevelOrganizationService.create(this.data)
+            .subscribe({
+                next: (companyLevelOrganization: CompanyLevelOrganization) => {
+                    this._companyLevelOrganizationService.getAll().subscribe();
+                },
+                error: (error: any) => {
+                    console.error(error);
+                }
+            });
+        }
     }
 }
