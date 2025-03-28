@@ -235,19 +235,21 @@
     },
     "company": {
       "form": {
-        "title": "Organisations niveau compagnie",
-        "subtitle": "Gérer les groupes organisationnels",
-        "description": "Liste et gestion des organisations niveau compagnie."
+        "title": "Gestion des compagnies",
+        "subtitle": "Définir les détails de la compagnie",
+        "description": "Liste et gestion des compagnies d'assurance."
       },
       "table": {
-        "title": "Organisations niveau compagnie",
-        "subtitle": "Gérer les groupes organisationnels",
-        "description": "Liste et gestion des organisations niveau compagnie.",
+        "title": "Compagnies d'assurance",
+        "subtitle": "Aperçu des compagnies",
+        "description": "Liste et gestion des compagnies d'assurance.",
         "columns": {
+          "logo": "Logo",
           "name": "Nom",
           "email": "Email",
           "phone": "Téléphone",
           "linked": "Liée",
+          "address": "Adresse",
           "actions": "Actions"
         },
         "empty_state": "Aucune compagnie trouvée"

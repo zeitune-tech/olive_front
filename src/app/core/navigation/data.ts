@@ -56,20 +56,20 @@ export const defaultNavigation: NavigationItem[] = [
         permission: PERMISSIONS.VIEW_COMPANIES,
         children: [
             {
+                id: 'companies.list',
+                title: 'sidebar.companies.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/administration/companies/list',
+                permission: PERMISSIONS.VIEW_COMPANIES
+            },
+            {
                 id: 'companies-linked',
                 title: 'sidebar.companies.linked',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/administration/companies/linked',
                 permission: PERMISSIONS.VIEW_LINKED_COMPANIES
-            },
-            {
-                id: 'companies.list',
-                title: 'sidebar.companies..list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/administration/companies/list',
-                permission: PERMISSIONS.VIEW_COMPANIES
             }
         ]
     },

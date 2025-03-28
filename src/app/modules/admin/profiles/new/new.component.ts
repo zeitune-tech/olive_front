@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { ManagementEntity } from '@core/services/management-entity/management-entity.interface';
 import { ProfileService } from '@core/services/profile/profile.service';
 import { UserService } from '@core/services/user/user.service';
-import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

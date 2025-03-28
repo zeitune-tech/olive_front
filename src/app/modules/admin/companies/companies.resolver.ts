@@ -17,8 +17,7 @@ export class CompaniesResolver implements Resolve<any> {
         state: RouterStateSnapshot
     ): Observable<any> {
         return forkJoin([
-            this._companyService.getCompanies(),
-            this._companyService.getCompaniesAll()
+            // this._companyService.getCompaniesAll()
         ])
     }
 }

@@ -31,7 +31,7 @@ export const routes: Routes = [
                 permission: PERMISSIONS.VIEW_ALL_COMPANIES
             },
             resolve: {
-                CompaniesResolver
+                // CompaniesResolver
             },
             loadChildren: () => import('./companies/companies.module').then(m => m.CompaniesModule)
         },

@@ -3,6 +3,7 @@ import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { Company } from "./company.interface";
+import { RequestMetadata } from "../common.interface";
 
 @Injectable()
 export class CompanyService {
@@ -12,6 +13,7 @@ export class CompanyService {
     private _company: ReplaySubject<Company> = new ReplaySubject<Company>(1);
     private _companies: ReplaySubject<Company[]> = new ReplaySubject<Company[]>(1);
     private _companiesLinked: ReplaySubject<Company[]> = new ReplaySubject<Company[]>(1);
+    private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
         
     set myCompany(value: Company) {
         this._myCompany.next(value);
@@ -45,6 +47,14 @@ export class CompanyService {
         return this._companiesLinked.asObservable();
     }
 
+    get metadata$() {
+        return this._metadata.asObservable();
+    }
+
+    set metadata(value: RequestMetadata) {
+        this._metadata.next(value);
+    }
+
     constructor(
         private _httpClient: HttpClient
     ) { }
@@ -60,19 +70,9 @@ export class CompanyService {
         );
     }
 
-    get(): Observable<Company> {
-        return this._httpClient.get<Company>(`${this.baseUrl}/companies/me`)
-        .pipe(
-            tap((company) => {
-                this.myCompany = company;
-                return (company);
-            }),
-            catchError(() => of({} as Company))
-        );
-    }
 
-    getCompany(id: string): Observable<Company> {
-        return this._httpClient.get<Company>(`${this.baseUrl}/companies/${id}`)
+    get(id: string): Observable<Company> {
+        return this._httpClient.get<Company>(`${this.baseUrl}${id}`)
         .pipe(
             tap((company) => {
                 this.company = company;
@@ -82,24 +82,16 @@ export class CompanyService {
         );
     }
 
-    getCompanies(): Observable<Company[]> {
-        return this._httpClient.get<Company[]>(`${this.baseUrl}/companies`)
-        .pipe(
-            tap((companies) => {
-                this.companiesLinked = companies;
-                return (companies);
-            }),
-            catchError(() => of([] as Company[]))
-        );
-    }
 
-
-    getCompaniesAll(): Observable<Company[]> {
-        return this._httpClient.get<Company[]>(`${this.baseUrl}/companies/all`)
+    getAll(): Observable<Company[]> {
+        return this._httpClient.get<Company[]>(`${this.baseUrl}`)
         .pipe(
-            tap((companies) => {
-                this.companies = companies;
-                return (companies);
+            tap((response : any) => {
+                this.companies = response?.content.map((company: Company) => {
+                    return company;
+                });
+                this.metadata = response;
+                return response;
             }),
             catchError(() => of([] as Company[]))
         );

@@ -8,6 +8,7 @@ import { PointOfSaleService } from '@core/services/point-of-sale/point-of-sale.s
 import { ProfileService } from '@core/services/profile/profile.service';
 import { ProductService } from '@core/services/product/product.service';
 import { CompanyLevelOrganizationService } from '@core/services/company-level-organization/company-level-organization.service';
+import { CompanyService } from '@core/services/company/company.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,7 @@ export class InitialDataResolver implements Resolve<any> {
         private _marketLevelOrganizationService: MarketLevelOrganizationService,
         private _pointOfSaleService: PointOfSaleService,
         private _companyLevelOrganizationService: CompanyLevelOrganizationService,
+        private _companyService: CompanyService,
         private _profileService: ProfileService,
         private _productService: ProductService
     ) { }
@@ -54,6 +56,7 @@ export class InitialDataResolver implements Resolve<any> {
             this._productService.getAll(),
             this._pointOfSaleService.getBrokers(),
             this._companyLevelOrganizationService.getAll(),
+            this._companyService.getAll(),
         ])
     }
 

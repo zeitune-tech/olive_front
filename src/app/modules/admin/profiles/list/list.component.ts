@@ -1,7 +1,6 @@
 import { SelectionModel } from "@angular/cdk/collections";
 import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -19,7 +18,6 @@ import { Subject, takeUntil } from "rxjs";
 })
 export class ProfilesListComponent {
 
-    
     private _unsubscribeAll: Subject<any> = new Subject<any>();
         
     tableOptions: TableOptions<Profile> = {
@@ -75,7 +73,6 @@ export class ProfilesListComponent {
         private _changeDetectorRef: ChangeDetectorRef,
         private _profileService: ProfileService,
         private _translateService: TranslocoService,
-        private _dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
