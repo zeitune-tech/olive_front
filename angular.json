@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"insurance-attestation-frontend": {
+		"olive_front": {
 		"projectType": "application",
 		"schematics": {
 			"@schematics/angular:component": {
@@ -24,7 +24,7 @@
 			"build": {
 				"builder": "@angular-devkit/build-angular:application",
 				"options": {
-					"outputPath": "dist/insurance-attestation-frontend",
+					"outputPath": "dist/olive_front",
 					"index": "src/index.html",
 					"browser": "src/main.ts",
 					"polyfills": [
@@ -101,10 +101,10 @@
 			"builder": "@angular-devkit/build-angular:dev-server",
 			"configurations": {
 				"production": {
-					"buildTarget": "insurance-attestation-frontend:build:production"
+					"buildTarget": "olive_front:build:production"
 				},
 				"development": {
-					"buildTarget": "insurance-attestation-frontend:build:development"
+					"buildTarget": "olive_front:build:development"
 				}
 			},
 			"defaultConfiguration": "development"

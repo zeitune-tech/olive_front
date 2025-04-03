@@ -196,6 +196,12 @@
         }
     },
     "management_entity": {
+      "level": {
+        "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché",
+        "COMPANY_LEVEL_ORGANIZATION": "Organisation de niveau compagnie",
+        "POINT_OF_SALE": "Point de vente",
+        "COMPANY": "Compagnie"
+      },
       "form": {
         "title": "Configuration des entités de gestion",
         "subtitle": "Définir les détails des entités",

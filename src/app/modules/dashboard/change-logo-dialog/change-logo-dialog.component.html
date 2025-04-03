@@ -1,0 +1,78 @@
+<div class="space-y-2min-w-[480px]" #dialogRef *transloco="let t;">
+    <div  class=" p-6 py-4"> 
+        <h1 class="text-2xl font-bold">
+            {{t('dashboard.change_logo_dialog.title')}}
+        </h1>
+        <p class="text-sm text-gray-600">
+        </p>
+    </div>
+
+    
+    <mat-divider></mat-divider>
+    <mat-dialog-content>
+        <div class="min-h-[200px] flex flex-col justify-center items-center space-y-2">
+            <p class="text-lg font-semibold">
+                {{t('dashboard.change_logo_dialog.description')}}
+            </p>
+
+            <p class="text-sm text-gray-600">
+                {{t('dashboard.change_logo_dialog.sub_description')}}
+            </p>
+
+            <div class="flex flex-col items-center justify-center space-y-2">
+                <!-- Preview du logo -->
+                <div class="flex items-center justify-center w-full h-32 border border-gray-300 rounded mb-4">
+                <div *ngIf="!logoPreview" class="flex items-center justify-center w-full h-full text-gray-500">
+                    {{ t('dashboard.change_logo_dialog.no_logo') || 'No logo uploaded' }}
+                </div>
+                <div *ngIf="logoPreview" class="flex items-center justify-center w-full h-full">
+                    <img
+                        *ngIf="logoPreview"
+                        [src]="logoPreview"
+                        alt="Logo preview"
+                        class="w-32 h-32 object-cover border border-gray-300 rounded"
+                    />
+                </div>
+
+                </div>
+            
+                <!-- Input fichier -->
+                <input
+                    type="file"
+                    (change)="onFileSelected($event)"
+                    accept="image/*"
+                    class="hidden"
+                    #fileInput
+                />
+                <button mat-stroked-button (click)="fileInput.click()">
+                    {{ t('dashboard.change_logo_dialog.upload_button') || 'Upload Logo' }}
+                </button>
+            
+                <!-- Message d’erreur si besoin -->
+                <p *ngIf="fileError" class="text-sm text-red-500">
+                    {{ fileError }}
+                </p>
+            </div>
+            
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="flex justify-end space-x-2 py-4 px-6">
+        <button mat-button
+            class="mat-button-large  mt-6"
+            mat-flat-button
+            [color]="'primary'"
+            (click)="onClose()"
+        >
+            {{t('dashboard.change_logo_dialog.cancel')}}
+        </button>
+        <button mat-button
+            class="mat-button-large  mt-6"
+            mat-flat-button
+            [color]="'primary'"
+            (click)="onSubmit()"
+        >
+            {{t('dashboard.change_logo_dialog.confirm')}}
+        </button>
+    </mat-dialog-actions>
+</div>

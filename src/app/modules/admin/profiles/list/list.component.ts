@@ -25,6 +25,7 @@ export class ProfilesListComponent {
         columns: [
             { label: 'entities.profile.table.columns.name', property: 'name', type: 'text', visible: true },
             { label: 'entities.profile.table.columns.description', property: 'description', type: 'text', visible: true },
+            { label: 'entities.profile.table.columns.type', property: 'level', type: 'text', visible: true },
             { label: 'entities.profile.table.columns.permissions_count', property: 'permissions', type: 'text', visible: true },
         ],
         imageOptions: {
@@ -38,7 +39,10 @@ export class ProfilesListComponent {
             
         ],
         renderItem: (element: Profile, property: keyof Profile) => {
-            
+            if (property === 'level') {
+                return this._translateService.translate('entities.management_entity.level.' + element[property]);
+            }
+
             if (property === 'permissions') {
                 return element[property].length;
             }

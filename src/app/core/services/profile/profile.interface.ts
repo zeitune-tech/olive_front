@@ -16,7 +16,8 @@ export class Profile {
     name: string = '';
     description: string = '';
     permissions: Permission[] = [];
-
+    level: string = '';
+    
     constructor(profile?: Partial<Profile>) {
         Object.assign(this, profile);
     }

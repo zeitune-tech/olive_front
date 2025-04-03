@@ -16,14 +16,8 @@ import { SharedModule } from "../../shared/shared.module";
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AuthForgotPasswordComponent } from "./forgot-password/forgot-password.component";
-import { AuthSignUpComponent } from "./sign-up/sign-up.component";
-import { StepOneComponent } from "./sign-up/stepOne/step-one.component";
-import { StepTwoComponent } from "./sign-up/stepTwo/step-two.component";
-import { StepThreeComponent } from "./sign-up/stepThree/step-three.component";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatDividerModule } from "@angular/material/divider";
-import { CreationDialogComponent } from "./sign-up/creation-dialog/creation-dialog.component";
-import { StepFourComponent } from "./sign-up/stepFour/step-four.component";
 import { DialogModule } from "@angular/cdk/dialog";
 
 import { CdkStepper } from '@angular/cdk/stepper'
@@ -32,12 +26,6 @@ import { CdkStepper } from '@angular/cdk/stepper'
     declarations: [
         AuthSignInComponent,
         AuthForgotPasswordComponent,
-        AuthSignUpComponent,
-        StepOneComponent,
-        StepTwoComponent,
-        StepThreeComponent,
-        StepFourComponent,
-        CreationDialogComponent
     ],
     imports: [
         RouterModule.forChild(authRoutes),

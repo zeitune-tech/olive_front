@@ -9,6 +9,7 @@ import { ProfileService } from '@core/services/profile/profile.service';
 import { ProductService } from '@core/services/product/product.service';
 import { CompanyLevelOrganizationService } from '@core/services/company-level-organization/company-level-organization.service';
 import { CompanyService } from '@core/services/company/company.service';
+import { RestrictionService } from '@core/services/restriction/restriction.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +26,8 @@ export class InitialDataResolver implements Resolve<any> {
         private _companyLevelOrganizationService: CompanyLevelOrganizationService,
         private _companyService: CompanyService,
         private _profileService: ProfileService,
-        private _productService: ProductService
+        private _productService: ProductService,
+        private _restrictionService: RestrictionService,
     ) { }
 
     // -----------------------------------------------------------------------------------------------------
@@ -57,6 +59,7 @@ export class InitialDataResolver implements Resolve<any> {
             this._pointOfSaleService.getBrokers(),
             this._companyLevelOrganizationService.getAll(),
             this._companyService.getAll(),
+            this._restrictionService.getAll(),
         ])
     }
 

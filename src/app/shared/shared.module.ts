@@ -8,10 +8,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { NewDemandComponent } from './components/new-demand/new-demand.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
     declarations: [
         NewDemandComponent,
+        ConfirmDialogComponent
     ],
     imports: [
         CommonModule,

@@ -1,7 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, UntypedFormGroup } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { ManagementEntity } from "@core/services/management-entity/management-entity.interface";
 import { User } from "@core/services/user/user.interface";
 import { UserService } from "@core/services/user/user.service";
+import { ChangeLogoDialogComponent } from "../change-logo-dialog/change-logo-dialog.component";
+import { RestrictionService } from "@core/services/restriction/restriction.service";
+import { Restriction } from "@core/services/restriction/restriction.interface";
 
 interface Module {
     id: string;
@@ -26,44 +31,16 @@ export class DashboardComponent implements OnInit {
     user: User = {} as User;
 
 
-    availableModules: Module[] = [{
-        id: 'gestion-client',
-        name: 'Gestion Clients',
-        features: [
-            {
-                name: 'Liste Clients',
-                description: 'Visualiser et gérer la liste des clients',
-                icon: 'fas fa-users'
-            },
-            {
-                name: 'Ajouter Client',
-                description: 'Créer un nouveau client',
-                icon: 'fas fa-user-plus'
-            },
-            // Autres fonctionnalités...
-        ]
-    },
-    {
-        id: 'facturation',
-        name: 'Facturation',
-        features: [
-            {
-                name: 'Créer Facture',
-                description: 'Générer une nouvelle facture',
-                icon: 'fas fa-file-invoice-dollar'
-            },
-            {
-                name: 'Liste Factures',
-                description: 'Consulter les factures existantes',
-                icon: 'fas fa-list'
-            },
-            // Autres fonctionnalités...
-        ]
-    }];
+    availableModules: Module[] = [];
+
+    formGroup!: UntypedFormGroup;
+    logo: FormData | null = null;
 
     currentModule: Module | null = null;
     currentModuleFeatures: Feature[] = [];
     isModuleSelectorOpen = false;
+
+    restrictions: Restriction[] = [];
     openModuleSelector() {
         this.isModuleSelectorOpen = true;
     }
@@ -79,7 +56,10 @@ export class DashboardComponent implements OnInit {
     }
 
     constructor(
-        private _userService: UserService
+        private _userService: UserService,
+        private _formBuilder: FormBuilder,
+        private _dialog: MatDialog,
+        private _restrictionService: RestrictionService,
     ) { }
 
     ngOnInit(): void {
@@ -87,8 +67,34 @@ export class DashboardComponent implements OnInit {
             this.user = user;
             this.entity = user.managementEntity;
         });
+
+        this._restrictionService.restrictions$.subscribe((restrictions: Restriction[]) => {
+            this.restrictions = restrictions;
+        });
+
         if (this.availableModules.length > 0) {
             this.selectModule(this.availableModules[0]);
         }
+
+        this.formGroup = this._formBuilder.group({
+            logo: [null],
+        });
+
+        this.formGroup.get("logo")?.valueChanges.subscribe((logo: FormData) => {
+            this.logo = logo;
+        });
+    }
+
+    openChangeLogoDialog() {
+        const dialogRef = this._dialog.open(ChangeLogoDialogComponent, {
+            data: { logo: this.logo },
+        });
+
+        dialogRef.afterClosed().subscribe((result: FormData) => {
+            if (result) {
+                this.logo = result;
+                // Handle the logo change logic here
+            }
+        });
     }
 }

@@ -26,7 +26,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { StepThreeComponent } from "./new/step-three/step-three.component";
 import { StepFourComponent } from "./new/step-four/step-four.component";
 import { StepFiveComponent } from "./new/step-five/step-five.component";
-import { ConfirmDialogComponent } from "@shared/components/confirm-dialog/confirm-dialog.component";
+import { UsersLayoutComponent } from "./layout/layout.component";
+import { ChangePointOfSaleDialogComponent } from "./change-point-of-sale-dialog/change-point-of-sale-dialog.component";
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { ConfirmDialogComponent } from "@shared/components/confirm-dialog/confir
         StepThreeComponent,
         StepFourComponent,
         StepFiveComponent,
-        ConfirmDialogComponent,
+        UsersLayoutComponent,
+        ChangePointOfSaleDialogComponent
     ],
     imports: [
         RouterModule.forChild(routes),

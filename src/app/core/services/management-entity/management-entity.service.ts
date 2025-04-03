@@ -8,7 +8,6 @@ import { HttpClient } from "@angular/common/http";
 export class ManagementEntityService {
 
     baseUrl = environment.request_url + '/management-entities';
-
     private _entity: ReplaySubject<ManagementEntity> = new ReplaySubject<ManagementEntity>(1);
     
     constructor(
@@ -23,26 +22,17 @@ export class ManagementEntityService {
         return this._entity.asObservable();
     }
 
-    create(entity: ManagementEntity): Observable<ManagementEntity> {
-        return this._httpClient.post<ManagementEntity>(`${this.baseUrl}/management-entities`, entity)
-        .pipe(
-            tap((entity) => {
-                this.entity = entity;
-            })
-        );
-    }
-
-    getEntity(id: string): Observable<ManagementEntity> {
-        return this._httpClient.get<ManagementEntity>(`${this.baseUrl}/management-entities/${id}`)
-        .pipe(
-            tap((entity) => {
-                this.entity = entity;
-            })
-        );
-    }
-
     get(): Observable<ManagementEntity> {
-        return this._httpClient.get<ManagementEntity>(`${this.baseUrl}/management-entities/me`)
+        return this._httpClient.get<ManagementEntity>(`${this.baseUrl}`)
+        .pipe(
+            tap((entity) => {
+                this.entity = entity;
+            })
+        );
+    }
+
+    updateLogo(formData: FormData): Observable<ManagementEntity> {
+        return this._httpClient.put<ManagementEntity>(`${this.baseUrl}/logo`, formData)
         .pipe(
             tap((entity) => {
                 this.entity = entity;

@@ -19,6 +19,7 @@ import { Subject, takeUntil } from "rxjs";
 export class UsersListComponent {
     
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
         
     tableOptions: TableOptions<User> = {
         title: '',

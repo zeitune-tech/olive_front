@@ -3,11 +3,11 @@
     <div class="w-full bg-primary p-4 sm:p-6 sm:rounded-xl rounded-md flex items-center sm:gap-6 gap-2">
         <!-- Logo -->
         <div class="size-32 md:size-36 bg-white rounded-md flex items-center justify-center">
-            <img src="assets/images/logo/logo.svg" class="w-full object-cover">
+            <img [src]="entity.logo || 'assets/images/logo/logo.svg'" class="w-full object-cover">
         </div>
 
         <!-- Entity Information -->
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 flex-1">
             <h1 class="text-white text-2xl font-bold">
                 Nom: {{ entity.name }}
             </h1>
@@ -21,44 +21,31 @@
                 Adresse: {{ entity.address }}
             </p>
         </div>
-    </div>
-
-    <!-- Module Selection Section -->
-    <div class="p-4 sm:p-6 bg-gray-100">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-primary text-lg font-bold">
-                Modules Disponibles
-            </h2>
+        <div class="flex flex-col h-full items-center gap-2">
             <button 
-                (click)="openModuleSelector()" 
-                class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition-colors"
+                (click)="openChangeLogoDialog()"
+                class="bg-white text-primary px-4 py-2 rounded-md hover:bg-gray-200 transition-colors"
             >
-                Changer de Module
+                Modifier
             </button>
         </div>
     </div>
 
-    <!-- Fonctionnalités list -->
-    <div class="p-4 sm:p-6">
-        <h2 class="text-primary text-lg font-bold mb-4">
-            Fonctionnalités du Module Actuel
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div 
-                *ngFor="let feature of currentModuleFeatures" 
-                class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-            >
-                <div class="flex items-center mb-2">
-                    <i class="mr-2 {{ feature.icon }} text-primary"></i>
-                    <h3 class="font-semibold">{{ feature.name }}</h3>
-                </div>
-                <p class="text-gray-600 text-sm">{{ feature.description }}</p>
+    <!-- Restriction -->
+
+    <div>
+        @for (restriction of restrictions; track $index) {
+            <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 mt-4">
+                {{ restriction.entity.name }} | {{ restriction.type }}
             </div>
-        </div>
+        }
+
     </div>
 
+
+
     <!-- Module Selector Modal (To be implemented) -->
-    <div *ngIf="isModuleSelectorOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <!-- <div *ngIf="isModuleSelectorOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg max-w-md w-full">
             <h2 class="text-xl font-bold mb-4">Sélectionner un Module</h2>
             <div class="grid grid-cols-2 gap-4">
@@ -77,5 +64,5 @@
                 Annuler
             </button>
         </div>
-    </div>
+    </div> -->
 </div>

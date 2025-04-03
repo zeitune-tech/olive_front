@@ -101,6 +101,20 @@ export class UserService{
             );
     }
 
+    getUsersByManagementEntity(id: string): Observable<User[]> {
+        return this._httpClient.get<User[]>(`${this.baseUrl}/management-entity/${id}`)
+            .pipe(
+                tap((response: any) => {
+                    this.users = response.content?.map((user: User) => {
+                        return user;
+                    });
+                    this.metadata = response;
+                    return response;
+                }),
+                catchError(() => of([] as User[]))
+            );
+    }
+
     create(user: any): Observable<any> {
         return this._httpClient.post<User>(`${this.baseUrl}`, {
             firstname: user.firstName,

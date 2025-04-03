@@ -1,0 +1,57 @@
+<div class="flex flex-col w-full" *transloco="let t;">
+    <!-- Dialog header -->
+    <div class="flex items-center justify-between p-6 pb-6">
+        <h2 class=" text-xl md:text-2xl font-semibold">
+            {{t('entity.select-entity')}}
+        </h2>
+        <button [matDialogClose]="false">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <!-- Search -->
+    <div class="flex flex-col md:flex-row w-full justify-between md:items-center gap-4 px-4 mb-6 ">
+        <mat-form-field class="w-full" appearance="outline">
+            <mat-icon matPrefix [svgIcon]="'fluent:search'" class="mr-2"></mat-icon>
+            <input matInput [placeholder]="t('input-placeholder.search-entitys')" [formControl]="searchControl">
+        </mat-form-field>
+        
+        @if (data.addEntity === true) {
+            <!-- Add entity button -->
+            <button mat-button class="bg-primary-500 text-white rounded-lg" (click)="openEntityCreationDialog()">
+                {{t('button.add-entity')}}
+            </button>
+        }
+    </div>
+
+    <!-- Entity list -->
+    <mat-dialog-content class="overflow-y-auto">
+        @for (entity of filteredEntity; track entity.id) {
+            <div class="flex items-center p-6 cursor-pointer hover:bg-hover"
+                (click)="selectEntity(entity)"
+                [class.bg-primary-50]="data.selectedEntity.id === entity.id">
+            
+                <mat-icon [svgIcon]="'fluent:people-entity'" class="mr-3"></mat-icon>
+                <span>{{entity.name}}</span>
+                <div class="flex-1">
+
+                </div>
+
+                <!-- Selected indicator -->
+                @if (data.selectedEntity.id === entity.id) {
+                    <mat-icon class="text-primary" [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                }
+            </div>
+
+            <!-- Divider -->
+            @if (!$last) {
+                <div class="border-t"></div>
+            }
+        }
+
+        <!-- No entitys -->
+        @if (filteredEntity.length === 0) {
+            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">{{t('entity.table.no-data')}}</div>
+        }
+    </mat-dialog-content>
+</div>

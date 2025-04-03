@@ -1,0 +1,19 @@
+<div class="w-full" *transloco="let t;">
+
+
+     <!-- Filter by entity, search bar, add member button -->
+     <div class="flex flex-col md:flex-row items-center gap-4">
+        <div class="flex flex-col md:flex-row items-center gap-4">
+            <!-- Team Selection -->
+            <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
+                <mat-icon [svgIcon]="'fluent:people-entity'"></mat-icon>
+                <span>{{selectedEntity.name || t('entity.select-entity')}}</span>
+                <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openEntitySelection()">
+                    {{t('button.change-entity')}}
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</div>

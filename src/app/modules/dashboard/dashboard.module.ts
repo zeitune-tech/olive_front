@@ -16,10 +16,12 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
+import { ChangeLogoDialogComponent } from "./change-logo-dialog/change-logo-dialog.component";
 
 @NgModule({
     declarations: [
-        DashboardComponent
+        DashboardComponent,
+        ChangeLogoDialogComponent
     ],
     imports: [
         RouterModule.forChild(routes),
