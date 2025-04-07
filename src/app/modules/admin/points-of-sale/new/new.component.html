@@ -41,7 +41,7 @@
                 <mat-label>
                     {{ t('entities.point_of_sale.form.fields.type.label') }}
                 </mat-label>
-                <mat-select [formControlName]="'type'">
+                <mat-select [formControlName]="'typePointOfSale'">
                     <mat-option *ngFor="let type of types" [value]="type.value">
                         {{ t(type.label) }}
                     </mat-option>
