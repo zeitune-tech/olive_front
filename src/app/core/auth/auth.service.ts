@@ -9,6 +9,7 @@ import { AuthResponse, RegisterRequest, UserCredentials } from './auth.model';
 @Injectable()
 export class AuthService {
     private _authenticated: boolean = false;
+    private _baseUrl = environment.auth_url;
 
     /**
      * Constructor
@@ -60,7 +61,7 @@ export class AuthService {
      * @param email
      */
     forgotPassword(email: string): Observable<any> {
-        return this._httpClient.post(`${environment.base_url}/auth/forgot-password`, email);
+        return this._httpClient.post(`${this._baseUrl}/auth/forgot-password`, email);
     }
 
     /**
@@ -69,7 +70,7 @@ export class AuthService {
      * @param password
      */
     resetPassword(password: string): Observable<any> {
-        return this._httpClient.post(`${environment.base_url}/auth/reset-password`, password);
+        return this._httpClient.post(`${this._baseUrl}/auth/reset-password`, password);
     }
 
     /**
@@ -83,7 +84,7 @@ export class AuthService {
             return throwError(() => 'User is already logged in.');
         }
 
-        return this._httpClient.post<AuthResponse>(`${environment.base_url}/auth/login`, credentials).pipe(
+        return this._httpClient.post<AuthResponse>(`${this._baseUrl}/auth/login`, credentials).pipe(
             tap((response: AuthResponse) => {
                 // Store the access token in the local storage
                 this.accessToken = response.accessToken;
@@ -107,7 +108,7 @@ export class AuthService {
      * @param user
      */
     signUp(registerRequest: RegisterRequest): Observable<AuthResponse> {
-        return this._httpClient.post<AuthResponse>(`${environment.base_url}/auth/register`, registerRequest)
+        return this._httpClient.post<AuthResponse>(`${this._baseUrl}/auth/register`, registerRequest)
         .pipe(
             tap((response: AuthResponse) => {
                 // Store the access token in the local storage
@@ -141,7 +142,7 @@ export class AuthService {
     }
 
     unlockSession(credentials: { email: string; password: string }): Observable<any> {
-        return this._httpClient.post(`${environment.base_url}/auth/unlock-session`, credentials);
+        return this._httpClient.post(`${this._baseUrl}/auth/unlock-session`, credentials);
     }
 
     check(): Observable<boolean> {
@@ -170,7 +171,7 @@ export class AuthService {
     private signInUsingToken(): Observable<boolean> {
         // Sign in using the token
         return this._httpClient.post<AuthResponse>(
-            `${environment.base_url}/auth/refresh-token`,
+            `${this._baseUrl}/auth/refresh-token`,
             {}, 
             {
                 headers: {

@@ -1,0 +1,82 @@
+<div class="w-full pb-10"  *transloco="let t">
+
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('entities.production_registry.form.title') }}
+        </h1>
+        <!-- Description -->
+        <p class="text-sm md:text-base text-gray-600">
+            {{ t('entities.production_registry.form.subtitle') }}
+        </p>
+    </div>
+
+    <!-- Form -->
+
+    <form [formGroup]="formGroup" 
+        class="w-full sm:max-w-4xl bg-card p-4 rounded-xl mx-auto"
+    >
+        <div class="flex flex-col mb-6 text-center text-primary">
+            <h1 class="text-2xl font-bold">
+                {{ t('entities.production_registry.form.title') }}
+            </h1>
+            <p class="text-sm text-gray-600">
+                {{ t('entities.production_registry.form.subtitle') }}
+            </p>
+        </div>
+
+        <div class="flex flex-col gap-6">
+            <!-- Prefix -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.production_registry.form.fields.prefix.label') }}</mat-label>
+                <input matInput formControlName="prefix" />
+                <mat-error *ngIf="formGroup.get('prefix')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Length -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.production_registry.form.fields.length.label') }}</mat-label>
+                <input type="number" matInput formControlName="length" />
+                <mat-error *ngIf="formGroup.get('length')?.hasError('min')">
+                    {{ t('form.errors.min', { min: 1 }) }}
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('length')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Management Entity -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.production_registry.form.fields.managementEntity.label') }}</mat-label>
+                <input matInput formControlName="managementEntity" />
+                <mat-error *ngIf="formGroup.get('managementEntity')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                </mat-error>
+            </mat-form-field>
+            
+            <!-- Submit Button -->
+            <div class="flex items-center gap-4 justify-end">
+                <div>
+                    {{t(message)}}
+                </div>
+                <button
+                    class="mat-button-large mt-6"
+                    mat-button
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="formGroup.invalid || formGroup.disabled"
+                    (click)="onSubmit()">
+                    <span *ngIf="!formGroup.disabled">
+                        {{ t('form.actions.save') }}
+                    </span>
+                    <mat-progress-spinner
+                        *ngIf="formGroup.disabled"
+                        [diameter]="24"
+    
+                        [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/forms";
-import { PointOfSale } from "@core/services/point-of-sale/point-of-sale.interface";
-import { PointOfSaleService } from "@core/services/point-of-sale/point-of-sale.service";
+import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
+import { PointOfSaleService } from "@core/services/administration/point-of-sale/point-of-sale.service";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({

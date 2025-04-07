@@ -1,4 +1,4 @@
-<div class="w-full flex flex-col">
+<div class="w-full flex flex-col" *transloco="let t">
     <!-- Header -->
     <div class="w-full bg-primary p-4 sm:p-6 sm:rounded-xl rounded-md flex items-center sm:gap-6 gap-2">
         <!-- Logo -->
@@ -22,47 +22,28 @@
             </p>
         </div>
         <div class="flex flex-col h-full items-center gap-2">
-            <button 
-                (click)="openChangeLogoDialog()"
-                class="bg-white text-primary px-4 py-2 rounded-md hover:bg-gray-200 transition-colors"
-            >
-                Modifier
-            </button>
+            
         </div>
     </div>
 
-    <!-- Restriction -->
+    <div class=" text-center w-full p-4 sm:p-6 sm:rounded-xl rounded-md items-center sm:gap-6 gap-2 mt-4">
+        <h2 class="text-2xl font-bold text-primary">
+            {{t(module.title)}}
+        </h2>
+        <p class="text-md text-gray-600 mt-2">
+            {{t(module.description || "")}}
+        </p>
+    </div>
 
-    <div>
-        @for (restriction of restrictions; track $index) {
-            <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 mt-4">
-                {{ restriction.entity.name }} | {{ restriction.type }}
+    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        <!-- Features List -->
+        @for (item of module.features; track $index) {
+            <div class="bg-white p-4 sm:p-6 sm:rounded-xl rounded-md flex flex-col gap-2">
+                <h3 class="text-lg font-bold">{{t(item.title)}}</h3>
+                <p>{{t(item.description || "")}}</p>
+                <a [routerLink]="item.route" class="text-blue-500 hover:underline mt-2">{{t('dashboard.seeMore')}}</a>
             </div>
         }
-
     </div>
-
-
-
-    <!-- Module Selector Modal (To be implemented) -->
-    <!-- <div *ngIf="isModuleSelectorOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded-lg max-w-md w-full">
-            <h2 class="text-xl font-bold mb-4">Sélectionner un Module</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <button 
-                    *ngFor="let module of availableModules" 
-                    (click)="selectModule(module)"
-                    class="bg-primary text-white py-2 rounded-md hover:bg-primary-dark transition-colors"
-                >
-                    {{ module.name }}
-                </button>
-            </div>
-            <button 
-                (click)="closeModuleSelector()" 
-                class="mt-4 w-full bg-gray-200 py-2 rounded-md hover:bg-gray-300 transition-colors"
-            >
-                Annuler
-            </button>
-        </div>
-    </div> -->
+    
 </div>

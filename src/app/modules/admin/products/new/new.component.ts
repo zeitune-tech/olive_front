@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/forms";
-import { ProductService } from "@core/services/product/product.service";
+import { ProductService } from "@core/services/administration/product/product.service";
 
 @Component({
     selector: "app-products-new",

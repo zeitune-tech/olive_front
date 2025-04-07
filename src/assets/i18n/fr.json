@@ -1,4 +1,7 @@
 {
+  "select-module": {
+    "title": "Sélectionner un module"
+  },
   "auth": {
     "sign_in": {
       "title": "Se connecter",
@@ -85,7 +88,8 @@
     },
     "market_level_organization": {
       "title": "Organisations niveau marché",
-      "list": "Liste des organisations niveau marché"
+      "list": "Liste des organisations niveau marché",
+      "linked": "Organisations liées"
     },
     "points_of_sale": {
       "title": "Points de vente",
@@ -112,6 +116,53 @@
       "title": "Produits",
       "list": "Liste des produits",
       "new": "Ajouter un produit"
+    },
+    "coverages": {
+      "title": "Produits",
+      "referential": "Référentiel des garanties",
+      "list": "Liste des garanties",
+      "new": "Ajouter une garantie"
+    },
+    "incompatible_coverages": {
+      "list": "Liste des garanties incompatibles",
+      "new": "Ajouter une garantie incompatible"
+    },
+    "coverage_durations": {
+      "title": "Durées Couverture",
+      "list": "Liste des durées",
+      "new": "Ajouter une durée"
+    },
+    "production_registries": {
+      "title": "Registres de production",
+      "list": "Liste des registres",
+      "new": "Ajouter un registre"
+    },
+    "insured_registries": {
+      "title": "Registres assurés",
+      "list": "Liste des registres",
+      "new": "Ajouter un registre"
+    },
+    "closures": {
+      "title": "Clôtures",
+      "list": "Liste des clôtures",
+      "new": "Ajouter une clôture"
+    },
+    "attestations": {
+      "title": "Stock d'attestations",
+      "list": "Mes attestations",
+      "new": "Ajouter une attestation",
+      "revoked": "Attestations retirées"
+    },
+    "attestation_demands": {
+      "title": "Demandes d'attestation reçues",
+      "list": "Liste des demandes",
+      "new": "Envoyer une d'attestations"
+    },
+    "attestation_points_of_sale": {
+      "title": "Attestations - Points de vente",
+      "list": "Mes points de vente",
+      "broker": "Courtiers",
+      "group": "Envoyer par groupe"
     }
   },
   "form": {
@@ -123,7 +174,10 @@
       "required": "Ce champ est requis",
       "email_invalid": "Format d'adresse e-mail invalide",
       "min_length": "Ce champ doit contenir au moins {min} caractères",
-      "password_mismatch": "Les mots de passe doivent être identiques"
+      "password_mismatch": "Les mots de passe doivent être identiques",
+      "min": "La valeur minimale est {{ min }}.",
+      "pastOrPresent": "La date doit être dans le passé ou aujourd’hui.",
+      "futureOrPresent": "La date doit être aujourd’hui ou dans le futur."
     },
     "actions": {
       "save": "Enregistrer",
@@ -133,67 +187,273 @@
       "confirm": "Confirmer",
       "confirm_delete": "Confirmer la suppression",
       "next": "Suivant",
-      "previous": "Précédent"
+      "previous": "Précédent",
+      "remove": "Supprimer",
+      "addIncompatible": "Ajouter une incompatibilité"
     }
   },
   "entities": {
-    "product": {
-        "form": {
-          "title": "Gestion des produits",
-          "subtitle": "Définir les détails du produit",
-          "description": "Créez ou modifiez les détails et classifications des produits.",
-            "fields": {
-                "name": { "label": "Nom", "placeholder": "Saisir le nom" },
-                "description": { "label": "Description", "placeholder": "Saisir la description" },
-                "branch": { "label": "Branche", "placeholder": "Sélectionner la branche" },
-                "category": { "label": "Classe", "placeholder": "Sélectionner la catégorie" }
-            }
+    "insured_registry": {
+      "table": {
+        "title": "Registre des assurés",
+        "description": "Liste des entrées du registre des assurés",
+        "columns": {
+          "name": "Nom",
+          "description": "Description",
+          "category": "Catégorie",
+          "branch": "Branche",
+          "prefix": "Préfixe",
+          "length": "Longueur",
+          "managementEntity": "Entité de gestion"
         },
-        "table": {
-          "title": "Liste des produits",
-          "subtitle": "Aperçu des produits",
-          "description": "Liste complète des produits proposés par la compagnie.",
-            "columns": {
-                "name": "Nom",
-                "description": "Description",
-                "branch": "Branche",
-                "category": "Classe",
-                "actions": "Actions"
-            },
-            "empty_state": "Aucun produit trouvé"
+        "empty_state": "Aucun registre des assurés trouvé."
+      },
+      "form": {
+        "title": "Registre des assurés",
+        "subtitle": "Veuillez remplir les informations du registre",
+        "fields": {
+          "name": { "label": "Nom" },
+          "description": { "label": "Description" },
+          "category": { "label": "Catégorie" },
+          "branch": { "label": "Branche" },
+          "prefix": { "label": "Préfixe" },
+          "length": { "label": "Longueur" },
+          "managementEntity": { "label": "Entité de gestion" }
         }
+      }
+    },
+
+    "closure": {
+      "form": {
+        "title": "Clôture",
+        "subtitle": "Veuillez spécifier les informations de clôture",
+        "fields": {
+          "type": { "label": "Type de clôture" },
+          "date": { "label": "Date d'effet" },
+          "managementEntity": { "label": "Entité de gestion" },
+          "product": { "label": "Produit" }
+        }
+      },
+      "table": {
+        "title": "Clôtures",
+        "description": "Liste des actions de clôture enregistrées",
+        "columns": {
+          "type": "Type de clôture",
+          "date": "Date d'effet",
+          "managementEntity": "Entité de gestion",
+          "product": "Produit"
+        },
+        "empty_state": "Aucune clôture enregistrée."
+      }
+    },
+
+    "coverage_duration": {
+      "form": {
+        "title": "Durée de la couverture",
+        "subtitle": "Définissez la période et les paramètres",
+        "fields": {
+          "from": { "label": "Date de début" },
+          "to": { "label": "Date de fin" },
+          "type": { "label": "Type de durée" },
+          "prorotaMode": { "label": "Mode prorata" },
+          "unit": { "label": "Unité" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Durées de couverture",
+        "description": "Périodes de couverture disponibles",
+        "columns": {
+          "from": "Date de début",
+          "to": "Date de fin",
+          "type": "Type de durée",
+          "prorotaMode": "Mode prorata",
+          "unit": "Unité",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucune durée de couverture disponible."
+      }
+    },
+
+    "coverage_reference": {
+      "form": {
+        "title": "Référence de garantie",
+        "subtitle": "Entrez les détails de la garantie",
+        "fields": {
+          "designation": { "label": "Désignation" },
+          "family": { "label": "Famille" },
+          "accessCharacteristic": { "label": "Accès aux caractéristiques" },
+          "tariffAccess": { "label": "Accès aux tarifs" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Références de garantie",
+        "description": "Table des différentes références de garantie",
+        "columns": {
+          "designation": "Désignation",
+          "family": "Famille",
+          "accessCharacteristic": "Accès aux caractéristiques",
+          "tariffAccess": "Accès au tarif",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucune référence de couverture trouvée."
+      }
+    },
+
+    "coverage": {
+      "form": {
+        "title": "Couverture",
+        "subtitle": "Remplissez les informations de garantie",
+        "fields": {
+          "nature": { "label": "Nature" },
+          "isFree": { "label": "Gratuite" },
+          "isFixed": { "label": "Fixe" },
+          "calculationMode": { "label": "Mode de calcul" },
+          "fixedCapital": { "label": "Capital fixe" },
+          "minCapital": { "label": "Capital minimum" },
+          "maxCapital": { "label": "Capital maximum" },
+          "order": { "label": "Ordre" },
+          "prorata": { "label": "Mode prorata" },
+          "displayPrime": { "label": "Afficher la prime" },
+          "generatesCharacteristic": { "label": "Génère des caractéristiques" },
+          "coverageReferenceId": { "label": "Référence de garantie" },
+          "product": { "label": "Produit" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Garantie",
+        "description": "Liste des garanties associées aux produits",
+        "columns": {
+          "nature": "Nature",
+          "isFree": "Gratuite",
+          "isFixed": "Fixe",
+          "calculationMode": "Mode de calcul",
+          "fixedCapital": "Capital fixe",
+          "minCapital": "Capital minimum",
+          "maxCapital": "Capital maximum",
+          "order": "Ordre",
+          "prorata": "Mode prorata",
+          "displayPrime": "Afficher la prime",
+          "generatesCharacteristic": "Génère des caractéristiques",
+          "coverageReferenceId": "Référence de garantie",
+          "product": "Produit",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucune couverture n’a été définie."
+      }
+    },
+
+    "incompatible_coverage": {
+      "form": {
+        "title": "Couvertures incompatibles",
+        "subtitle": "Ajoutez des paires de couvertures incompatibles",
+        "fields": {
+          "coverageUuid": { "label": "UUID de la couverture" },
+          "incompatibleCoverageUuid": { "label": "UUID de la couverture incompatible" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Garantie incompatibles",
+        "description": "Relations de garantie non compatibles",
+        "columns": {
+          "coverageUuid": "UUID de la garantie",
+          "incompatibleCoverageUuid": "UUID de la garantie incompatible",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucune incompatibilité de couverture enregistrée."
+      }
+    },
+
+    "production_registry": {
+      "form": {
+        "title": "Registre de production",
+        "subtitle": "Configurer les paramètres du registre de production",
+        "fields": {
+          "prefix": { "label": "Préfixe" },
+          "length": { "label": "Longueur" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Registre de production",
+        "description": "Paramètres de génération des enregistrements de production",
+        "columns": {
+          "prefix": "Préfixe",
+          "length": "Longueur",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucun registre de production disponible."
+      }
+    },
+    "product": {
+      "form": {
+        "title": "Gestion des produits",
+        "subtitle": "Définir les détails du produit",
+        "description": "Créez ou modifiez les détails et classifications des produits.",
+        "fields": {
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "description": {
+            "label": "Description",
+            "placeholder": "Saisir la description"
+          },
+          "branch": {
+            "label": "Branche",
+            "placeholder": "Sélectionner la branche"
+          },
+          "category": {
+            "label": "Classe",
+            "placeholder": "Sélectionner la catégorie"
+          }
+        }
+      },
+      "table": {
+        "title": "Liste des produits",
+        "subtitle": "Aperçu des produits",
+        "description": "Liste complète des produits proposés par la compagnie.",
+        "columns": {
+          "name": "Nom",
+          "description": "Description",
+          "branch": "Branche",
+          "category": "Classe",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucun produit trouvé"
+      }
     },
     "branch": {
-        "form": {
-            "title": "Détails de la branche",
-            "subtitle": "Créer ou modifier une branche"
+      "form": {
+        "title": "Détails de la branche",
+        "subtitle": "Créer ou modifier une branche"
+      },
+      "table": {
+        "title": "Branches",
+        "description": "Liste des branches",
+        "columns": {
+          "name": "Nom",
+          "description": "Description",
+          "actions": "Actions"
         },
-        "table": {
-            "title": "Branches",
-            "description": "Liste des branches",
-            "columns": {
-                "name": "Nom",
-                "description": "Description",
-                "actions": "Actions"
-            },
-            "empty_state": "Aucune branche trouvée"
-        }
+        "empty_state": "Aucune branche trouvée"
+      }
     },
     "category": {
-        "form": {
-            "title": "Détails de la catégorie",
-            "subtitle": "Créer ou modifier une catégorie"
+      "form": {
+        "title": "Détails de la catégorie",
+        "subtitle": "Créer ou modifier une catégorie"
+      },
+      "table": {
+        "title": "Catégories",
+        "description": "Liste des catégories",
+        "columns": {
+          "name": "Nom",
+          "description": "Description",
+          "actions": "Actions"
         },
-        "table": {
-            "title": "Catégories",
-            "description": "Liste des catégories",
-            "columns": {
-                "name": "Nom",
-                "description": "Description",
-                "actions": "Actions"
-            },
-            "empty_state": "Aucune catégorie trouvée"
-        }
+        "empty_state": "Aucune catégorie trouvée"
+      }
     },
     "management_entity": {
       "level": {
@@ -207,20 +467,26 @@
         "subtitle": "Définir les détails des entités",
         "description": "Créez ou modifiez les principales informations des entités de gestion.",
         "fields": {
-            "name": { "label": "Nom", "placeholder": "Saisir le nom" },
-            "email": { "label": "E-mail", "placeholder": "Saisir l'adresse e-mail" },
-            "phone": { "label": "Téléphone", "placeholder": "Saisir le numéro de téléphone" },
-            "address": { "label": "Adresse", "placeholder": "Saisir l'adresse" },
-            "logo": { "label": "Logo", "placeholder": "Télécharger le logo" },
-            "level": {
-                "label": "Niveau de l'entité",
-                "placeholder": "Sélectionner le niveau de l'entité",
-                "options": {
-                    "ENTITY_SUPERIOR": "Entité Supérieure",
-                    "COMPANY": "Entreprise",
-                    "POINT_OF_SALE": "Point de vente"
-                }
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "email": {
+            "label": "E-mail",
+            "placeholder": "Saisir l'adresse e-mail"
+          },
+          "phone": {
+            "label": "Téléphone",
+            "placeholder": "Saisir le numéro de téléphone"
+          },
+          "address": { "label": "Adresse", "placeholder": "Saisir l'adresse" },
+          "logo": { "label": "Logo", "placeholder": "Télécharger le logo" },
+          "level": {
+            "label": "Niveau de l'entité",
+            "placeholder": "Sélectionner le niveau de l'entité",
+            "options": {
+              "ENTITY_SUPERIOR": "Entité Supérieure",
+              "COMPANY": "Entreprise",
+              "POINT_OF_SALE": "Point de vente"
             }
+          }
         }
       },
       "table": {
@@ -288,8 +554,14 @@
         "description": "Créez ou modifiez les détails des points de vente.",
         "fields": {
           "name": { "label": "Nom", "placeholder": "Saisir le nom" },
-          "email": { "label": "E-mail", "placeholder": "Saisir l'adresse e-mail" },
-          "phone": { "label": "Téléphone", "placeholder": "Saisir le numéro de téléphone" },
+          "email": {
+            "label": "E-mail",
+            "placeholder": "Saisir l'adresse e-mail"
+          },
+          "phone": {
+            "label": "Téléphone",
+            "placeholder": "Saisir le numéro de téléphone"
+          },
           "address": { "label": "Adresse", "placeholder": "Saisir l'adresse" },
           "type": {
             "label": "Type",
@@ -353,15 +625,39 @@
         "step_five_previous": "Précédent",
         "step_five_confirm": "Confirmer & créer",
         "fields": {
-          "first_name": { "label": "Prénom", "placeholder": "Saisir le prénom" },
+          "first_name": {
+            "label": "Prénom",
+            "placeholder": "Saisir le prénom"
+          },
           "last_name": { "label": "Nom", "placeholder": "Saisir le nom" },
-          "email": { "label": "E-mail", "placeholder": "Saisir l'adresse e-mail" },
-          "phone": { "label": "Téléphone", "placeholder": "Saisir le numéro de téléphone" },
-          "password": { "label": "Mot de passe", "placeholder": "Saisir le mot de passe" },
-          "confirm_password": { "label": "Confirmer le mot de passe", "placeholder": "Confirmer le mot de passe" },
-          "company": { "label": "Compagnie", "placeholder": "Sélectionner la compagnie" },
-          "point_of_sale": { "label": "Point de vente", "placeholder": "Sélectionner le point de vente" },
-          "profile": { "label": "Profil", "placeholder": "Sélectionner le profil" }
+          "email": {
+            "label": "E-mail",
+            "placeholder": "Saisir l'adresse e-mail"
+          },
+          "phone": {
+            "label": "Téléphone",
+            "placeholder": "Saisir le numéro de téléphone"
+          },
+          "password": {
+            "label": "Mot de passe",
+            "placeholder": "Saisir le mot de passe"
+          },
+          "confirm_password": {
+            "label": "Confirmer le mot de passe",
+            "placeholder": "Confirmer le mot de passe"
+          },
+          "company": {
+            "label": "Compagnie",
+            "placeholder": "Sélectionner la compagnie"
+          },
+          "point_of_sale": {
+            "label": "Point de vente",
+            "placeholder": "Sélectionner le point de vente"
+          },
+          "profile": {
+            "label": "Profil",
+            "placeholder": "Sélectionner le profil"
+          }
         }
       },
       "table": {
@@ -396,8 +692,14 @@
         "step_three_create": "Confirmer & créer",
         "fields": {
           "name": { "label": "Nom", "placeholder": "Saisir le nom" },
-          "description": { "label": "Description", "placeholder": "Saisir la description" },
-          "permissions": { "label": "Permissions", "placeholder": "Sélectionner les permissions" }
+          "description": {
+            "label": "Description",
+            "placeholder": "Saisir la description"
+          },
+          "permissions": {
+            "label": "Permissions",
+            "placeholder": "Sélectionner les permissions"
+          }
         }
       },
       "table": {
@@ -432,8 +734,14 @@
         "step_three_create": "Confirmer & créer",
         "fields": {
           "name": { "label": "Nom", "placeholder": "Saisir le nom" },
-          "description": { "label": "Description", "placeholder": "Saisir la description" },
-          "points_of_sale": { "label": "Points de vente", "placeholder": "Sélectionner les points de vente" }
+          "description": {
+            "label": "Description",
+            "placeholder": "Saisir la description"
+          },
+          "points_of_sale": {
+            "label": "Points de vente",
+            "placeholder": "Sélectionner les points de vente"
+          }
         }
       },
       "table": {
@@ -478,16 +786,67 @@
   },
   "dashboard": {
     "title": "Tableau de bord",
-    "description": "Vue d'ensemble de votre compte"
+    "description": "Vue d'ensemble de votre compte",
+    "seeMore": "Voir plus"
   },
   "home": {
     "title": "Bonjour",
-    "description": "Bienvenue sur Olive Insurance, veuillez choisir un module pour commencer",
-    "modules": {
-      "administration": "Administration",
-      "productions_auto": "Exploitation Auto",
-      "insureds": "Assurés",
-      "parameters_auto": "Paramétrage Auto"
+    "description": "Bienvenue sur Olive Insurance, veuillez choisir un module pour commencer"
+  },
+  "modules": {
+    "administration": {
+      "title": "Module Administration",
+      "description": "Gérer les produits, organisations, entreprises, points de vente, profils et utilisateurs.",
+      "features": {
+        "products": "Produits",
+        "products_description": "Gestion des produits disponibles.",
+        "market_level_organizations": "Organisations de niveau marché",
+        "market_level_organizations_description": "Gestion des entités de niveau marché.",
+        "companies": "Entreprises",
+        "companies_description": "Gestion des entreprises partenaires.",
+        "points_of_sale": "Points de vente",
+        "points_of_sale_description": "Gestion des points de vente affiliés.",
+        "profiles": "Profils",
+        "profiles_description": "Gestion des profils utilisateurs et des rôles.",
+        "users": "Utilisateurs",
+        "users_description": "Gestion des comptes utilisateurs."
+      }
+    },
+    "settings": {
+      "title": "Module Paramètrage Auto",
+      "description": "Configurer les garanties, durées et registres.",
+      "features": {
+        "coverages": "Garantie",
+        "coverages_description": "Gestion des types de garantie.",
+        "coverage_durations": "Durées de garantie",
+        "coverage_durations_description": "Définir les durées de garantie disponibles.",
+        "insured_registries": "Registres des assurés",
+        "insured_registries_description": "Consulter et gérer les assurés enregistrés.",
+        "production_registries": "Registres de production",
+        "production_registries_description": "Suivi des données de production.",
+        "closures": "Clôtures",
+        "closures_description": "Configurer les périodes de clôture."
+      }
+    },
+    "insureds": {
+      "title": "Module Assurés",
+      "description": "Gérer les informations des assurés."
+    },
+    "productions_auto": "Module Exploitation Auto",
+    "productions_auto_description": "Gérer les données de production.",
+    "attestations": {
+      "title": "Module Attestations",
+      "description": "Gérer les attestations et les demandes associées.",
+      "features": {
+        "attestations": "Attestations",
+        "attestations_description": "Consultation et gestion des attestations.",
+        "attestations_demands": "Demandes d'attestation",
+        "attestations_demands_description": "Suivi des demandes d'attestations.",
+        "market_level_organization": "Demande aux organisations",
+        "market_level_organization_description": "Création de demandes pour les organisations de niveau marché.",
+        "companies": "Demande aux entreprises",
+        "companies_demands_description": "Création de demandes pour les entreprises."
+      }
     }
   },
   "user": {

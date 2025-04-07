@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { CompanyLevelOrganizationService } from '@core/services/company-level-organization/company-level-organization.service';
-import { PointOfSaleService } from '@core/services/point-of-sale/point-of-sale.service';
+import { CompanyLevelOrganizationService } from '@core/services/administration/company-level-organization/company-level-organization.service';
+import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
 import { forkJoin, map, Observable, of } from 'rxjs';
 
 @Injectable({

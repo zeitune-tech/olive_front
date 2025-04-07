@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { LayoutService } from "../../../../@lhacksrt/services/layout/layout.service";
 import { AppNavigationService } from "../../../../@lhacksrt/components";
 import { VerticalNavigationComponent } from "../../../../@lhacksrt/components/navigation/vertical/vertical.component";
+import { ModuleService, Module } from "@core/navigation/module.service";
+import { MatDialog } from "@angular/material/dialog";
+import { SelectModuleDialogComponent } from "../select-module-dialog/select-module-dialog.component";
 
 
 @Component({
@@ -11,10 +14,20 @@ import { VerticalNavigationComponent } from "../../../../@lhacksrt/components/na
 
 export class HeaderComponent implements OnInit, OnDestroy { 
 
+    modules: Module[] = [];
+    module: Module = {} as Module;
+
     constructor(
+        private dialog: MatDialog,
         private _layoutService: LayoutService,
+        private _moduleService: ModuleService,
         private _appNavigationService: AppNavigationService
-    ) { }
+    ) { 
+        this.modules = this._moduleService.getModules();
+        this._moduleService.module$.subscribe((module: Module) => {
+            this.module = module;
+        });
+    }
 
     ngOnInit(): void { }
 
@@ -38,5 +51,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
             // Toggle the opened status
             navigation.toggle();
         }
+    }
+
+    openDialog() {
+        this.dialog.open(SelectModuleDialogComponent, {
+            panelClass: 'select-module-dialog',
+            data: { modules: this.modules }
+        });
     }
 }

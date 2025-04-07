@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { CompanyService } from '@core/services/company/company.service';
+import { CompanyService } from '@core/services/administration/company/company.service';
 import { forkJoin, map, Observable } from 'rxjs';
 
 @Injectable({

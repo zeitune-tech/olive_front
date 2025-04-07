@@ -5,8 +5,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { MarketLevelOrganization } from "@core/services/market-level-organization/market-level-organization.interface";
-import { MarketLevelOrganizationService } from "@core/services/market-level-organization/market-level-organization.service";
+import { MarketLevelOrganization } from "@core/services/administration/market-level-organization/market-level-organization.interface";
+import { MarketLevelOrganizationService } from "@core/services/administration/market-level-organization/market-level-organization.service";
 import { animations } from "@lhacksrt/animations";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject } from "rxjs";
@@ -23,19 +23,18 @@ export class LinkedMarketLevelOrganizationListComponent {
     tableOptions: TableOptions<MarketLevelOrganization> = {
         title: '',
         columns: [
-            { label: 'company.columns.logo', property: 'logo', type: 'image', visible: true },
-            { label: 'company.columns.name', property: 'name', type: 'text', visible: true},
-            { label: 'company.columns.email', property: 'email', type: 'text', visible: true},
-            { label: 'company.columns.phone', property: 'phone', type: 'text', visible: true},
-            { label: 'company.columns.address', property: 'address', type: 'text', visible: true},
+            { label: 'entities.management_entity.table.columns.logo', property: 'logo', type: 'image', visible: true },
+            { label: 'entities.management_entity.table.columns.name', property: 'name', type: 'text', visible: true},
+            { label: 'entities.management_entity.table.columns.email', property: 'email', type: 'text', visible: true},
+            { label: 'entities.management_entity.table.columns.phone', property: 'phone', type: 'text', visible: true},
+            { label: 'entities.management_entity.table.columns.address', property: 'address', type: 'text', visible: true},
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
-            { label: 'company.actions.demand', icon: 'demand', action: this.onDemand.bind(this) },
         ],
         imageOptions: {
-            label: 'company.columns.logo',
+            label: 'entities.management_entity.table.columns.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },

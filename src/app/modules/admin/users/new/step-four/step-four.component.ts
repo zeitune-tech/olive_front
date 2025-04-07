@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/forms";
-import { Profile } from "@core/services/profile/profile.interface";
-import { ProfileService } from "@core/services/profile/profile.service";
-import { UserService } from "@core/services/user/user.service";
+import { Profile } from "@core/services/auth/profile/profile.interface";
+import { ProfileService } from "@core/services/auth/profile/profile.service";
+import { UserService } from "@core/services/auth/user/user.service";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({

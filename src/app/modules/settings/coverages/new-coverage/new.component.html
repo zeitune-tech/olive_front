@@ -1,0 +1,138 @@
+<div class="w-full pb-10"  *transloco="let t">
+
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('entities.coverage.table.title') }}
+        </h1>
+        <!-- Description -->
+        <p class="text-sm md:text-base text-gray-600">
+            {{ t('entities.coverage.form.subtitle') }}
+        </p>
+    </div>
+
+    <!-- Form -->
+
+    <form [formGroup]="formGroup" class="w-full sm:max-w-4xl bg-card p-4 rounded-xl mx-auto">
+        <div class="flex flex-col mb-6 text-center text-primary">
+          <h1 class="text-2xl font-bold">{{ t('entities.coverage.form.title') }}</h1>
+          <p class="text-sm text-gray-600">{{ t('entities.coverage.form.subtitle') }}</p>
+        </div>
+      
+        <div class="flex flex-col gap-6">
+          <!-- Nature -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.nature.label') }}</mat-label>
+            <input matInput formControlName="nature" />
+            <mat-error *ngIf="formGroup.get('nature')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
+      
+          <!-- Is Free -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.isFree.label') }}</mat-label>
+            <mat-select formControlName="isFree">
+              <mat-option [value]="true">{{ t('common.yes') }}</mat-option>
+              <mat-option [value]="false">{{ t('common.no') }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <!-- Is Fixed -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.isFixed.label') }}</mat-label>
+            <mat-select formControlName="isFixed">
+              <mat-option [value]="true">{{ t('common.yes') }}</mat-option>
+              <mat-option [value]="false">{{ t('common.no') }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <!-- Calculation Mode -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.calculationMode.label') }}</mat-label>
+            <mat-select formControlName="calculationMode">
+              <mat-option *ngFor="let mode of calculationModes" [value]="mode.value">
+                {{ mode.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <!-- Fixed Capital -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.fixedCapital.label') }}</mat-label>
+            <input matInput type="number" formControlName="fixedCapital" />
+          </mat-form-field>
+      
+          <!-- Min Capital -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.minCapital.label') }}</mat-label>
+            <input matInput type="number" formControlName="minCapital" />
+          </mat-form-field>
+      
+          <!-- Max Capital -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.maxCapital.label') }}</mat-label>
+            <input matInput type="number" formControlName="maxCapital" />
+          </mat-form-field>
+      
+          <!-- Order -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.order.label') }}</mat-label>
+            <input matInput type="number" formControlName="order" />
+          </mat-form-field>
+      
+          <!-- Prorata -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.prorata.label') }}</mat-label>
+            <input matInput formControlName="prorata" />
+          </mat-form-field>
+      
+          <!-- Display Prime -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.displayPrime.label') }}</mat-label>
+            <mat-select formControlName="displayPrime">
+              <mat-option [value]="true">{{ t('common.yes') }}</mat-option>
+              <mat-option [value]="false">{{ t('common.no') }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <!-- Generates Characteristic -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.generatesCharacteristic.label') }}</mat-label>
+            <mat-select formControlName="generatesCharacteristic">
+              <mat-option [value]="true">{{ t('common.yes') }}</mat-option>
+              <mat-option [value]="false">{{ t('common.no') }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <!-- Coverage Reference -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.coverageReferenceId.label') }}</mat-label>
+            <input matInput formControlName="coverageReferenceId" />
+          </mat-form-field>
+      
+          <!-- Product -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.product.label') }}</mat-label>
+            <input matInput formControlName="product" />
+          </mat-form-field>
+      
+          <!-- Management Entity -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage.form.fields.managementEntity.label') }}</mat-label>
+            <input matInput formControlName="managementEntity" />
+          </mat-form-field>
+      
+          <!-- Submit -->
+          <div class="flex justify-end mt-6">
+            <button
+              mat-flat-button
+              color="primary"
+              [disabled]="formGroup.invalid || formGroup.disabled"
+              (click)="onSubmit()">
+              <span *ngIf="!formGroup.disabled">{{ t('form.actions.save') }}</span>
+              <mat-progress-spinner *ngIf="formGroup.disabled" [diameter]="24" mode="indeterminate"></mat-progress-spinner>
+            </button>
+          </div>
+        </div>
+      </form>
+</div>

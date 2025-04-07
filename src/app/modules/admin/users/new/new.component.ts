@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { UntypedFormGroup, FormBuilder, Validators, NgForm } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { ManagementEntity } from "@core/services/management-entity/management-entity.interface";
-import { UserService } from "@core/services/user/user.service";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
+import { UserService } from "@core/services/auth/user/user.service";
 import { animations } from "@lhacksrt/animations";
 import { ConfirmDialogComponent } from "@shared/components/confirm-dialog/confirm-dialog.component";
 import { Subject, takeUntil } from "rxjs";
@@ -86,9 +86,6 @@ export class UsersNewComponent implements OnInit {
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((user) => {
             if (user) {
-                this.currentIsCompanyEmployee = user.managementEntity.type === 'COMPANY';
-                this.currentAccessLevel = user.managementEntity.type;
-                this.managementEntity = user.managementEntity;
             }
         });
         

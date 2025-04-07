@@ -1,7 +1,7 @@
 <!-- Header -->
 <div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 dark:shadow-none  dark:bg-transparent print:hidden">
     
-    <div class="flex items-center space-x-0.5 sm:space-x-2">
+    <div class="flex items-center space-x-0.5 sm:space-x-2" *transloco="let t">
         
         <!-- Navigation toggle button -->
         <button
@@ -12,7 +12,17 @@
         </button>
 
         <!-- Breadcumbs -->
-        <breadcrumbs></breadcrumbs>
+        @if (module) {
+            <div class="flex h-full items-center gap-2">
+                <button 
+                (click)="openDialog()"
+                    class="bg-primary items-center flex text-white text-lg capitalize font-semibold px-4 py-2 rounded-md transition-colors hover:bg-primary-800"
+                >
+                {{t(module.title)}}
+                <mat-icon class="text-white" [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon>
+                </button>
+            </div>
+        }
     </div>
 
 

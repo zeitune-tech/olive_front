@@ -1,0 +1,72 @@
+<div class="w-full pb-10" *transloco="let t">
+
+	<div class="flex flex-col mb-10">
+		<h1 class="text-2xl md:text-4xl font-bold py-4">
+			{{ t('entities.incompatible_coverage.table.title') }}
+		</h1>
+		<!-- Description -->
+		<p class="text-sm md:text-base text-gray-600">
+			{{ t('entities.incompatible_coverage.form.subtitle') }}
+		</p>
+	</div>
+
+	<!-- Form -->
+
+	<form [formGroup]="formGroup" class="p-6 bg-card rounded-xl">
+		<div formArrayName="incompatibles">
+			<div *ngFor="let group of incompatibles.controls; let i = index" [formGroupName]="i"
+				class="mb-6 p-4 rounded-lg flex flex-col gap-6">
+
+				<!-- Coverage UUID -->
+				<mat-form-field class="w-full" appearance="outline">
+					<mat-label>{{ t('entities.incompatible_coverage.form.fields.coverageUuid.label') }}</mat-label>
+					<input matInput formControlName="coverageUuid" />
+					<mat-error *ngIf="group.get('coverageUuid')?.hasError('required')">
+						{{ t('form.errors.required') }}
+					</mat-error>
+				</mat-form-field>
+
+				<!-- Incompatible Coverage UUID -->
+				<mat-form-field class="w-full" appearance="outline">
+					<mat-label>{{ t('entities.incompatible_coverage.form.fields.incompatibleCoverageUuid.label')
+						}}</mat-label>
+					<input matInput formControlName="incompatibleCoverageUuid" />
+					<mat-error *ngIf="group.get('incompatibleCoverageUuid')?.hasError('required')">
+						{{ t('form.errors.required') }}
+					</mat-error>
+				</mat-form-field>
+
+				<!-- Management Entity -->
+				<mat-form-field class="w-full" appearance="outline">
+					<mat-label>{{ t('entities.incompatible_coverage.form.fields.managementEntity.label') }}</mat-label>
+					<input matInput formControlName="managementEntity" />
+					<mat-error *ngIf="group.get('managementEntity')?.hasError('required')">
+						{{ t('form.errors.required') }}
+					</mat-error>
+				</mat-form-field>
+
+				<!-- Remove button -->
+				<div class="flex justify-end">
+					<button mat-button color="warn" (click)="removeIncompatible(i)" *ngIf="incompatibles.length > 1">
+						{{ t('form.actions.remove') }}
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Add New Incompatible Coverage -->
+		<button mat-button color="primary" (click)="addIncompatible()">
+			{{ t('form.actions.addIncompatible') }}
+		</button>
+
+		<!-- Submit Button -->
+		<div class="mt-6 text-right">
+			<button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
+				(click)="onSubmit()">
+				{{ t('form.actions.save') }}
+			</button>
+		</div>
+	</form>
+
+</div>

@@ -8,6 +8,9 @@ import { PERMISSIONS } from '@core/permissions/permissions.data';
 import { DashboardResolver } from './modules/dashboard/dashboard.resolver';
 import { PointsOfSaleResolver } from './modules/admin/points-of-sale/points-of-sale.resolver';
 import { CompaniesResolver } from './modules/admin/companies/companies.resolver';
+import { AdministrationResolver } from './modules/admin/admin.resolver';
+import { resolve } from 'path';
+import { SettingsResolver } from './modules/settings/settings.resolver';
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy       : PreloadAllModules,
@@ -72,10 +75,23 @@ const routes: Routes = [
             },
             {
                 path: 'administration',
+                resolve: {
+                    administrationData: AdministrationResolver
+                },
                 canActivate: [],
                 canActivateChild: [],
                 data: {},
                 loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+            },
+            {
+                path: 'parameters',
+                canActivate: [],
+                canActivateChild: [],
+                resolve: {
+                    resolveData: SettingsResolver
+                },
+                data: {},
+                loadChildren: () => import('./modules/settings/settings.module').then(m => m.SettingsModule)
             },
             
             // 404 & Catch all

@@ -5,6 +5,11 @@ import { ProfilesNewComponent } from './new/new.component';
 
 export const routes: Routes = [
     {
+        path: "",
+        redirectTo: "list",
+        pathMatch: "full"
+    },
+    {
         path: "list",
         component: ProfilesListComponent
     },

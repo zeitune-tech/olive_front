@@ -4,8 +4,8 @@ import { UntypedFormGroup, FormBuilder, Validators, UntypedFormControl } from "@
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Permission } from "@core/services/profile/profile.interface";
-import { ProfileService } from "@core/services/profile/profile.service";
+import { Permission } from "@core/permissions/permissions.model";
+import { ProfileService } from "@core/services/auth/profile/profile.service";
 import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { UserService } from '@core/services/user/user.service';
+import { UserService } from '@core/services/auth/user/user.service';
 import { forkJoin, map, Observable, of } from 'rxjs';
 
 @Injectable({

@@ -1,0 +1,103 @@
+import { SelectionModel } from "@angular/cdk/collections";
+import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
+import { UntypedFormControl } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { CoverageDuration } from "@core/services/settings/coverage-duration/coverage-duration.interface";
+import { CoverageDurationService } from "@core/services/settings/coverage-duration/coverage-duration.service";
+import { animations } from "@lhacksrt/animations";
+import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
+import { Subject, takeUntil } from "rxjs";
+
+@Component({
+    selector: "app-coverage-durations-list",
+    templateUrl: "./list.component.html",
+    animations: animations
+})
+export class CoverageDurationsListComponent {
+
+
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+
+    tableOptions: TableOptions<CoverageDuration> = {
+        title: '',
+        columns: [
+            { label: 'entities.coverage_duration.table.columns.from', property: 'from', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.table.columns.to', property: 'to', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.table.columns.type', property: 'type', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.table.columns.prorotaMode', property: 'prorotaMode', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.table.columns.unit', property: 'unit', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true }
+        ],
+        imageOptions: {
+            label: 'coverageDuration.columns.logo',
+            property: 'logo',
+            cssClasses: ['w-16 h-16']
+        },
+        pageSize: 8,
+        pageSizeOptions: [5, 6, 8],
+        actions: [
+
+        ],
+        renderItem: (element: CoverageDuration, property: keyof CoverageDuration) => {
+
+            return element[property];
+        },
+    };
+    data: CoverageDuration[] = [];
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
+
+    dataSource: MatTableDataSource<CoverageDuration> = new MatTableDataSource();
+    selection = new SelectionModel<CoverageDuration>(true, []);
+    searchInputControl: UntypedFormControl = new UntypedFormControl();
+
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _coverageDurationService: CoverageDurationService,
+        private _dialog: MatDialog
+    ) { }
+
+    ngOnInit(): void {
+        this._coverageDurationService.coverageDurations$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: CoverageDuration[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+                this._changeDetectorRef.detectChanges();
+            });
+    }
+
+    ngAfterViewInit() {
+        if (this.dataSource) {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        }
+    }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    /**
+        * EditCoverageDurationCoverageDuration
+        */
+    onDemand(item: CoverageDuration | null): void {
+
+    }
+
+    get visibleColumns() {
+        let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
+        columns.push('actions');
+        return columns;
+    }
+
+    trackByProperty(index: number, column: TableColumn<CoverageDuration>) {
+        return column.property;
+    }
+}

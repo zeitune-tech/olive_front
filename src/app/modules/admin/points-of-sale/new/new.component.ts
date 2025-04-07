@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { UntypedFormGroup, FormBuilder, Validators } from "@angular/forms";
-import { PointOfSale } from "@core/services/point-of-sale/point-of-sale.interface";
-import { PointOfSaleService } from "@core/services/point-of-sale/point-of-sale.service";
-import { User } from "@core/services/user/user.interface";
-import { UserService } from "@core/services/user/user.service";
+import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
+import { PointOfSaleService } from "@core/services/administration/point-of-sale/point-of-sale.service";
+import { User } from "@core/services/auth/user/user.interface";
+import { UserService } from "@core/services/auth/user/user.service";
 
 @Component({
     selector: "app-points-of-sale-new",

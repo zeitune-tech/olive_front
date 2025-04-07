@@ -12,6 +12,8 @@ import { FullscreenModule } from "../../../../@lhacksrt/components/fullscreen/fu
 import { UserModule } from "../user/user.module";
 import { BreadcrumbsModule } from "../breadcrumbs/breadcrumbs.module";
 import { MatButtonModule } from "@angular/material/button";
+import { SelectModuleDialogModule } from "../select-module-dialog/select-module-dialog.component.module";
+import { TranslocoCoreModule } from "@core/transloco/transloco.module";
 
 
 
@@ -31,7 +33,9 @@ import { MatButtonModule } from "@angular/material/button";
         SearchModule,
         ShortcutsModule,
         BreadcrumbsModule,
-        UserModule
+        UserModule,
+        SelectModuleDialogModule,
+        TranslocoCoreModule
     ],
     exports: [
         HeaderComponent

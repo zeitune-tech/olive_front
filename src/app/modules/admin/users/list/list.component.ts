@@ -5,8 +5,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { User } from "@core/services/user/user.interface";
-import { UserService } from "@core/services/user/user.service";
+import { User } from "@core/services/auth/user/user.interface";
+import { UserService } from "@core/services/auth/user/user.service";
 import { animations } from "@lhacksrt/animations";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -38,7 +38,7 @@ export class UsersListComponent {
         renderItem: (element: User, property: keyof User) => {
             
             if (property === 'managementEntity') {
-                return element.managementEntity?.name;
+                return element.managementEntity;
             }
             return element[property];
         },

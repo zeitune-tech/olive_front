@@ -2,10 +2,10 @@ import { Component, ViewChild } from "@angular/core";
 import { UntypedFormGroup, FormBuilder, Validators, NgForm } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { CompanyLevelOrganization } from "@core/services/company-level-organization/company-level-organization.interface";
-import { CompanyLevelOrganizationService } from "@core/services/company-level-organization/company-level-organization.service";
-import { ManagementEntity } from "@core/services/management-entity/management-entity.interface";
-import { UserService } from "@core/services/user/user.service";
+import { CompanyLevelOrganization } from "@core/services/administration/company-level-organization/company-level-organization.interface";
+import { CompanyLevelOrganizationService } from "@core/services/administration/company-level-organization/company-level-organization.service";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
+import { UserService } from "@core/services/auth/user/user.service";
 import { ConfirmDialogComponent } from "@shared/components/confirm-dialog/confirm-dialog.component";
 import { Subject, takeUntil } from "rxjs";
 
@@ -71,9 +71,6 @@ export class CompanyLevelOrganizationNewComponent {
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((user) => {
             if (user) {
-                this.currentIsCompanyEmployee = user.managementEntity.type === 'COMPANY';
-                this.currentAccessLevel = user.managementEntity.type;
-                this.managementEntity = user.managementEntity;
             }
         });
         

@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { AppNavigationService } from '../../../../../@lhacksrt/components';
 import { MediaWatcherService } from '../../../../../@lhacksrt/services/media-watcher/media-watcher.service';
-import { UserService } from '../../../../core/services/user/user.service';
+import { UserService } from '../../../../core/services/auth/user/user.service';
 import { VerticalNavigationComponent } from '../../../../../@lhacksrt/components/navigation/vertical/vertical.component';
 import { Navigation } from '../../../../core/navigation/navigation.types';
 import { LayoutService } from '../../../../../@lhacksrt/services/layout/layout.service';
-import { User } from '../../../../core/services/user/user.interface';
+import { User } from '../../../../core/services/auth/user/user.interface';
 
 @Component({
     selector     : 'classy-layout',

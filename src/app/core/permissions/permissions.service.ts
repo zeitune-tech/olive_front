@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { UserService } from "../services/user/user.service";
-import { map, Observable} from "rxjs";
-import { User } from "../services/user/user.interface";
+import { UserService } from "../services/auth/user/user.service";
+import { map, Observable, of} from "rxjs";
+import { User } from "../services/auth/user/user.interface";
 
 
 @Injectable({
@@ -9,28 +9,31 @@ import { User } from "../services/user/user.interface";
 })
 export class PermissionsService {
 
+    private _permissions: string[] = [];
+    private _profile: string[] = [];
+
     constructor(
         private _userService: UserService,
-    ) { }
+    ) {
+        this._userService.user$.subscribe(user => {
+            if (user) {
+                this.getUserPermissions(user);
+            }
+        })
+    }
    
 
-    public hasPermission (user: User, requiredPermission: string): boolean {
+    public hasPermission (requiredPermission: string): boolean {
         // Check if the user has the required role
-        const hasRole = user.permissions.includes(requiredPermission);
-
-        // For this implementation, we don't need to check userIds
-        // since we're only checking roles
+        const hasRole = this._permissions.includes(requiredPermission);
         return hasRole;
     }
 
 
     public checkDirectly(permission: string): boolean {
-        const user = this._userService.user;
-        if (!user || !user.permissions) {
-            console.warn('User data is unavailable');
-            return false;
-        }
-        return this.hasPermission(user, permission);
+        // Check if the user has the required role
+        const hasRole = this._permissions.includes(permission);
+        return hasRole;
     }
     /**
      * Check permissions
@@ -40,28 +43,28 @@ export class PermissionsService {
      * @returns Observable<boolean>
      */
     check(permission: string): Observable<boolean> {
-        
-        return this._userService.get().pipe(
-            map(user => {
-                if (!user || !user.permissions) {
-                    console.warn('User data is unavailable');
-                    return false;
-                }
-                return this.hasPermission(user, permission);
-            })
-        );
+       return of(this._permissions.includes(permission));
     }
 
     checkMany(permissions: string[]): Observable<boolean> {
-        
-        return this._userService.get().pipe(
-            map(user => {
-                if (!user || !user.permissions) {
-                    console.warn('User data is unavailable');
-                    return false;
+        return of(permissions.every(permission => this._permissions.includes(permission)));
+    }
+
+    getUserPermissions(user: User) {
+        this._permissions = [];
+        // Check if the user has profiles and permissions
+        if (user && user.profiles && user.profiles) {
+            user.profiles.forEach((profile: any) => {
+                if (profile.permissions) {
+                    this._permissions = this._permissions.concat(profile.permissions.map((permission: any) => {
+                        return permission.name;
+                    }));
+                    this._permissions = [...new Set(this._permissions)];
                 }
-                return permissions.every(permission => this.hasPermission(user, permission));
-            })
-        );
+            });
+        } else {
+            this._permissions = [];
+        }
+        return this._permissions;
     }
 }

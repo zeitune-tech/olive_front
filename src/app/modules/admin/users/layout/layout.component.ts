@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { ManagementEntity } from "@core/services/management-entity/management-entity.interface";
-import { UserService } from "@core/services/user/user.service";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
+import { UserService } from "@core/services/auth/user/user.service";
 import { ChangePointOfSaleDialogComponent } from "../change-point-of-sale-dialog/change-point-of-sale-dialog.component";
-import { ManagementEntityService } from "@core/services/management-entity/management-entity.service";
-import { PointOfSaleService } from "@core/services/point-of-sale/point-of-sale.service";
+import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
+import { PointOfSaleService } from "@core/services/administration/point-of-sale/point-of-sale.service";
 
 
 @Component({
@@ -27,9 +27,6 @@ export class UsersLayoutComponent {
     ) { 
         this._userService.user$.subscribe((user) => {
             if (user) {
-                this.selectedEntity = user.managementEntity;
-                this.mainEntity = user.managementEntity;
-                this.entities.push(user.managementEntity);
             }
         })
         this._pointOfSaleService.pointsOfSale$.subscribe((entities) => {

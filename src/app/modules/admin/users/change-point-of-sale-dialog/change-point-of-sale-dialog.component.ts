@@ -1,8 +1,8 @@
 import { Component, Inject } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { ManagementEntity } from "@core/services/management-entity/management-entity.interface";
-import { PointOfSale } from "@core/services/point-of-sale/point-of-sale.interface";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
+import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
 import { debounceTime, distinctUntilChanged } from "rxjs";
 
 @Component({

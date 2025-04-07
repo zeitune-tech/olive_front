@@ -1,6 +1,6 @@
 import { Component, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { ManagementEntityService } from "@core/services/management-entity/management-entity.service";
+import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 
 
 @Component({

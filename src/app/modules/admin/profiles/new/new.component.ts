@@ -2,9 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { UntypedFormGroup, NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ManagementEntity } from '@core/services/management-entity/management-entity.interface';
-import { ProfileService } from '@core/services/profile/profile.service';
-import { UserService } from '@core/services/user/user.service';
+import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
+import { ProfileService } from '@core/services/auth/profile/profile.service';
+import { UserService } from '@core/services/auth/user/user.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

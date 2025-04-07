@@ -1,0 +1,29 @@
+<div class="flex flex-col w-full" *transloco="let t;">
+    <!-- Dialog header -->
+    <div class="flex items-center justify-between p-6">
+        <h1 class="text-2xl font-bold text-center">
+            {{ t('select-module.title') }}
+        </h1>
+        <button [matDialogClose]="false">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- Entity list -->
+    <mat-dialog-content class="overflow-y-auto">
+        <div class="mx-auto w-fit gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-gutter">
+            @for (module of modules; track $index) {
+                <div [ngClass]="module.cssClass" (click)="selectModule(module)">
+                    <div class="w-full h-36 overflow-hidden text-primary bg-[#AFC3C8] flex items-center justify-center">
+                        <img class="object-cover h-32 relative" [src]="'assets/img/icons/'+module.icon" [alt]="module.title">
+                    </div>
+                    <div class=" text-center">
+                        <h2 class="text-lg font-semibold my-2">{{ t(module.title) }}</h2>
+                    </div>
+                </div>
+            }
+        </div>
+    </mat-dialog-content>
+</div>

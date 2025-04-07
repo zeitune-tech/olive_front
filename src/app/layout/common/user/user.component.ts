@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject, takeUntil } from 'rxjs';
-import { UserService } from '../../../core/services/user/user.service';
-import { User } from '../../../core/services/user/user.interface';
+import { UserService } from '../../../core/services/auth/user/user.service';
+import { User } from '../../../core/services/auth/user/user.interface';
 
 @Component({
     selector       : 'user',
