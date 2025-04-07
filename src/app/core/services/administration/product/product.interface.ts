@@ -1,49 +1,27 @@
+import { Branch } from "../branch/branch.interface";
 
-
-export interface InsuranceLevel {
+export class Product {
     id: string;
     name: string;
-    description: string;
-}
-
-export class Category implements InsuranceLevel {
-    id: string;
-    name: string;
-    description: string;
-
-    constructor(category: Category) {
-        this.id = category?.id;
-        this.name = category?.name;
-        this.description = category?.description;
-    }
-}
-
-export class Branch implements InsuranceLevel {
-    id: string;
-    name: string;
-    description: string;
-    category: Category;
-
-    constructor(branch: Branch) {
-        this.id = branch?.id;
-        this.name = branch?.name;
-        this.description = branch?.description;
-        this.category = branch?.category;
-    }
-}
-
-export class Product implements InsuranceLevel {
-    id: string;
-    name: string;
-    description: string;
     branch: Branch;
-    category: Category;
+    ownerId: string;
+    owner: string;
+    minRisk: number;
+    maxRisk: number;
+    minimumGuaranteeNumber: number;
+    fleet: boolean;
+    hasReduction: boolean;
 
-    constructor(product: Product) {
-        this.id = product?.id;
-        this.name = product?.name;
-        this.description = product?.description;
-        this.branch = product?.branch;
-        this.category = this.branch?.category;
+    constructor(response: Partial<Product>) {
+        this.id = response?.id ?? '';
+        this.name = response?.name ?? '';
+        this.branch = response?.branch ?? new Branch(response?.branch ?? {});
+        this.ownerId = response?.ownerId ?? '';
+        this.owner = response?.owner ?? '';
+        this.minRisk = response?.minRisk ?? 1;
+        this.maxRisk = response?.maxRisk ?? 1;
+        this.minimumGuaranteeNumber = response?.minimumGuaranteeNumber ?? 1;
+        this.fleet = response?.fleet ?? false;
+        this.hasReduction = response?.hasReduction ?? false;
     }
 }

@@ -70,9 +70,6 @@ export class AdministrationResolver implements Resolve<any> {
             resolList.push(this._profileService.getAll());
             resolList.push(this._profileService.getAllPermissions());
         }
-        if (this._permissionService.hasPermission(PERMISSIONS.VIEW_PRODUCTS)) {
-            resolList.push(this._productService.getAll());
-        }
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_BROKERS)) {
             resolList.push(this._pointOfSaleService.getBrokers());
         }

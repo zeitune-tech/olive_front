@@ -22,8 +22,8 @@ export class ManagementEntityService {
         return this._entity.asObservable();
     }
 
-    get(id: string): Observable<ManagementEntity> {
-        return this._httpClient.get<ManagementEntity>(`${this.baseUrl}/${id}`)
+    get(): Observable<ManagementEntity> {
+        return this._httpClient.get<ManagementEntity>(`${this.baseUrl}`)
         .pipe(
             tap((entity) => {
                 this.entity = entity;

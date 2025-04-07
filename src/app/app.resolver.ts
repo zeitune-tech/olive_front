@@ -4,6 +4,8 @@ import { Observable, forkJoin, switchMap, map } from 'rxjs';
 import { UserService } from '@core/services/auth/user/user.service';
 import { NavigationService } from '@core/navigation/navigation.service';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
+import { BranchService } from '@core/services/administration/branch/branch.service';
+import { ProductService } from '@core/services/administration/product/product.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,27 +15,19 @@ export class InitialDataResolver implements Resolve<any> {
         private _userService: UserService,
         private _navigationService: NavigationService,
         private _managementService: ManagementEntityService,
+        private _productService: ProductService,
+        private _branchService: BranchService,
     ) {}
 
     resolve(
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot
     ): Observable<any> {
-        return this._userService.get().pipe(
-            switchMap(user => {
-                const managementEntityId = user?.managementEntity;
-
-                return forkJoin({
-                    navigation: this._navigationService.get(),
-                    managementEntity: this._managementService.get(managementEntityId),
-                }).pipe(
-                    map(({ navigation, managementEntity }) => ({
-                        user,
-                        navigation,
-                        managementEntity
-                    }))
-                );
-            })
-        );
+        
+        return forkJoin([
+            this._userService.get(),
+            this._managementService.get(),
+            this._productService.getAll(),
+        ])
     }
 }

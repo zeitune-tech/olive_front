@@ -25,30 +25,27 @@ export class ProductsListComponent {
         title: '',
         columns: [
             { label: 'entities.product.table.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'entities.product.table.columns.description', property: 'description', type: 'text', visible: true },
             { label: 'entities.product.table.columns.branch', property: 'branch', type: 'text', visible: true },
-            { label: 'entities.product.table.columns.category', property: 'category', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.category', property: 'owner', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.minRisk', property: 'minRisk', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.maxRisk', property: 'maxRisk', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.minimumGuaranteeNumber', property: 'minimumGuaranteeNumber', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.fleet', property: 'fleet', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.hasReduction', property: 'hasReduction', type: 'text', visible: true },
         ],
-        imageOptions: {
-            label: 'product.columns.logo',
-            property: 'logo',
-            cssClasses: ['w-16 h-16']
-        },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
             
         ],
         renderItem: (element: Product, property: keyof Product) => {
-            
             if (property === 'branch') {
-                return element.branch?.name;
+                return element.branch.name;
+            } else if (property === 'fleet') {
+                return element.fleet ? 'Yes' : 'No';
+            } else if (property === 'hasReduction') {
+                return element.hasReduction ? 'Yes' : 'No';
             }
-
-            if (property === 'category') {
-                return element.category?.name;
-            }
-            
             return element[property];
         },
     };

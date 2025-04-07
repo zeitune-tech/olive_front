@@ -18,6 +18,7 @@ import { SharedModule } from "@shared/shared.module";
 import { ProductsListComponent } from "./list/list.component";
 import { ProductsNewComponent } from "./new/new.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
         MatDialogModule,
         MatButtonModule,
         MatFormFieldModule,
+        MatCheckboxModule,
         MatInputModule,
         MatSelectModule,
         MatDividerModule,

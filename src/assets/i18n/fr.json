@@ -179,6 +179,10 @@
       "pastOrPresent": "La date doit être dans le passé ou aujourd’hui.",
       "futureOrPresent": "La date doit être aujourd’hui ou dans le futur."
     },
+    "options": {
+      "yes": "Oui",
+      "no": "Non"
+    },
     "actions": {
       "save": "Enregistrer",
       "cancel": "Annuler",
@@ -390,22 +394,32 @@
     },
     "product": {
       "form": {
-        "title": "Gestion des produits",
-        "subtitle": "Définir les détails du produit",
-        "description": "Créez ou modifiez les détails et classifications des produits.",
+        "title": "Créer ou modifier un produit",
+        "subtitle": "Veuillez remplir les informations du produit ci-dessous.",
         "fields": {
-          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
-          "description": {
-            "label": "Description",
-            "placeholder": "Saisir la description"
+          "name": {
+            "label": "Nom du produit"
           },
           "branch": {
-            "label": "Branche",
-            "placeholder": "Sélectionner la branche"
+            "label": "Branche"
           },
-          "category": {
-            "label": "Classe",
-            "placeholder": "Sélectionner la catégorie"
+          "owner": {
+            "label": "Propriétaire"
+          },
+          "minRisk": {
+            "label": "Risque minimum"
+          },
+          "maxRisk": {
+            "label": "Risque maximum"
+          },
+          "minimumGuaranteeNumber": {
+            "label": "Nombre minimum de garanties"
+          },
+          "fleet": {
+            "label": "Produit destiné à une flotte ?"
+          },
+          "hasReduction": {
+            "label": "Produit avec réduction ?"
           }
         }
       },
@@ -414,11 +428,14 @@
         "subtitle": "Aperçu des produits",
         "description": "Liste complète des produits proposés par la compagnie.",
         "columns": {
-          "name": "Nom",
-          "description": "Description",
+          "name": "Nom du produit",
           "branch": "Branche",
-          "category": "Classe",
-          "actions": "Actions"
+          "category": "Catégorie",
+          "minRisk": "Risque min",
+          "maxRisk": "Risque max",
+          "minimumGuaranteeNumber": "Nombre minimum de garanties",
+          "fleet": "Flotte",
+          "hasReduction": "Réduction"
         },
         "empty_state": "Aucun produit trouvé"
       }

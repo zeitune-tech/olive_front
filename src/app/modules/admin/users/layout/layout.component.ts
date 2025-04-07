@@ -21,6 +21,7 @@ export class UsersLayoutComponent {
 
     constructor(
         private _userService: UserService,
+        private _managementEntityService: ManagementEntityService,
         private _pointOfSaleService: PointOfSaleService,
         private _matDialog: MatDialog,
         private _changeDetectorRef: ChangeDetectorRef
@@ -29,9 +30,19 @@ export class UsersLayoutComponent {
             if (user) {
             }
         })
+        this._managementEntityService.entity$.subscribe((entity) => {
+            if (entity) {
+                this.mainEntity = entity;
+                this.selectedEntity = entity;
+                this._userService.getUsersByManagementEntity(this.selectedEntity.id).subscribe();
+            }
+        });
         this._pointOfSaleService.pointsOfSale$.subscribe((entities) => {
-            this.entities.push(...entities);
-            this._changeDetectorRef.markForCheck();
+            if (entities) {
+                this.entities.push(...entities);
+                this._changeDetectorRef.markForCheck();
+            }
+            
         });
 
 
