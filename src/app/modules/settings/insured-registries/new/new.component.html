@@ -46,15 +46,6 @@
                 </mat-error>
             </mat-form-field>
 
-            <!-- Management Entity -->
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.insured_registry.form.fields.managementEntity.label') }}</mat-label>
-                <input matInput formControlName="managementEntity" />
-                <mat-error *ngIf="formGroup.get('managementEntity')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-            </mat-form-field>
-            
             <!-- Submit Button -->
             <div class="flex items-center gap-4 justify-end">
                 <div>

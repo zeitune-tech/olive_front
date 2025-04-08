@@ -5,18 +5,20 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { CoverageReference } from "@core/services/settings/coverage-referential/coverage-referential.interface";
-import { CoverageReferentialService } from "@core/services/settings/coverage-referential/coverage-referential.service";
+import { CoverageReference } from "@core/services/settings/coverage-reference/coverage-reference.interface";
+import { CoverageReferenceService } from "@core/services/settings/coverage-reference/coverage-reference.service";
+import { Coverage } from "@core/services/settings/coverage/coverage.interface";
+import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
-    selector: "app-coverage-referentials-list",
+    selector: "app-coverage-reference-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class CoverageReferentialsListComponent {
+export class CoverageReferenceListComponent {
 
   
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -28,20 +30,19 @@ export class CoverageReferentialsListComponent {
             { label: 'entities.coverage_reference.table.columns.family', property: 'family', type: 'text', visible: true },
             { label: 'entities.coverage_reference.table.columns.accessCharacteristic', property: 'accessCharacteristic', type: 'text', visible: true },
             { label: 'entities.coverage_reference.table.columns.tariffAccess', property: 'tariffAccess', type: 'text', visible: true },
-            { label: 'entities.coverage_reference.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true }
         ],
-        imageOptions: {
-            label: 'coverage-referential.columns.logo',
-            property: 'logo',
-            cssClasses: ['w-16 h-16']
-        },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
             
         ],
         renderItem: (element: CoverageReference, property: keyof CoverageReference) => {
-            
+            if (property === 'accessCharacteristic') {
+                return element.accessCharacteristic == false ? 'Non' : 'Oui';
+            }
+            if (property === 'tariffAccess') {
+                return element.tariffAccess == false ? 'Non' : 'Oui';
+            }
             return element[property];
         },
     };
@@ -56,16 +57,18 @@ export class CoverageReferentialsListComponent {
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _coverageReferentialService: CoverageReferentialService,
+        private _coverageService: CoverageService,
         private _dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
-        this._coverageReferentialService.coverageReferentials$
+        this._coverageService.coverages$
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: CoverageReference[]) => {
-            this.data = data;
-            this.dataSource.data = data;
+        .subscribe((data: Coverage[]) => {
+            this.data = data.map((coverage: Coverage) => {
+                return coverage.reference as CoverageReference;
+            });
+            this.dataSource.data = this.data;
             this._changeDetectorRef.detectChanges();
         });
     }

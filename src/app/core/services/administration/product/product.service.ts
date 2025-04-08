@@ -111,4 +111,16 @@ export class ProductService {
                 })
             );
     }
+
+    getWithFilters(filters: any): Observable<Product[]> {
+        return this._httpClient.get<Product[]>(`${this.baseUrl}`, { params: filters })
+            .pipe(
+                tap((response: any) => {
+                    return response;
+                }),
+                catchError((error) => {
+                    return of(error);
+                })
+            );
+    }
 }

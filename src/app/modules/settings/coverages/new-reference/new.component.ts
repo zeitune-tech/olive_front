@@ -1,0 +1,89 @@
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import { Subject, takeUntil } from "rxjs";
+import { ProductService } from "@core/services/administration/product/product.service";
+import { CoverageReferenceService } from "@core/services/settings/coverage-reference/coverage-reference.service";
+import { Product } from "@core/services/administration/product/product.interface";
+import { TranslocoService } from "@jsverse/transloco";
+
+@Component({
+    selector: "app-coverage-referentials-new",
+    templateUrl: "./new.component.html",
+})
+export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
+
+    formGroup!: UntypedFormGroup;
+    products: Product[] = [];
+    loading = true;
+
+    private destroy$ = new Subject<void>();
+
+    constructor(
+        private _formBuilder: FormBuilder,
+        private _coverageReferentialService: CoverageReferenceService,
+        private _productService: ProductService,
+        private _translocoService: TranslocoService,
+        private _snackBar: MatSnackBar
+    ) {}
+
+    ngOnInit(): void {
+        this.initForm();
+
+        this._productService.products$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (products) => {
+                    this.products = products;
+                    this.loading = false;
+                },
+                error: () => {
+                    this.showSnackBar('errors.loadingProducts', 'error');
+                    this.loading = false;
+                }
+            });
+    }
+
+    private initForm(): void {
+        this.formGroup = this._formBuilder.group({
+            productId: [null, Validators.required],
+            designation: ['', Validators.required],
+            family: ['', Validators.required],
+            accessCharacteristic: [null, Validators.required],
+            tariffAccess: [null, Validators.required],
+        });
+    }
+
+    onSubmit(): void {
+        if (this.formGroup.valid) {
+            this.formGroup.disable();
+
+            this._coverageReferentialService.create(this.formGroup.value).subscribe({
+                next: () => {
+                    this.showSnackBar('form.success.creation', 'success');
+                    this.formGroup.enable();
+                    this.formGroup.reset();
+                },
+                error: () => {
+                    this.showSnackBar('form.errors.submission', 'error');
+                    this.formGroup.enable();
+                }
+            });
+        }
+    }
+
+    showSnackBar(messageKey: string, type: 'success' | 'error'): void {
+        const message = this._translocoService.translate(messageKey);
+        this._snackBar.open(message, undefined, {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: type === 'success' ? 'snackbar-success' : 'snackbar-error'
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+}

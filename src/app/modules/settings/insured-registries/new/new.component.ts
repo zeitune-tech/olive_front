@@ -20,14 +20,14 @@ export class InsuredRegistryNewComponent implements OnInit {
     ngOnInit(): void {
         this.formGroup = this._formBuilder.group({
             prefix: ['', Validators.required],
-            length: [1, [Validators.required, Validators.min(1)]],
-            managementEntity: [null, Validators.required]
+            length: [1, [Validators.required, Validators.min(1)]]
         });
     }
 
     onSubmit(): void {
         if (this.formGroup.valid) {
-            // this._insured-registryService.create(this.form.value).subscribe();
+            this._insuredRegistryService.create(this.formGroup.value).subscribe();
+            this._insuredRegistryService.getAll().subscribe();
         }
     }
 

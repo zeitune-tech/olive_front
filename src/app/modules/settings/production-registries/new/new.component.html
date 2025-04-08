@@ -46,15 +46,19 @@
                 </mat-error>
             </mat-form-field>
 
-            <!-- Management Entity -->
+            <!-- Procduct -->
             <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.production_registry.form.fields.managementEntity.label') }}</mat-label>
-                <input matInput formControlName="managementEntity" />
-                <mat-error *ngIf="formGroup.get('managementEntity')?.hasError('required')">
+                <mat-label>{{ t('entities.production_registry.form.fields.product.label') }}</mat-label>
+                <mat-select formControlName="productId" [disabled]="formGroup.disabled">
+                    <mat-option *ngFor="let product of products" [value]="product.id">
+                        {{ product.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">
                     {{ t('form.errors.required') }}
                 </mat-error>
             </mat-form-field>
-            
+
             <!-- Submit Button -->
             <div class="flex items-center gap-4 justify-end">
                 <div>

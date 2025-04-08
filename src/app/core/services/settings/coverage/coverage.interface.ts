@@ -1,3 +1,5 @@
+import { CoverageReference } from "../coverage-reference/coverage-reference.interface";
+
 export class Coverage {
     nature: string;
     isFree: boolean;
@@ -10,7 +12,7 @@ export class Coverage {
     prorata: string;
     displayPrime: boolean;
     generatesCharacteristic: boolean;
-    coverageReferenceId: string;
+    reference: CoverageReference;
     product: string;
     managementEntity: string;
   
@@ -26,7 +28,7 @@ export class Coverage {
       this.prorata = coverage.prorata || '';
       this.displayPrime = coverage.displayPrime ?? false;
       this.generatesCharacteristic = coverage.generatesCharacteristic ?? false;
-      this.coverageReferenceId = coverage.coverageReferenceId || '';
+      this.reference = new CoverageReference(coverage.reference || {});
       this.product = coverage.product || '';
       this.managementEntity = coverage.managementEntity || '';
     }

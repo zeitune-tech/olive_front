@@ -5,10 +5,12 @@ import { HttpClient } from "@angular/common/http";
 import { RequestMetadata } from "../../common.interface";
 import { InsuredRegistry } from "./insured-registry.interface";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class InsuredRegistryService {
 
-    baseUrl = environment.administration_url + '/insured-registries';
+    baseUrl = environment.settings_url + '/insured-registries';
     private _insuredRegistry: ReplaySubject<InsuredRegistry> = new ReplaySubject<InsuredRegistry>(1);
     private _insuredRegistries: ReplaySubject<InsuredRegistry[]> = new ReplaySubject<InsuredRegistry[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
@@ -44,7 +46,7 @@ export class InsuredRegistryService {
     ) { }
 
     create(insuredRegistry: InsuredRegistry): Observable<InsuredRegistry> {
-        return this._httpClient.post<InsuredRegistry>(`${this.baseUrl}/insuredRegistries`, insuredRegistry)
+        return this._httpClient.post<InsuredRegistry>(`${this.baseUrl}`, insuredRegistry)
         .pipe(
             tap((insuredRegistry) => {
                 this.insuredRegistry = insuredRegistry;

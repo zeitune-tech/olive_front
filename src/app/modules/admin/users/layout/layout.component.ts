@@ -35,6 +35,7 @@ export class UsersLayoutComponent {
                 this.mainEntity = entity;
                 this.selectedEntity = entity;
                 this._userService.getUsersByManagementEntity(this.selectedEntity.id).subscribe();
+                this.entities.push(entity);
             }
         });
         this._pointOfSaleService.pointsOfSale$.subscribe((entities) => {

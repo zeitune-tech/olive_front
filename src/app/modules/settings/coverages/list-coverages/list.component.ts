@@ -14,6 +14,39 @@ import { Subject, takeUntil } from "rxjs";
 @Component({
     selector: "app-coverages-list",
     templateUrl: "./list.component.html",
+    styles: `
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            @apply bg-default;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            @apply bg-primary-500; 
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            @apply bg-primary;
+        }
+    `,
     animations: animations
 })
 export class CoveragesListComponent {
@@ -24,7 +57,7 @@ export class CoveragesListComponent {
     tableOptions: TableOptions<Coverage> = {
         title: '',
         columns: [
-            { label: 'entities.coverage.table.columns.nature', property: 'nature', type: 'text', visible: true },
+            { label: 'entities.coverage.table.columns.nature', property: 'nature', type: 'text', visible: true, cssClasses: ["w-80"] },
             { label: 'entities.coverage.table.columns.isFree', property: 'isFree', type: 'text', visible: true },
             { label: 'entities.coverage.table.columns.isFixed', property: 'isFixed', type: 'text', visible: true },
             { label: 'entities.coverage.table.columns.calculationMode', property: 'calculationMode', type: 'text', visible: true },
@@ -35,9 +68,7 @@ export class CoveragesListComponent {
             { label: 'entities.coverage.table.columns.prorata', property: 'prorata', type: 'text', visible: true },
             { label: 'entities.coverage.table.columns.displayPrime', property: 'displayPrime', type: 'text', visible: true },
             { label: 'entities.coverage.table.columns.generatesCharacteristic', property: 'generatesCharacteristic', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.coverageReferenceId', property: 'coverageReferenceId', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.product', property: 'product', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true }
+            { label: 'entities.coverage.table.columns.reference', property: 'reference', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'coverage.columns.logo',
@@ -50,7 +81,9 @@ export class CoveragesListComponent {
 
         ],
         renderItem: (element: Coverage, property: keyof Coverage) => {
-
+            if (property === 'reference') {
+                return element.reference?.designation || " - ";
+            }
             return element[property];
         },
     };

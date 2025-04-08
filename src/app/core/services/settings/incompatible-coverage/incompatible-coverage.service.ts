@@ -5,10 +5,12 @@ import { HttpClient } from "@angular/common/http";
 import { RequestMetadata } from "../../common.interface";
 import { IncompatibleCoverage } from "./incompatible-coverage.interface";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class IncompatibleCoverageService {
 
-    baseUrl = environment.administration_url + '/incompatible-coverages';
+    baseUrl = environment.settings_url + '/incompatible-coverages';
     private _incompatibleCoverage: ReplaySubject<IncompatibleCoverage> = new ReplaySubject<IncompatibleCoverage>(1);
     private _incompatibleCoverages: ReplaySubject<IncompatibleCoverage[]> = new ReplaySubject<IncompatibleCoverage[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
@@ -75,6 +77,16 @@ export class IncompatibleCoverageService {
                     return incompatibleCoverage;
                 });
                 this.metadata = response;
+                return response;
+            }),
+            catchError(() => of([] as IncompatibleCoverage[]))
+        );
+    }
+
+    getWithFilters(filters: any): Observable<IncompatibleCoverage[]> {
+        return this._httpClient.get<IncompatibleCoverage[]>(`${this.baseUrl}`, { params: filters })
+        .pipe(
+            tap((response : any) => {
                 return response;
             }),
             catchError(() => of([] as IncompatibleCoverage[]))

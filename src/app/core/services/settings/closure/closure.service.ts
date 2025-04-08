@@ -5,10 +5,12 @@ import { HttpClient } from "@angular/common/http";
 import { RequestMetadata } from "../../common.interface";
 import { Closure } from "./closure.interface";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ClosureService {
 
-    baseUrl = environment.administration_url + '/closures';
+    baseUrl = environment.settings_url + '/closures';
     private _closure: ReplaySubject<Closure> = new ReplaySubject<Closure>(1);
     private _closures: ReplaySubject<Closure[]> = new ReplaySubject<Closure[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);

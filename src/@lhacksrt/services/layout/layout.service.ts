@@ -7,7 +7,7 @@ import { AppConfig } from '../../../app/core/config/app.config';
 import { AppConfigService } from '../config';
 import { AppStylesConfig, Layout, Themes, Scheme, Theme } from './layout.types';
 import { MediaWatcherService } from '../media-watcher';
-import { Navigation, NavigationItem } from '../../components';
+import { Navigation } from '../../components';
 
 @Injectable({
     providedIn: 'root'

@@ -3,12 +3,14 @@ import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { RequestMetadata } from "../../common.interface";
-import { CoverageReference } from "./coverage-referential.interface";
+import { CoverageReference } from "./coverage-reference.interface";
 
-@Injectable()
-export class CoverageReferentialService {
+@Injectable({
+    providedIn: 'root'
+})
+export class CoverageReferenceService {
 
-    baseUrl = environment.administration_url + '/coverage-referentials';
+    baseUrl = environment.settings_url + '/coverage-references';
     private _coverageReferential: ReplaySubject<CoverageReference> = new ReplaySubject<CoverageReference>(1);
     private _coverageReferentials: ReplaySubject<CoverageReference[]> = new ReplaySubject<CoverageReference[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
@@ -44,13 +46,15 @@ export class CoverageReferentialService {
     ) { }
 
     create(coverage: CoverageReference): Observable<CoverageReference> {
-        return this._httpClient.post<CoverageReference>(`${this.baseUrl}/coverageReferentials`, coverage)
+        return this._httpClient.post<CoverageReference>(`${this.baseUrl}`, coverage)
         .pipe(
             tap((coverage) => {
                 this.coverage = coverage;
                 return (coverage);
             }),
-            catchError(() => of({} as CoverageReference))
+            catchError((error) => {
+                throw new Error("Error creating coverage reference: " + error);
+            })
         );
     }
 

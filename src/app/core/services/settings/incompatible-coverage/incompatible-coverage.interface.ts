@@ -1,11 +1,13 @@
 export class IncompatibleCoverage {
-    coverageUuid: string;
-    incompatibleCoverageUuid: string;
+    id: string;
+    coverage: string;
+    incompatibleCoverage: string;
     managementEntity: string;
   
     constructor(incompatibleCoverage: any) {
-      this.coverageUuid = incompatibleCoverage.coverageUuid || '';
-      this.incompatibleCoverageUuid = incompatibleCoverage.incompatibleCoverageUuid || '';
+      this.id = incompatibleCoverage.id || '';
+      this.coverage = incompatibleCoverage.coverage || '';
+      this.incompatibleCoverage = incompatibleCoverage.incompatibleCoverage || '';
       this.managementEntity = incompatibleCoverage.managementEntity || '';
     }
   }

@@ -5,7 +5,7 @@ import { ManagementEntityService } from './administration/management-entity/mana
 import { CompanyService } from './administration/company/company.service';
 import { PointOfSaleService } from './administration/point-of-sale/point-of-sale.service';
 import { MarketLevelOrganizationService } from './administration/market-level-organization/market-level-organization.service';
-import { CoverageReferentialService } from './settings/coverage-referential/coverage-referential.service';
+import { CoverageReferenceService } from './settings/coverage-reference/coverage-reference.service';
 import { CoverageService } from './settings/coverage/coverage.service';
 import { CoverageDurationService } from './settings/coverage-duration/coverage-duration.service';
 import { IncompatibleCoverageService } from './settings/incompatible-coverage/incompatible-coverage.service';
@@ -25,7 +25,7 @@ import { BranchService } from './administration/branch/branch.service';
         CompanyService,
         MarketLevelOrganizationService,
         PointOfSaleService,
-        CoverageReferentialService,
+        CoverageReferenceService,
         CoverageService,
         CoverageDurationService,
         IncompatibleCoverageService,

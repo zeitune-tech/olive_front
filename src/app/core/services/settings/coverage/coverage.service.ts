@@ -1,14 +1,16 @@
 import { Injectable } from "@angular/core";
 import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { environment } from "@env/environment";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { RequestMetadata } from "../../common.interface";
 import { Coverage } from "./coverage.interface";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CoverageService {
 
-    baseUrl = environment.administration_url + '/coverages';
+    baseUrl = environment.settings_url + '/coverages';
     private _coverage: ReplaySubject<Coverage> = new ReplaySubject<Coverage>(1);
     private _coverages: ReplaySubject<Coverage[]> = new ReplaySubject<Coverage[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
@@ -75,6 +77,16 @@ export class CoverageService {
                     return coverage;
                 });
                 this.metadata = response;
+                return response;
+            }),
+            catchError(() => of([] as Coverage[]))
+        );
+    }
+
+    getWithFilters(filters: HttpParams): Observable<Coverage[]> {
+        return this._httpClient.get<Coverage[]>(`${this.baseUrl}`, { params: filters })
+        .pipe(
+            tap((response : any) => {
                 return response;
             }),
             catchError(() => of([] as Coverage[]))

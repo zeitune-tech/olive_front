@@ -4,26 +4,27 @@ import { forkJoin, Observable, of } from 'rxjs';
 import { UserService } from '@core/services/auth/user/user.service';
 import { PermissionsService } from '@core/permissions/permissions.service';
 import { PERMISSIONS } from '@core/permissions/permissions.data';
+import { CoverageService } from '@core/services/settings/coverage/coverage.service';
+import { CoverageReferenceService } from '@core/services/settings/coverage-reference/coverage-reference.service';
+import { InsuredRegistryService } from '@core/services/settings/insured-registry/insured-registry.service';
+import { ProductionRegistryService } from '@core/services/settings/production-registry/production-registry.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SettingsResolver implements Resolve<any> {
 
-    private _managementEntity: string = '';
-
     /**
      * Constructor
      */
     constructor(
         private _permissionService: PermissionsService,
-        private _userService: UserService,
+        private _coverageService: CoverageService,
+        private _coverageReferenceService: CoverageReferenceService,
+        private _productionRegistryService: ProductionRegistryService,
+        private _insuredRegistryService: InsuredRegistryService,
     ) {
-        this._userService.user$.subscribe((user) => {
-            if (user) {
-                this._managementEntity = user.managementEntity;
-            }
-        });
+     
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -42,10 +43,21 @@ export class SettingsResolver implements Resolve<any> {
     ): Observable<any> {
         // Fork join multiple API endpoint calls to wait all of them to finish
 
-        const resolList: Observable<any>[] = [
-            of()
-        ];
+        const resolList: Observable<any>[] = [];
+
+        if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COVERAGES)) {
+            resolList.push(this._coverageService.getAll());
+            resolList.push(this._coverageReferenceService.getAll());
+        }
+
+        if (this._permissionService.hasPermission(PERMISSIONS.VIEW_PRODUCTION_REGISTRIES)) {
+            resolList.push(this._productionRegistryService.getAll());
+        }
+
+        if (this._permissionService.hasPermission(PERMISSIONS.VIEW_INSURED_REGISTRIES)) {
+            resolList.push(this._insuredRegistryService.getAll());
+        }
        
-        return of([])
+        return forkJoin(resolList);
     }
 }

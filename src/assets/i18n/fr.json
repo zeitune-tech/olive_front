@@ -341,7 +341,7 @@
           "prorata": "Mode prorata",
           "displayPrime": "Afficher la prime",
           "generatesCharacteristic": "Génère des caractéristiques",
-          "coverageReferenceId": "Référence de garantie",
+          "reference": "Référence de garantie",
           "product": "Produit",
           "managementEntity": "Entité de gestion"
         },
@@ -354,8 +354,8 @@
         "title": "Couvertures incompatibles",
         "subtitle": "Ajoutez des paires de couvertures incompatibles",
         "fields": {
-          "coverageUuid": { "label": "UUID de la couverture" },
-          "incompatibleCoverageUuid": { "label": "UUID de la couverture incompatible" },
+          "coverage": { "label": "Garantie" },
+          "incompatibleCoverage": { "label": "Garantie incompatible" },
           "managementEntity": { "label": "Entité de gestion" }
         }
       },
@@ -363,8 +363,8 @@
         "title": "Garantie incompatibles",
         "description": "Relations de garantie non compatibles",
         "columns": {
-          "coverageUuid": "UUID de la garantie",
-          "incompatibleCoverageUuid": "UUID de la garantie incompatible",
+          "coverage": "Garantie",
+          "incompatibleCoverage": "Garantie incompatible",
           "managementEntity": "Entité de gestion"
         },
         "empty_state": "Aucune incompatibilité de couverture enregistrée."
