@@ -7,9 +7,9 @@
             <!-- Team Selection -->
             <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
                 <mat-icon [svgIcon]="'fluent:people-entity'"></mat-icon>
-                <span>{{selectedEntity.name || t('entity.select-entity')}}</span>
+                <span>{{selectedEntity.name || t('entity.select.titre')}}</span>
                 <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openEntitySelection()">
-                    {{t('button.change-entity')}}
+                    {{t('entity.actions.change')}}
                 </button>
             </div>
 

@@ -26,7 +26,7 @@ export class ProductsListComponent {
         columns: [
             { label: 'entities.product.table.columns.name', property: 'name', type: 'text', visible: true },
             { label: 'entities.product.table.columns.branch', property: 'branch', type: 'text', visible: true },
-            { label: 'entities.product.table.columns.category', property: 'owner', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.category', property: 'category', type: 'text', visible: true },
             { label: 'entities.product.table.columns.minRisk', property: 'minRisk', type: 'text', visible: true },
             { label: 'entities.product.table.columns.maxRisk', property: 'maxRisk', type: 'text', visible: true },
             { label: 'entities.product.table.columns.minimumGuaranteeNumber', property: 'minimumGuaranteeNumber', type: 'text', visible: true },
@@ -45,6 +45,8 @@ export class ProductsListComponent {
                 return element.fleet ? 'Yes' : 'No';
             } else if (property === 'hasReduction') {
                 return element.hasReduction ? 'Yes' : 'No';
+            } else if (property === 'category') {
+                return element.branch.category.name;
             }
             return element[property];
         },

@@ -27,13 +27,12 @@ export class UsersListComponent {
             { label: 'entities.user.table.columns.first_name', property: 'firstName', type: 'text', visible: true },
             { label: 'entities.user.table.columns.last_name', property: 'lastName', type: 'text', visible: true },
             { label: 'entities.user.table.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'entities.user.table.columns.management_entity', property: 'managementEntity', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
-            { label: 'company.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'company.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) }
+            { label: 'entities.user.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
+            { label: 'entities.user.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) }
         ],
         renderItem: (element: User, property: keyof User) => {
             
@@ -97,7 +96,7 @@ export class UsersListComponent {
     
     get visibleColumns() {
         const columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

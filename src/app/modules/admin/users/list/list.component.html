@@ -17,7 +17,7 @@
     <div class="flex flex-col md:flex-row items-center gap-4">
         <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
             <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
-            <input class="form-input" type="text" [placeholder]="t('input-placeholder.search')" [formControl]="searchCtrl">
+            <input class="form-input" type="text" [placeholder]="t('Common.search.placeholder.users')" [formControl]="searchCtrl">
         </div>
     </div>
 
@@ -45,8 +45,22 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="uppercase text-center border-l">
                     Actions
                 </th>
-                <td mat-cell *matCellDef="let element" class="w-10 text-center border-l">
-
+                <td *matCellDef="let row" mat-cell class="border-l">
+                    <div class="flex items-center justify-center gap-4">
+                        @let actions = tableOptions.actions;
+                        @for (action of actions; track $index) {
+                            @let label = t(action.label);
+                            <button 
+                                mat-button
+                                class="mat-button-large"
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="action.action(row)"
+                            >
+                                {{label}}
+                            </button>
+                        }
+                    </div>
                 </td>
             </ng-container>
 
@@ -59,7 +73,7 @@
             <!-- No Data Row -->
             <tr *matNoDataRow>
                 <td [attr.colspan]="4" class="text-center py-4">
-                    {{ t('entities.user.table.table.no-data') }}
+                    {{ t('entity.select.no-users') }}
                 </td>
             </tr>
         </table>

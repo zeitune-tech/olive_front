@@ -23,7 +23,6 @@ export class ProfilesNewStepTwoComponent {
     tableOptions: TableOptions<Permission> = {
         title: '',
         columns: [
-            { label: 'permissions.columns.name', property: 'name', type: 'text', visible: true },
             { label: 'permissions.columns.description', property: 'description', type: 'text', visible: true },],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],

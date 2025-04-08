@@ -17,6 +17,19 @@
                 {{ t('form.errors.required') }}
             </mat-error>
         </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline" [ngClass]="entity.type != 'COMPANY' ? 'hidden' : ''">
+            <mat-label>
+                {{ t('entities.profile.form.fields.level.label') }}
+            </mat-label>
+            <mat-select [formControlName]="'level'">
+                <mat-option *ngFor="let level of levels" [value]="level">
+                    {{ level }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.get('level')?.hasError('required')">
+                {{ t('form.errors.required') }}
+            </mat-error>
+        </mat-form-field>
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
                 {{ t('entities.profile.form.fields.description.label') }}

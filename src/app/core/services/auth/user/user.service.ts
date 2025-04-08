@@ -121,7 +121,8 @@ export class UserService{
             lastname: user.lastName,
             email: user.email,
             phone: user.phone,
-            managementEntityId: user.managementEntityId,
+            accessLevel: user.accessLevel,
+            managementEntity: user.managementEntityId,
             password: user.password,
             profiles: user.profiles.map((profile: any) => profile.id),
         }).pipe(

@@ -1,9 +1,10 @@
-import { Branch } from "../branch/branch.interface";
+import { Branch, Category } from "../branch/branch.interface";
 
 export class Product {
     id: string;
     name: string;
     branch: Branch;
+    category: Category;
     ownerId: string;
     owner: string;
     minRisk: number;
@@ -16,6 +17,7 @@ export class Product {
         this.id = response?.id ?? '';
         this.name = response?.name ?? '';
         this.branch = response?.branch ?? new Branch(response?.branch ?? {});
+        this.category = this.branch?.category ?? new Category(this.branch?.category ?? {});
         this.ownerId = response?.ownerId ?? '';
         this.owner = response?.owner ?? '';
         this.minRisk = response?.minRisk ?? 1;

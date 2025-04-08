@@ -2,7 +2,7 @@
     <!-- Dialog header -->
     <div class="flex items-center justify-between p-6 pb-6">
         <h2 class=" text-xl md:text-2xl font-semibold">
-            {{t('entity.select-entity')}}
+            {{t('entity.select.title')}}
         </h2>
         <button [matDialogClose]="false">
             <mat-icon>close</mat-icon>
@@ -13,7 +13,7 @@
     <div class="flex flex-col md:flex-row w-full justify-between md:items-center gap-4 px-4 mb-6 ">
         <mat-form-field class="w-full" appearance="outline">
             <mat-icon matPrefix [svgIcon]="'fluent:search'" class="mr-2"></mat-icon>
-            <input matInput [placeholder]="t('input-placeholder.search-entitys')" [formControl]="searchControl">
+            <input matInput [placeholder]="t('Common.search.placeholder.entities')" [formControl]="searchControl">
         </mat-form-field>
         
         @if (data.addEntity === true) {
@@ -51,7 +51,7 @@
 
         <!-- No entitys -->
         @if (filteredEntity.length === 0) {
-            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">{{t('entity.table.no-data')}}</div>
+            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">{{t('Common.no-data')}}</div>
         }
     </mat-dialog-content>
 </div>

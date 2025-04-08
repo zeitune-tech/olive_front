@@ -48,9 +48,9 @@ export class ProfilesListComponent {
             }
 
             if (property === 'description') {
-                if (element[property] && element[property] === "profile.admin_description") {
+                if (element[property] && element[property] === "profiles.descriptions") {
 
-                    return this._translateService.translate('entities.profile.table.columns.admin_description');
+                    return this._translateService.translate(element[property].toLocaleLowerCase());
                 }
             
                 if (element[property] && element[property].length > 50) {
