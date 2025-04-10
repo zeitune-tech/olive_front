@@ -62,6 +62,7 @@ export class AdministrationResolver implements Resolve<any> {
         }
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_MARKET_LEVEL_ORGANIZATIONS)) {
             resolList.push(this._marketLevelOrganizationService.getAll());
+            resolList.push(this._marketLevelOrganizationService.getLinked());
         }
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_POINTS_OF_SALE)) {
             resolList.push(this._pointOfSaleService.getAll());

@@ -5,6 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { Product } from "@core/services/administration/product/product.interface";
 import { IncompatibleCoverage } from "@core/services/settings/incompatible-coverage/incompatible-coverage.interface";
 import { IncompatibleCoverageService } from "@core/services/settings/incompatible-coverage/incompatible-coverage.service";
 import { animations } from "@lhacksrt/animations";
@@ -17,9 +18,13 @@ import { Subject, takeUntil } from "rxjs";
     animations: animations
 })
 export class IncompatibleCoveragesListComponent {
+    openSelection() {
+        throw new Error('Method not implemented.');
+    }
 
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
 
     tableOptions: TableOptions<IncompatibleCoverage> = {
         title: '',
@@ -38,7 +43,12 @@ export class IncompatibleCoveragesListComponent {
 
         ],
         renderItem: (element: IncompatibleCoverage, property: keyof IncompatibleCoverage) => {
-
+            if (property === "coverage") {
+                return element[property].designation;
+            }
+            if (property === "incompatibleCoverage") {
+                return element[property].designation;
+            }
             return element[property];
         },
     };
@@ -50,6 +60,8 @@ export class IncompatibleCoveragesListComponent {
     dataSource: MatTableDataSource<IncompatibleCoverage> = new MatTableDataSource();
     selection = new SelectionModel<IncompatibleCoverage>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = {} as Product;
+    
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,

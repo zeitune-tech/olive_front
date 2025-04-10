@@ -1,0 +1,57 @@
+{
+  "select": "Changer de module",
+    "administration": {
+      "title": "Module Administration",
+      "description": "Gérer les produits, organisations, entreprises, points de vente, profils et utilisateurs.",
+      "features": {
+        "products": "Produits",
+        "products_description": "Gestion des produits disponibles.",
+        "market_level_organizations": "Organisations de niveau marché",
+        "market_level_organizations_description": "Gestion des entités de niveau marché.",
+        "companies": "Entreprises",
+        "companies_description": "Gestion des entreprises partenaires.",
+        "points_of_sale": "Points de vente",
+        "points_of_sale_description": "Gestion des points de vente affiliés.",
+        "profiles": "Profils",
+        "profiles_description": "Gestion des profils utilisateurs et des rôles.",
+        "users": "Utilisateurs",
+        "users_description": "Gestion des comptes utilisateurs."
+      }
+    },
+    "settings": {
+      "title": "Module Paramètrage Auto",
+      "description": "Configurer les garanties, durées et registres.",
+      "features": {
+        "coverages": "Garantie",
+        "coverages_description": "Gestion des types de garantie.",
+        "coverage_durations": "Durées de garantie",
+        "coverage_durations_description": "Définir les durées de garantie disponibles.",
+        "insured_registries": "Registres des assurés",
+        "insured_registries_description": "Consulter et gérer les assurés enregistrés.",
+        "production_registries": "Registres de production",
+        "production_registries_description": "Suivi des données de production.",
+        "closures": "Clôtures",
+        "closures_description": "Configurer les périodes de clôture."
+      }
+    },
+    "insureds": {
+      "title": "Module Assurés",
+      "description": "Gérer les informations des assurés."
+    },
+    "productions_auto": "Module Exploitation Auto",
+    "productions_auto_description": "Gérer les données de production.",
+    "attestations": {
+      "title": "Module Attestations",
+      "description": "Gérer les attestations et les demandes associées.",
+      "features": {
+        "attestations": "Attestations",
+        "attestations_description": "Consultation et gestion des attestations.",
+        "attestations_demands": "Demandes d'attestation",
+        "attestations_demands_description": "Suivi des demandes d'attestations.",
+        "market_level_organization": "Demande aux organisations",
+        "market_level_organization_description": "Création de demandes pour les organisations de niveau marché.",
+        "companies": "Demande aux entreprises",
+        "companies_demands_description": "Création de demandes pour les entreprises."
+      }
+    }
+  }

@@ -1,10 +1,10 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { ChangeDetectorRef, Component, EventEmitter, Output, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { UntypedFormGroup, FormBuilder, Validators, UntypedFormControl } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Permission } from "@core/permissions/permissions.model";
+import { Permission } from "@core/services/auth/profile/profile.interface";
 import { ProfileService } from "@core/services/auth/profile/profile.service";
 import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
@@ -18,13 +18,16 @@ import { Subject, takeUntil } from "rxjs";
 })
 export class ProfilesNewStepTwoComponent {
 
+    @Input() level: string = '';
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
         
     tableOptions: TableOptions<Permission> = {
         title: '',
         columns: [
-            { label: 'permissions.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'permissions.columns.description', property: 'description', type: 'text', visible: true },],
+            { label: 'permissions.columns.description', property: 'description', type: 'text', visible: true },
+            { label: 'permissions.columns.module', property: 'module', type: 'text', visible: true },
+        ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [],

@@ -59,8 +59,8 @@ export class ProfileService {
         return this._httpClient.post<Profile>(`${this.baseUrl}`, 
             {
                 name: profile.name,
-                email: profile.email,
-                password: profile.password,
+                description: profile.description,
+                level: profile.level,
                 permissions: profile.permissions.map((permission: Permission) => permission.id)
             }
         )
@@ -70,7 +70,7 @@ export class ProfileService {
                     return (profile);
                 }),
                 catchError((error) => {
-                    return of(error);
+                    throw error
                 })
             );
     }
@@ -104,12 +104,10 @@ export class ProfileService {
     getAll(): Observable<Profile[]> {
         return this._httpClient.get<Profile[]>(`${this.baseUrl}`)
             .pipe(
-                tap((response: any) => {
-                    this.profiles = response.content?.map((profile: Profile) => {
+                tap((response: Profile[]) => {
+                    this.profiles = response.map((profile: Profile) => {
                         return profile;
                     });
-                    this.metadata = response;
-                    return response;
                 }),
                 catchError(() => of([] as Profile[]))
             );

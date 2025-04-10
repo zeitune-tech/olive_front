@@ -1,5 +1,16 @@
 <div class="w-full pb-10" *transloco="let t">
 
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('entities.coverage_reference.form.title') }}
+        </h1>
+        <!-- Description -->
+        <p class="text-sm md:text-base text-gray-600">
+            {{ t('entities.coverage_reference.form.description') }}
+        </p>
+    </div>
+
+
     <!-- Form -->
     <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
 
@@ -49,8 +60,8 @@
             <mat-form-field appearance="outline" class="w-full">
                 <mat-label>{{ t('entities.coverage_reference.form.fields.accessCharacteristic.label') }}</mat-label>
                 <mat-select formControlName="accessCharacteristic">
-                    <mat-option [value]="true">{{ t('common.yes') }}</mat-option>
-                    <mat-option [value]="false">{{ t('common.no') }}</mat-option>
+                    <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+                    <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="formGroup.get('accessCharacteristic')?.hasError('required')">
                     {{ t('form.errors.required') }}
@@ -61,8 +72,8 @@
             <mat-form-field appearance="outline" class="w-full">
                 <mat-label>{{ t('entities.coverage_reference.form.fields.tariffAccess.label') }}</mat-label>
                 <mat-select formControlName="tariffAccess">
-                    <mat-option [value]="true">{{ t('common.yes') }}</mat-option>
-                    <mat-option [value]="false">{{ t('common.no') }}</mat-option>
+                    <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+                    <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="formGroup.get('tariffAccess')?.hasError('required')">
                     {{ t('form.errors.required') }}

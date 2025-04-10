@@ -5,14 +5,14 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Company } from "@core/services/administration/company/company.interface";
-import { CompanyService } from "@core/services/administration/company/company.service";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { PermissionsService } from "@core/permissions/permissions.service";
 import { UserService } from "@core/services/auth/user/user.service";
 import { User } from "@core/services/auth/user/user.interface";
 import { animations } from "@lhacksrt/animations";
+import { Company } from "@core/services/administration/company/company.interface";
+import { CompanyService } from "@core/services/administration/company/company.service";
 
 @Component({
     selector: "app-linked-companies-list",
@@ -32,16 +32,16 @@ export class LinkedCompaniesListComponent {
     tableOptions: TableOptions<Company> = {
         title: '',
         columns: [
-            { label: 'company.columns.logo', property: 'logo', type: 'image', visible: true },
-            { label: 'company.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'company.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'company.columns.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'company.columns.address', property: 'address', type: 'text', visible: true },
+            { label: 'entities.company.table.columns.logo', property: 'logo', type: 'image', visible: true },
+            { label: 'entities.company.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.company.table.columns.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.company.table.columns.phone', property: 'phone', type: 'text', visible: true },
+            { label: 'entities.company.table.columns.address', property: 'address', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         imageOptions: {
-            label: 'company.columns.logo',
+            label: 'entities.company.table.columns.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },

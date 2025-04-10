@@ -42,15 +42,7 @@
             </th>
             <td mat-cell *matCellDef="let element" class="border-l">
                 <div class="w-full h-full flex items-center justify-around">
-                    <button 
-                        mat-button matStepperNext
-                        class="mat-button-large"
-                        mat-flat-button
-                        [color]="'primary'"
-                        (click)="onDemand(element)"
-                    >
-                        {{t('entities.coverage_duration.table.table.demand')}}
-                    </button>
+
                 </div>
             </td>
         </ng-container>

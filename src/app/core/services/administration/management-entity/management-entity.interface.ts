@@ -8,7 +8,7 @@ export class ManagementEntity {
     phone: string;
     address: string;
     logo: string;
-    type: "MARKET_LEVEL_ORGANISATION" | "COMPANY" | "POINT_OF_SALE";
+    type: "MARKET_LEVEL_ORGANIZATION" | "COMPANY" | "POINT_OF_SALE";
 
     constructor(entity: any) {
         this.id = entity?.id || '';

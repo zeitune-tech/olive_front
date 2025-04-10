@@ -1,0 +1,9 @@
+{
+    "welcome": "Bienvenue",
+    "connected": "Connecté en tant que",
+    "logout": {
+      "title": "Déconnexion",
+      "description": "Voulez-vous vraiment vous déconnecter ?",
+      "redirecting": "Déconnexion en cours..."
+    }
+  }

@@ -8,6 +8,7 @@ import { CoverageService } from '@core/services/settings/coverage/coverage.servi
 import { CoverageReferenceService } from '@core/services/settings/coverage-reference/coverage-reference.service';
 import { InsuredRegistryService } from '@core/services/settings/insured-registry/insured-registry.service';
 import { ProductionRegistryService } from '@core/services/settings/production-registry/production-registry.service';
+import { IncompatibleCoverageService } from '@core/services/settings/incompatible-coverage/incompatible-coverage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +21,7 @@ export class SettingsResolver implements Resolve<any> {
     constructor(
         private _permissionService: PermissionsService,
         private _coverageService: CoverageService,
-        private _coverageReferenceService: CoverageReferenceService,
+        private _incompatibleCoverageService: IncompatibleCoverageService,
         private _productionRegistryService: ProductionRegistryService,
         private _insuredRegistryService: InsuredRegistryService,
     ) {
@@ -47,7 +48,7 @@ export class SettingsResolver implements Resolve<any> {
 
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COVERAGES)) {
             resolList.push(this._coverageService.getAll());
-            resolList.push(this._coverageReferenceService.getAll());
+            resolList.push(this._incompatibleCoverageService.getAll());
         }
 
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_PRODUCTION_REGISTRIES)) {
@@ -57,6 +58,8 @@ export class SettingsResolver implements Resolve<any> {
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_INSURED_REGISTRIES)) {
             resolList.push(this._insuredRegistryService.getAll());
         }
+
+
        
         return forkJoin(resolList);
     }

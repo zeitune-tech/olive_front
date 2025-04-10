@@ -1,6 +1,7 @@
 import { CoverageReference } from "../coverage-reference/coverage-reference.interface";
 
 export class Coverage {
+    id: string;
     nature: string;
     isFree: boolean;
     isFixed: boolean;
@@ -17,6 +18,7 @@ export class Coverage {
     managementEntity: string;
   
     constructor(coverage: any) {
+      this.id = coverage.id || '';
       this.nature = coverage.nature || '';
       this.isFree = coverage.isFree ?? false;
       this.isFixed = coverage.isFixed ?? false;

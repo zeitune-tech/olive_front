@@ -1,22 +1,28 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { PERMISSIONS } from "@core/permissions/permissions.data";
+import { PermissionsService } from "@core/permissions/permissions.service";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
+import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 import { Product } from "@core/services/administration/product/product.interface";
 import { ProductService } from "@core/services/administration/product/product.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { LayoutService } from "../layout.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-products-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class ProductsListComponent {
+export class ProductsListComponent implements OnInit{
 
   
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -26,7 +32,8 @@ export class ProductsListComponent {
         columns: [
             { label: 'entities.product.table.columns.name', property: 'name', type: 'text', visible: true },
             { label: 'entities.product.table.columns.branch', property: 'branch', type: 'text', visible: true },
-            { label: 'entities.product.table.columns.category', property: 'owner', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.category', property: 'category', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.visibility', property: 'visibility', type: 'text', visible: true },
             { label: 'entities.product.table.columns.minRisk', property: 'minRisk', type: 'text', visible: true },
             { label: 'entities.product.table.columns.maxRisk', property: 'maxRisk', type: 'text', visible: true },
             { label: 'entities.product.table.columns.minimumGuaranteeNumber', property: 'minimumGuaranteeNumber', type: 'text', visible: true },
@@ -45,6 +52,8 @@ export class ProductsListComponent {
                 return element.fleet ? 'Yes' : 'No';
             } else if (property === 'hasReduction') {
                 return element.hasReduction ? 'Yes' : 'No';
+            } else if (property === 'category') {
+                return element.branch.category.name;
             }
             return element[property];
         },
@@ -58,13 +67,17 @@ export class ProductsListComponent {
     selection = new SelectionModel<Product>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
+    managementEntity: ManagementEntity = new ManagementEntity({});
+
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _productService: ProductService,
+        private _permissionService: PermissionsService,
+        private _managementEntityService: ManagementEntityService,
+        private _layoutService: LayoutService,
+        private _router: Router,
         private _dialog: MatDialog
-    ) {}
-
-    ngOnInit(): void {
+    ) {
         this._productService.products$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((data: Product[]) => {
@@ -72,7 +85,15 @@ export class ProductsListComponent {
             this.dataSource.data = data;
             this._changeDetectorRef.detectChanges();
         });
+
+        this._managementEntityService.entity$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: ManagementEntity) => {
+            this.managementEntity = data;
+        });
     }
+
+    ngOnInit(): void {}
 
     ngAfterViewInit() {
         if (this.dataSource) {
@@ -90,8 +111,23 @@ export class ProductsListComponent {
     /**
         * Edit Product Product
         */
-    onDemand(item: Product | null): void {
-      
+// products-list.component.ts
+    onEdit(product: Product): void {
+        this._layoutService.setSelectedProduct(product);
+        this._router.navigate(['/administration/products/new']); // ou route vers le même formulaire mais dans un mode "édition"
+  }
+  
+
+    hasPermission(product: Product): boolean {
+        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
+        if (!hasPerm){
+            return false;
+        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION"){
+            return true;
+        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE"){
+            return true;
+        } else 
+         return false;
     }
 
     get visibleColumns() {

@@ -28,6 +28,7 @@ export class InitialDataResolver implements Resolve<any> {
             this._userService.get(),
             this._managementService.get(),
             this._productService.getAll(),
+            this._branchService.getAll()
         ])
     }
 }

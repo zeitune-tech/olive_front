@@ -3,9 +3,9 @@ import { UntypedFormGroup, FormBuilder, Validators, NgForm } from "@angular/form
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
+import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 import { UserService } from "@core/services/auth/user/user.service";
 import { animations } from "@lhacksrt/animations";
-import { ConfirmDialogComponent } from "@shared/components/confirm-dialog/confirm-dialog.component";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
@@ -20,9 +20,9 @@ export class UsersNewComponent implements OnInit {
 
 
     ACCESS_LEVELS = [
-        "ENTITY_SUPERIOR_USER",
-        "COMPANY_USER",
-        "POINT_OF_SALE_USER"
+        "MARKET_LEVEL_ORGANIZATION",
+        "COMPANY",
+        "POINT_OF_SALE"
     ];
 
     formGroup!: UntypedFormGroup;
@@ -70,6 +70,7 @@ export class UsersNewComponent implements OnInit {
 
     constructor(
         private _userService: UserService,
+        private _managenmentEntityService: ManagementEntityService,
         private _dialog: MatDialog,
         private _router: Router
     ) {  }
@@ -82,13 +83,16 @@ export class UsersNewComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this._userService.user$
+        this._managenmentEntityService.entity$
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((user) => {
-            if (user) {
+        .subscribe((entity) => {
+            if (entity) {
+                this.managementEntity = entity;
+                this.currentAccessLevel = entity.type;
+                this.currentIsCompanyEmployee = entity.type === 'COMPANY';
             }
         });
-        
+       
     }
 
     // -----------------------------------------------------------------------------------------------------

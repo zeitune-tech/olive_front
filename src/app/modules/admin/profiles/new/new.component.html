@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </ng-template>
-            <app-profiles-new-step-two (formReady)="onStepTwoNext($event)" ></app-profiles-new-step-two>
+            <app-profiles-new-step-two [level]="data.level" (formReady)="onStepTwoNext($event)" ></app-profiles-new-step-two>
         </mat-step>
         <mat-step [stepControl]="formStepThree">
             <ng-template matStepLabel>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('entities.profile.form.step_three_description')}}
+                                {{t('entities.profile.form.step_three_description_2')}}
                             </div>
                             <div>{{ data.description }}</div>
                         </div>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex justify-end gap-6">
+            <div class="flex justify-end gap-4">
                 <button mat-button matStepperPrevious class="mat-button-large mt-6" mat-flat-button [color]="'primary'">
                     {{ t('entities.profile.form.step_three_previous') }}
                 </button>

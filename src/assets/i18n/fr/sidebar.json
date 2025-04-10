@@ -1,0 +1,92 @@
+{
+    "dashboard": "Tableau de bord",
+    "management_entities": {
+      "title": "Entités de gestion",
+      "list": "Liste des entités",
+      "new": "Ajouter / Modifier une entité"
+    },
+    "companies": {
+      "title": "Compagnies",
+      "linked": "Compagnies liées",
+      "list": "Liste des compagnies",
+      "new": "Ajouter / Modifier une compagnie"
+    },
+    "market_level_organization": {
+      "title": "Organisations niveau marché",
+      "list": "Liste des organisations niveau marché",
+      "linked": "Organisations liées"
+    },
+    "points_of_sale": {
+      "title": "Points de vente",
+      "broker": "Liste des courtiers",
+      "list": "Liste des points de vente",
+      "new": "Ajouter / Modifier un point de vente"
+    },
+    "company_level_organization": {
+      "title": "Organisation par compagnie",
+      "list": "Liste des organisations",
+      "new": "Ajouter / Modifier une organisation"
+    },
+    "users": {
+      "title": "Utilisateurs",
+      "list": "Liste des utilisateurs",
+      "new": "Ajouter / Modifier un utilisateur"
+    },
+    "profiles": {
+      "title": "Profils utilisateurs",
+      "list": "Liste des profils",
+      "new": "Ajouter / Modifier un profil"
+    },
+    "products": {
+      "title": "Produits",
+      "list": "Liste des produits",
+      "new": "Ajouter / Modifier un produit"
+    },
+    "coverages": {
+      "title": "Produits",
+      "referential": "Référentiel des garanties",
+      "list": "Liste des garanties",
+      "new": "Ajouter / Modifier une garantie"
+    },
+    "incompatible_coverages": {
+      "list": "Liste des garanties incompatibles",
+      "new": "Ajouter / Modifier une garantie incompatible"
+    },
+    "coverage_durations": {
+      "title": "Durées Couverture",
+      "list": "Liste des durées",
+      "new": "Ajouter / Modifier une durée"
+    },
+    "production_registries": {
+      "title": "Registres de production",
+      "list": "Liste des registres",
+      "new": "Ajouter / Modifier un registre"
+    },
+    "insured_registries": {
+      "title": "Registres assurés",
+      "list": "Liste des registres",
+      "new": "Ajouter / Modifier un registre"
+    },
+    "closures": {
+      "title": "Clôtures",
+      "list": "Liste des clôtures",
+      "new": "Ajouter / Modifier une clôture"
+    },
+    "attestations": {
+      "title": "Stock d'attestations",
+      "list": "Mes attestations",
+      "new": "Ajouter / Modifier une attestation",
+      "revoked": "Attestations retirées"
+    },
+    "attestation_demands": {
+      "title": "Demandes d'attestation reçues",
+      "list": "Liste des demandes",
+      "new": "Envoyer une d'attestations"
+    },
+    "attestation_points_of_sale": {
+      "title": "Attestations - Points de vente",
+      "list": "Mes points de vente",
+      "broker": "Courtiers",
+      "group": "Envoyer par groupe"
+    }
+  }

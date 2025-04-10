@@ -6,6 +6,7 @@ import { ProductService } from "@core/services/administration/product/product.se
 import { CoverageReferenceService } from "@core/services/settings/coverage-reference/coverage-reference.service";
 import { Product } from "@core/services/administration/product/product.interface";
 import { TranslocoService } from "@jsverse/transloco";
+import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 
 @Component({
     selector: "app-coverage-referentials-new",
@@ -22,6 +23,7 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
     constructor(
         private _formBuilder: FormBuilder,
         private _coverageReferentialService: CoverageReferenceService,
+        private _coverageService: CoverageService,
         private _productService: ProductService,
         private _translocoService: TranslocoService,
         private _snackBar: MatSnackBar
@@ -63,6 +65,7 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
                     this.showSnackBar('form.success.creation', 'success');
                     this.formGroup.enable();
                     this.formGroup.reset();
+                    this._coverageService.getAll().subscribe();
                 },
                 error: () => {
                     this.showSnackBar('form.errors.submission', 'error');

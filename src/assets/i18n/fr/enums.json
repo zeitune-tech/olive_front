@@ -1,0 +1,16 @@
+{
+    "managementEntityLevel": {
+      "ENTITY_SUPERIOR": "Entité supérieure",
+      "COMPANY": "Entreprise",
+      "POINT_OF_SALE": "Point de vente"
+    },
+    "point_of_saleType": {
+      "GENERAL_AGENT": "Agent général",
+      "BROKER": "Courtier",
+      "DIRECT_OFFICE": "Bureau direct"
+    },
+    "linkedStatus": {
+      "true": "Lié",
+      "false": "Non lié"
+    }
+  }

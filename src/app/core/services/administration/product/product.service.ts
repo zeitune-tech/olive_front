@@ -53,20 +53,20 @@ export class ProductService {
                     return (product);
                 }),
                 catchError((error) => {
-                    return of(error);
+                    throw error;
                 })
             );
     }
 
-    update(product: Product): Observable<Product> {
-        return this._httpClient.put<Product>(`${this.baseUrl}/${product.id}`, product)
+    update(id: string, product: any): Observable<Product> {
+        return this._httpClient.put<Product>(`${this.baseUrl}/${id}`, product)
             .pipe(
                 tap((product) => {
                     this.product = product;
                     return (product);
                 }),
                 catchError((error) => {
-                    return of(error);
+                    throw error;
                 })
             );
     }
@@ -107,7 +107,7 @@ export class ProductService {
                     return response;
                 }),
                 catchError((error) => {
-                    return of(error);
+                    throw error;
                 })
             );
     }

@@ -46,7 +46,7 @@ export class CoverageDurationService {
     ) { }
 
     create(coverage: CoverageDuration): Observable<CoverageDuration> {
-        return this._httpClient.post<CoverageDuration>(`${this.baseUrl}/coverages`, coverage)
+        return this._httpClient.post<CoverageDuration>(`${this.baseUrl}`, coverage)
         .pipe(
             tap((coverage) => {
                 this.coverageDuration = coverage;

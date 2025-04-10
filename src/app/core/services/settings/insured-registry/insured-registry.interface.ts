@@ -6,6 +6,7 @@ export class InsuredRegistry {
     prefix: string;
     length: number;
     managementEntity: string;
+    counter: number;
   
     constructor(insuredRegistry: any) {
       this.name = insuredRegistry.name || '';
@@ -15,6 +16,7 @@ export class InsuredRegistry {
       this.prefix = insuredRegistry.prefix || '';
       this.length = insuredRegistry.length || 0;
       this.managementEntity = insuredRegistry.managementEntity || '';
+      this.counter = insuredRegistry.counter || 0;
     }
   }
   

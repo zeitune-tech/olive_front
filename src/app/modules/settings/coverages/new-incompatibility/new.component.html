@@ -12,61 +12,49 @@
 
 	<!-- Form -->
 
-	<form [formGroup]="formGroup" class="p-6 bg-card rounded-xl">
-		<div formArrayName="incompatibles">
-			<div *ngFor="let group of incompatibles.controls; let i = index" [formGroupName]="i"
-				class="mb-6 p-4 rounded-lg flex flex-col gap-6">
+	<form [formGroup]="formGroup" class="w-full sm:max-w-4xl bg-card p-4 rounded-xl mx-auto">
+		<div class="flex flex-col mb-6 text-center text-primary">
+			<h1 class="text-2xl font-bold">{{ t('entities.incompatible_coverage.form.title') }}</h1>
+			<p class="text-sm text-gray-600">{{ t('entities.incompatible_coverage.form.subtitle') }}</p>
+		</div>
 
-				<!-- Coverage UUID -->
-				<mat-form-field class="w-full" appearance="outline">
-					<mat-label>{{ t('entities.incompatible_coverage.form.fields.coverageUuid.label') }}</mat-label>
-					<input matInput formControlName="coverageUuid" />
-					<mat-error *ngIf="group.get('coverageUuid')?.hasError('required')">
-						{{ t('form.errors.required') }}
-					</mat-error>
-				</mat-form-field>
 
-				<!-- Incompatible Coverage UUID -->
-				<mat-form-field class="w-full" appearance="outline">
-					<mat-label>{{ t('entities.incompatible_coverage.form.fields.incompatibleCoverageUuid.label')
-						}}</mat-label>
-					<input matInput formControlName="incompatibleCoverageUuid" />
-					<mat-error *ngIf="group.get('incompatibleCoverageUuid')?.hasError('required')">
-						{{ t('form.errors.required') }}
-					</mat-error>
-				</mat-form-field>
+		<div class="flex flex-col gap-6">
+			<mat-form-field appearance="outline" class="w-full">
+				<mat-label>{{ t('entities.coverage.form.fields.product.label') }}</mat-label>
+				<mat-select >
+					<mat-option *ngFor="let product of products" [value]="product.id">
+						{{ product.name }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field appearance="outline" class="w-full">
+				<mat-label>{{ t('entities.incompatible_coverage.form.fields.coverage.label') }}</mat-label>
+				<mat-select formControlName="coverageId">
+					<mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
+						{{ coverage.reference.designation }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
 
-				<!-- Management Entity -->
-				<mat-form-field class="w-full" appearance="outline">
-					<mat-label>{{ t('entities.incompatible_coverage.form.fields.managementEntity.label') }}</mat-label>
-					<input matInput formControlName="managementEntity" />
-					<mat-error *ngIf="group.get('managementEntity')?.hasError('required')">
-						{{ t('form.errors.required') }}
-					</mat-error>
-				</mat-form-field>
+			<mat-form-field appearance="outline" class="w-full">
+				<mat-label>{{ t('entities.incompatible_coverage.form.fields.incompatible.label') }}</mat-label>
+				<mat-select formControlName="incompatibleId">
+					<mat-option *ngFor="let incompatible of incompatibles" [value]="incompatible.id">
+						{{ incompatible.reference.designation }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
 
-				<!-- Remove button -->
-				<div class="flex justify-end">
-					<button mat-button color="warn" (click)="removeIncompatible(i)" *ngIf="incompatibles.length > 1">
-						{{ t('form.actions.remove') }}
-					</button>
-				</div>
-
+			<!-- Submit -->
+			<div class="flex justify-end mt-6">
+				<button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
+					(click)="onSubmit()">
+					<span *ngIf="!formGroup.disabled">{{ t('form.actions.save') }}</span>
+					<mat-progress-spinner *ngIf="formGroup.disabled" [diameter]="24"
+						mode="indeterminate"></mat-progress-spinner>
+				</button>
 			</div>
 		</div>
-
-		<!-- Add New Incompatible Coverage -->
-		<button mat-button color="primary" (click)="addIncompatible()">
-			{{ t('form.actions.addIncompatible') }}
-		</button>
-
-		<!-- Submit Button -->
-		<div class="mt-6 text-right">
-			<button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
-				(click)="onSubmit()">
-				{{ t('form.actions.save') }}
-			</button>
-		</div>
 	</form>
-
 </div>

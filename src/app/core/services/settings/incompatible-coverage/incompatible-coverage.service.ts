@@ -46,7 +46,7 @@ export class IncompatibleCoverageService {
     ) { }
 
     create(incompatibleCoverage: IncompatibleCoverage): Observable<IncompatibleCoverage> {
-        return this._httpClient.post<IncompatibleCoverage>(`${this.baseUrl}/incompatibleCoverages`, incompatibleCoverage)
+        return this._httpClient.post<IncompatibleCoverage>(`${this.baseUrl}`, incompatibleCoverage)
         .pipe(
             tap((incompatibleCoverage) => {
                 this.incompatibleCoverage = incompatibleCoverage;

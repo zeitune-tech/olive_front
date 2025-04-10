@@ -5,6 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { Product } from "@core/services/administration/product/product.interface";
 import { CoverageReference } from "@core/services/settings/coverage-reference/coverage-reference.interface";
 import { CoverageReferenceService } from "@core/services/settings/coverage-reference/coverage-reference.service";
 import { Coverage } from "@core/services/settings/coverage/coverage.interface";
@@ -20,9 +21,9 @@ import { Subject, takeUntil } from "rxjs";
 })
 export class CoverageReferenceListComponent {
 
-  
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-        
+
     tableOptions: TableOptions<CoverageReference> = {
         title: '',
         columns: [
@@ -34,7 +35,7 @@ export class CoverageReferenceListComponent {
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
-            
+
         ],
         renderItem: (element: CoverageReference, property: keyof CoverageReference) => {
             if (property === 'accessCharacteristic') {
@@ -54,23 +55,24 @@ export class CoverageReferenceListComponent {
     dataSource: MatTableDataSource<CoverageReference> = new MatTableDataSource();
     selection = new SelectionModel<CoverageReference>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = {} as Product;
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _coverageService: CoverageService,
         private _dialog: MatDialog
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this._coverageService.coverages$
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: Coverage[]) => {
-            this.data = data.map((coverage: Coverage) => {
-                return coverage.reference as CoverageReference;
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: Coverage[]) => {
+                this.data = data.map((coverage: Coverage) => {
+                    return coverage.reference as CoverageReference;
+                });
+                this.dataSource.data = this.data;
+                this._changeDetectorRef.detectChanges();
             });
-            this.dataSource.data = this.data;
-            this._changeDetectorRef.detectChanges();
-        });
     }
 
     ngAfterViewInit() {
@@ -86,11 +88,8 @@ export class CoverageReferenceListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit CoverageReferential CoverageReferential
-        */
-    onDemand(item: CoverageReference | null): void {
-      
+    openSelection() {
+        
     }
 
     get visibleColumns() {

@@ -30,7 +30,6 @@ export class CoverageDurationNewComponent implements OnInit {
             type: [null, Validators.required],
             prorotaMode: ['', Validators.required],
             unit: ['', Validators.required],
-            managementEntity: [null, Validators.required]
           });
           
     }
@@ -52,7 +51,7 @@ export class CoverageDurationNewComponent implements OnInit {
 
     onSubmit(): void {
         if (this.formGroup.valid) {
-            // this._coverageService.create(this.form.value).subscribe();
+            this._coverageService.create(this.formGroup.value).subscribe();
         }
     }
 

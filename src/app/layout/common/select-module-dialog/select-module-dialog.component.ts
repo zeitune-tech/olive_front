@@ -15,14 +15,17 @@ export class SelectModuleDialogComponent {
     modules: Module[] = [];
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: any,
+        @Inject(MAT_DIALOG_DATA) public data: {
+            modules: Module[];
+        },
         public dialogRef: MatDialogRef<SelectModuleDialogComponent>,
         private _layoutService: LayoutService,
         private _navigationService: NavigationService,
         private _moduleService: ModuleService,
         private _router: Router
     ) { 
-        this.modules = this._moduleService.getModules();
+        this.modules = data.modules;
+        
     }
     
 

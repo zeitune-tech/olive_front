@@ -9,19 +9,11 @@ import { RequestMetadata } from "../../common.interface";
 export class MarketLevelOrganizationService {
 
     baseUrl = environment.administration_url + '/market-level-organizations';
-    private _myMarketLevelOrganization: ReplaySubject<MarketLevelOrganization> = new ReplaySubject<MarketLevelOrganization>(1);
     private _marketLevelOrganization: ReplaySubject<MarketLevelOrganization> = new ReplaySubject<MarketLevelOrganization>(1);
     private _marketLevelOrganizations: ReplaySubject<MarketLevelOrganization[]> = new ReplaySubject<MarketLevelOrganization[]>(1);
     private _marketLevelOrganizationLinked: ReplaySubject<MarketLevelOrganization[]> = new ReplaySubject<MarketLevelOrganization[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
 
-    set myMarketLevelOrganization(value: MarketLevelOrganization) {
-        this._myMarketLevelOrganization.next(value);
-    }
-
-    get myMarketLevelOrganization$() {
-        return this._myMarketLevelOrganization.asObservable();
-    }
 
     set entitySuperior(value: MarketLevelOrganization) {
         this._marketLevelOrganization.next(value);
@@ -46,6 +38,7 @@ export class MarketLevelOrganizationService {
     get marketLevelOrganizationLinked$() {
         return this._marketLevelOrganizationLinked.asObservable();
     }
+
 
     get metadata$() {
         return this._metadata.asObservable();
@@ -75,6 +68,20 @@ export class MarketLevelOrganizationService {
         .pipe(
             tap((response : any) => {
                 this.marketLevelOrganizations = response?.content.map((marketLevelOrganization: MarketLevelOrganization) => {
+                    return marketLevelOrganization
+                });
+                this.metadata = response;
+                return (response);
+            }),
+            catchError(() => of([] as MarketLevelOrganization[]))
+        );
+    }
+
+    getLinked(): Observable<MarketLevelOrganization[]> {
+        return this._httpClient.get<MarketLevelOrganization[]>(`${this.baseUrl}`)
+        .pipe(
+            tap((response : any) => {
+                this.marketLevelOrganizationLinked = response?.content.map((marketLevelOrganization: MarketLevelOrganization) => {
                     return marketLevelOrganization
                 });
                 this.metadata = response;

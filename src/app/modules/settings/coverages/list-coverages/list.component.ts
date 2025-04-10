@@ -5,6 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { Product } from "@core/services/administration/product/product.interface";
 import { Coverage } from "@core/services/settings/coverage/coverage.interface";
 import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 import { animations } from "@lhacksrt/animations";
@@ -50,14 +51,18 @@ import { Subject, takeUntil } from "rxjs";
     animations: animations
 })
 export class CoveragesListComponent {
+    openSelection() {
+        throw new Error('Method not implemented.');
+    }
 
-
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     tableOptions: TableOptions<Coverage> = {
         title: '',
         columns: [
-            { label: 'entities.coverage.table.columns.nature', property: 'nature', type: 'text', visible: true, cssClasses: ["w-80"] },
+            { label: 'entities.coverage.table.columns.reference', property: 'reference', type: 'text', visible: true },
+            { label: 'entities.coverage.table.columns.nature', property: 'nature', type: 'text', visible: true, cssClasses: ["min-w-80"] },
             { label: 'entities.coverage.table.columns.isFree', property: 'isFree', type: 'text', visible: true },
             { label: 'entities.coverage.table.columns.isFixed', property: 'isFixed', type: 'text', visible: true },
             { label: 'entities.coverage.table.columns.calculationMode', property: 'calculationMode', type: 'text', visible: true },
@@ -68,7 +73,6 @@ export class CoveragesListComponent {
             { label: 'entities.coverage.table.columns.prorata', property: 'prorata', type: 'text', visible: true },
             { label: 'entities.coverage.table.columns.displayPrime', property: 'displayPrime', type: 'text', visible: true },
             { label: 'entities.coverage.table.columns.generatesCharacteristic', property: 'generatesCharacteristic', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.reference', property: 'reference', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'coverage.columns.logo',
@@ -84,6 +88,15 @@ export class CoveragesListComponent {
             if (property === 'reference') {
                 return element.reference?.designation || " - ";
             }
+
+            if (element[property] === null || element[property] === undefined) {
+                return " - ";
+            }
+
+            if (property === 'isFree' || property === 'isFixed' || property === 'displayPrime' || property === 'generatesCharacteristic') {
+                return element[property] ? "Oui" : "Non";
+            }
+            
             return element[property];
         },
     };
@@ -95,6 +108,7 @@ export class CoveragesListComponent {
     dataSource: MatTableDataSource<Coverage> = new MatTableDataSource();
     selection = new SelectionModel<Coverage>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = {} as Product;
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,

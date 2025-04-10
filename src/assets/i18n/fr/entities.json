@@ -1,0 +1,603 @@
+{
+    "insured_registry": {
+      "table": {
+        "title": "Registre des assurés",
+        "description": "Liste des entrées du registre des assurés",
+        "columns": {
+          "name": "Nom",
+          "description": "Description",
+          "category": "Catégorie",
+          "branch": "Branche",
+          "prefix": "Préfixe",
+          "length": "Longueur",
+          "counter": "Compteur",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucun registre des assurés trouvé."
+      },
+      "form": {
+        "title": "Registre des assurés",
+        "subtitle": "Veuillez remplir les informations du registre",
+        "fields": {
+          "name": { "label": "Nom" },
+          "description": { "label": "Description" },
+          "category": { "label": "Catégorie" },
+          "branch": { "label": "Branche" },
+          "prefix": { "label": "Préfixe" },
+          "length": { "label": "Longueur" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      }
+    },
+
+    "closure": {
+      "form": {
+        "title": "Clôture",
+        "subtitle": "Veuillez spécifier les informations de clôture",
+        "fields": {
+          "type": { "label": "Type de clôture" },
+          "date": { "label": "Date d'effet" },
+          "managementEntity": { "label": "Entité de gestion" },
+          "product": { "label": "Produit" }
+        }
+      },
+      "table": {
+        "title": "Clôtures",
+        "description": "Liste des actions de clôture enregistrées",
+        "columns": {
+          "type": "Type de clôture",
+          "date": "Date d'effet",
+          "managementEntity": "Entité de gestion",
+          "product": "Produit"
+        },
+        "empty_state": "Aucune clôture enregistrée."
+      }
+    },
+
+    "coverage_duration": {
+      "form": {
+        "title": "Durée de la couverture",
+        "subtitle": "Définissez la période et les paramètres",
+        "fields": {
+          "from": { "label": "Date de début" },
+          "to": { "label": "Date de fin" },
+          "type": { "label": "Type de durée" },
+          "prorotaMode": { "label": "Mode prorata" },
+          "unit": { "label": "Unité" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Durées de couverture",
+        "description": "Périodes de couverture disponibles",
+        "columns": {
+          "from": "Date de début",
+          "to": "Date de fin",
+          "type": "Type de durée",
+          "prorotaMode": "Mode prorata",
+          "unit": "Unité",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucune durée de couverture disponible."
+      }
+    },
+
+    "coverage_reference": {
+      "form": {
+        "title": "Référence de garantie",
+        "subtitle": "Entrez les détails de la garantie",
+        "fields": {
+          "product": { "label": "Produit" },
+          "designation": { "label": "Désignation" },
+          "family": { "label": "Famille" },
+          "accessCharacteristic": { "label": "Accès aux caractéristiques" },
+          "tariffAccess": { "label": "Accès aux tarifs" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Références de garantie",
+        "description": "Table des différentes références de garantie",
+        "columns": {
+          "designation": "Désignation",
+          "family": "Famille",
+          "accessCharacteristic": "Accès aux caractéristiques",
+          "tariffAccess": "Accès au tarif",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucune référence de garantie trouvée."
+      }
+    },
+
+    "coverage": {
+      "form": {
+        "title": "Couverture",
+        "subtitle": "Remplissez les informations de garantie",
+        "fields": {
+          "nature": { "label": "Nature" },
+          "isFree": { "label": "Gratuite" },
+          "isFixed": { "label": "Fixe" },
+          "calculationMode": { "label": "Mode de calcul" },
+          "fixedCapital": { "label": "Capital fixe" },
+          "minCapital": { "label": "Capital minimum" },
+          "maxCapital": { "label": "Capital maximum" },
+          "order": { "label": "Ordre" },
+          "prorata": { "label": "Mode prorata" },
+          "displayPrime": { "label": "Afficher la prime" },
+          "generatesCharacteristic": { "label": "Génère des caractéristiques" },
+          "coverageReferenceId": { "label": "Référence de garantie" },
+          "product": { "label": "Produit" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Garantie",
+        "description": "Liste des garanties associées aux produits",
+        "columns": {
+          "nature": "Nature",
+          "isFree": "Gratuite",
+          "isFixed": "Fixe",
+          "calculationMode": "Mode de calcul",
+          "fixedCapital": "Capital fixe",
+          "minCapital": "Capital minimum",
+          "maxCapital": "Capital maximum",
+          "order": "Ordre",
+          "prorata": "Mode prorata",
+          "displayPrime": "Afficher la prime",
+          "generatesCharacteristic": "Génère des caractéristiques",
+          "reference": "Référence de garantie",
+          "product": "Produit",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucune garantie n’a été définie."
+      }
+    },
+
+    "incompatible_coverage": {
+      "form": {
+        "title": "Garantie incompatibles",
+        "subtitle": "Ajoutez des paires de garantie incompatibles",
+        "fields": {
+          "coverage": { "label": "Garantie" },
+          "incompatible": { "label": "Garantie incompatible" },
+          "managementEntity": { "label": "Entité de gestion" }
+        }
+      },
+      "table": {
+        "title": "Garantie incompatibles",
+        "description": "Relations de garantie non compatibles",
+        "columns": {
+          "coverage": "Garantie",
+          "incompatibleCoverage": "Garantie incompatible",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucune incompatibilité de garantie enregistrée."
+      }
+    },
+
+    "production_registry": {
+      "form": {
+        "title": "Registre de production",
+        "subtitle": "Configurer les paramètres du registre de production",
+        "fields": {
+          "prefix": { "label": "Préfixe" },
+          "length": { "label": "Longueur" },
+          "managementEntity": { "label": "Entité de gestion" },
+          "product": { "label": "Produit" }
+        }
+      },
+      "table": {
+        "title": "Registre de production",
+        "description": "Paramètres de génération des enregistrements de production",
+        "columns": {
+          "prefix": "Préfixe",
+          "length": "Longueur",
+          "counter": "Compteur",
+          "product": "Produit",
+          "managementEntity": "Entité de gestion"
+        },
+        "empty_state": "Aucun registre de production disponible."
+      }
+    },
+    "product": {
+      "form": {
+        "title": "Créer ou modifier un produit",
+        "subtitle": "Veuillez remplir les informations du produit ci-dessous.",
+        "fields": {
+          "name": {
+            "label": "Nom du produit"
+          },
+          "branch": {
+            "label": "Branche"
+          },
+          "owner": {
+            "label": "Propriétaire"
+          },
+          "minRisk": {
+            "label": "Risque minimum"
+          },
+          "maxRisk": {
+            "label": "Risque maximum"
+          },
+          "minimumGuaranteeNumber": {
+            "label": "Nombre minimum de garanties"
+          },
+          "fleet": {
+            "label": "Produit destiné à une flotte ?"
+          },
+          "hasReduction": {
+            "label": "Produit avec réduction ?"
+          }
+        }
+      },
+      "table": {
+        "title": "Liste des produits",
+        "subtitle": "Aperçu des produits",
+        "description": "Liste complète des produits proposés par la compagnie.",
+        "columns": {
+          "name": "Produit",
+          "visibility": "Visibilité",
+          "branch": "Branche",
+          "category": "Catégorie",
+          "minRisk": "Risque min",
+          "maxRisk": "Risque max",
+          "minimumGuaranteeNumber": "Nbr min de garanties",
+          "fleet": "Flotte",
+          "hasReduction": "Rédu"
+        },
+        "actions": {
+          "share": "Partager",
+          "modify": "Modifier"
+        },
+        "empty_state": "Aucun produit trouvé"
+      }
+    },
+    "branch": {
+      "form": {
+        "title": "Détails de la branche",
+        "subtitle": "Créer ou modifier une branche"
+      },
+      "table": {
+        "title": "Branches",
+        "description": "Liste des branches",
+        "columns": {
+          "name": "Nom",
+          "description": "Description",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune branche trouvée"
+      }
+    },
+    "category": {
+      "form": {
+        "title": "Détails de la catégorie",
+        "subtitle": "Créer ou modifier une catégorie"
+      },
+      "table": {
+        "title": "Catégories",
+        "description": "Liste des catégories",
+        "columns": {
+          "name": "Nom",
+          "description": "Description",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune catégorie trouvée"
+      }
+    },
+    "management_entity": {
+      "level": {
+        "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché",
+        "COMPANY_LEVEL_ORGANIZATION": "Organisation de niveau compagnie",
+        "POINT_OF_SALE": "Point de vente",
+        "COMPANY": "Compagnie"
+      },
+      "form": {
+        "title": "Configuration des entités de gestion",
+        "subtitle": "Définir les détails des entités",
+        "description": "Créez ou modifiez les principales informations des entités de gestion.",
+        "fields": {
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "email": {
+            "label": "E-mail",
+            "placeholder": "Saisir l'adresse e-mail"
+          },
+          "phone": {
+            "label": "Téléphone",
+            "placeholder": "Saisir le numéro de téléphone"
+          },
+          "address": { "label": "Adresse", "placeholder": "Saisir l'adresse" },
+          "logo": { "label": "Logo", "placeholder": "Télécharger le logo" },
+          "level": {
+            "label": "Niveau de l'entité",
+            "placeholder": "Sélectionner le niveau de l'entité",
+            "options": {
+              "ENTITY_SUPERIOR": "Entité Supérieure",
+              "COMPANY": "Entreprise",
+              "POINT_OF_SALE": "Point de vente"
+            }
+          }
+        }
+      },
+      "table": {
+        "title": "Entités de gestion",
+        "subtitle": "Aperçu des entités",
+        "description": "Liste de toutes les entités de gestion avec leurs informations clés.",
+        "columns": {
+          "id": "Identifiant",
+          "name": "Nom",
+          "email": "Email",
+          "phone": "Téléphone",
+          "logo": "Logo",
+          "address": "Adresse",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune entité trouvée"
+      }
+    },
+    "company": {
+      "form": {
+        "title": "Gestion des compagnies",
+        "subtitle": "Définir les détails de la compagnie",
+        "description": "Liste et gestion des compagnies d'assurance."
+      },
+      "table": {
+        "title": "Compagnies d'assurance",
+        "subtitle": "Aperçu des compagnies",
+        "description": "Liste et gestion des compagnies d'assurance.",
+        "columns": {
+          "logo": "Logo",
+          "name": "Nom",
+          "email": "Email",
+          "phone": "Téléphone",
+          "linked": "Liée",
+          "address": "Adresse",
+          "actions": "Actions"
+        },
+        "actions": {
+          "link": "Lier",
+          "unlink": "Délier",
+          "share": "Partager"
+        },
+        "empty_state": "Aucune compagnie trouvée"
+      }
+    },
+    "market_level_organization": {
+      "form": {
+        "title": "Gestion des organisations niveau marché",
+        "subtitle": "Définir les groupes niveau marché",
+        "description": "Créez ou modifiez les organisations au niveau marché."
+      },
+      "table": {
+        "title": "Organisations niveau marché",
+        "subtitle": "Aperçu des groupes niveau marché",
+        "description": "Liste et gestion des organisations opérant au niveau marché.",
+        "columns": {
+          "name": "Nom",
+          "points_of_sale_count": "Nombre de points de vente",
+          "createdAt": "Créé le",
+          "updatedAt": "Mis à jour le",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune organisation trouvée"
+      }
+    },
+    "point_of_sale": {
+      "form": {
+        "title": "Gestion des points de vente",
+        "subtitle": "Définir les détails du point de vente",
+        "description": "Créez ou modifiez les détails des points de vente.",
+        "fields": {
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "email": {
+            "label": "E-mail",
+            "placeholder": "Saisir l'adresse e-mail"
+          },
+          "phone": {
+            "label": "Téléphone",
+            "placeholder": "Saisir le numéro de téléphone"
+          },
+          "address": { "label": "Adresse", "placeholder": "Saisir l'adresse" },
+          "type": {
+            "label": "Type",
+            "placeholder": "Sélectionner le type",
+            "options": {
+              "GENERAL_AGENT": "Agent général",
+              "BROKER": "Courtier",
+              "DIRECT_OFFICE": "Bureau direct"
+            }
+          }
+        }
+      },
+      "table": {
+        "title": "Organisations niveau compagnie",
+        "subtitle": "Gérer les groupes organisationnels",
+        "description": "Liste et gestion des organisations niveau compagnie.",
+        "columns": {
+          "name": "Nom",
+          "email": "Email",
+          "phone": "Téléphone",
+          "address": "Adresse",
+          "type": "Type",
+          "linked": "Lié",
+          "actions": "Actions"
+        },
+        "types": {
+          "general_agent": "Agent général",
+          "broker": "Courtier",
+          "direct_office": "Bureau direct"
+        },
+        "broker": {
+          "title": "Liste des courtiers",
+          "description": "Liste des courtiers"
+        },
+        "empty_state": "Aucun point de vente trouvé"
+      }
+    },
+    "user": {
+      "profile": {
+        "title": "Mon profil"
+      },
+      "form": {
+        "title": "Création d'utilisateur",
+        "subtitle": "Gérer les informations utilisateur",
+        "description": "Renseignez les informations personnelles, associez une compagnie, un point de vente et définissez les permissions de l'utilisateur.",
+        "step_one_title": "Informations personnelles",
+        "step_one_description": "Fournissez les informations personnelles de base de l'utilisateur.",
+        "step_two_title": "Informations sur la compagnie",
+        "step_two_description": "Associez l'utilisateur à une compagnie.",
+        "step_three_title": "Informations sur le point de vente",
+        "step_three_description": "Associez l'utilisateur à un point de vente spécifique.",
+        "step_four_title": "Permissions & accès",
+        "step_four_description": "Définissez les permissions et les droits d'accès de l'utilisateur.",
+        "step_five_title": "Résumé & confirmation",
+        "step_five_description": "Vérifiez les détails de l'utilisateur avant confirmation.",
+        "step_five_summary": "Résumé de l'utilisateur",
+        "step_five_name": "Nom",
+        "step_five_firstname": "Prénom",
+        "step_five_email": "Adresse email",
+        "step_five_phone": "Numéro de téléphone",
+        "step_five_profile": "Informations du profil",
+        "step_five_profile_name": "Nom du rôle",
+        "step_five_profile_description": "Entité de gestion",
+        "step_five_previous": "Précédent",
+        "step_five_confirm": "Confirmer & créer",
+        "fields": {
+          "first_name": {
+            "label": "Prénom",
+            "placeholder": "Saisir le prénom"
+          },
+          "last_name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "email": {
+            "label": "E-mail",
+            "placeholder": "Saisir l'adresse e-mail"
+          },
+          "phone": {
+            "label": "Téléphone",
+            "placeholder": "Saisir le numéro de téléphone"
+          },
+          "password": {
+            "label": "Mot de passe",
+            "placeholder": "Saisir le mot de passe"
+          },
+          "confirm_password": {
+            "label": "Confirmer le mot de passe",
+            "placeholder": "Confirmer le mot de passe"
+          },
+          "company": {
+            "label": "Compagnie",
+            "placeholder": "Sélectionner la compagnie"
+          },
+          "point_of_sale": {
+            "label": "Point de vente",
+            "placeholder": "Sélectionner le point de vente"
+          },
+          "profile": {
+            "label": "Profil",
+            "placeholder": "Sélectionner le profil"
+          }
+        }
+      },
+      "table": {
+        "title": "Liste des utilisateurs",
+        "subtitle": "Gérer les utilisateurs du système",
+        "description": "Liste de tous les utilisateurs enregistrés dans le système.",
+        "columns": {
+          "first_name": "Prénom",
+          "last_name": "Nom",
+          "email": "Email",
+          "management_entity": "Entité de gestion",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucun utilisateur trouvé"
+      },
+      "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      }
+    },
+    "profile": {
+      "form": {
+        "title": "Création de profil",
+        "subtitle": "Définir les rôles et permissions",
+        "description": "Créez ou modifiez les profils utilisateur et attribuez des permissions.",
+        "step_one_title": "Informations du profil",
+        "step_one_description": "Saisissez les informations de base du profil.",
+        "step_two_title": "Permissions",
+        "step_two_description": "Sélectionnez les permissions à attribuer à ce profil.",
+        "step_three_title": "Résumé & confirmation",
+        "step_three_description": "Vérifiez les détails du profil avant la création.",
+        "step_three_description_2": "Description du profil.",
+        "step_three_summary": "Résumé du profil",
+        "step_three_name": "Nom du profil",
+        "step_three_permissions": "Permissions attribuées",
+        "step_three_previous": "Précédent",
+        "step_three_create": "Confirmer & créer",
+        "fields": {
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "description": {
+            "label": "Description",
+            "placeholder": "Saisir la description"
+          },
+          "permissions": {
+            "label": "Permissions",
+            "placeholder": "Sélectionner les permissions"
+          }
+        }
+      },
+      "table": {
+        "title": "Profils utilisateurs",
+        "subtitle": "Gérer les profils et permissions",
+        "description": "Aperçu des rôles utilisateurs et de leurs permissions associées.",
+        "columns": {
+          "name": "Nom du profil",
+          "description": "Description",
+          "permissions_count": "Nombre de permissions",
+          "admin_description": "Possède tous les droits sur cette entité de gestion",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucun profil trouvé"
+      }
+    },
+    "company_level_organization": {
+      "form": {
+        "title": "Création d'organisation niveau compagnie",
+        "subtitle": "Organiser les points de vente par groupe",
+        "description": "Définissez des groupes organisationnels et associez-y les points de vente.",
+        "step_one_title": "Informations de l'organisation",
+        "step_one_description": "Saisissez les détails de base pour l'organisation.",
+        "step_two_title": "Points de vente",
+        "step_two_description": "Sélectionnez les points de vente à associer à cette organisation.",
+        "step_three_title": "Résumé & confirmation",
+        "step_three_description": "Vérifiez les détails de l'organisation avant la création.",
+        "step_three_summary": "Résumé de l'organisation",
+        "step_three_name": "Nom de l'organisation",
+        "step_three_points-of-sale": "Points de vente associés",
+        "step_three_previous": "Précédent",
+        "step_three_create": "Confirmer & créer",
+        "fields": {
+          "name": { "label": "Nom", "placeholder": "Saisir le nom" },
+          "description": {
+            "label": "Description",
+            "placeholder": "Saisir la description"
+          },
+          "points_of_sale": {
+            "label": "Points de vente",
+            "placeholder": "Sélectionner les points de vente"
+          }
+        }
+      },
+      "table": {
+        "title": "Organisations niveau compagnie",
+        "subtitle": "Gérer les groupes organisationnels",
+        "description": "Liste et gestion des organisations niveau compagnie.",
+        "columns": {
+          "name": "Nom",
+          "points_of_sale_count": "Nombre de points de vente",
+          "createdAt": "Créé le",
+          "updatedAt": "Mis à jour le",
+          "actions": "Actions"
+        },
+        "empty_state": "Aucune organisation trouvée"
+      }
+    }
+  }

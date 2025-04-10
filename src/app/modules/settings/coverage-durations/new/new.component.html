@@ -27,7 +27,7 @@
           <!-- From Date -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>{{ t('entities.coverage_duration.form.fields.from.label') }}</mat-label>
-            <input matInput  formControlName="from">
+            <input matInput type="date"  formControlName="from">
             <mat-error *ngIf="formGroup.get('from')?.hasError('required')">
               {{ t('form.errors.required') }}
             </mat-error>
@@ -39,7 +39,7 @@
           <!-- To Date -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>{{ t('entities.coverage_duration.form.fields.to.label') }}</mat-label>
-            <input matInput  formControlName="to">
+            <input matInput type="date" formControlName="to">
             <mat-error *ngIf="formGroup.get('to')?.hasError('required')">
               {{ t('form.errors.required') }}
             </mat-error>
@@ -75,15 +75,6 @@
             <mat-label>{{ t('entities.coverage_duration.form.fields.unit.label') }}</mat-label>
             <input matInput formControlName="unit">
             <mat-error *ngIf="formGroup.get('unit')?.hasError('required')">
-              {{ t('form.errors.required') }}
-            </mat-error>
-          </mat-form-field>
-      
-          <!-- Management Entity -->
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage_duration.form.fields.managementEntity.label') }}</mat-label>
-            <input matInput formControlName="managementEntity" />
-            <mat-error *ngIf="formGroup.get('managementEntity')?.hasError('required')">
               {{ t('form.errors.required') }}
             </mat-error>
           </mat-form-field>

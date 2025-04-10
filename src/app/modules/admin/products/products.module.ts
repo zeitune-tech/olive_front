@@ -19,6 +19,8 @@ import { ProductsListComponent } from "./list/list.component";
 import { ProductsNewComponent } from "./new/new.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { LayoutService } from "./layout.service";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
     declarations: [
@@ -42,9 +44,12 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
         MatSelectModule,
         MatDividerModule,
         ReactiveFormsModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatSnackBarModule
     ],
-    providers: [],
+    providers: [
+        LayoutService
+    ],
     exports: [],
 })
 export class ProductsModule { 

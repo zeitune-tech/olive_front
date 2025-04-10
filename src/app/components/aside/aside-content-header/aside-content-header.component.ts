@@ -33,7 +33,6 @@ export class AsideContentHeaderComponent implements OnInit {
 
     navigateToDashboard() {
         if (this._router.url.includes('dashboard')) {
-            console.log('Already on dashboard');
             return;
         }
         this._router.navigate(['/dashboard']);

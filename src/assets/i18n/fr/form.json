@@ -1,0 +1,33 @@
+
+{
+    "fields": {
+      "search": "Rechercher",
+      "checkboxes": "Cases à cocher"
+    },
+    "errors": {
+      "required": "Ce champ est requis",
+      "email_invalid": "Format d'adresse e-mail invalide",
+      "min_length": "Ce champ doit contenir au moins {min} caractères",
+      "password_mismatch": "Les mots de passe doivent être identiques",
+      "min": "La valeur minimale est {{ min }}.",
+      "pastOrPresent": "La date doit être dans le passé ou aujourd’hui.",
+      "futureOrPresent": "La date doit être aujourd’hui ou dans le futur."
+    },
+    "options": {
+      "yes": "Oui",
+      "no": "Non"
+    },
+    "actions": {
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "confirm": "Confirmer",
+      "confirm_delete": "Confirmer la suppression",
+      "next": "Suivant",
+      "previous": "Précédent",
+      "remove": "Supprimer",
+      "addIncompatible": "Ajouter / Modifier une incompatibilité"
+    }
+  }
+

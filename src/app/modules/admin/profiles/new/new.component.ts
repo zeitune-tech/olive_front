@@ -43,10 +43,12 @@ export class ProfilesNewComponent {
     data: {
         name: string;
         description: string;
+        level: string;
         permissions: {name: string, id: string}[];
     } = {
         name: '',
         description: '',
+        level: '',
         permissions: [],
     };
 
@@ -82,8 +84,8 @@ export class ProfilesNewComponent {
     onStepOneNext(fromGroup: UntypedFormGroup): void {
         this.formStepOne = fromGroup;
         this.data.name = fromGroup.value.name;
+        this.data.level = fromGroup.value.level;
         this.data.description = fromGroup.value.description;
-        
     }
 
 
