@@ -95,5 +95,18 @@ export class CompanyService {
             }),
             catchError(() => of([] as Company[]))
         );
+    }   
+
+    getLinked(): Observable<Company[]> {
+        return this._httpClient.get<Company[]>(`${this.baseUrl}/linked`)
+        .pipe(
+            tap((response : any) => {
+                this.companiesLinked = response?.content.map((company: Company) => {
+                    return company;
+                });
+                return response;
+            }),
+            catchError(() => of([] as Company[]))
+        );
     }
 }

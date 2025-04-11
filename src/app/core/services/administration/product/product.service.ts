@@ -107,7 +107,7 @@ export class ProductService {
                     return response;
                 }),
                 catchError((error) => {
-                    throw error;
+                    return of(error);
                 })
             );
     }
@@ -117,6 +117,18 @@ export class ProductService {
             .pipe(
                 tap((response: any) => {
                     return response;
+                }),
+                catchError((error) => {
+                    return of(error);
+                })
+            );
+    }
+
+    shareProduct(id: string, companies: string[]): Observable<any> {
+        return this._httpClient.patch(`${this.baseUrl}/${id}/share`, companies)
+            .pipe(
+                tap(() => {
+                    return (id);
                 }),
                 catchError((error) => {
                     return of(error);

@@ -107,6 +107,7 @@ export class UsersNewComponent implements OnInit {
         this.data.phone = fromGroup.value.phone;
         if (!this.currentIsCompanyEmployee) {
             this.getAccessLevel();
+            console.log(this.data.accessLevel);
             this.data.managementEntityId = this.managementEntity.id;
             this.data.managementEntityName = this.managementEntity.name;
         }
@@ -157,7 +158,7 @@ export class UsersNewComponent implements OnInit {
         this._userService.create(this.data)
         .subscribe(() => {
             this._userService.getAll().subscribe();
-            this._router.navigate(['/users/list']);
+            this._router.navigate(['/administration/users/list']);
         });
     }
 }

@@ -37,6 +37,10 @@ export class ProfilesNewStepOneComponent {
         this._managementEntityService.entity$.subscribe({
             next: (entity) => {
                 this.entity = entity;
+                this.formGroup.patchValue({
+                    level: entity.type,
+                });
+
             }
         });
     }

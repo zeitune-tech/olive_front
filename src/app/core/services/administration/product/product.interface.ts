@@ -13,6 +13,7 @@ export class Product {
     minimumGuaranteeNumber: number;
     fleet: boolean;
     hasReduction: boolean;
+    sharedWith: string[];
 
     constructor(response: Partial<Product>) {
         this.id = response?.id ?? '';
@@ -27,5 +28,6 @@ export class Product {
         this.minimumGuaranteeNumber = response?.minimumGuaranteeNumber ?? 1;
         this.fleet = response?.fleet ?? false;
         this.hasReduction = response?.hasReduction ?? false;
+        this.sharedWith = response?.sharedWith ?? [];
     }
 }

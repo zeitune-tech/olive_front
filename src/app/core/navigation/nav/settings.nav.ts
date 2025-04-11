@@ -9,7 +9,7 @@ export const defaultSettingsNavigation: NavigationItem[] = [
         title: 'sidebar.coverages.title',
         type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_COVERAGES_REFERENCES,
+        permission: PERMISSIONS.VIEW_COVERAGES,
         children: [
             {
                 id: 'coverages.list-referiential',
@@ -17,7 +17,7 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/parameters/coverages/referentials',
-                permission: PERMISSIONS.VIEW_COVERAGES_REFERENCES
+                permission: PERMISSIONS.VIEW_COVERAGES
             },
             {
                 id: 'coverages.list',

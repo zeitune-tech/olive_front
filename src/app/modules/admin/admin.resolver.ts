@@ -29,7 +29,6 @@ export class AdministrationResolver implements Resolve<any> {
         private _companyLevelOrganizationService: CompanyLevelOrganizationService,
         private _companyService: CompanyService,
         private _profileService: ProfileService,
-        private _productService: ProductService
     ) {
         this._userService.user$.subscribe((user) => {
             if (user) {
@@ -79,6 +78,7 @@ export class AdministrationResolver implements Resolve<any> {
         }
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COMPANIES)) {
             resolList.push(this._companyService.getAll());
+            resolList.push(this._companyService.getLinked());
         }
 
         return forkJoin(resolList)

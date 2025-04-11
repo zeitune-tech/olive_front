@@ -16,17 +16,18 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
+import { ShareProductComponent } from "../share-product/share-product.component";
 
 @Component({
     selector: "app-products-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class ProductsListComponent implements OnInit{
+export class ProductsListComponent implements OnInit {
 
-  
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-        
+
     tableOptions: TableOptions<Product> = {
         title: '',
         columns: [
@@ -43,7 +44,7 @@ export class ProductsListComponent implements OnInit{
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
-            
+
         ],
         renderItem: (element: Product, property: keyof Product) => {
             if (property === 'branch') {
@@ -79,21 +80,21 @@ export class ProductsListComponent implements OnInit{
         private _dialog: MatDialog
     ) {
         this._productService.products$
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: Product[]) => {
-            this.data = data;
-            this.dataSource.data = data;
-            this._changeDetectorRef.detectChanges();
-        });
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: Product[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+                this._changeDetectorRef.detectChanges();
+            });
 
         this._managementEntityService.entity$
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: ManagementEntity) => {
-            this.managementEntity = data;
-        });
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: ManagementEntity) => {
+                this.managementEntity = data;
+            });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     ngAfterViewInit() {
         if (this.dataSource) {
@@ -111,23 +112,35 @@ export class ProductsListComponent implements OnInit{
     /**
         * Edit Product Product
         */
-// products-list.component.ts
     onEdit(product: Product): void {
         this._layoutService.setSelectedProduct(product);
         this._router.navigate(['/administration/products/new']); // ou route vers le même formulaire mais dans un mode "édition"
-  }
-  
+    }
+
+    onShare(product: Product): void {
+        this._dialog.open(ShareProductComponent, {
+            data: {
+                product: product,
+                companies: product.sharedWith,
+            },
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                
+            }
+        })
+    }
+
 
     hasPermission(product: Product): boolean {
         let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm){
+        if (!hasPerm) {
             return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION"){
+        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
             return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE"){
+        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
             return true;
-        } else 
-         return false;
+        } else
+            return false;
     }
 
     get visibleColumns() {

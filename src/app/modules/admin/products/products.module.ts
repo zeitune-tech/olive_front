@@ -21,11 +21,13 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { LayoutService } from "./layout.service";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { ShareProductComponent } from "./share-product/share-product.component";
 
 @NgModule({
     declarations: [
         ProductsListComponent,
-        ProductsNewComponent
+        ProductsNewComponent,
+        ShareProductComponent
     ],
     imports: [
         RouterModule.forChild(routes),

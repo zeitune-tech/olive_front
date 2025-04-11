@@ -17,11 +17,6 @@ export class ProfilesNewComponent {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
-    ACCESS_LEVELS = [
-        "ENTITY_SUPERIOR_USER",
-        "COMPANY_USER",
-        "POINT_OF_SALE_USER"
-    ];
 
     formGroup!: UntypedFormGroup;
     @ViewChild('form') form!: NgForm;
