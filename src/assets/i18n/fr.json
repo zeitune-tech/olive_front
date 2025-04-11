@@ -202,8 +202,8 @@
       "min_length": "Ce champ doit contenir au moins {min} caractères",
       "password_mismatch": "Les mots de passe doivent être identiques",
       "min": "La valeur minimale est {{ min }}.",
-      "pastOrPresent": "La date doit être dans le passé ou aujourd’hui.",
-      "futureOrPresent": "La date doit être aujourd’hui ou dans le futur."
+      "inferieurToFrom": "Cette valeur doit être supérieure à la précédente.",
+      "inferieurTo0": "Cette valeur doit être positive."
     },
     "options": {
       "yes": "Oui",
@@ -283,11 +283,25 @@
         "title": "Durée de la couverture",
         "subtitle": "Définissez la période et les paramètres",
         "fields": {
-          "from": { "label": "Date de début" },
-          "to": { "label": "Date de fin" },
-          "type": { "label": "Type de durée" },
+          "from": { "label": "De" },
+          "to": { "label": "à" },
+          "type": { 
+            "label": "Type",
+            "options": {
+              "fixed":"Fixe",
+              "variable":"Variable"
+            }
+          },
           "prorotaMode": { "label": "Mode prorata" },
-          "unit": { "label": "Unité" },
+          "unit": { 
+            "label": "Unité",
+            "options": {
+              "day": "Jour",
+              "week": "Semaine",
+              "month": "Mois",
+              "year": "Année"
+            }
+          },
           "managementEntity": { "label": "Entité de gestion" }
         }
       },
@@ -295,14 +309,29 @@
         "title": "Durées de couverture",
         "description": "Périodes de couverture disponibles",
         "columns": {
-          "from": "Date de début",
-          "to": "Date de fin",
-          "type": "Type de durée",
+          "from": "De",
+          "to": "à",
+          "type": {
+            "label": "Type",
+            "fixed": "Fixe",
+            "variable": "Variable"
+          },
           "prorotaMode": "Mode prorata",
-          "unit": "Unité",
+          "unit": {
+            "label": "Unité",
+            "day": "Jour",
+            "week": "Semaine",
+            "month": "Mois",
+            "year": "Année"
+          },
           "managementEntity": "Entité de gestion"
         },
         "empty_state": "Aucune durée de couverture disponible."
+      },
+      "actions": {
+        "add": "Ajouter une durée de couverture",
+        "edit": "Modifier",
+        "delete": "Supprimer"
       }
     },
 

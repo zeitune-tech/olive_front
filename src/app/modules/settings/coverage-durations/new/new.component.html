@@ -24,57 +24,67 @@
         </div>
       
         <div class="flex flex-col gap-6">
-          <!-- From Date -->
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage_duration.form.fields.from.label') }}</mat-label>
-            <input matInput type="date"  formControlName="from">
-            <mat-error *ngIf="formGroup.get('from')?.hasError('required')">
-              {{ t('form.errors.required') }}
-            </mat-error>
-            <mat-error *ngIf="formGroup.get('from')?.hasError('pastOrPresent')">
-              {{ t('form.errors.pastOrPresent') }}
-            </mat-error>
-          </mat-form-field>
-      
-          <!-- To Date -->
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage_duration.form.fields.to.label') }}</mat-label>
-            <input matInput type="date" formControlName="to">
-            <mat-error *ngIf="formGroup.get('to')?.hasError('required')">
-              {{ t('form.errors.required') }}
-            </mat-error>
-            <mat-error *ngIf="formGroup.get('to')?.hasError('futureOrPresent')">
-              {{ t('form.errors.futureOrPresent') }}
-            </mat-error>
-          </mat-form-field>
-      
+
           <!-- Type -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>{{ t('entities.coverage_duration.form.fields.type.label') }}</mat-label>
             <mat-select formControlName="type">
               <mat-option *ngFor="let option of coverageDurationTypes" [value]="option.value">
-                {{ option.label }}
+                {{ t('entities.coverage_duration.form.fields.type.options.' + option.label.toLocaleLowerCase()) }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="formGroup.get('type')?.hasError('required')">
               {{ t('form.errors.required') }}
             </mat-error>
           </mat-form-field>
+
+          <!-- Unit -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage_duration.form.fields.unit.label') }}</mat-label>
+            <mat-select formControlName="unit">
+              <mat-option *ngFor="let option of coverageDurationUnits" [value]="option.value">
+                {{ t('entities.coverage_duration.form.fields.unit.options.' + option.label.toLocaleLowerCase()) }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.get('unit')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- From Date -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>{{ t('entities.coverage_duration.form.fields.from.label') }}</mat-label>
+            <input matInput type="number"  formControlName="from">
+            <mat-error *ngIf="formGroup.get('from')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+            <mat-error *ngIf="formGroup.get('from')?.hasError('min')">
+              {{ t('form.errors.inferieurTo0') }}
+            </mat-error>
+          </mat-form-field>
+      
+          <!-- To Date -->
+          <mat-form-field appearance="outline" class="w-full" *ngIf="formGroup.get('type')?.value === 'VARIABLE'">
+            <mat-label>{{ t('entities.coverage_duration.form.fields.to.label') }}</mat-label>
+            <input matInput type="number" formControlName="to">
+            <mat-error *ngIf="formGroup.get('to')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+            <mat-error *ngIf="formGroup.get('to')?.hasError('inferieurToFrom')">
+              {{ t('form.errors.inferieurToFrom') }}
+            </mat-error>
+            <mat-error *ngIf="formGroup.get('to')?.hasError('min')">
+              {{ t('form.errors.inferieurTo0') }}
+            </mat-error>
+          </mat-form-field>
+      
+          
       
           <!-- Prorata Mode -->
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>{{ t('entities.coverage_duration.form.fields.prorotaMode.label') }}</mat-label>
             <input matInput formControlName="prorotaMode">
             <mat-error *ngIf="formGroup.get('prorotaMode')?.hasError('required')">
-              {{ t('form.errors.required') }}
-            </mat-error>
-          </mat-form-field>
-      
-          <!-- Unit -->
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage_duration.form.fields.unit.label') }}</mat-label>
-            <input matInput formControlName="unit">
-            <mat-error *ngIf="formGroup.get('unit')?.hasError('required')">
               {{ t('form.errors.required') }}
             </mat-error>
           </mat-form-field>

@@ -56,6 +56,16 @@ export class CoverageDurationService {
         );
     }
 
+    update(coverage: any): Observable<CoverageDuration> {
+        return this._httpClient.put<CoverageDuration>(`${this.baseUrl}`, coverage)
+        .pipe(
+            tap((coverage) => {
+                this.coverageDuration = coverage;
+                return (coverage);
+            }),
+            catchError(() => of({} as CoverageDuration))
+        );
+    }
 
     get(id: string): Observable<CoverageDuration> {
         return this._httpClient.get<CoverageDuration>(`${this.baseUrl}${id}`)
@@ -72,11 +82,11 @@ export class CoverageDurationService {
     getAll(): Observable<CoverageDuration[]> {
         return this._httpClient.get<CoverageDuration[]>(`${this.baseUrl}`)
         .pipe(
-            tap((response : any) => {
-                this.coverageDurations = response?.content.map((coverage: CoverageDuration) => {
+            tap((response : CoverageDuration[]) => {
+                this.coverageDurations = response?.map((coverage: CoverageDuration) => {
                     return coverage;
                 });
-                this.metadata = response;
+                //this.metadata = response;
                 return response;
             }),
             catchError(() => of([] as CoverageDuration[]))
