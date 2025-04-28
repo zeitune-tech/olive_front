@@ -32,8 +32,8 @@ export class ProductsListComponent implements OnInit {
         title: '',
         columns: [
             { label: 'entities.product.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.product.table.columns.description', property: 'description', type: 'text', visible: true, cssClasses: ["min-w-64"] },
             { label: 'entities.product.table.columns.branch', property: 'branch', type: 'text', visible: true },
-            { label: 'entities.product.table.columns.category', property: 'category', type: 'text', visible: true },
             { label: 'entities.product.table.columns.visibility', property: 'visibility', type: 'text', visible: true },
             { label: 'entities.product.table.columns.minRisk', property: 'minRisk', type: 'text', visible: true },
             { label: 'entities.product.table.columns.maxRisk', property: 'maxRisk', type: 'text', visible: true },

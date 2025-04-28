@@ -17,7 +17,7 @@
         @for (module of modules; track $index) {
             <div [ngClass]="module.cssClass" (click)="navigate(module)">
                 <div class="w-full h-36 overflow-hidden text-primary bg-[#AFC3C8] flex items-center justify-center">
-                    <img class="object-cover h-32 relative" [src]="'assets/img/icons/'+module.icon" [alt]="module.title">
+                    <img class="object-cover w-36 relative" [src]="module.icon" [alt]="module.title">
                 </div>
                 <div class=" text-center">
                     <h2 class="text-lg font-semibold my-2">{{ t(module.title) }}</h2>

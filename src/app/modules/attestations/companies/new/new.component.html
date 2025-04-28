@@ -1,0 +1,87 @@
+<div class="w-full "  *transloco="let t">
+
+    <div class="flex flex-col" matDialogTitle>
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('entities.lot_attestations.table.title') }}
+        </h1>
+        <!-- Description -->
+        <p class="text-sm md:text-base text-gray-600">
+            {{ t('entities.lot_attestations.form.subtitle') }}
+        </p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+        <mat-dialog-content>
+            <div class="flex flex-col gap-6">
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.lot_attestations.form.fields.product.label') }}</mat-label>
+                    <mat-select formControlName="product">
+                        <mat-option *ngFor="let product of products" [value]="product.id">
+                            {{ product.description }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('product')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+            
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.lot_attestations.form.fields.prefix.label') }}</mat-label>
+                    <input matInput type="prefix" formControlName="prefix">
+                    <mat-error *ngIf="formGroup.get('prefix')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+            
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.lot_attestations.form.fields.quantity.label') }}</mat-label>
+                    <input matInput formControlName="quantity" type="number" min="1">
+                    <mat-hint>{{ t('entities.lot_attestations.form.fields.quantity.hint') }}</mat-hint>
+                    <mat-error *ngIf="formGroup.get('quantity')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Start date -->
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.lot_attestations.form.fields.start_date.label') }}</mat-label>
+                    <input matInput formControlName="startDate"  type="date">
+                    <mat-error *ngIf="formGroup.get('startDate')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.lot_attestations.form.fields.end_date.label') }}</mat-label>
+                    <input matInput formControlName="endDate"  type="date">
+                    <mat-error *ngIf="formGroup.get('endDate')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+        </mat-dialog-content>
+      
+          <!-- Submit Button -->
+          <div matDialogActions class="flex items-center justify-end gap-4">
+            <div>{{ t(message) }}</div>
+            <button
+              mat-flat-button
+              color="primary"
+              [disabled]="formGroup.invalid || formGroup.disabled"
+              (click)="onSubmit()"
+            >
+              <span *ngIf="!formGroup.disabled">
+                {{ t('form.actions.save') }}
+              </span>
+              <mat-progress-spinner
+                *ngIf="formGroup.disabled"
+                [diameter]="24"
+                mode="indeterminate"
+              ></mat-progress-spinner>
+            </button>
+          </div>
+      </form>
+      
+</div>

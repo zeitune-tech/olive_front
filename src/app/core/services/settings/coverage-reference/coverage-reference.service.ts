@@ -12,7 +12,7 @@ export class CoverageReferenceService {
 
     baseUrl = environment.settings_url + '/coverage-references';
     private _coverageReferential: ReplaySubject<CoverageReference> = new ReplaySubject<CoverageReference>(1);
-    private _coverageReferentials: ReplaySubject<CoverageReference[]> = new ReplaySubject<CoverageReference[]>(1);
+    private _coverageReferences: ReplaySubject<CoverageReference[]> = new ReplaySubject<CoverageReference[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
         
 
@@ -25,11 +25,11 @@ export class CoverageReferenceService {
     }
 
     set coverageReferentials(value: CoverageReference[]) {
-        this._coverageReferentials.next(value);
+        this._coverageReferences.next(value);
     }
 
-    get coverageReferentials$() {
-        return this._coverageReferentials.asObservable();
+    get coverageReferences$() {
+        return this._coverageReferences.asObservable();
     }
 
 
@@ -74,11 +74,11 @@ export class CoverageReferenceService {
     getAll(): Observable<CoverageReference[]> {
         return this._httpClient.get<CoverageReference[]>(`${this.baseUrl}`)
         .pipe(
-            tap((response : any) => {
-                this.coverageReferentials = response?.content.map((coverage: CoverageReference) => {
+            tap((response : CoverageReference[]) => {
+                this.coverageReferentials = response?.map((coverage: CoverageReference) => {
                     return coverage;
                 });
-                this.metadata = response;
+                // this.metadata = response;
                 return response;
             }),
             catchError(() => of([] as CoverageReference[]))

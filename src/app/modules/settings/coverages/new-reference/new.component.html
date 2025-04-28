@@ -23,20 +23,7 @@
             </p>
         </div>
 
-        <div class="flex flex-col gap-6" *ngIf="!loading; else loadingSpinner">
-
-            <!-- Product -->
-            <mat-form-field appearance="outline" class="w-full">
-                <mat-label>{{ t('entities.coverage_reference.form.fields.product.label') }}</mat-label>
-                <mat-select formControlName="productId">
-                    <mat-option *ngFor="let product of products" [value]="product.id">
-                        {{ product.name }}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-            </mat-form-field>
+        <div class="flex flex-col gap-6">
 
             <!-- Designation -->
             <mat-form-field appearance="outline" class="w-full">
@@ -92,11 +79,6 @@
             </div>
         </div>
 
-        <!-- Loading -->
-        <ng-template #loadingSpinner>
-            <div class="flex justify-center py-10">
-                <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-            </div>
-        </ng-template>
+        
     </form>
 </div>

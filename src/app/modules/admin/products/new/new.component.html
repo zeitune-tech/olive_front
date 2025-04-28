@@ -1,127 +1,98 @@
-<div class="w-full pb-10" *transloco="let t">
+<div class="w-full pb-10"  *transloco="let t">
 
     <div class="flex flex-col mb-10">
         <h1 class="text-2xl md:text-4xl font-bold py-4">
             {{ t('entities.product.form.title') }}
         </h1>
+        <!-- Description -->
         <p class="text-sm md:text-base text-gray-600">
-            {{ t('entities.product.form.subtitle') }}
+            {{ t('entities.product.form.description') }}
         </p>
     </div>
 
-    <!-- Form -->
-    <form [formGroup]="formGroup" class="w-full sm:max-w-4xl bg-card p-4 rounded-xl mx-auto">
-        <div class="flex flex-col mb-6 text-center text-primary">
-            <h1 class="text-2xl font-bold">
-                {{ t('entities.product.form.title') }}
-            </h1>
-            <p class="text-sm text-gray-600">
-                {{ t('entities.product.form.subtitle') }}
-            </p>
-        </div>
 
-        <div class="flex flex-col gap-6">
-            <!-- Name -->
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.product.form.fields.name.label') }}</mat-label>
-                <input matInput formControlName="name" />
-                <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-                <mat-error *ngIf="formGroup.get('name')?.hasError('minlength')">
-                    {{ t('form.errors.minLength') }}
-                </mat-error>
-            </mat-form-field>
-
-            <!-- Branch UUID -->
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.product.form.fields.branch.label') }}</mat-label>
-                <mat-select [formControlName]="'branchUuid'">
-                    <mat-option *ngFor="let branch of branches" [value]="branch.id">
-                        {{ t(branch.name) }}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formGroup.get('branchUuid')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-            </mat-form-field>
-
-            <!-- Owner UUID -->
-            <mat-form-field class="w-full hidden" appearance="outline">
-                <mat-label>{{ t('entities.product.form.fields.owner.label') }}</mat-label>
-                <input matInput formControlName="ownerUuid" />
-                <mat-error *ngIf="formGroup.get('ownerUuid')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-            </mat-form-field>
-
-            <!-- Min Risk -->
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.product.form.fields.minRisk.label') }}</mat-label>
-                <input type="number" matInput formControlName="minRisk" />
-                <mat-error *ngIf="formGroup.get('minRisk')?.hasError('min')">
-                    {{ t('form.errors.min', { value: 1 }) }}
-                </mat-error>
-                <mat-error *ngIf="formGroup.get('minRisk')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-            </mat-form-field>
-
-            <!-- Max Risk -->
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.product.form.fields.maxRisk.label') }}</mat-label>
-                <input type="number" matInput formControlName="maxRisk" />
-                <mat-error *ngIf="formGroup.get('maxRisk')?.hasError('min')">
-                    {{ t('form.errors.min', { value: 1 }) }}
-                </mat-error>
-                <mat-error *ngIf="formGroup.get('maxRisk')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-            </mat-form-field>
-
-            <!-- Minimum Guarantee Number -->
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.product.form.fields.minimumGuaranteeNumber.label') }}</mat-label>
-                <input type="number" matInput formControlName="minimumGuaranteeNumber" />
-                <mat-error *ngIf="formGroup.get('minimumGuaranteeNumber')?.hasError('min')">
-                    {{ t('form.errors.min', { value: 1 }) }}
-                </mat-error>
-                <mat-error *ngIf="formGroup.get('minimumGuaranteeNumber')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-            </mat-form-field>
-
-            <!-- Fleet -->
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.product.form.fields.fleet.label') }}</mat-label>
-                <mat-select formControlName="fleet">
-                    <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
-                    <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="formGroup.get('fleet')?.hasError('required')">
-                    {{ t('form.errors.required') }}
-                </mat-error>
-            </mat-form-field>
-
-            <!-- Has Reduction -->
-            <mat-checkbox formControlName="hasReduction">
-                {{ t('entities.product.form.fields.hasReduction.label') }}
-            </mat-checkbox>
-
-            <!-- Submit Button -->
-            <div class="flex items-center gap-4 justify-end">
-                <div>
-                    {{ t(message) }}
+    <mat-vertical-stepper  #stepper class="mt-8 rounded-md" [selectedIndex]="selectedIndex">
+        <mat-step [stepControl]="formStepOne">
+            <ng-template matStepLabel>
+                <!-- Informations personnelles -->
+                <div class="flex flex-col items-start">
+                    <div class="text-lg font-semibold">
+                        {{ t('entities.product.form.step_one_title') }}
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        {{ t('entities.product.form.step_one_description') }}
+                    </div>
                 </div>
-                <button class="mat-button-large mt-6" mat-button mat-flat-button [color]="'primary'"
-                    [disabled]="formGroup.invalid || formGroup.disabled" (click)="onSubmit()">
-                    <span *ngIf="!formGroup.disabled">
-                        {{ t('form.actions.save') }}
-                    </span>
-                    <mat-progress-spinner *ngIf="formGroup.disabled" [diameter]="24" [mode]="'indeterminate'">
-                    </mat-progress-spinner>
+            </ng-template>
+            <app-product-new-step-one (formReady)="onStepOneNext($event)" ></app-product-new-step-one>
+        </mat-step>
+
+        <mat-step [stepControl]="formStepTwo">
+            <ng-template matStepLabel>
+                <div class="flex flex-col items-start">
+                    <div class="text-lg font-semibold">
+                        {{ t('entities.product.form.step_two_title') }}
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        {{ t('entities.product.form.step_two_description') }}
+                    </div>
+                </div>
+            </ng-template>
+            <app-product-new-step-two (formReady)="onStepTwoNext($event)" ></app-product-new-step-two>
+        </mat-step>
+        <mat-step [stepControl]="formStepThree">
+            <ng-template matStepLabel>
+                <div class="flex flex-col items-start">
+                    <div class="text-lg font-semibold">
+                        {{ t('entities.product.form.step_three_title') }}
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        {{ t('entities.product.form.step_three_description') }}
+                    </div>
+                </div>
+            </ng-template>
+            <div class="flex flex-col gap-4 py-4">
+                <div class="text-lg font-semibold">
+                    {{t('entities.product.form.step_three_summary')}}
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex gap-6">
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">
+                                {{t('entities.product.form.step_three_name')}}
+                            </div>
+                            <div>{{ data.name }}</div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">
+                                {{t('entities.product.form.step_three_description_2')}}
+                            </div>
+                            <div>{{ data.description }}</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="flex flex-col gap-1">
+                            <div class="text-sm font-semibold">
+                                {{t('entities.product.form.step_three_coverages')}}
+                            </div>
+                            <div>
+                                <ng-container *ngFor="let coverage of data.coverages; let i = index">
+                                    <ng-container >{{ coverage.designation }}</ng-container>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button mat-button matStepperPrevious class="mat-button-large mt-6" mat-flat-button [color]="'primary'">
+                    {{ t('entities.product.form.step_three_previous') }}
+                </button>
+                <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="save()">
+                    {{ t('entities.product.form.step_three_create') }}
                 </button>
             </div>
-        </div>
-    </form>
+        </mat-step>
+        <!-- -->
+    </mat-vertical-stepper>
 </div>

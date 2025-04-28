@@ -21,6 +21,7 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { ProfilesNewStepOneComponent } from "./new/step-one/step-one.component";
 import { ProfilesNewStepTwoComponent } from './new/step-two/step-two.component';
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { StepperDataService } from "./new/form.service";
 
 @NgModule({
     declarations: [
@@ -48,7 +49,9 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
         MatStepperModule,
         MatCheckboxModule
     ],
-    providers: [],
+    providers: [
+        StepperDataService
+    ],
     exports: [],
 })
 export class ProfilesModule { 

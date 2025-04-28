@@ -18,7 +18,7 @@
             <th *matHeaderCellDef mat-header-cell>
                 {{ t(imageOptions?.label || 'Logo') }}
             </th>
-            <td *matCellDef="let row" class=" pr-0 py-2" mat-cell>
+            <td *matCellDef="let row" class=" pr-0 py-2 w-24 h-24" mat-cell>
                 <img [src]="row[imageOptions?.property || 'defaultProperty']" [ngClass]="imageOptions?.cssClasses">
             </td>
         </ng-container>

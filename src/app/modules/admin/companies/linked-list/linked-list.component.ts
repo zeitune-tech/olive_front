@@ -43,7 +43,7 @@ export class LinkedCompaniesListComponent {
         imageOptions: {
             label: 'entities.company.table.columns.logo',
             property: 'logo',
-            cssClasses: ['w-16 h-16']
+            cssClasses: ['object-cover'],
         },
         actions: [],
         renderItem: (element: Company, property: keyof Company) => {
@@ -116,7 +116,7 @@ export class LinkedCompaniesListComponent {
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
+        // columns.push('actions');
         return columns;
     }
 

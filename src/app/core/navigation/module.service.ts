@@ -38,7 +38,7 @@ export class ModuleService {
             name: "administration",
             title: "modules.administration.title",
             description: "modules.administration.description",
-            icon: "admin_panel_settings",
+            icon: "assets/images/modules/admin_icon.png",
             route: "/administration",
             permissions: [
                 PERMISSIONS.VIEW_PRODUCTS,
@@ -114,7 +114,7 @@ export class ModuleService {
             name: "settings",
             title: "modules.settings.title",
             description: "modules.settings.description",
-            icon: "settings",
+            icon: "assets/images/modules/param_icon.png",
             route: "/parameters",
             permissions: [
                 PERMISSIONS.VIEW_COVERAGES,
@@ -176,7 +176,7 @@ export class ModuleService {
             name: "insureds",
             title: "modules.insureds.title",
             description: "modules.insureds.description",
-            icon: "insurance",
+            icon: "assets/images/modules/insureds.png",
             route: "/insured",
             permissions: [
                 
@@ -186,7 +186,7 @@ export class ModuleService {
         {
             name: "productions",
             title: "modules.productions_auto",
-            icon: "production_quantity_limits",
+            icon: "assets/images/modules/exp_icon.png",
             route: "/production",
             permissions: [],
             features: []
@@ -195,16 +195,11 @@ export class ModuleService {
             name: "attestations",
             title: "modules.attestations.title",
             description: "modules.attestations.description",
-            icon: "production_quantity_limits",
+            icon: "assets/images/modules/attestations.png",
             route: "/production",
             permissions: [
                 PERMISSIONS.VIEW_ATTESTATIONS,
-                PERMISSIONS.VIEW_ATTESTATIONS_DEMANDS,
-                PERMISSIONS.CREATE_ATTESTATIONS_DEMANDS_TO_MARKET_LEVEL_ORGANIZATION,
-                PERMISSIONS.CREATE_ATTESTATIONS_DEMANDS_TO_COMPANY,
-                PERMISSIONS.CREATE_ATTESTATIONS,
-                PERMISSIONS.DELIVER_ATTESTATIONS_TO_COMPANY,
-                PERMISSIONS.DELIVER_ATTESTATIONS_TO_POINTS_OF_SALE
+                
             ],
             features: [
                 {

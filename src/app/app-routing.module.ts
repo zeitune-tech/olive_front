@@ -11,6 +11,7 @@ import { CompaniesResolver } from './modules/admin/companies/companies.resolver'
 import { AdministrationResolver } from './modules/admin/admin.resolver';
 import { resolve } from 'path';
 import { SettingsResolver } from './modules/settings/settings.resolver';
+import { AttestationsResolver } from './modules/attestations/attestations.resolver';
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy       : PreloadAllModules,
@@ -92,6 +93,16 @@ const routes: Routes = [
                 },
                 data: {},
                 loadChildren: () => import('./modules/settings/settings.module').then(m => m.SettingsModule)
+            },
+            {
+                path: 'attestations',
+                canActivate: [],
+                canActivateChild: [],
+                data: {},
+                resolve: {
+                    AttestationsResolver
+                },
+                loadChildren: () => import('./modules/attestations/attestations.module').then(m => m.AttestationsModule)
             },
             
             // 404 & Catch all

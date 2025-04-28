@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/forms";
+import { StepperDataService } from "../form.service";
 
 
 @Component({
@@ -11,15 +12,16 @@ export class StepTwoComponent implements OnInit {
     @Output() formReady = new EventEmitter<UntypedFormGroup>();
     formGroup!: UntypedFormGroup;
     accessLevels = [
-        { value: 'DEFAULT', label: 'employee.new.form-access-level-entreprise' },
-        { value: 'POINT_OF_SALE', label: 'employee.new.form-access-level-point-of-sale' },
+        { value: 'COMPANY', label: 'enums.managementEntityLevel.COMPANY' },
+        { value: 'POINT_OF_SALE', label: 'enums.managementEntityLevel.POINT_OF_SALE' }
     ];
 
     /**
      * Constructor
      */
     constructor(
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private _stepperDataService: StepperDataService,
     ) { 
         this.formGroup = this.formBuilder.group({
             accessLevel: [this.accessLevels[0].value, Validators.required]
@@ -46,5 +48,6 @@ export class StepTwoComponent implements OnInit {
      */
     onNext(): void {
         this.formReady.emit(this.formGroup);
+        this._stepperDataService.setLevel(this.formGroup.get('accessLevel')?.value);
     }
 }

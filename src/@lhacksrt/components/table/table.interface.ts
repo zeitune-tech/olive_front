@@ -1,7 +1,16 @@
 export interface TableColumn<T> {
     label: string;
     property: keyof T ;
-    type: 'text' | 'image' | 'badge' | 'progress' | 'checkbox' | 'button' | 'calendar' | 'input';
+    options?: {
+        label: string;
+        value: string | number | boolean | Date | null;
+        icon?: string;
+        iconColor?: string;
+        onClick?: (element: T) => void;
+        cssClasses?: string[];
+        onChange?: (element: T) => void;
+    }[];
+    type: 'text' | 'image' | 'badge' | 'progress' | 'checkbox' | 'button' | 'calendar' | 'input' | 'select' | 'textarea' | 'date' | 'time' | 'datetime' | 'calendar-daily' | 'calendar-weekly' | 'calendar-monthly-total' | 'calendar-monthly-by-day';
     visible?: boolean;
     cssClasses?: string[];
 }

@@ -22,12 +22,17 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { LayoutService } from "./layout.service";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ShareProductComponent } from "./share-product/share-product.component";
+import { ProductNewStepOneComponent } from "./new/step-one/step-one.component";
+import { ProductNewStepTwoComponent } from "./new/step-two/step-two.component";
+import { MatStepperModule } from "@angular/material/stepper";
 
 @NgModule({
     declarations: [
         ProductsListComponent,
         ProductsNewComponent,
-        ShareProductComponent
+        ShareProductComponent,
+        ProductNewStepOneComponent,
+        ProductNewStepTwoComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -47,7 +52,8 @@ import { ShareProductComponent } from "./share-product/share-product.component";
         MatDividerModule,
         ReactiveFormsModule,
         MatProgressSpinnerModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatStepperModule,
     ],
     providers: [
         LayoutService

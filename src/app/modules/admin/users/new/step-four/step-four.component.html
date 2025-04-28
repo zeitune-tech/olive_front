@@ -10,7 +10,7 @@
                 {{ t('entities.user.form.fields.profile.label') }}
             </mat-label>
             <mat-select [multiple]="true" [formControlName]="'profiles'">
-                <mat-option *ngFor="let profile of profiles" [value]="profile">
+                <mat-option *ngFor="let profile of filteredProfiles" [value]="profile">
                     {{ t(profile.name) }}
                 </mat-option>
             </mat-select>

@@ -28,6 +28,7 @@ import { StepFourComponent } from "./new/step-four/step-four.component";
 import { StepFiveComponent } from "./new/step-five/step-five.component";
 import { UsersLayoutComponent } from "./layout/layout.component";
 import { ChangePointOfSaleDialogComponent } from "./change-point-of-sale-dialog/change-point-of-sale-dialog.component";
+import { StepperDataService } from "./new/form.service";
 
 @NgModule({
     declarations: [
@@ -63,7 +64,9 @@ import { ChangePointOfSaleDialogComponent } from "./change-point-of-sale-dialog/
         RouterModule,
         DialogModule,
     ],
-    providers: [],
+    providers: [
+        StepperDataService
+    ],
     exports: []
 })
 export class UsersModule { }

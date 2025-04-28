@@ -61,18 +61,34 @@ export class CoveragesListComponent {
     tableOptions: TableOptions<Coverage> = {
         title: '',
         columns: [
-            { label: 'entities.coverage.table.columns.reference', property: 'reference', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.nature', property: 'nature', type: 'text', visible: true, cssClasses: ["min-w-80"] },
-            { label: 'entities.coverage.table.columns.isFree', property: 'isFree', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.isFixed', property: 'isFixed', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.calculationMode', property: 'calculationMode', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.fixedCapital', property: 'fixedCapital', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.minCapital', property: 'minCapital', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.maxCapital', property: 'maxCapital', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.order', property: 'order', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.prorata', property: 'prorata', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.displayPrime', property: 'displayPrime', type: 'text', visible: true },
-            { label: 'entities.coverage.table.columns.generatesCharacteristic', property: 'generatesCharacteristic', type: 'text', visible: true },
+            { label: 'entities.coverage.table.columns.reference', property: 'reference', type: 'text', visible: true, cssClasses: ["min-w-64"] },
+            { label: 'entities.coverage.table.columns.nature', property: 'nature', type: 'text', visible: true,  },
+            { label: 'entities.coverage.table.columns.isFixed', property: 'isFixed', type: 'select', visible: true, options: [
+                { label: 'form.fields.yes', value: true },
+                { label: 'form.fields.no', value: false }
+            ] },
+            { label: 'entities.coverage.form.fields.calculationMode.label', property: 'calculationMode', type: 'select', visible: true, options: [
+                { label: 'entities.coverage.form.fields.calculationMode.options.FIXED', value: 'FIXE' },
+                { label: 'entities.coverage.form.fields.calculationMode.options.VARIABLE', value: 'VARIABLE' },
+
+            ] },
+            { label: 'entities.coverage.table.columns.fixedCapital', property: 'fixedCapital', type: 'input', visible: true,},
+            { label: 'entities.coverage.table.columns.minCapital', property: 'minCapital', type: 'input', visible: true },
+            { label: 'entities.coverage.table.columns.maxCapital', property: 'maxCapital', type: 'input', visible: true },
+            { label: 'entities.coverage.table.columns.order', property: 'order', type: 'input', visible: true },
+            { label: 'entities.coverage.table.columns.prorata', property: 'prorata', type: 'input', visible: true },
+            { label: 'entities.coverage.table.columns.displayPrime', property: 'displayPrime', type: 'select', visible: true, options: [
+                { label: 'form.fields.yes', value: true },
+                { label: 'form.fields.no', value: false }
+            ] },
+            { label: 'entities.coverage.table.columns.generatesCharacteristic', property: 'generatesCharacteristic', type: 'select', visible: true, options: [
+                { label: 'form.fields.yes', value: true },
+                { label: 'form.fields.no', value: false }
+            ] },
+            { label: 'entities.coverage.table.columns.isFree', property: 'isFree', type: 'select', visible: true, options: [
+                { label: 'form.fields.yes', value: true },
+                { label: 'form.fields.no', value: false }
+            ] },
         ],
         imageOptions: {
             label: 'coverage.columns.logo',
@@ -93,10 +109,6 @@ export class CoveragesListComponent {
                 return " - ";
             }
 
-            if (property === 'isFree' || property === 'isFixed' || property === 'displayPrime' || property === 'generatesCharacteristic') {
-                return element[property] ? "Oui" : "Non";
-            }
-            
             return element[property];
         },
     };
@@ -148,7 +160,6 @@ export class CoveragesListComponent {
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
         return columns;
     }
 

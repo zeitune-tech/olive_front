@@ -21,6 +21,7 @@ export class SettingsResolver implements Resolve<any> {
     constructor(
         private _permissionService: PermissionsService,
         private _coverageService: CoverageService,
+        private _coverageReferenceService: CoverageReferenceService,
         private _incompatibleCoverageService: IncompatibleCoverageService,
         private _productionRegistryService: ProductionRegistryService,
         private _insuredRegistryService: InsuredRegistryService,
@@ -48,6 +49,7 @@ export class SettingsResolver implements Resolve<any> {
 
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COVERAGES)) {
             resolList.push(this._coverageService.getAll());
+            resolList.push(this._coverageReferenceService.getAll());
             resolList.push(this._incompatibleCoverageService.getAll());
         }
 

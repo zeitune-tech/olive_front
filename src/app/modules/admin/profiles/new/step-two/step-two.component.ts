@@ -10,6 +10,7 @@ import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { StepperDataService } from "../form.service";
 
 @Component({
     selector: "app-profiles-new-step-two",
@@ -18,14 +19,15 @@ import { Subject, takeUntil } from "rxjs";
 })
 export class ProfilesNewStepTwoComponent {
 
-    @Input() level: string = '';
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    permissions: Permission[] = [];
         
     tableOptions: TableOptions<Permission> = {
         title: '',
         columns: [
             { label: 'permissions.columns.description', property: 'description', type: 'text', visible: true },
+            { label: 'permissions.columns.level', property: 'level', type: 'text', visible: true },
             { label: 'permissions.columns.module', property: 'module', type: 'text', visible: true },
         ],
         pageSize: 8,
@@ -34,6 +36,10 @@ export class ProfilesNewStepTwoComponent {
         renderItem: (element: Permission, property: keyof Permission) => {
             if (property === 'description') {
                 return this._translateService.translate(element[property]);
+            }
+
+            if (property === 'level') {
+                return this._translateService.translate('permissions.columns.levels.' + element[property].toLowerCase());
             }
             return element[property];
         },
@@ -51,11 +57,13 @@ export class ProfilesNewStepTwoComponent {
         private _changeDetectorRef: ChangeDetectorRef,
         private _profileService: ProfileService,
         private _translateService: TranslocoService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private _stepperDataService: StepperDataService,
     ) { 
         this.formGroup = this.formBuilder.group({
             permissions: [[], Validators.required],
         });
+
     }
 
     @Output() formReady = new EventEmitter<UntypedFormGroup>();
@@ -68,9 +76,23 @@ export class ProfilesNewStepTwoComponent {
         .subscribe((data: Permission[]) => {
             this.data = data;
             this.dataSource.data = data;
+            this.permissions = data;
+
             this._changeDetectorRef.detectChanges();
         });
+
+        this._stepperDataService.level$.subscribe(level => {
+            if (level) {
+                console.log('level', level);
+              this.dataSource.data = this.permissions.filter((permission: Permission) => permission.level === level);
+            }
+        });
+
+        this.searchInputControl.valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((searchText) => {
+            this.dataSource.filter = searchText.trim().toLowerCase();
+        });
     }
+
 
     ngAfterViewInit() {
         if (this.dataSource) {

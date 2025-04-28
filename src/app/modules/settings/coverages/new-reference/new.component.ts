@@ -15,8 +15,6 @@ import { CoverageService } from "@core/services/settings/coverage/coverage.servi
 export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
 
     formGroup!: UntypedFormGroup;
-    products: Product[] = [];
-    loading = true;
 
     private destroy$ = new Subject<void>();
 
@@ -32,23 +30,10 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.initForm();
 
-        this._productService.products$
-            .pipe(takeUntil(this.destroy$))
-            .subscribe({
-                next: (products) => {
-                    this.products = products;
-                    this.loading = false;
-                },
-                error: () => {
-                    this.showSnackBar('errors.loadingProducts', 'error');
-                    this.loading = false;
-                }
-            });
     }
 
     private initForm(): void {
         this.formGroup = this._formBuilder.group({
-            productId: [null, Validators.required],
             designation: ['', Validators.required],
             family: ['', Validators.required],
             accessCharacteristic: [null, Validators.required],

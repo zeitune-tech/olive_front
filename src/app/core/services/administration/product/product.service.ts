@@ -45,7 +45,7 @@ export class ProductService {
     ) {
     }
 
-    create(product: Product): Observable<Product> {
+    create(product: any): Observable<Product> {
         return this._httpClient.post<Product>(`${this.baseUrl}`, product)
             .pipe(
                 tap((product) => {

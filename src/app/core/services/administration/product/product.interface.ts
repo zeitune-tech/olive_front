@@ -3,6 +3,7 @@ import { Branch, Category } from "../branch/branch.interface";
 export class Product {
     id: string;
     name: string;
+    description: string;
     branch: Branch;
     category: Category;
     visibility: string;
@@ -18,6 +19,7 @@ export class Product {
     constructor(response: Partial<Product>) {
         this.id = response?.id ?? '';
         this.name = response?.name ?? '';
+        this.description = response?.description ?? '';
         this.branch = response?.branch ?? new Branch(response?.branch ?? {});
         this.category = this.branch?.category ?? new Category(this.branch?.category ?? {});
         this.visibility = response?.visibility ?? 'PRIVATE';

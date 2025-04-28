@@ -7,7 +7,7 @@
     <div class="flex flex-col gap-4">
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('entities.user.form.point_of_sale') }}
+                {{ t('entities.user.form.fields.point_of_sale.label') }}
             </mat-label>
             <mat-select [formControlName]="'pointOfSale'">
                 <mat-option *ngFor="let pointOfSale of pointsOfSale" [value]="pointOfSale.id">

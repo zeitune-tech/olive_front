@@ -23,7 +23,7 @@ export class CompaniesListComponent implements OnInit, OnDestroy {
     tableOptions: TableOptions<Company> = {
         title: '',
         columns: [
-            { label: 'entities.company.table.columns.logo', property: 'logo', type: 'image', visible: true },
+            { label: 'entities.company.table.columns.logo', property: 'logo', type: 'image', visible: true},
             { label: 'entities.company.table.columns.name', property: 'name', type: 'text', visible: true },
             { label: 'entities.company.table.columns.email', property: 'email', type: 'text', visible: true },
             { label: 'entities.company.table.columns.phone', property: 'phone', type: 'text', visible: true },
@@ -39,7 +39,7 @@ export class CompaniesListComponent implements OnInit, OnDestroy {
         imageOptions: {
             label: 'entities.company.table.columns.logo',
             property: 'logo',
-            cssClasses: ['w-24 h-24']
+            cssClasses: ['object-cover'],
         },
         renderItem: (element: Company, property: keyof Company) => {
             

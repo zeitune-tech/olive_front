@@ -59,16 +59,16 @@ export class CoverageReferenceListComponent {
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _coverageService: CoverageService,
+        private _coverageService: CoverageReferenceService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
-        this._coverageService.coverages$
+        this._coverageService.coverageReferences$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Coverage[]) => {
-                this.data = data.map((coverage: Coverage) => {
-                    return coverage.reference as CoverageReference;
+            .subscribe((data: CoverageReference[]) => {
+                this.data = data.map((coverage: CoverageReference) => {
+                    return coverage as CoverageReference;
                 });
                 this.dataSource.data = this.data;
                 this._changeDetectorRef.detectChanges();

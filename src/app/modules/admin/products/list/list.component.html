@@ -13,23 +13,13 @@
      <div class="overflow-y-hidden overflow-x-auto pb-4">
         <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
     
-            <!-- Image Column -->
-            @let imageOptions = tableOptions.imageOptions;
-            <ng-container matColumnDef="logo">
-                <th *matHeaderCellDef mat-header-cell>
-                    {{ t(imageOptions?.label || 'Logo') }}
-                </th>
-                <td *matCellDef="let row" class=" pr-0 py-2" mat-cell>
-                    <img [src]="row[imageOptions?.property || 'defaultProperty']" [ngClass]="imageOptions?.cssClasses">
-                </td>
-            </ng-container>
     
             <!-- Text Columns -->
             @let columns = tableOptions.columns;
             <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
                 <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
                     <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>{{ t(column.label) }}</th>
-                    <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                    <td *matCellDef="let row" [ngClass]="column.cssClasses"  mat-cell>
                         {{ tableOptions.renderItem(row, column.property) }}
                     </td>
                 </ng-container>

@@ -16,8 +16,6 @@ export class ProfilesNewComponent {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-
-
     formGroup!: UntypedFormGroup;
     @ViewChild('form') form!: NgForm;
 

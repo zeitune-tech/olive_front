@@ -3,6 +3,7 @@ import { UntypedFormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 import { Subject } from "rxjs";
+import { StepperDataService } from "../form.service";
 
 @Component({
     selector: "app-profiles-new-step-one",
@@ -27,6 +28,7 @@ export class ProfilesNewStepOneComponent {
     constructor(
         private formBuilder: FormBuilder,
         private _managementEntityService: ManagementEntityService,
+        private _stepperDataService: StepperDataService,
     ) { 
         this.formGroup = this.formBuilder.group({
             name: ['', Validators.required],
@@ -65,5 +67,6 @@ export class ProfilesNewStepOneComponent {
      */
     onNext(): void {
         this.formReady.emit(this.formGroup);
+        this._stepperDataService.setLevel(this.formGroup.get('level')?.value);
     }
 }

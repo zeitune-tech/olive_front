@@ -23,7 +23,7 @@
             </mat-label>
             <mat-select [formControlName]="'level'">
                 <mat-option *ngFor="let level of levels" [value]="level">
-                    {{ level }}
+                    {{ t("entities.profile.form.fields.level.options."+level) }}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="formGroup.get('level')?.hasError('required')">

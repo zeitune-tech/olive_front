@@ -6,6 +6,8 @@ export class Permission {
     name: string = '';
     description: string = '';
     module: string = '';
+    level: string = '';
+    type: string = '';
 
     constructor(permissions?: Partial<Permission>) {
         Object.assign(this, permissions);

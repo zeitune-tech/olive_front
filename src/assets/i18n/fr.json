@@ -175,7 +175,7 @@
     },
     "attestations": {
       "title": "Stock d'attestations",
-      "list": "Mes attestations",
+      "list": "Liste attestations",
       "new": "Ajouter / Modifier une attestation",
       "revoked": "Attestations retirées"
     },
@@ -194,7 +194,9 @@
   "form": {
     "fields": {
       "search": "Rechercher",
-      "checkboxes": "Cases à cocher"
+      "checkboxes": "Cases à cocher",
+      "yes": "Oui",
+      "no": "Non"
     },
     "errors": {
       "required": "Ce champ est requis",
@@ -230,7 +232,7 @@
         "columns": {
           "name": "Nom",
           "description": "Description",
-          "category": "Catégorie",
+          "category": "Classe",
           "branch": "Branche",
           "prefix": "Préfixe",
           "length": "Longueur",
@@ -245,7 +247,7 @@
         "fields": {
           "name": { "label": "Nom" },
           "description": { "label": "Description" },
-          "category": { "label": "Catégorie" },
+          "category": { "label": "Classe" },
           "branch": { "label": "Branche" },
           "prefix": { "label": "Préfixe" },
           "length": { "label": "Longueur" },
@@ -341,7 +343,12 @@
           "nature": { "label": "Nature" },
           "isFree": { "label": "Gratuite" },
           "isFixed": { "label": "Fixe" },
-          "calculationMode": { "label": "Mode de calcul" },
+          "calculationMode": { "label": "Mode de calcul", "options": {
+            "FIXED": "Fixe",
+            "VARIABLE": "Variable",
+            "PRORATA": "Prorata",
+            "PRORATA_FIXED": "Prorata fixe"
+          } },
           "fixedCapital": { "label": "Capital fixe" },
           "minCapital": { "label": "Capital minimum" },
           "maxCapital": { "label": "Capital maximum" },
@@ -425,11 +432,23 @@
     },
     "product": {
       "form": {
+        "step_one_title": "Informations de base",
+        "step_one_description": "Saisissez les informations de base du produit.",
+        "step_two_title": "Garanties associées",
+        "step_two_description": "Sélectionnez les garanties à associer au produit.",
+        "step_three_title": "Résumé & confirmation",
+        "step_three_description": "Vérifiez les détails du produit avant la création.",
+        "step_three_summary": "Résumé du produit",
         "title": "Créer ou modifier un produit",
         "subtitle": "Veuillez remplir les informations du produit ci-dessous.",
+        "description": "Créez ou modifiez les informations de base du produit.",
         "fields": {
           "name": {
             "label": "Nom du produit"
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Saisir la description du produit"
           },
           "branch": {
             "label": "Branche"
@@ -460,12 +479,13 @@
         "description": "Liste complète des produits proposés par la compagnie.",
         "columns": {
           "name": "Produit",
+          "description": "Description",
           "visibility": "Visibilité",
           "branch": "Branche",
-          "category": "Catégorie",
+          "category": "Classe",
           "minRisk": "Risque min",
           "maxRisk": "Risque max",
-          "minimumGuaranteeNumber": "Nbr min de garanties",
+          "minimumGuaranteeNumber": "Garanties min",
           "fleet": "Flotte",
           "hasReduction": "Rédu"
         },
@@ -498,7 +518,7 @@
         "subtitle": "Créer ou modifier une catégorie"
       },
       "table": {
-        "title": "Catégories",
+        "title": "Classes",
         "description": "Liste des catégories",
         "columns": {
           "name": "Nom",
@@ -667,8 +687,8 @@
         "description": "Renseignez les informations personnelles, associez une compagnie, un point de vente et définissez les permissions de l'utilisateur.",
         "step_one_title": "Informations personnelles",
         "step_one_description": "Fournissez les informations personnelles de base de l'utilisateur.",
-        "step_two_title": "Informations sur la compagnie",
-        "step_two_description": "Associez l'utilisateur à une compagnie.",
+        "step_two_title": "Niveau d'accès",
+        "step_two_description": "Sélectionnez le niveau d'accès de l'utilisateur.",
         "step_three_title": "Informations sur le point de vente",
         "step_three_description": "Associez l'utilisateur à un point de vente spécifique.",
         "step_four_title": "Permissions & accès",
@@ -694,6 +714,15 @@
           "email": {
             "label": "E-mail",
             "placeholder": "Saisir l'adresse e-mail"
+          },
+          "access_level": {
+            "label": "Niveau d'accès",
+            "placeholder": "Sélectionner le niveau d'accès",
+            "options": {
+              "COMPANY": "Compagnie",
+              "POINT_OF_SALE": "Point de vente",
+              "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché"
+            }
           },
           "phone": {
             "label": "Téléphone",
@@ -762,6 +791,14 @@
             "label": "Description",
             "placeholder": "Saisir la description"
           },
+          "level": {
+            "label": "Niveau de l'entité",
+            "placeholder": "Sélectionner le niveau de l'entité",
+            "options": {
+              "COMPANY": "Compagnie",
+              "POINT_OF_SALE": "Point de vente"
+            }
+          },
           "permissions": {
             "label": "Permissions",
             "placeholder": "Sélectionner les permissions"
@@ -775,9 +812,15 @@
         "columns": {
           "name": "Nom du profil",
           "description": "Description",
+          "level": "Niveau de l'entité",
           "permissions_count": "Nombre de permissions",
           "admin_description": "Possède tous les droits sur cette entité de gestion",
           "actions": "Actions"
+        },
+        "options": {
+          "COMPANY": "Compagnie",
+          "POINT_OF_SALE": "Point de vente",
+          "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché"
         },
         "empty_state": "Aucun profil trouvé"
       }
@@ -827,8 +870,8 @@
   },
   "enums": {
     "managementEntityLevel": {
-      "ENTITY_SUPERIOR": "Entité supérieure",
-      "COMPANY": "Entreprise",
+      "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché",
+      "COMPANY": "Compagnie",
       "POINT_OF_SALE": "Point de vente"
     },
     "point_of_saleType": {
@@ -856,7 +899,7 @@
     "seeMore": "Voir plus"
   },
   "home": {
-    "title": "Bonjour",
+    "title": "Bienvenue",
     "description": "Bienvenue sur Olive Insurance, veuillez choisir un module pour commencer"
   },
   "modules": {
@@ -924,10 +967,22 @@
       "redirecting": "Déconnexion en cours..."
     }
   },
+  "profiles": {
+    "descriptions": {
+      "COMPANY": { "COMPANY": "Administrateur de la compagnie", "POINT_OF_SALE": "Administrateur du point de vente" },
+      "POINT_OF_SALE": "Administrateur du point de vente",
+      "MARKET_LEVEL_ORGANIZATION": { "MARKET_LEVEL_ORGANIZATION": "Administrateur de l'organisation de niveau marché" }
+    }
+  },
   "permissions": {
     "columns": {
       "description": "Permissions",
       "module": "Module",
+      "levels" : {
+        "company": "Compagnie",
+        "point_of_sale": "Point de vente",
+        "market_level_organization": "Organisation de niveau marché"
+      },
       "actions": "Actions"
     },
     "view_own_company_details": "Voir les détails de sa propre entreprise",

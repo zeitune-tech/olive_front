@@ -10,100 +10,89 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 
 @Component({
-    selector: "app-products-new",
-    templateUrl: "./new.component.html",
+	selector: "app-products-new",
+	templateUrl: "./new.component.html",
 })
 export class ProductsNewComponent implements OnInit {
 
-    formGroup!: UntypedFormGroup;
-    message: string = '';
 
-    branches: Branch[] = [];
-    owner: ManagementEntity | null = null;
 
-    constructor(
-        private _formBuilder: FormBuilder,
-        private _productService: ProductService,
-        private _branchService: BranchService,
-        private _managementService: ManagementEntityService,
-        private _layoutService: LayoutService,
-        private _snackBar: MatSnackBar,
-        private _router: Router,
-    ) {}
+	formStepOne!: UntypedFormGroup;
+	formStepTwo!: UntypedFormGroup;
+	formStepThree!: UntypedFormGroup;
+	formStepFour!: UntypedFormGroup;
+	formStepFive!: UntypedFormGroup;
 
-    isEditMode: boolean = false;
-    productId: string = '';
+    selectedIndex: number = 0;
 
-    initForm(): void {
-        this.formGroup = this._formBuilder.group({
-          name: ['', Validators.required],
-          branchUuid: ['', Validators.required],
-          ownerUuid: ['', Validators.required],
-          minRisk: [1, [Validators.required, Validators.min(1)]],
-          maxRisk: [1, [Validators.required, Validators.min(1)]],
-          minimumGuaranteeNumber: [1, [Validators.required, Validators.min(1)]],
-          fleet: [null, Validators.required],
-          hasReduction: [false]
-        });
+	data: {
+		name: string;
+		description: string;
+		branch: Branch | null;
+		minRisk: number;
+		maxRisk: number;
+		minimumGuaranteeNumber: number;
+		fleet: boolean | null;
+		hasReduction: boolean | null;
+		coverages: {
+			id: string;
+			designation: string;
+			family: string;
+		}[];
+	} = {
+		name: '',
+		description: '',
+		branch: null,
+		minRisk: 1,
+		maxRisk: 1,
+		minimumGuaranteeNumber: 1,
+		fleet: null,
+		hasReduction: null,
+		coverages: [],
+	};
+
+	constructor(
+		private _formBuilder: FormBuilder,
+		private _productService: ProductService,
+		private _branchService: BranchService,
+		private _layoutService: LayoutService,
+		private _snackBar: MatSnackBar,
+		private _router: Router,
+	) { }
+
+	ngOnInit(): void {}
+
+	onStepOneNext(fromGroup: UntypedFormGroup): void {
+        this.formStepOne = fromGroup;
+        this.data.name = fromGroup.value.name;
+        this.data.description = fromGroup.value.description;
+		this.data.branch = fromGroup.value.branch;
+		this.data.minRisk = fromGroup.value.minRisk;
+		this.data.maxRisk = fromGroup.value.maxRisk;
+		this.data.minimumGuaranteeNumber = fromGroup.value.minimumGuaranteeNumber;
+		this.data.fleet = fromGroup.value.fleet;
+		this.data.hasReduction = fromGroup.value.hasReduction;
     }
 
 
-    ngOnInit(): void {
-        this.initForm();
-
-        this._branchService.branches$.subscribe(branches => {
-            this.branches = branches;
-        });
-    
-        this._layoutService.selectedProduct$.subscribe(product => {
-          if (product) {
-            this.isEditMode = true;
-            this.productId = product.id;
-            this.formGroup.patchValue({
-                name: product.name,
-                branchUuid: product.branch.id,
-                ownerUuid: product.ownerId,
-                minRisk: product.minRisk,
-                maxRisk: product.maxRisk,
-                minimumGuaranteeNumber: product.minimumGuaranteeNumber,
-                fleet: product.fleet,
-                hasReduction: product.hasReduction
-            });
-          }
-        });
-
-    
-        this._managementService.entity$.subscribe(owner => {
-          this.owner = owner;
-          if (this.owner && !this.isEditMode) {
-            this.formGroup.get('ownerUuid')?.setValue(this.owner.id);
-          }
-        });
+    onStepTwoNext(fromGroup: UntypedFormGroup): void {
+        this.formStepTwo = fromGroup;
+        this.data.coverages = fromGroup.value.coverages;
     }
 
-    onSubmit(): void {
-        if (this.formGroup.valid) {
-            if (this.isEditMode) {
-              this._productService.update(this.productId, this.formGroup.value).subscribe({
-                next: () => {
-                  this._snackBar.open('Produit mis à jour avec succès', 'Fermer', { duration: 3000 });
-                  this._layoutService.setSelectedProduct(null);
-                  this._productService.getAll().subscribe();
-                  this._router.navigate(['/administration/products']);
-                },
-                error: () => this._snackBar.open('Erreur lors de la mise à jour du produit', 'Fermer', { duration: 3000 })
-              });
+	save(): void {
+        this._productService.create({
+			...this.data,
+			coverages: this.data.coverages.map((coverage) => coverage.id)
+		})
+        .subscribe({
+            next: (_product) => {
+                this._productService.getAll().subscribe();
+                this._router.navigate(['/administration/products/list']);
+            },
+            error: (error) => {
 
-            } else {
-              this._productService.create(this.formGroup.value).subscribe({
-                next: () => {
-                  this._snackBar.open('Produit créé avec succès', 'Fermer', { duration: 3000 })
-                  this._router.navigate(['/administration/products']);
-                },
-                error: () => this._snackBar.open('Erreur lors de la création du produit', 'Fermer', { duration: 3000 })
-              });
-              
             }
-        }
+        });
     }
 }

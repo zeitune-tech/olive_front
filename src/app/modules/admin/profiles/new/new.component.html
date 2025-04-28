@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </ng-template>
-            <app-profiles-new-step-two [level]="data.level" (formReady)="onStepTwoNext($event)" ></app-profiles-new-step-two>
+            <app-profiles-new-step-two (formReady)="onStepTwoNext($event)" ></app-profiles-new-step-two>
         </mat-step>
         <mat-step [stepControl]="formStepThree">
             <ng-template matStepLabel>

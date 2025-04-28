@@ -36,8 +36,32 @@
             <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
                 <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
                     <th *matHeaderCellDef class="uppercase min-w-32" mat-header-cell mat-sort-header>{{ t(column.label) }}</th>
-                    <td *matCellDef="let row" class="w-64" [ngClass]="column.cssClasses" mat-cell>
+                    <td *matCellDef="let row"  [ngClass]="column.cssClasses" mat-cell>
                         {{ tableOptions.renderItem(row, column.property) }}
+                    </td>
+                </ng-container>
+            </ng-container>
+
+            <!-- Input Columns -->
+            <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+                <ng-container *ngIf="column.type === 'input'" [matColumnDef]="column.property">
+                    <th *matHeaderCellDef class="uppercase min-w-24" mat-header-cell mat-sort-header>{{ t(column.label) }}</th>
+                    <td *matCellDef="let row"  [ngClass]="column.cssClasses" mat-cell>
+                        <input class="border p-2 rounded w-28" type="text" [value]="row[column.property]" />
+                    </td>
+                </ng-container>
+            </ng-container>
+
+            <!-- Select Columns -->
+            <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+                <ng-container *ngIf="column.type === 'select'" [matColumnDef]="column.property">
+                    <th *matHeaderCellDef class="uppercase min-w-24" mat-header-cell mat-sort-header>{{ t(column.label) }}</th>
+                    <td *matCellDef="let row"  [ngClass]="column.cssClasses" mat-cell>
+                        <mat-select class="w-full border p-1 min-w-28" [value]="row[column.property]" >
+                            <mat-option *ngFor="let option of column.options" [value]="option.value">
+                                {{ t(option.label) }}
+                            </mat-option>
+                        </mat-select>
                     </td>
                 </ng-container>
             </ng-container>
