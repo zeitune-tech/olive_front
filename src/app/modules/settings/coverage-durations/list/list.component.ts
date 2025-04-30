@@ -7,6 +7,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { CoverageDuration } from "@core/services/settings/coverage-duration/coverage-duration.interface";
 import { CoverageDurationService } from "@core/services/settings/coverage-duration/coverage-duration.service";
+import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -24,12 +25,11 @@ export class CoverageDurationsListComponent {
     tableOptions: TableOptions<CoverageDuration> = {
         title: '',
         columns: [
+            { label: 'entities.coverage_duration.table.columns.type.label', property: 'type', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.table.columns.unit.label', property: 'unit', type: 'text', visible: true },
             { label: 'entities.coverage_duration.table.columns.from', property: 'from', type: 'text', visible: true },
             { label: 'entities.coverage_duration.table.columns.to', property: 'to', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.table.columns.type', property: 'type', type: 'text', visible: true },
             { label: 'entities.coverage_duration.table.columns.prorotaMode', property: 'prorotaMode', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.table.columns.unit', property: 'unit', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true }
         ],
         imageOptions: {
             label: 'coverageDuration.columns.logo',
@@ -38,11 +38,16 @@ export class CoverageDurationsListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: CoverageDuration, property: keyof CoverageDuration) => {
 
+            if(property === 'type') {
+                return this._translateService.translate('entities.coverage_duration.table.columns.type.' + element.type.toLowerCase());
+            }
+            if(property === 'unit') {
+                return  this._translateService.translate('entities.coverage_duration.table.columns.unit.' + element.unit.toLowerCase());
+            }
+        
             return element[property];
         },
     };
@@ -58,6 +63,7 @@ export class CoverageDurationsListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _coverageDurationService: CoverageDurationService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) { }
 
@@ -87,9 +93,8 @@ export class CoverageDurationsListComponent {
     /**
         * EditCoverageDurationCoverageDuration
         */
-    onDemand(item: CoverageDuration | null): void {
-
-    }
+    onEdit(coverageDuration: CoverageDuration): void {}
+    onDelete(coverageDuration: CoverageDuration): void {} 
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

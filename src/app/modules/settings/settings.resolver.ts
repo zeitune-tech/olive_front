@@ -9,6 +9,8 @@ import { CoverageReferenceService } from '@core/services/settings/coverage-refer
 import { InsuredRegistryService } from '@core/services/settings/insured-registry/insured-registry.service';
 import { ProductionRegistryService } from '@core/services/settings/production-registry/production-registry.service';
 import { IncompatibleCoverageService } from '@core/services/settings/incompatible-coverage/incompatible-coverage.service';
+import { CoverageDuration } from '@core/services/settings/coverage-duration/coverage-duration.interface';
+import { CoverageDurationService } from '@core/services/settings/coverage-duration/coverage-duration.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +27,7 @@ export class SettingsResolver implements Resolve<any> {
         private _incompatibleCoverageService: IncompatibleCoverageService,
         private _productionRegistryService: ProductionRegistryService,
         private _insuredRegistryService: InsuredRegistryService,
+        private _coverageDurationService: CoverageDurationService
     ) {
      
     }
@@ -61,7 +64,9 @@ export class SettingsResolver implements Resolve<any> {
             resolList.push(this._insuredRegistryService.getAll());
         }
 
-
+        if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COVERAGE_DURATIONS)) {
+            resolList.push(this._coverageDurationService.getAll());
+        }
        
         return forkJoin(resolList);
     }

@@ -12,10 +12,16 @@ export class CoverageDurationNewComponent implements OnInit {
     message: string = '';
 
     coverageDurationTypes = [
-        { value: 'FIXED', label: 'Fixed' },
-        { value: 'FLEXIBLE', label: 'Flexible' }
+        { value: 'FIXED', label: 'FIXED' },
+        { value: 'VARIABLE', label: 'VARIABLE' }
       ];
       
+    coverageDurationUnits = [
+        { value: 'DAY', label: 'DAY' },
+        { value: 'WEEK', label: 'WEEK' },
+        { value: 'MONTH', label: 'MONTH' },
+        { value: 'YEAR',  label: 'YEAR' }
+      ];
 
     constructor(
         private _formBuilder: FormBuilder,
@@ -25,32 +31,28 @@ export class CoverageDurationNewComponent implements OnInit {
 
     ngOnInit(): void {
         this.formGroup = this._formBuilder.group({
-            from: [null, [Validators.required, this.pastOrPresentValidator()]],
-            to: [null, [Validators.required, this.futureOrPresentValidator()]],
             type: [null, Validators.required],
-            prorotaMode: ['', Validators.required],
             unit: ['', Validators.required],
+            from: [null, [Validators.required, Validators.min(0)]],
+            to: [null, [this.inferieurToFromValidator(), Validators.min(0)]],
+            prorotaMode: ['', Validators.required],
           });
           
     }
 
-    pastOrPresentValidator(): ValidatorFn {
+      inferieurToFromValidator(): ValidatorFn {
         return (control: AbstractControl) => {
-          const date = control.value;
-          return date && new Date(date) > new Date() ? { pastOrPresent: true } : null;
+          const value = control.value;
+          const from = this.formGroup?.get('from')?.value;
+          return value && value < from ? { inferieurToFrom: true } : null;
         };
       }
-      
-      futureOrPresentValidator(): ValidatorFn {
-        return (control: AbstractControl) => {
-          const date = control.value;
-          return date && new Date(date) < new Date() ? { futureOrPresent: true } : null;
-        };
-      }
-      
 
     onSubmit(): void {
         if (this.formGroup.valid) {
+          if (this.formGroup.get('type')?.value === 'FIXED') {
+            this.formGroup.get('to')?.setValue(this.formGroup.get('from')?.value);
+          }
             this._coverageService.create(this.formGroup.value).subscribe();
         }
     }
