@@ -154,6 +154,110 @@ export const defaultSettingsNavigation: NavigationItem[] = [
             }
         ]
     },
+    {
+        id: 'accessories',
+        title: 'sidebar.accessories.title',
+        type: 'collapsable',
+        // permission: PERMISSIONS.VIEW_ACCESSORIES,
+        children: [
+            {
+                id: 'accessories.list',
+                title: 'sidebar.accessories.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/accessories/list',
+                // permission: PERMISSIONS.VIEW_ACCESSORIES
+            },
+            {
+                id: 'accessories.new',
+                title: 'sidebar.accessories.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/accessories/new',
+                // permission: PERMISSIONS.CREATE_ACCESSORIES
+            }
+        ],
+    },
+    {
+        id: 'taxes',
+        title: 'sidebar.taxes.title',
+        type: 'collapsable',
+        // permission: PERMISSIONS.VIEW_TAXES,
+        children: [
+            {
+                id: 'taxes.list-prime',
+                title: 'sidebar.taxes.list_prime',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/taxes/list',
+                // permission: PERMISSIONS.VIEW_TAXES
+            },
+            {
+                id: 'taxes.list-accessories',
+                title: 'sidebar.taxes.list_accessories',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/taxes/list',
+                // permission: PERMISSIONS.VIEW_TAXES
+            },
+            {
+                id: 'taxes.new',
+                title: 'sidebar.taxes.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/taxes/new',
+                // permission: PERMISSIONS.CREATE_TAXES
+            },
+            {
+                id: 'regime-taxes.list',
+                title: 'sidebar.regime_taxes.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/taxes/regime-taxes/list',
+                // permission: PERMISSIONS.VIEW_TAXES
+            },
+        ],
+    },
+    {
+        id: 'commissions',
+        title: 'sidebar.commissions.title',
+        type: 'collapsable',
+        // permission: PERMISSIONS.VIEW_COMMISSIONS,
+        children: [
+            {
+                id: 'commissions.list-prime',
+                title: 'sidebar.commissions.list_prime',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/commissions/list',
+                // permission: PERMISSIONS.VIEW_COMMISSIONS
+            },
+            {
+                id: 'commissions.list-accessories',
+                title: 'sidebar.commissions.list_accessories',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/commissions/list',
+                // permission: PERMISSIONS.VIEW_COMMISSIONS
+            },
+            {
+                id: 'commissions-taxes.list',
+                title: 'sidebar.commissions-taxes.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/commissions/regime-commissions/list',
+                // permission: PERMISSIONS.VIEW_COMMISSIONS
+            },
+            {
+                id: 'commissions.new',
+                title: 'sidebar.commissions.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/commissions/new',
+                // permission: PERMISSIONS.CREATE_COMMISSIONS
+            }
+        ],
+    }
 ];
 export const compactSettingsNavigation: NavigationItem[] = [
     {
