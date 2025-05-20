@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  auth_url: "http://localhost:8010/api/v1",
-  administration_url: "http://localhost:8020/api/v1/app",
-  settings_url: "http://localhost:8030/api/v1/app",
-  attestations_url: "http://localhost:8040/api/v1/app",
+  auth_url: "http://192.168.1.17:8010/api/v1",
+  administration_url: "http://192.168.1.17:8020/api/v1/app",
+  settings_url: "http://192.168.1.17:8030/api/v1/app",
+  attestations_url: "http://192.168.1.17:8040/api/v1/app",
   production: false
 };
 

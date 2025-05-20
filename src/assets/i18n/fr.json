@@ -189,6 +189,31 @@
       "list": "Mes points de vente",
       "broker": "Courtiers",
       "group": "Envoyer par groupe"
+    },
+    "duration_rates": {
+      "title": "Taux Durées",
+      "list": "Liste des taux",
+      "new": "Ajouter / Modifier un taux"
+    },
+    "accessories": {
+      "title": "Accessoires",
+      "list": "Liste des accessoires",
+      "new": "Ajouter / Modifier un accessoire"
+    },
+    "taxes": {
+      "title": "Taxes",
+      "list": "Liste des taxes",
+      "list_prime": "Taxes / Primes",
+      "list_accessories": "Taxes / Accessoires",
+      "regime_taxes": "Régimes Taxes",
+      "new": "Ajouter / Modifier une taxe"
+    },
+    "commissions": {
+      "title": "Commissions",
+      "list_prime": "Commissions / Primes",
+      "list_accessories": "Commissions / Accessoires",
+      "list": "Liste des commissions",
+      "new": "Ajouter / Modifier une commission"
     }
   },
   "form": {

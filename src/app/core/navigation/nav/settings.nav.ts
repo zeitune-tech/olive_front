@@ -80,52 +80,27 @@ export const defaultSettingsNavigation: NavigationItem[] = [
         ]
     },
     {
-        id: 'production_registries',
-        title: 'sidebar.production_registries.title',
+        id: 'duration-rates',
+        title: 'sidebar.duration_rates.title',
         type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_PRODUCTION_REGISTRIES,
+        // permission: PERMISSIONS.VIEW_DURATION_RATES,
         children: [
             {
-                id: 'production_registries.list',
-                title: 'sidebar.production_registries.list',
+                id: 'duration-rates.list',
+                title: 'sidebar.duration_rates.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/parameters/production-registries/list',
-                permission: PERMISSIONS.VIEW_PRODUCTION_REGISTRIES
+                link: '/parameters/duration-rates/list',
+                // permission: PERMISSIONS.VIEW_DURATION_RATES
             },
             {
-                id: 'production_registries.new',
-                title: 'sidebar.production_registries.new',
+                id: 'duration-rates.new',
+                title: 'sidebar.duration_rates.new',
                 type: 'basic',
                 icon: 'fluent:people-team',
-                link: '/parameters/production-registries/new',
-                permission: PERMISSIONS.CREATE_PRODUCTION_REGISTRIES
-            }
-        ]
-    },
-    {
-        id: 'insured_registries',
-        title: 'sidebar.insured_registries.title',
-        type: 'collapsable',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_INSURED_REGISTRIES,
-        children: [
-            {
-                id: 'insured_registries.list',
-                title: 'sidebar.insured_registries.list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/insured-registries/list',
-                permission: PERMISSIONS.VIEW_INSURED_REGISTRIES
-            },
-            {
-                id: 'insured_registries.new',
-                title: 'sidebar.insured_registries.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/insured-registries/new',
-                permission: PERMISSIONS.CREATE_INSURED_REGISTRIES
+                link: '/parameters/duration-rates/new',
+                // permission: PERMISSIONS.CREATE_DURATION_RATES
             }
         ]
     },
@@ -210,7 +185,7 @@ export const defaultSettingsNavigation: NavigationItem[] = [
             },
             {
                 id: 'regime-taxes.list',
-                title: 'sidebar.regime_taxes.list',
+                title: 'sidebar.taxes.regime_taxes',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/parameters/taxes/regime-taxes/list',
@@ -242,7 +217,7 @@ export const defaultSettingsNavigation: NavigationItem[] = [
             },
             {
                 id: 'commissions-taxes.list',
-                title: 'sidebar.commissions-taxes.list',
+                title: 'sidebar.commissions_taxes.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/parameters/commissions/regime-commissions/list',
@@ -257,7 +232,57 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 // permission: PERMISSIONS.CREATE_COMMISSIONS
             }
         ],
-    }
+    },
+        {
+        id: 'production_registries',
+        title: 'sidebar.production_registries.title',
+        type: 'collapsable',
+        icon: 'fluent:people-team',
+        permission: PERMISSIONS.VIEW_PRODUCTION_REGISTRIES,
+        children: [
+            {
+                id: 'production_registries.list',
+                title: 'sidebar.production_registries.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/production-registries/list',
+                permission: PERMISSIONS.VIEW_PRODUCTION_REGISTRIES
+            },
+            {
+                id: 'production_registries.new',
+                title: 'sidebar.production_registries.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/production-registries/new',
+                permission: PERMISSIONS.CREATE_PRODUCTION_REGISTRIES
+            }
+        ]
+    },
+    {
+        id: 'insured_registries',
+        title: 'sidebar.insured_registries.title',
+        type: 'collapsable',
+        icon: 'fluent:people-team',
+        permission: PERMISSIONS.VIEW_INSURED_REGISTRIES,
+        children: [
+            {
+                id: 'insured_registries.list',
+                title: 'sidebar.insured_registries.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/insured-registries/list',
+                permission: PERMISSIONS.VIEW_INSURED_REGISTRIES
+            },
+            {
+                id: 'insured_registries.new',
+                title: 'sidebar.insured_registries.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/insured-registries/new',
+                permission: PERMISSIONS.CREATE_INSURED_REGISTRIES
+            }
+        ]
+    },
 ];
 export const compactSettingsNavigation: NavigationItem[] = [
     {
