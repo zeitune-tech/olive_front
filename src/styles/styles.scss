@@ -12,4 +12,13 @@
         content: none;
     }
 
+    .mat-step-icon {
+        background-color: #fff;
+        @apply border
+    }
+
+    .mat-step-icon-selected {
+        @apply bg-primary;
+        @apply text-white;
+    }
 }

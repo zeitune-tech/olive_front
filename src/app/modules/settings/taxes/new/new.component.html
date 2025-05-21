@@ -1,0 +1,91 @@
+<div class="w-full pb-10"  *transloco="let t">
+
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('entities.closure.table.title') }}
+        </h1>
+        <!-- Description -->
+        <p class="text-sm md:text-base text-gray-600">
+            {{ t('entities.closure.form.subtitle') }}
+        </p>
+    </div>
+
+    <!-- Form -->
+    <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+
+        <div class="flex flex-col mb-6 text-center text-primary">
+          <h1 class="text-2xl font-bold">
+            {{ t('entities.closure.form.title') }}
+          </h1>
+          <p class="text-sm text-gray-600">
+            {{ t('entities.closure.form.subtitle') }}
+          </p>
+        </div>
+      
+        <div class="flex flex-col gap-6">
+          <!-- Closure Type -->
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.closure.form.fields.type.label') }}</mat-label>
+            <mat-select formControlName="type">
+              <mat-option *ngFor="let option of closureTypes" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.get('type')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
+      
+          <!-- Effective Date -->
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.closure.form.fields.date.label') }}</mat-label>
+            <input matInput type="date" formControlName="date">
+            <mat-error *ngIf="formGroup.get('date')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+            <mat-error *ngIf="formGroup.get('date')?.hasError('matDatepickerMax')">
+              {{ t('form.errors.pastOrPresent') }}
+            </mat-error>
+          </mat-form-field>
+      
+          <!-- Management Entity -->
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.closure.form.fields.managementEntity.label') }}</mat-label>
+            <input matInput formControlName="managementEntity" />
+            <mat-error *ngIf="formGroup.get('managementEntity')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
+      
+          <!-- Product -->
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.closure.form.fields.product.label') }}</mat-label>
+            <input matInput formControlName="product" />
+            <mat-error *ngIf="formGroup.get('product')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
+      
+          <!-- Submit Button -->
+          <div class="flex items-center justify-end gap-4 mt-6">
+            <div>{{ t(message) }}</div>
+            <button
+              mat-flat-button
+              color="primary"
+              [disabled]="formGroup.invalid || formGroup.disabled"
+              (click)="onSubmit()"
+            >
+              <span *ngIf="!formGroup.disabled">
+                {{ t('form.actions.save') }}
+              </span>
+              <mat-progress-spinner
+                *ngIf="formGroup.disabled"
+                [diameter]="24"
+                mode="indeterminate"
+              ></mat-progress-spinner>
+            </button>
+          </div>
+        </div>
+      </form>
+      
+</div>

@@ -1,0 +1,54 @@
+<div class="w-full pb-10" *transloco="let t">
+  <div class="flex flex-col mb-10">
+    <h1 class="text-2xl md:text-4xl font-bold py-4">
+      {{ t('entities.accessory.table.title') }}
+    </h1>
+    <p class="text-sm text-gray-600">
+      {{ t('entities.accessory.form.subtitle') }}
+    </p>
+  </div>
+
+  <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+    <div class="flex flex-col gap-6">
+      <!-- Date Effective -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.accessory.fields.dateEffective') }}</mat-label>
+        <input matInput type="date" formControlName="dateEffective" />
+      </mat-form-field>
+
+      <!-- Act Type -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.accessory.fields.actType') }}</mat-label>
+        <mat-select formControlName="actType">
+          <mat-option *ngFor="let type of actTypes" [value]="type.value">{{ type.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Accessory Amount -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.accessory.fields.accessoryAmount') }}</mat-label>
+        <input matInput type="number" formControlName="accessoryAmount" />
+      </mat-form-field>
+
+      <!-- Product -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.accessory.fields.product') }}</mat-label>
+        <input matInput formControlName="product" />
+      </mat-form-field>
+
+      <!-- Management Entity -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.accessory.fields.managementEntity') }}</mat-label>
+        <input matInput formControlName="managementEntity" />
+      </mat-form-field>
+
+      <!-- Submit -->
+      <div class="flex items-center justify-end gap-4 mt-6">
+        <div>{{ t(message) }}</div>
+        <button mat-flat-button color="primary" [disabled]="formGroup.invalid" (click)="onSubmit()">
+          {{ t('form.actions.save') }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

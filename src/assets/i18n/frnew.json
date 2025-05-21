@@ -1,0 +1,1139 @@
+{
+  "entities": {
+    "insured_registry": {
+      "label": "Registre des assurés",
+      "description": "Liste des entrées du registre des assurés",
+      "form": {
+        "title": "Registre des assurés",
+        "subtitle": "Veuillez remplir les informations du registre"
+      },
+      "table": {
+        "title": "Registre des assurés",
+        "description": "Liste des entrées du registre des assurés",
+        "empty_state": "Aucun registre des assurés trouvé."
+      },
+      "fields": {
+        "name": "Nom",
+        "description": "Description",
+        "category": "Classe",
+        "branch": "Branche",
+        "prefix": "Préfixe",
+        "length": "Longueur",
+        "counter": "Compteur",
+        "managementEntity": "Entité de gestion"
+      }
+    },
+    "closure": {
+      "label": "Clôture",
+      "description": "Liste des actions de clôture enregistrées",
+      "form": {
+        "title": "Clôture",
+        "subtitle": "Veuillez spécifier les informations de clôture"
+      },
+      "table": {
+        "title": "Clôtures",
+        "description": "Liste des actions de clôture enregistrées",
+        "empty_state": "Aucune clôture enregistrée."
+      },
+      "fields": {
+        "type": "Type de clôture",
+        "date": "Date d'effet",
+        "managementEntity": "Entité de gestion",
+        "product": "Produit"
+      }
+    },
+    "coverage_duration": {
+      "label": "Durée de couverture",
+      "description": "Périodes de couverture disponibles",
+      "form": {
+        "title": "Durée de la couverture",
+        "subtitle": "Définissez la période et les paramètres"
+      },
+      "table": {
+        "title": "Durées de couverture",
+        "description": "Périodes de couverture disponibles",
+        "empty_state": "Aucune durée de couverture disponible."
+      },
+      "actions": {
+        "add": "Ajouter une durée de couverture",
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      },
+      "fields": {
+        "from": "De",
+        "to": "à",
+        "type": "Type",
+        "prorotaMode": "Mode prorata",
+        "unit": "Unité",
+        "managementEntity": "Entité de gestion"
+      },
+      "options": {
+        "type": {
+          "fixed": "Fixe",
+          "variable": "Variable"
+        },
+        "unit": {
+          "day": "Jour",
+          "week": "Semaine",
+          "month": "Mois",
+          "year": "Année"
+        }
+      }
+    },
+    "coverage_reference": {
+      "label": "Référence de garantie",
+      "description": "Table des différentes références de garantie",
+      "form": {
+        "title": "Référence de garantie",
+        "subtitle": "Entrez les détails de la garantie"
+      },
+      "table": {
+        "title": "Références de garantie",
+        "description": "Table des différentes références de garantie",
+        "empty_state": "Aucune référence de garantie trouvée."
+      },
+      "fields": {
+        "product": "Produit",
+        "designation": "Désignation",
+        "family": "Famille",
+        "accessCharacteristic": "Accès aux caractéristiques",
+        "tariffAccess": "Accès aux tarifs",
+        "managementEntity": "Entité de gestion"
+      }
+    },
+    "coverage": {
+      "label": "Garantie",
+      "description": "Liste des garanties associées aux produits",
+      "form": {
+        "title": "Couverture",
+        "subtitle": "Remplissez les informations de garantie"
+      },
+      "table": {
+        "title": "Garantie",
+        "description": "Liste des garanties associées aux produits",
+        "empty_state": "Aucune garantie n’a été définie."
+      },
+      "fields": {
+        "nature": "Nature",
+        "isFree": "Gratuite",
+        "isFixed": "Fixe",
+        "calculationMode": "Mode de calcul",
+        "fixedCapital": "Capital fixe",
+        "minCapital": "Capital minimum",
+        "maxCapital": "Capital maximum",
+        "order": "Ordre",
+        "prorata": "Mode prorata",
+        "displayPrime": "Afficher la prime",
+        "generatesCharacteristic": "Génère des caractéristiques",
+        "coverageReferenceId": "Référence de garantie",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion"
+      },
+      "options": {
+        "calculationMode": {
+          "FIXED": "Fixe",
+          "VARIABLE": "Variable",
+          "PRORATA": "Prorata",
+          "PRORATA_FIXED": "Prorata fixe"
+        }
+      }
+    },
+    "incompatible_coverage": {
+      "label": "Garanties incompatibles",
+      "description": "Relations de garantie non compatibles",
+      "form": {
+        "title": "Garanties incompatibles",
+        "subtitle": "Ajoutez des paires de garantie incompatibles"
+      },
+      "table": {
+        "title": "Garanties incompatibles",
+        "description": "Relations de garantie non compatibles",
+        "empty_state": "Aucune incompatibilité de garantie enregistrée."
+      },
+      "fields": {
+        "coverage": "Garantie",
+        "incompatible": "Garantie incompatible",
+        "managementEntity": "Entité de gestion"
+      }
+    },
+    "production_registry": {
+      "label": "Registre de production",
+      "description": "Paramètres de génération des enregistrements de production",
+      "form": {
+        "title": "Registre de production",
+        "subtitle": "Configurer les paramètres du registre de production"
+      },
+      "table": {
+        "title": "Registre de production",
+        "description": "Paramètres de génération des enregistrements de production",
+        "empty_state": "Aucun registre de production disponible."
+      },
+      "fields": {
+        "prefix": "Préfixe",
+        "length": "Longueur",
+        "counter": "Compteur",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion"
+      }
+    },
+    "product": {
+      "label": "Produit",
+      "description": "Liste complète des produits proposés par la compagnie.",
+      "form": {
+        "title": "Créer ou modifier un produit",
+        "subtitle": "Veuillez remplir les informations du produit ci-dessous.",
+        "description": "Créez ou modifiez les informations de base du produit.",
+        "steps": {
+          "step_one_title": "Informations de base",
+          "step_one_description": "Saisissez les informations de base du produit.",
+          "step_two_title": "Garanties associées",
+          "step_two_description": "Sélectionnez les garanties à associer au produit.",
+          "step_three_title": "Résumé & confirmation",
+          "step_three_description": "Vérifiez les détails du produit avant la création.",
+          "step_three_summary": "Résumé du produit"
+        }
+      },
+      "table": {
+        "title": "Liste des produits",
+        "subtitle": "Aperçu des produits",
+        "description": "Liste complète des produits proposés par la compagnie.",
+        "empty_state": "Aucun produit trouvé",
+        "actions": {
+          "share": "Partager",
+          "modify": "Modifier"
+        }
+      },
+      "fields": {
+        "name": "Nom du produit",
+        "description": "Description",
+        "branch": "Branche",
+        "visibility": "Visibilité",
+        "category": "Classe",
+        "owner": "Propriétaire",
+        "minRisk": "Risque minimum",
+        "maxRisk": "Risque maximum",
+        "minimumGuaranteeNumber": "Nombre minimum de garanties",
+        "fleet": "Produit destiné à une flotte ?",
+        "hasReduction": "Produit avec réduction ?"
+      }
+    },
+    "branch": {
+      "label": "Branche",
+      "description": "Liste des branches",
+      "form": {
+        "title": "Détails de la branche",
+        "subtitle": "Créer ou modifier une branche"
+      },
+      "table": {
+        "title": "Branches",
+        "description": "Liste des branches",
+        "empty_state": "Aucune branche trouvée"
+      },
+      "fields": {
+        "name": "Nom",
+        "description": "Description",
+        "actions": "Actions"
+      }
+    },
+    "category": {
+      "label": "Catégorie",
+      "description": "Liste des catégories",
+      "form": {
+        "title": "Détails de la catégorie",
+        "subtitle": "Créer ou modifier une catégorie"
+      },
+      "table": {
+        "title": "Classes",
+        "description": "Liste des catégories",
+        "empty_state": "Aucune catégorie trouvée"
+      },
+      "fields": {
+        "name": "Nom",
+        "description": "Description",
+        "actions": "Actions"
+      }
+    },
+    "management_entity": {
+      "label": "Entité de gestion",
+      "description": "Liste de toutes les entités de gestion avec leurs informations clés.",
+      "form": {
+        "title": "Configuration des entités de gestion",
+        "subtitle": "Définir les détails des entités",
+        "description": "Créez ou modifiez les principales informations des entités de gestion."
+      },
+      "table": {
+        "title": "Entités de gestion",
+        "subtitle": "Aperçu des entités",
+        "description": "Liste de toutes les entités de gestion avec leurs informations clés.",
+        "empty_state": "Aucune entité trouvée"
+      },
+      "fields": {
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "address": "Adresse",
+        "logo": "Logo",
+        "level": "Niveau de l'entité",
+        "actions": "Actions"
+      },
+      "options": {
+        "level": {
+          "ENTITY_SUPERIOR": "Entité Supérieure",
+          "COMPANY": "Entreprise",
+          "POINT_OF_SALE": "Point de vente"
+        }
+      }
+    },
+    "company": {
+      "label": "Compagnie",
+      "description": "Liste et gestion des compagnies d'assurance.",
+      "form": {
+        "title": "Gestion des compagnies",
+        "subtitle": "Définir les détails de la compagnie",
+        "description": "Liste et gestion des compagnies d'assurance."
+      },
+      "table": {
+        "title": "Compagnies d'assurance",
+        "subtitle": "Aperçu des compagnies",
+        "description": "Liste et gestion des compagnies d'assurance.",
+        "empty_state": "Aucune compagnie trouvée",
+        "actions": {
+          "link": "Lier",
+          "unlink": "Délier",
+          "share": "Partager"
+        }
+      },
+      "fields": {
+        "logo": "Logo",
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "linked": "Liée",
+        "address": "Adresse",
+        "actions": "Actions"
+      }
+    },
+    "market_level_organization": {
+      "label": "Organisation de niveau marché",
+      "description": "Liste et gestion des organisations opérant au niveau marché.",
+      "form": {
+        "title": "Gestion des organisations niveau marché",
+        "subtitle": "Définir les groupes niveau marché",
+        "description": "Créez ou modifiez les organisations au niveau marché."
+      },
+      "table": {
+        "title": "Organisations niveau marché",
+        "subtitle": "Aperçu des groupes niveau marché",
+        "description": "Liste et gestion des organisations opérant au niveau marché.",
+        "empty_state": "Aucune organisation trouvée"
+      },
+      "fields": {
+        "name": "Nom",
+        "points_of_sale_count": "Nombre de points de vente",
+        "createdAt": "Créé le",
+        "updatedAt": "Mis à jour le",
+        "actions": "Actions"
+      }
+    },
+    "point_of_sale": {
+      "label": "Point de vente",
+      "description": "Liste et gestion des points de vente.",
+      "form": {
+        "title": "Gestion des points de vente",
+        "subtitle": "Définir les détails du point de vente",
+        "description": "Créez ou modifiez les détails des points de vente."
+      },
+      "table": {
+        "title": "Organisations niveau compagnie",
+        "subtitle": "Gérer les groupes organisationnels",
+        "description": "Liste et gestion des organisations niveau compagnie.",
+        "empty_state": "Aucun point de vente trouvé"
+      },
+      "fields": {
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "address": "Adresse",
+        "type": "Type",
+        "linked": "Lié",
+        "actions": "Actions"
+      },
+      "options": {
+        "type": {
+          "GENERAL_AGENT": "Agent général",
+          "BROKER": "Courtier",
+          "DIRECT_OFFICE": "Bureau direct"
+        }
+      },
+      "subsections": {
+        "broker_list_title": "Liste des courtiers",
+        "broker_list_description": "Liste des courtiers"
+      }
+    },
+    "user": {
+      "label": "Utilisateur",
+      "description": "Gérer les utilisateurs du système.",
+      "form": {
+        "title": "Création d'utilisateur",
+        "subtitle": "Gérer les informations utilisateur",
+        "description": "Renseignez les informations personnelles, associez une compagnie, un point de vente et définissez les permissions de l'utilisateur.",
+        "steps": {
+          "step_one_title": "Informations personnelles",
+          "step_one_description": "Fournissez les informations personnelles de base de l'utilisateur.",
+          "step_two_title": "Niveau d'accès",
+          "step_two_description": "Sélectionnez le niveau d'accès de l'utilisateur.",
+          "step_three_title": "Informations sur le point de vente",
+          "step_three_description": "Associez l'utilisateur à un point de vente spécifique.",
+          "step_four_title": "Permissions & accès",
+          "step_four_description": "Définissez les permissions et les droits d'accès de l'utilisateur.",
+          "step_five_title": "Résumé & confirmation",
+          "step_five_description": "Vérifiez les détails de l'utilisateur avant confirmation.",
+          "step_five_summary": "Résumé de l'utilisateur",
+          "step_five_name": "Nom",
+          "step_five_firstname": "Prénom",
+          "step_five_email": "Adresse email",
+          "step_five_phone": "Numéro de téléphone",
+          "step_five_profile": "Informations du profil",
+          "step_five_profile_name": "Nom du rôle",
+          "step_five_profile_description": "Entité de gestion",
+          "step_five_previous": "Précédent",
+          "step_five_confirm": "Confirmer & créer"
+        }
+      },
+      "table": {
+        "title": "Liste des utilisateurs",
+        "subtitle": "Gérer les utilisateurs du système",
+        "description": "Liste de tous les utilisateurs enregistrés dans le système.",
+        "empty_state": "Aucun utilisateur trouvé"
+      },
+      "fields": {
+        "first_name": "Prénom",
+        "last_name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "password": "Mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "access_level": "Niveau d'accès",
+        "company": "Compagnie",
+        "point_of_sale": "Point de vente",
+        "profile": "Profil",
+        "management_entity": "Entité de gestion",
+        "actions": "Actions"
+      },
+      "options": {
+        "access_level": {
+          "COMPANY": "Compagnie",
+          "POINT_OF_SALE": "Point de vente",
+          "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché"
+        }
+      },
+      "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      },
+      "profile": {
+        "title": "Mon profil"
+      }
+    },
+    "profile": {
+      "label": "Profil",
+      "description": "Aperçu des rôles utilisateurs et de leurs permissions associées.",
+      "form": {
+        "title": "Création de profil",
+        "subtitle": "Définir les rôles et permissions",
+        "description": "Créez ou modifiez les profils utilisateur et attribuez des permissions.",
+        "steps": {
+          "step_one_title": "Informations du profil",
+          "step_one_description": "Saisissez les informations de base du profil.",
+          "step_two_title": "Permissions",
+          "step_two_description": "Sélectionnez les permissions à attribuer à ce profil.",
+          "step_three_title": "Résumé & confirmation",
+          "step_three_description": "Vérifiez les détails du profil avant la création.",
+          "step_three_description_2": "Description du profil.",
+          "step_three_summary": "Résumé du profil",
+          "step_three_name": "Nom du profil",
+          "step_three_permissions": "Permissions attribuées",
+          "step_three_previous": "Précédent",
+          "step_three_create": "Confirmer & créer"
+        }
+      },
+      "table": {
+        "title": "Profils utilisateurs",
+        "subtitle": "Gérer les profils et permissions",
+        "description": "Aperçu des rôles utilisateurs et de leurs permissions associées.",
+        "empty_state": "Aucun profil trouvé"
+      },
+      "fields": {
+        "name": "Nom du profil",
+        "description": "Description",
+        "level": "Niveau de l'entité",
+        "permissions": "Permissions",
+        "permissions_count": "Nombre de permissions",
+        "admin_description": "Possède tous les droits sur cette entité de gestion",
+        "actions": "Actions"
+      },
+      "options": {
+        "level": {
+          "COMPANY": "Compagnie",
+          "POINT_OF_SALE": "Point de vente",
+          "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché"
+        }
+      }
+    },
+    "company_level_organization": {
+      "label": "Organisation niveau compagnie",
+      "description": "Liste et gestion des organisations niveau compagnie.",
+      "form": {
+        "title": "Création d'organisation niveau compagnie",
+        "subtitle": "Organiser les points de vente par groupe",
+        "description": "Définissez des groupes organisationnels et associez-y les points de vente.",
+        "steps": {
+          "step_one_title": "Informations de l'organisation",
+          "step_one_description": "Saisissez les détails de base pour l'organisation.",
+          "step_two_title": "Points de vente",
+          "step_two_description": "Sélectionnez les points de vente à associer à cette organisation.",
+          "step_three_title": "Résumé & confirmation",
+          "step_three_description": "Vérifiez les détails de l'organisation avant la création.",
+          "step_three_summary": "Résumé de l'organisation",
+          "step_three_name": "Nom de l'organisation",
+          "step_three_points_of_sale": "Points de vente associés",
+          "step_three_previous": "Précédent",
+          "step_three_create": "Confirmer & créer"
+        }
+      },
+      "table": {
+        "title": "Organisations niveau compagnie",
+        "subtitle": "Gérer les groupes organisationnels",
+        "description": "Liste et gestion des organisations niveau compagnie.",
+        "empty_state": "Aucune organisation trouvée"
+      },
+      "fields": {
+        "name": "Nom",
+        "description": "Description",
+        "points_of_sale": "Points de vente",
+        "points_of_sale_count": "Nombre de points de vente",
+        "createdAt": "Créé le",
+        "updatedAt": "Mis à jour le",
+        "actions": "Actions"
+      }
+    },
+    "accessory": {
+      "label": "Accessoire",
+      "description": "Liste des accessoires tarifaires liés aux produits.",
+      "form": {
+        "title": "Gestion des accessoires",
+        "subtitle": "Ajouter ou modifier un accessoire"
+      },
+      "table": {
+        "title": "Accessoires",
+        "description": "Liste des accessoires",
+        "empty_state": "Aucun accessoire trouvé"
+      },
+      "fields": {
+        "dateEffective": "Date d'effet",
+        "actType": "Type d'acte",
+        "accessoryAmount": "Montant de l'accessoire",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      },
+      "options": {
+        "actType": {
+          "INCLUSION": "Inclusion",
+          "EXCLUSION": "Exclusion"
+        }
+      }
+    },
+    "base_tax": {
+      "label": "Base de taxe",
+      "description": "Définition des bases de calcul des taxes appliquées aux produits ou garanties.",
+      "form": {
+        "title": "Base de calcul de taxe",
+        "subtitle": "Ajouter ou modifier une base de taxe"
+      },
+      "table": {
+        "title": "Bases de taxe",
+        "description": "Liste des bases de calcul de taxe",
+        "empty_state": "Aucune base de taxe trouvée"
+      },
+      "fields": {
+        "dateEffective": "Date d'effet",
+        "calculationBase": "Base de calcul",
+        "isFlat": "Montant fixe",
+        "rate": "Taux",
+        "fixedAmount": "Montant fixe",
+        "tax": "Taxe",
+        "coverage": "Garantie",
+        "product": "Produit",
+        "pointOfSale": "Point de vente",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      },
+      "options": {
+        "calculationBase": {
+          "PRIME": "Sur la prime",
+          "ACCESSORY": "Sur les accessoires",
+          "GARANTIE": "Sur la garantie"
+        },
+        "isFlat": {
+          "true": "Oui (montant fixe)",
+          "false": "Non (en pourcentage)"
+        }
+      }
+    },
+    "commission": {
+      "label": "Commission",
+      "description": "Définition des commissions de gestion et d’apport.",
+      "form": {
+        "title": "Configuration des commissions",
+        "subtitle": "Ajouter ou modifier une commission"
+      },
+      "table": {
+        "title": "Commissions",
+        "description": "Liste des commissions configurées",
+        "empty_state": "Aucune commission trouvée"
+      },
+      "fields": {
+        "dateEffective": "Date d'effet",
+        "calculationBase": "Base de calcul",
+        "managementRate": "Taux de gestion",
+        "contributionRate": "Taux d'apport",
+        "pointOfSale": "Point de vente",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      },
+
+      "options": {
+        "calculationBase": {
+          "PRIME": "Sur la prime",
+          "ACCESSORY": "Sur les accessoires",
+          "GARANTIE": "Sur la garantie"
+        }
+      }
+    },
+    "commission_contributor": {
+      "label": "Commission apporteur",
+      "description": "Définir les taux de commission attribués aux contributeurs et à leurs entités supérieures.",
+      "form": {
+        "title": "Configuration des commissions apporteurs",
+        "subtitle": "Ajouter ou modifier une commission apporteur"
+      },
+      "table": {
+        "title": "Commissions / Apporteurs",
+        "description": "Liste des commissions par contributeur",
+        "empty_state": "Aucune commission apporteur trouvée"
+      },
+      "fields": {
+        "dateEffective": "Date d'effet",
+        "commissionBase": "Base de commission",
+        "contributorRate": "Taux de l’apporteur",
+        "upperEntityContributorRate": "Taux de l'entité supérieure",
+        "contributor": "Apporteur",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      },
+      "options": {
+        "commissionBase": {
+          "PRIME": "Sur la prime",
+          "ACCESSORY": "Sur les accessoires",
+          "GARANTIE": "Sur la garantie"
+        }
+      }
+    },
+    "duration_rate": {
+      "label": "Taux de durée",
+      "description": "Définition des taux appliqués aux différentes durées de couverture.",
+      "form": {
+        "title": "Configuration des taux de durée",
+        "subtitle": "Ajouter ou modifier un taux de durée"
+      },
+      "table": {
+        "title": "Taux Durées",
+        "description": "Liste des taux associés aux durées de couverture",
+        "empty_state": "Aucun taux de durée trouvé"
+      },
+      "fields": {
+        "dateEffective": "Date d'effet",
+        "duration": "Durée de couverture",
+        "rate": "Taux",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      }
+    },
+    "tax": {
+      "label": "Taxe",
+      "description": "Définition des taxes applicables aux produits ou points de vente.",
+      "form": {
+        "title": "Configuration des taxes",
+        "subtitle": "Ajouter ou modifier une taxe"
+      },
+      "table": {
+        "title": "Taxes",
+        "description": "Liste des taxes",
+        "empty_state": "Aucune taxe trouvée"
+      },
+      "fields": {
+        "designation": "Désignation",
+        "rgr": "Régime de regroupement",
+        "nature": "Nature de la taxe",
+        "pointOfSale": "Point de vente",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      },
+      "placeholders": {
+        "designation": "Saisir le nom ou l’objet de la taxe"
+      },
+      "options": {
+        "rgr": {
+          "FISCAL": "Fiscal",
+          "PARAFISCAL": "Parafiscal",
+          "COMMUNAL": "Communal"
+        },
+        "nature": {
+          "FIXED": "Montant fixe",
+          "VARIABLE": "Taux variable",
+          "HYBRID": "Mixte"
+        }
+      }
+    }
+  },
+    "auth": {
+    "sign_in": {
+      "title": "Se connecter",
+      "subtitle": "Connectez-vous à votre compte",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "password": "Mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "remember_me": "Se souvenir de moi",
+      "forgot_password": "Mot de passe oublié ?",
+      "no_account": "Pas de compte ?",
+      "sign_up": "S'inscrire",
+      "sign_in": "Se connecter",
+      "error": "Email ou mot de passe incorrect"
+    },
+    "sign_up": {
+      "title": "S'inscrire",
+      "subtitle": "Vous avez déjà un compte ?",
+      "first_name": "Prénom",
+      "first_name_required": "Le prénom est requis",
+      "last_name": "Nom",
+      "last_name_required": "Le nom est requis",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "password": "Mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "password_min": "Le mot de passe doit contenir au moins 6 caractères",
+      "password_confirmation": "Confirmer le mot de passe",
+      "password_confirmation_required": "La confirmation du mot de passe est requise",
+      "password_confirmation_same": "Les mots de passe doivent être identiques",
+      "sign_up": "S'inscrire",
+      "already_account": "Déjà un compte ?",
+      "sign_in": "Se connecter"
+    },
+    "forgot_password": {
+      "title": "Mot de passe oublié",
+      "subtitle": "Entrez votre email pour réinitialiser votre mot de passe",
+      "email": "Email",
+      "email_required": "L'email est requis",
+      "email_invalid": "L'email est invalide",
+      "send": "Envoyer le lien de réinitialisation",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    },
+    "reset_password": {
+      "title": "Réinitialiser le mot de passe",
+      "subtitle": "Entrez votre nouveau mot de passe",
+      "password": "Nouveau mot de passe",
+      "password_required": "Le mot de passe est requis",
+      "password_min": "Le mot de passe doit contenir au moins 6 caractères",
+      "password_confirmation": "Confirmer le mot de passe",
+      "password_confirmation_required": "La confirmation du mot de passe est requise",
+      "password_confirmation_same": "Les mots de passe doivent être identiques",
+      "reset": "Réinitialiser le mot de passe",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    },
+    "sign_out": {
+      "title": "Déconnexion",
+      "description": "Voulez-vous vraiment vous déconnecter ?",
+      "redirecting": "Déconnexion en cours...",
+      "seconds": "secondes",
+      "back": "Retour à la connexion",
+      "back_to": "Retour à",
+      "sign_in": "Se connecter"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "management_entities": {
+      "title": "Entités de gestion",
+      "list": "Liste des entités",
+      "new": "Ajouter / Modifier une entité"
+    },
+    "companies": {
+      "title": "Compagnies",
+      "linked": "Compagnies liées",
+      "list": "Liste des compagnies",
+      "new": "Ajouter / Modifier une compagnie"
+    },
+    "market_level_organization": {
+      "title": "Organisations niveau marché",
+      "list": "Liste des organisations niveau marché",
+      "linked": "Organisations liées"
+    },
+    "points_of_sale": {
+      "title": "Points de vente",
+      "broker": "Liste des courtiers",
+      "list": "Liste des points de vente",
+      "new": "Ajouter / Modifier un point de vente"
+    },
+    "company_level_organization": {
+      "title": "Organisation par compagnie",
+      "list": "Liste des organisations",
+      "new": "Ajouter / Modifier une organisation"
+    },
+    "users": {
+      "title": "Utilisateurs",
+      "list": "Liste des utilisateurs",
+      "new": "Ajouter / Modifier un utilisateur"
+    },
+    "profiles": {
+      "title": "Profils utilisateurs",
+      "list": "Liste des profils",
+      "new": "Ajouter / Modifier un profil"
+    },
+    "products": {
+      "title": "Produits",
+      "list": "Liste des produits",
+      "new": "Ajouter / Modifier un produit"
+    },
+    "coverages": {
+      "title": "Produits",
+      "referential": "Référentiel des garanties",
+      "list": "Liste des garanties",
+      "new": "Ajouter / Modifier une garantie"
+    },
+    "incompatible_coverages": {
+      "list": "Liste des garanties incompatibles",
+      "new": "Ajouter / Modifier une garantie incompatible"
+    },
+    "coverage_durations": {
+      "title": "Durées Couverture",
+      "list": "Liste des durées",
+      "new": "Ajouter / Modifier une durée"
+    },
+    "production_registries": {
+      "title": "Registres de production",
+      "list": "Liste des registres",
+      "new": "Ajouter / Modifier un registre"
+    },
+    "insured_registries": {
+      "title": "Registres assurés",
+      "list": "Liste des registres",
+      "new": "Ajouter / Modifier un registre"
+    },
+    "closures": {
+      "title": "Clôtures",
+      "list": "Liste des clôtures",
+      "new": "Ajouter / Modifier une clôture"
+    },
+    "attestations": {
+      "title": "Stock d'attestations",
+      "list": "Liste attestations",
+      "new": "Ajouter / Modifier une attestation",
+      "revoked": "Attestations retirées"
+    },
+    "attestation_demands": {
+      "title": "Demandes d'attestation reçues",
+      "list": "Liste des demandes",
+      "new": "Envoyer une d'attestations"
+    },
+    "attestation_points_of_sale": {
+      "title": "Attestations - Points de vente",
+      "list": "Mes points de vente",
+      "broker": "Courtiers",
+      "group": "Envoyer par groupe"
+    },
+    "duration_rates": {
+      "title": "Taux Durées",
+      "list": "Liste des taux",
+      "new": "Ajouter / Modifier un taux"
+    },
+    "accessories": {
+      "title": "Accessoires",
+      "list": "Liste des accessoires",
+      "new": "Ajouter / Modifier un accessoire"
+    },
+    "taxes": {
+      "title": "Taxes",
+      "list": "Liste des taxes",
+      "base_taxes": "Base de calcul des taxes",
+      "list_prime": "Taxes / Primes",
+      "list_accessories": "Taxes / Accessoires",
+      "regime_taxes": "Régimes Taxes",
+      "new": "Ajouter / Modifier une taxe"
+    },
+    "commissions": {
+      "title": "Commissions",
+      "list_prime": "Commissions / Primes",
+      "list_accessories": "Commissions / Accessoires",
+      "taxes": "Commissions / Taxes",
+      "contributors": "Commissions / Apporteurs",
+      "new": "Ajouter / Modifier une commission"
+    }
+  },
+  "form": {
+    "fields": {
+      "search": "Rechercher",
+      "checkboxes": "Cases à cocher",
+      "yes": "Oui",
+      "no": "Non"
+    },
+    "errors": {
+      "required": "Ce champ est requis",
+      "email_invalid": "Format d'adresse e-mail invalide",
+      "min_length": "Ce champ doit contenir au moins {min} caractères",
+      "password_mismatch": "Les mots de passe doivent être identiques",
+      "min": "La valeur minimale est {{ min }}.",
+      "inferieurToFrom": "Cette valeur doit être supérieure à la précédente.",
+      "inferieurTo0": "Cette valeur doit être positive."
+    },
+    "options": {
+      "yes": "Oui",
+      "no": "Non"
+    },
+    "actions": {
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "confirm": "Confirmer",
+      "confirm_delete": "Confirmer la suppression",
+      "next": "Suivant",
+      "previous": "Précédent",
+      "remove": "Supprimer",
+      "addIncompatible": "Ajouter / Modifier une incompatibilité"
+    }
+  },
+    "enums": {
+    "managementEntityLevel": {
+      "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché",
+      "COMPANY": "Compagnie",
+      "POINT_OF_SALE": "Point de vente"
+    },
+    "point_of_saleType": {
+      "GENERAL_AGENT": "Agent général",
+      "BROKER": "Courtier",
+      "DIRECT_OFFICE": "Bureau direct"
+    },
+    "linkedStatus": {
+      "true": "Lié",
+      "false": "Non lié"
+    }
+  },
+  "common": {
+    "search": "Rechercher",
+    "no_data": "Aucun résultat trouvé",
+    "no_data_description": "Aucune donnée disponible actuellement"
+  },
+  "notifications": {
+    "no_notifications": "Aucune notification",
+    "no_notifications_description": "Vous n'avez pas de notifications actuellement"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "description": "Vue d'ensemble de votre compte",
+    "seeMore": "Voir plus"
+  },
+  "home": {
+    "title": "Bienvenue",
+    "description": "Bienvenue sur Olive Insurance, veuillez choisir un module pour commencer"
+  },
+  "modules": {
+    "administration": {
+      "title": "Module Administration",
+      "description": "Gérer les produits, organisations, entreprises, points de vente, profils et utilisateurs.",
+      "features": {
+        "products": "Produits",
+        "products_description": "Gestion des produits disponibles.",
+        "market_level_organizations": "Organisations de niveau marché",
+        "market_level_organizations_description": "Gestion des entités de niveau marché.",
+        "companies": "Entreprises",
+        "companies_description": "Gestion des entreprises partenaires.",
+        "points_of_sale": "Points de vente",
+        "points_of_sale_description": "Gestion des points de vente affiliés.",
+        "profiles": "Profils",
+        "profiles_description": "Gestion des profils utilisateurs et des rôles.",
+        "users": "Utilisateurs",
+        "users_description": "Gestion des comptes utilisateurs."
+      }
+    },
+    "settings": {
+      "title": "Module Paramètrage Auto",
+      "description": "Configurer les garanties, durées et registres.",
+      "features": {
+        "coverages": "Garantie",
+        "coverages_description": "Gestion des types de garantie.",
+        "coverage_durations": "Durées de garantie",
+        "coverage_durations_description": "Définir les durées de garantie disponibles.",
+        "insured_registries": "Registres des assurés",
+        "insured_registries_description": "Consulter et gérer les assurés enregistrés.",
+        "production_registries": "Registres de production",
+        "production_registries_description": "Suivi des données de production.",
+        "closures": "Clôtures",
+        "closures_description": "Configurer les périodes de clôture."
+      }
+    },
+    "insureds": {
+      "title": "Module Assurés",
+      "description": "Gérer les informations des assurés."
+    },
+    "productions_auto": "Module Exploitation Auto",
+    "productions_auto_description": "Gérer les données de production.",
+    "attestations": {
+      "title": "Module Attestations",
+      "description": "Gérer les attestations et les demandes associées.",
+      "features": {
+        "attestations": "Attestations",
+        "attestations_description": "Consultation et gestion des attestations.",
+        "attestations_demands": "Demandes d'attestation",
+        "attestations_demands_description": "Suivi des demandes d'attestations.",
+        "market_level_organization": "Demande aux organisations",
+        "market_level_organization_description": "Création de demandes pour les organisations de niveau marché.",
+        "companies": "Demande aux entreprises",
+        "companies_demands_description": "Création de demandes pour les entreprises."
+      }
+    }
+  },
+  "user": {
+    "welcome": "Bienvenue",
+    "connected": "Connecté en tant que",
+    "logout": {
+      "title": "Déconnexion",
+      "description": "Voulez-vous vraiment vous déconnecter ?",
+      "redirecting": "Déconnexion en cours..."
+    }
+  },
+  "profiles": {
+    "descriptions": {
+      "COMPANY": { "COMPANY": "Administrateur de la compagnie", "POINT_OF_SALE": "Administrateur du point de vente" },
+      "POINT_OF_SALE": "Administrateur du point de vente",
+      "MARKET_LEVEL_ORGANIZATION": { "MARKET_LEVEL_ORGANIZATION": "Administrateur de l'organisation de niveau marché" }
+    }
+  },
+  "permissions": {
+    "columns": {
+      "description": "Permissions",
+      "module": "Module",
+      "levels" : {
+        "company": "Compagnie",
+        "point_of_sale": "Point de vente",
+        "market_level_organization": "Organisation de niveau marché"
+      },
+      "actions": "Actions"
+    },
+    "view_own_company_details": "Voir les détails de sa propre entreprise",
+    "update_own_company_details": "Modifier les détails de sa propre entreprise",
+    "view_products": "Voir les produits",
+    "create_products": "Créer des produits",
+    "update_products": "Modifier les produits",
+    "delete_products": "Supprimer des produits",
+    "affiliate_products": "Affilier des produits",
+    "view_company_level_organization": "Voir les organisations au niveau entreprise",
+    "create_company_level_organization": "Créer des organisations au niveau entreprise",
+    "update_company_level_organization": "Modifier les organisations au niveau entreprise",
+    "delete_company_level_organization": "Supprimer des organisations au niveau entreprise",
+    "view_points_of_sale": "Voir les points de vente",
+    "create_points_of_sale": "Créer des points de vente",
+    "update_points_of_sale": "Modifier les points de vente",
+    "delete_points_of_sale": "Supprimer des points de vente",
+    "view_brokers": "Voir les courtiers",
+    "view_market_level_organization": "Voir les organisations au niveau marché",
+    "view_user_company": "Voir les utilisateurs de l'entreprise",
+    "create_user_company": "Créer des utilisateurs pour l'entreprise",
+    "update_user_company": "Modifier les utilisateurs de l'entreprise",
+    "delete_user_company": "Supprimer des utilisateurs de l'entreprise",
+    "view_user_point_of_sale": "Voir les utilisateurs des points de vente",
+    "create_user_point_of_sale": "Créer des utilisateurs pour les points de vente",
+    "update_user_point_of_sale": "Modifier les utilisateurs des points de vente",
+    "delete_user_point_of_sale": "Supprimer des utilisateurs des points de vente",
+    "create_profile_company": "Créer des profils pour l'entreprise",
+    "update_profile_company": "Modifier des profils de l'entreprise",
+    "delete_profile_company": "Supprimer des profils de l'entreprise",
+    "create_profile_point_of_sale": "Créer des profils pour les points de vente",
+    "update_profile_point_of_sale": "Modifier des profils des points de vente",
+    "delete_profile_point_of_sale": "Supprimer des profils des points de vente",
+    "view_coverages": "Voir les garanties",
+    "create_coverages": "Créer des garanties",
+    "update_coverages": "Modifier des garanties",
+    "delete_coverages": "Supprimer des garanties",
+    "view_coverages_references": "Voir les références de garantie",
+    "create_coverage_durations": "Créer des durées de garantie",
+    "update_coverage_durations": "Modifier des durées de garantie",
+    "delete_coverage_durations": "Supprimer des durées de garantie",
+    "view_coverage_durations": "Voir les durées de garantie",
+    "create_insured_registries": "Créer des registres des assurés",
+    "update_insured_registries": "Modifier des registres des assurés",
+    "delete_insured_registries": "Supprimer des registres des assurés",
+    "view_insured_registries": "Voir les registres des assurés",
+    "create_production_registries": "Créer des registres de production",
+    "update_production_registries": "Modifier des registres de production",
+    "delete_production_registries": "Supprimer des registres de production",
+    "view_production_registries": "Voir les registres de production",
+    "create_closures": "Créer des clôtures",
+    "update_closures": "Modifier des clôtures",
+    "delete_closures": "Supprimer des clôtures",
+    "view_closures": "Voir les clôtures",
+    "view_attestations": "Voir les attestations",
+    "view_attestations_demands": "Voir les demandes d'attestation",
+    "create_attestations_demands": "Créer des demandes d'attestation",
+    "update_attestations_demands": "Modifier des demandes d'attestation",
+    "delete_attestations_demands": "Supprimer des demandes d'attestation",
+    "deliver_attestations": "Livrer des attestations",
+    "revoke_attestations": "Révoquer des attestations",
+    "view_own_markets": "Voir ses propres marchés",
+    "update_own_markets": "Modifier ses propres marchés",
+    "view_companies": "Voir les entreprises",
+    "view_linked_companies": "Voir les entreprises liées",
+    "distribute_attestations": "Distribuer des attestations",
+    "view_own_points_of_sale": "Voir ses propres points de vente",
+    "update_own_points_of_sale": "Modifier ses propres points de vente"
+  },  "product-selection": {
+    "title": "Sélectionner un produit",
+    "description": "Sélectionnez le produit que vous souhaitez gérer.",
+    "no-products": "Aucun produit pour l'instant",
+    "change": "Changer de produit"
+  },
+  "Common": {
+    "search": {
+      "placeholder": {
+        "entities": "Rechercher des entités...",
+        "users": "Rechercher des utilisateurs..."
+      }
+    },
+    "no-data": "Aucun résultat trouvé"
+  },
+  "entity": {
+    "select": {
+      "title": "Sélectionner une entité",
+      "description": "Sélectionnez l'entité à laquelle vous souhaitez accéder.",
+      "no-users": "Aucun utilisateur pour l'instant"
+    },
+    "actions": {
+      "add": "Ajouter / Modifier une entité",
+      "change": "Changer d'entité"
+    }
+  },
+  "select-module": {
+    "title": "Sélectionner un module"
+  }
+}

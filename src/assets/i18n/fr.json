@@ -203,6 +203,7 @@
     "taxes": {
       "title": "Taxes",
       "list": "Liste des taxes",
+      "base_taxes": "Base de calcul des taxes",
       "list_prime": "Taxes / Primes",
       "list_accessories": "Taxes / Accessoires",
       "regime_taxes": "Régimes Taxes",
@@ -212,7 +213,8 @@
       "title": "Commissions",
       "list_prime": "Commissions / Primes",
       "list_accessories": "Commissions / Accessoires",
-      "list": "Liste des commissions",
+      "taxes": "Commissions / Taxes",
+      "contributors": "Commissions / Apporteurs",
       "new": "Ajouter / Modifier une commission"
     }
   },

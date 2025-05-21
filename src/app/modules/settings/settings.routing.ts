@@ -46,5 +46,32 @@ export const routes: Routes = [
             permission: PERMISSIONS.VIEW_CLOSURES
         },
         loadChildren: () => import('./closures/closures.module').then(m => m.ClosuresModule)
+    },
+    {
+        path: 'taxes',
+        canActivate: [],
+        canActivateChild: [],
+        data: {
+            // permission: PERMISSIONS.VIEW_TAXES
+        },
+        loadChildren: () => import('./taxes/taxes.module').then(m => m.TaxesModule)
+    },
+    {
+        path: 'accessories',
+        canActivate: [],
+        canActivateChild: [],
+        data: {
+            // permission: PERMISSIONS.VIEW_ACCESSORIES
+        },
+        loadChildren: () => import('./accessories/accessories.module').then(m => m.AccessoriesModule)
+    },
+    {
+        path: 'commissions',
+        canActivate: [],
+        canActivateChild: [],
+        data: {
+            // permission: PERMISSIONS.VIEW_COMMISSIONS
+        },
+        loadChildren: () => import('./commissions/commissions.module').then(m => m.CommissionsModule)
     }
 ];
