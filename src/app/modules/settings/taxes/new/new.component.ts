@@ -1,48 +1,65 @@
-import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormBuilder, FormGroup, UntypedFormGroup, ValidatorFn, Validators } from "@angular/forms";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Product } from '@core/services/administration/product/product.interface';
+import { ProductService } from '@core/services/administration/product/product.service';
+import { TaxService } from '@core/services/settings/tax/tax.service';
 
 @Component({
-    selector: "app-closures-new",
-    templateUrl: "./new.component.html",
+  selector: 'app-tax-new',
+  templateUrl: './new.component.html'
 })
-export class TaxesNewComponent implements OnInit {
+export class TaxNewComponent implements OnInit {
+  formGroup!: UntypedFormGroup;
+  products: Product[] = [];
+  message: string = '';
 
-    formGroup!: UntypedFormGroup;
-    message: string = '';
+  /**
+   * [RGR5, RGR1, RGR2, RGR3, RGR4]
+   */
 
-    closureTypes = [
-        { value: 'CLOSURE_TYPE_1', label: 'Type 1' },
-        { value: 'CLOSURE_TYPE_2', label: 'Type 2' },
-    ];
+  rgrOptions = [
+    { value: 'RGR1', label: 'RGR1' },
+    { value: 'RGR2', label: 'RGR2' },
+    { value: 'RGR3', label: 'RGR3' },
+    { value: 'RGR4', label: 'RGR4' },
+    { value: 'RGR5', label: 'RGR5' }
+  ];
 
-    constructor(
-        private _formBuilder: FormBuilder,
-        private _closureService: ClosureService,
-    ) {}
+    /**
+     * [OTHER, TAX, FGA]
+     */
+  natureOptions = [
+    { value: 'OTHER', label: 'OTHER' },
+    { value: 'TAX', label: 'TAX' },
+    { value: 'FGA', label: 'FGA' }
+  ];
 
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _productService: ProductService,
+    private _taxService: TaxService
+  ) {}
 
-    ngOnInit(): void {
-        this.formGroup = this._formBuilder.group({
-            type: [null, Validators.required],
-            date: [null, [Validators.required, this.pastOrPresentValidator()]],
-            managementEntity: [null, Validators.required],
-            product: [null, Validators.required]
-          });
-          
+  ngOnInit(): void {
+    this.formGroup = this._formBuilder.group({
+      designation: ['', Validators.required],
+      rgr: [null, Validators.required],
+      nature: [null, Validators.required],
+      product: [null, Validators.required],
+      managementEntity: [''] // optionnel ou dynamique selon l'utilisateur connecté
+    });
+
+    this._productService.products$.subscribe((products) => {
+      this.products = products;
+    });
+  }
+
+  onSubmit(): void {
+    if (this.formGroup.valid) {
+      const data = this.formGroup.value;
+      this._taxService.create(data).subscribe(() => {
+        this.message = 'form.success.created';
+      });
     }
-
-    pastOrPresentValidator(): ValidatorFn {
-        return (control: AbstractControl) => {
-          const date = control.value;
-          return date && new Date(date) > new Date() ? { matDatepickerMax: true } : null;
-        };
-      }
-
-    onSubmit(): void {
-        if (this.formGroup.valid) {
-            // this._closureService.create(this.form.value).subscribe();
-        }
-    }
-
+  }
 }

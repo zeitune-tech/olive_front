@@ -56,9 +56,8 @@ export class CommissionService {
 
   getAll(): Observable<Commission[]> {
     return this._httpClient.get<Commission[]>(this.baseUrl).pipe(
-      tap((response: any) => {
-        this.commissions = response?.content || [];
-        this.metadata = response;
+      tap((response: Commission[]) => {
+        this.commissions = response;
         return response;
       }),
       catchError(() => of([] as Commission[]))

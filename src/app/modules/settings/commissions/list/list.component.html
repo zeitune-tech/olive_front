@@ -1,17 +1,16 @@
 <div class="w-full p-4" *transloco="let t;" tabindex="0">
     <div class="flex flex-col mb-6">
         <h1 class="text-2xl md:text-4xl font-bold py-4">
-            {{ t('entities.closure.table.title') }}
+            {{ t('entities.commission.table.title') }}
         </h1>
         <!-- Description -->
         <p class="text-sm md:text-base text-gray-600">
-            {{ t('entities.closure.table.description') }}
+            {{ t('entities.commission.table.description') }}
         </p>
     </div>
 
     <!-- Table -->
     <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
-    
         <!-- Image Column -->
         @let imageOptions = tableOptions.imageOptions;
         <ng-container matColumnDef="logo">
@@ -59,7 +58,7 @@
         <!-- No Data Row -->
         <tr *matNoDataRow>
             <td [attr.colspan]="count" class="text-center py-4">
-                {{ t('entities.closure.table.empty_state') }}
+                {{ t('entities.commission.table.empty_state') }}
             </td>
         </tr>
     </table>

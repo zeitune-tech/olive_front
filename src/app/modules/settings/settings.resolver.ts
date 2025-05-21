@@ -11,6 +11,13 @@ import { ProductionRegistryService } from '@core/services/settings/production-re
 import { IncompatibleCoverageService } from '@core/services/settings/incompatible-coverage/incompatible-coverage.service';
 import { CoverageDuration } from '@core/services/settings/coverage-duration/coverage-duration.interface';
 import { CoverageDurationService } from '@core/services/settings/coverage-duration/coverage-duration.service';
+import { AccessoryService } from '@core/services/settings/accessory/accessory.service';
+import { BaseTaxService } from '@core/services/settings/base-tax/base-tax.service';
+import { TaxService } from '@core/services/settings/tax/tax.service';
+import { TaxRegimeService } from '@core/services/settings/tax-regime/tax-regime.service';
+import { CommissionService } from '@core/services/settings/commission/commission.service';
+import { CommissionContributorService } from './../../core/services/settings/commission-contributor/commission-contributor.service';
+import { CommissionTaxService } from '@core/services/settings/commission-tax/commission-tax.service';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +34,14 @@ export class SettingsResolver implements Resolve<any> {
         private _incompatibleCoverageService: IncompatibleCoverageService,
         private _productionRegistryService: ProductionRegistryService,
         private _insuredRegistryService: InsuredRegistryService,
-        private _coverageDurationService: CoverageDurationService
+        private _coverageDurationService: CoverageDurationService,
+        private _accessoryService: AccessoryService,
+        private _baseTaxService: BaseTaxService,
+        private _taxService: TaxService,
+        private _taxRegimeService: TaxRegimeService,
+        private _commissionService: CommissionService,
+        private _commissionContributorService: CommissionContributorService,
+        private _commissionTaxService: CommissionTaxService
     ) {
      
     }
@@ -67,7 +81,35 @@ export class SettingsResolver implements Resolve<any> {
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COVERAGE_DURATIONS)) {
             resolList.push(this._coverageDurationService.getAll());
         }
-       
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_ACCESSORIES)) {
+            resolList.push(this._accessoryService.getAll());
+        // }
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_BASE_TAXES)) {
+            resolList.push(this._baseTaxService.getAll());
+        // }
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_TAXES)) {
+            resolList.push(this._taxService.getAll());
+        // }
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_TAX_REGIMES)) {
+            resolList.push(this._taxRegimeService.getAll());
+        // }
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COMMISSION)) {
+            resolList.push(this._commissionService.getAll());
+        // }
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COMMISSION_CONTRIBUTORS)) {
+            resolList.push(this._commissionContributorService.getAll());
+        // }
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_USERS)) {
+            resolList.push(this._commissionTaxService.getAll());
+        //}
+
         return forkJoin(resolList);
     }
 }

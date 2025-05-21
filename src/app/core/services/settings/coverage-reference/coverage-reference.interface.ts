@@ -1,4 +1,5 @@
 export class CoverageReference {
+    id: string;
     designation: string;
     family: string;
     accessCharacteristic: boolean;
@@ -6,6 +7,7 @@ export class CoverageReference {
     managementEntity: string;
   
     constructor(coverageReference: any) {
+      this.id = coverageReference.id || '';
       this.designation = coverageReference.designation || '';
       this.family = coverageReference.family || '';
       this.accessCharacteristic = coverageReference.accessCharacteristic ?? false;

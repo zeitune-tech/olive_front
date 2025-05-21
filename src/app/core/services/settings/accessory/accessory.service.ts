@@ -56,9 +56,8 @@ export class AccessoryService {
 
   getAll(): Observable<Accessory[]> {
     return this._httpClient.get<Accessory[]>(this.baseUrl).pipe(
-      tap((response: any) => {
-        this.accessories = response?.content || [];
-        this.metadata = response;
+      tap((response: Accessory[]) => {
+        this.accessories = response;
         return response;
       }),
       catchError(() => of([] as Accessory[]))

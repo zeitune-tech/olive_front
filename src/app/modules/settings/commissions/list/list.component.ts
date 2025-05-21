@@ -5,8 +5,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Closure } from "@core/services/settings/closure/closure.interface";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { Commission } from "@core/services/settings/commission/commission.interface";
+import { CommissionService } from "@core/services/settings/commission/commission.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -16,18 +16,20 @@ import { Subject, takeUntil } from "rxjs";
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class AccessoriesListComponent {
+export class CommissionListComponent {
 
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Closure> = {
+    tableOptions: TableOptions<Commission> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.commission.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
+            { label: 'entities.commission.fields.calculationBase', property: 'calculationBase', type: 'text', visible: true },
+            { label: 'entities.commission.fields.managementRate', property: 'managementRate', type: 'text', visible: true },
+            { label: 'entities.commission.fields.contributionRate', property: 'contributionRate', type: 'text', visible: true },
+            { label: 'entities.commission.fields.pointOfSale', property: 'pointOfSale', type: 'text', visible: true },
+            { label: 'entities.commission.fields.product', property: 'product', type: 'text', visible: true }
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -39,30 +41,30 @@ export class AccessoriesListComponent {
         actions: [
 
         ],
-        renderItem: (element: Closure, property: keyof Closure) => {
+        renderItem: (element: Commission, property: keyof Commission) => {
 
             return element[property];
         },
     };
-    data: Closure[] = [];
+    data: Commission[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Closure> = new MatTableDataSource();
-    selection = new SelectionModel<Closure>(true, []);
+    dataSource: MatTableDataSource<Commission> = new MatTableDataSource();
+    selection = new SelectionModel<Commission>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private dclosureService: ClosureService,
+        private _commisionService: CommissionService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
-        this.dclosureService.closures$
+        this._commisionService.commissions$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Closure[]) => {
+            .subscribe((data: Commission[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -83,9 +85,9 @@ export class AccessoriesListComponent {
     }
 
     /**
-        * Edit Closure Closure
+        * Edit Commission Commission
         */
-    onDemand(item: Closure | null): void {
+    onDemand(item: Commission | null): void {
 
     }
 
@@ -95,7 +97,7 @@ export class AccessoriesListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Closure>) {
+    trackByProperty(index: number, column: TableColumn<Commission>) {
         return column.property;
     }
 }

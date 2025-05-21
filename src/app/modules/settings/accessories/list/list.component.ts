@@ -24,7 +24,10 @@ export class AccessoriesListComponent {
     tableOptions: TableOptions<Accessory> = {
         title: '',
         columns: [
-            
+            { label: 'entities.accessory.fields.dateEffective', property: 'dateEffective', visible: true, type: 'text' },
+            { label: 'entities.accessory.fields.actType', property: 'actType', visible: true, type: 'text' },
+            { label: 'entities.accessory.fields.product', property: 'product', visible: true, type: 'text' },
+
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -37,6 +40,10 @@ export class AccessoriesListComponent {
 
         ],
         renderItem: (element: Accessory, property: keyof Accessory) => {
+
+            if (property === 'product') {
+                return element.product?.name;
+            }
 
             return element[property];
         },

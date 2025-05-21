@@ -56,9 +56,8 @@ export class BaseTaxService {
 
   getAll(): Observable<BaseTax[]> {
     return this._httpClient.get<BaseTax[]>(this.baseUrl).pipe(
-      tap((response: any) => {
-        this.baseTaxes = response?.content || [];
-        this.metadata = response;
+      tap((response: BaseTax[]) => {
+        this.baseTaxes = response;
         return response;
       }),
       catchError(() => of([] as BaseTax[]))

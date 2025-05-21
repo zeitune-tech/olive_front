@@ -3,16 +3,17 @@ import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Closure } from "@core/services/settings/closure/closure.interface";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { BaseTax } from "@core/services/settings/base-tax/base-tax.interface";
+import { BaseTaxService } from "@core/services/settings/base-tax/base-tax.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
-    selector: "app-closures-list",
+    selector: "app-basetax-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
@@ -21,16 +22,20 @@ export class BaseTaxesListComponent {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Closure> = {
+    tableOptions: TableOptions<BaseTax> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.base_tax.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.calculationBase', property: 'calculationBase', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.rate', property: 'rate', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.fixedAmount', property: 'fixedAmount', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.tax', property: 'tax', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.coverage', property: 'coverage', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.isFlat', property: 'isFlat', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.product', property: 'product', type: 'text', visible: true }
         ],
         imageOptions: {
-            label: 'closure.columns.logo',
+            label: 'base_taxes.columns.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },
@@ -39,30 +44,44 @@ export class BaseTaxesListComponent {
         actions: [
 
         ],
-        renderItem: (element: Closure, property: keyof Closure) => {
+        renderItem: (element: BaseTax, property: keyof BaseTax) => {
 
+            if (property === 'tax') {
+                return element.tax?.designation;
+            }
+
+            if (property === 'coverage') {
+                return element.coverage?.designation
+            }
+
+            if (property === 'product') {
+                return element.product?.name
+            }
+
+          
             return element[property];
         },
     };
-    data: Closure[] = [];
+    data: BaseTax[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Closure> = new MatTableDataSource();
-    selection = new SelectionModel<Closure>(true, []);
+    dataSource: MatTableDataSource<BaseTax> = new MatTableDataSource();
+    selection = new SelectionModel<BaseTax>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private dclosureService: ClosureService,
-        private _dialog: MatDialog
+        private _baseTaxService: BaseTaxService,
+        private _dialog: MatDialog,
+        private _snackBar: MatSnackBar
     ) { }
 
     ngOnInit(): void {
-        this.dclosureService.closures$
+        this._baseTaxService.baseTaxes$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Closure[]) => {
+            .subscribe((data: BaseTax[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -82,12 +101,16 @@ export class BaseTaxesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Closure Closure
-        */
-    onDemand(item: Closure | null): void {
 
+    refreshBaseTaxList(): void {
+        this._baseTaxService.getAll().subscribe((data: BaseTax[]) => {
+            this.data = data;
+            this.dataSource.data = data;
+            this._changeDetectorRef.detectChanges();
+        });
     }
+
+
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
@@ -95,7 +118,7 @@ export class BaseTaxesListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Closure>) {
+    trackByProperty(index: number, column: TableColumn<BaseTax>) {
         return column.property;
     }
 }

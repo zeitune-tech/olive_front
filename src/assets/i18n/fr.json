@@ -581,6 +581,23 @@
         }
       }
     },
+    "tax_regime": {
+      "table": {
+        "title": "Régimes de taxe"
+      },
+      "form": {
+        "title": "Créer un régime de taxe",
+        "subtitle": "Veuillez renseigner les informations du régime.",
+        "description": "Créez ou modifiez les informations de base du régime de taxe."
+      },
+      "fields": {
+          "designation": "Désignation",
+          "nature": "Nature",
+          "stampExemption": "Exonération de timbre",
+          "exemptedTaxes": "Taxes exonérées",
+          "managementEntity":"Entité de gestion"
+        }
+    },
     "commission": {
       "label": "Commission",
       "description": "Définition des commissions de gestion et d’apport.",
@@ -642,6 +659,19 @@
         }
       }
     },
+    "commission_tax": {
+      "form": {
+        "title": "Taxe de commission",
+        "subtitle": "Veuillez remplir les champs requis"
+      },
+      "fields": {
+        "dateEffective": "Date d'effet",
+        "commissionTaxType": "Type de taxe",
+        "rate": "Taux (%)",
+        "pointOfSale": "Point de vente",
+        "product": "Produit"
+      }
+    },
     "duration_rate": {
       "label": "Taux de durée",
       "description": "Définition des taux appliqués aux différentes durées de couverture.",
@@ -701,7 +731,7 @@
       }
     }
   },
-    "auth": {
+  "auth": {
     "sign_in": {
       "title": "Se connecter",
       "subtitle": "Connectez-vous à votre compte",
@@ -879,15 +909,18 @@
       "base_taxes": "Base de calcul des taxes",
       "list_prime": "Taxes / Primes",
       "list_accessories": "Taxes / Accessoires",
-      "regime_taxes": "Régimes Taxes",
+      "tax_regime": "Régimes Taxes",
+      "tax_regime_new": "Ajouter / Modifier un régime de taxe",
+      "base_taxes_new": "Ajouter / Modifier une base de Calcul",
       "new": "Ajouter / Modifier une taxe"
     },
     "commissions": {
       "title": "Commissions",
-      "list_prime": "Commissions / Primes",
-      "list_accessories": "Commissions / Accessoires",
+      "list": "Liste des commissions",
       "taxes": "Commissions / Taxes",
+      "taxes_new": "Ajouter / Modifier une Commission / Taxe",
       "contributors": "Commissions / Apporteurs",
+      "contributors_new": "Ajouter / Modifier une Commission / Apporteur",
       "new": "Ajouter / Modifier une commission"
     }
   },
@@ -924,7 +957,7 @@
       "addIncompatible": "Ajouter / Modifier une incompatibilité"
     }
   },
-    "enums": {
+  "enums": {
     "managementEntityLevel": {
       "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché",
       "COMPANY": "Compagnie",
@@ -1025,16 +1058,21 @@
   },
   "profiles": {
     "descriptions": {
-      "COMPANY": { "COMPANY": "Administrateur de la compagnie", "POINT_OF_SALE": "Administrateur du point de vente" },
+      "COMPANY": {
+        "COMPANY": "Administrateur de la compagnie",
+        "POINT_OF_SALE": "Administrateur du point de vente"
+      },
       "POINT_OF_SALE": "Administrateur du point de vente",
-      "MARKET_LEVEL_ORGANIZATION": { "MARKET_LEVEL_ORGANIZATION": "Administrateur de l'organisation de niveau marché" }
+      "MARKET_LEVEL_ORGANIZATION": {
+        "MARKET_LEVEL_ORGANIZATION": "Administrateur de l'organisation de niveau marché"
+      }
     }
   },
   "permissions": {
     "columns": {
       "description": "Permissions",
       "module": "Module",
-      "levels" : {
+      "levels": {
         "company": "Compagnie",
         "point_of_sale": "Point de vente",
         "market_level_organization": "Organisation de niveau marché"
@@ -1107,7 +1145,8 @@
     "distribute_attestations": "Distribuer des attestations",
     "view_own_points_of_sale": "Voir ses propres points de vente",
     "update_own_points_of_sale": "Modifier ses propres points de vente"
-  },  "product-selection": {
+  },
+  "product-selection": {
     "title": "Sélectionner un produit",
     "description": "Sélectionnez le produit que vous souhaitez gérer.",
     "no-products": "Aucun produit pour l'instant",
