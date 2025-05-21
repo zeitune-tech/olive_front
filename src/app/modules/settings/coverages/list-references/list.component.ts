@@ -27,10 +27,10 @@ export class CoverageReferenceListComponent {
     tableOptions: TableOptions<CoverageReference> = {
         title: '',
         columns: [
-            { label: 'entities.coverage_reference.table.columns.designation', property: 'designation', type: 'text', visible: true },
-            { label: 'entities.coverage_reference.table.columns.family', property: 'family', type: 'text', visible: true },
-            { label: 'entities.coverage_reference.table.columns.accessCharacteristic', property: 'accessCharacteristic', type: 'text', visible: true },
-            { label: 'entities.coverage_reference.table.columns.tariffAccess', property: 'tariffAccess', type: 'text', visible: true },
+            { label: 'entities.coverage_reference.fields.designation', property: 'designation', type: 'text', visible: true },
+            { label: 'entities.coverage_reference.fields.family', property: 'family', type: 'text', visible: true },
+            { label: 'entities.coverage_reference.fields.accessCharacteristic', property: 'accessCharacteristic', type: 'text', visible: true },
+            { label: 'entities.coverage_reference.fields.tariffAccess', property: 'tariffAccess', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
