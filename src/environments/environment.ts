@@ -7,6 +7,7 @@ export const environment = {
   administration_url: "http://192.168.1.17:8020/api/v1/app",
   settings_url: "http://192.168.1.17:8030/api/v1/app",
   attestations_url: "http://192.168.1.17:8040/api/v1/app",
+  insured_url: "http://192.168.1.17:8050/api/v1/app",
   production: false
 };
 

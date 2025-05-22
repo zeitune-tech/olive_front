@@ -12,6 +12,7 @@ import { AdministrationResolver } from './modules/admin/admin.resolver';
 import { resolve } from 'path';
 import { SettingsResolver } from './modules/settings/settings.resolver';
 import { AttestationsResolver } from './modules/attestations/attestations.resolver';
+import { InsuredResolver } from './modules/insured/insured.resolver';
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy       : PreloadAllModules,
@@ -103,6 +104,18 @@ const routes: Routes = [
                     AttestationsResolver
                 },
                 loadChildren: () => import('./modules/attestations/attestations.module').then(m => m.AttestationsModule)
+            },
+            {
+                path: 'insured',
+                canActivate: [],
+                canActivateChild: [],
+                data: {
+                    // permission: PERMISSIONS.VIEW_INSUREDS
+                },
+                resolve: {
+                    InsuredResolver
+                },
+                loadChildren: () => import('./modules/insured/insured.module').then(m => m.InsuredModule)
             },
             
             // 404 & Catch all

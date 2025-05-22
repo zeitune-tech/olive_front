@@ -316,6 +316,7 @@ export const defaultSettingsNavigation: NavigationItem[] = [
         ]
     },
 ];
+
 export const compactSettingsNavigation: NavigationItem[] = [
     {
         id: 'coverages',

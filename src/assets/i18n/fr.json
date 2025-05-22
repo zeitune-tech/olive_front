@@ -591,12 +591,12 @@
         "description": "Créez ou modifiez les informations de base du régime de taxe."
       },
       "fields": {
-          "designation": "Désignation",
-          "nature": "Nature",
-          "stampExemption": "Exonération de timbre",
-          "exemptedTaxes": "Taxes exonérées",
-          "managementEntity":"Entité de gestion"
-        }
+        "designation": "Désignation",
+        "nature": "Nature",
+        "stampExemption": "Exonération de timbre",
+        "exemptedTaxes": "Taxes exonérées",
+        "managementEntity": "Entité de gestion"
+      }
     },
     "commission": {
       "label": "Commission",
@@ -728,6 +728,59 @@
           "VARIABLE": "Taux variable",
           "HYBRID": "Mixte"
         }
+      }
+    },
+    "insured": {
+      "table": {
+        "title": "Assurés"
+      },
+      "form": {
+        "subtitle": "Créer un nouvel assuré"
+      },
+      "fields": {
+        "lastName": "Nom",
+        "firstName": "Prénom",
+        "birthDate": "Date de naissance",
+        "gender": "Sexe",
+        "maritalStatus": "Situation familiale",
+        "address": "Adresse",
+        "city": "Ville",
+        "postalCode": "Code postal",
+        "email": "Adresse e-mail",
+        "phone": "Téléphone",
+        "licenseNumber": "Numéro de permis",
+        "licenseIssueDate": "Date de délivrance du permis",
+        "licenseCategory": "Catégorie de permis",
+        "registrationDate": "Date d'enregistrement",
+        "profession": "Profession",
+        "employmentStatus": "Statut professionnel"
+      }
+    },
+    "vehicle": {
+      "table": {
+        "title": "Véhicules"
+      },
+      "form": {
+        "subtitle": "Ajouter un nouveau véhicule"
+      },
+      "fields": {
+        "licensePlate": "Immatriculation",
+        "brand": "Marque",
+        "model": "Modèle",
+        "fuelType": "Type de carburant",
+        "gearboxType": "Type de boîte",
+        "fiscalPower": "Puissance fiscale",
+        "realPower": "Puissance réelle",
+        "seatingCapacity": "Nombre de places",
+        "firstRegistrationDate": "Date de première mise en circulation",
+        "initialValue": "Valeur à neuf",
+        "currentValue": "Valeur actuelle",
+        "vin": "Numéro de châssis (VIN)",
+        "vehicleUsage": "Usage du véhicule",
+        "vehicleType": "Type de véhicule",
+        "mileage": "Kilométrage",
+        "usualParkingLocation": "Lieu de stationnement habituel",
+        "insured": "Assuré"
       }
     }
   },
@@ -1027,8 +1080,18 @@
       }
     },
     "insureds": {
-      "title": "Module Assurés",
-      "description": "Gérer les informations des assurés."
+      "title": "Gestion des assurés",
+      "description": "Gérer les assurés et leurs véhicules",
+      "features": {
+        "insureds": "Liste des assurés",
+        "insureds_description": "Consulter et gérer les assurés",
+        "insureds_create": "Nouvel assuré",
+        "insureds_create_description": "Créer un nouveau dossier assuré",
+        "vehicles": "Liste des véhicules",
+        "vehicles_description": "Consulter et gérer les véhicules assurés",
+        "vehicles_create": "Nouveau véhicule",
+        "vehicles_create_description": "Ajouter un véhicule pour un assuré"
+      }
     },
     "productions_auto": "Module Exploitation Auto",
     "productions_auto_description": "Gérer les données de production.",
