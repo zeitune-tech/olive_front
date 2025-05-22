@@ -7,7 +7,7 @@
     <div class="flex flex-col gap-4">
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('entities.user.form.fields.profile.label') }}
+                {{ t('entities.user.fields.profile') }}
             </mat-label>
             <mat-select [multiple]="true" [formControlName]="'profiles'">
                 <mat-option *ngFor="let profile of filteredProfiles" [value]="profile">

@@ -23,18 +23,18 @@ export class LinkedMarketLevelOrganizationListComponent {
     tableOptions: TableOptions<MarketLevelOrganization> = {
         title: '',
         columns: [
-            { label: 'entities.management_entity.table.columns.logo', property: 'logo', type: 'image', visible: true },
-            { label: 'entities.management_entity.table.columns.name', property: 'name', type: 'text', visible: true},
-            { label: 'entities.management_entity.table.columns.email', property: 'email', type: 'text', visible: true},
-            { label: 'entities.management_entity.table.columns.phone', property: 'phone', type: 'text', visible: true},
-            { label: 'entities.management_entity.table.columns.address', property: 'address', type: 'text', visible: true},
+            { label: 'entities.management_entity.fields.logo', property: 'logo', type: 'image', visible: true },
+            { label: 'entities.management_entity.fields.name', property: 'name', type: 'text', visible: true},
+            { label: 'entities.management_entity.fields.email', property: 'email', type: 'text', visible: true},
+            { label: 'entities.management_entity.fields.phone', property: 'phone', type: 'text', visible: true},
+            { label: 'entities.management_entity.fields.address', property: 'address', type: 'text', visible: true},
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
         ],
         imageOptions: {
-            label: 'entities.management_entity.table.columns.logo',
+            label: 'entities.management_entity.fields.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },

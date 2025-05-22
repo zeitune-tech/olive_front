@@ -24,22 +24,22 @@ export class PointsOfSaleListComponent {
     tableOptions: TableOptions<PointOfSale> = {
         title: '',
         columns: [
-            { label: 'entities.point_of_sale.table.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'entities.point_of_sale.table.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'entities.point_of_sale.table.columns.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'entities.point_of_sale.table.columns.address', property: 'address', type: 'text', visible: true },
-            { label: 'entities.point_of_sale.table.columns.type', property: 'type', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.phone', property: 'phone', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.address', property: 'address', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.type', property: 'typePointOfSale', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
-            { label: 'entities.point_of_sale.table.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'entities.point_of_sale.table.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) },
-            { label: 'entities.point_of_sale.table.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
+            { label: 'entities.point_of_sale.fields.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
+            { label: 'entities.point_of_sale.fields.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) },
+            { label: 'entities.point_of_sale.fields.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
         ],
         renderItem: (element: PointOfSale, property: keyof PointOfSale) => {
-            if (property === 'type') {
-                return this._translateService.translate(`entities.point_of_sale.table.types.${element[property]?.toLocaleLowerCase()}`);
+            if (property === 'typePointOfSale') {
+                return this._translateService.translate(`entities.point_of_sale.options.type.${element[property]}`);
             }
             return element[property];
         },

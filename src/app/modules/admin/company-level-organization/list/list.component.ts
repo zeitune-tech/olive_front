@@ -24,8 +24,8 @@ export class CompanyLevelOrganizationListComponent {
     tableOptions: TableOptions<CompanyLevelOrganization> = {
         title: '',
         columns: [
-            { label: 'entities.company_level_organization.table.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'entities.company_level_organization.table.columns.points_of_sale_count', property: 'pointsOfSale', type: 'text', visible: true },
+            { label: 'entities.company_level_organization.fields.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.company_level_organization.fields.points_of_sale_count', property: 'pointsOfSale', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],

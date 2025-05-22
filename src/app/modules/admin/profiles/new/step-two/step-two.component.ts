@@ -27,7 +27,7 @@ export class ProfilesNewStepTwoComponent {
         title: '',
         columns: [
             { label: 'permissions.columns.description', property: 'description', type: 'text', visible: true },
-            { label: 'permissions.columns.level', property: 'level', type: 'text', visible: true },
+            { label: 'permissions.columns.levels.level', property: 'level', type: 'text', visible: true },
             { label: 'permissions.columns.module', property: 'module', type: 'text', visible: true },
         ],
         pageSize: 8,

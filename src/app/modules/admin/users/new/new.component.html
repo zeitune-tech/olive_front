@@ -17,10 +17,10 @@
                 <!-- Informations personnelles -->
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('entities.user.form.step_one_title') }}
+                        {{ t('entities.user.form.steps.step_one_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('entities.user.form.step_one_description') }}
+                        {{ t('entities.user.form.steps.step_one_description') }}
                     </div>
                 </div>
             </ng-template>
@@ -31,10 +31,10 @@
                 <ng-template matStepLabel>
                     <div class="flex flex-col items-start">
                         <div class="text-lg font-semibold">
-                            {{ t('entities.user.form.step_two_title') }}
+                            {{ t('entities.user.form.steps.step_two_title') }}
                         </div>
                         <div class="text-sm text-gray-500">
-                            {{ t('entities.user.form.step_two_description') }}
+                            {{ t('entities.user.form.steps.step_two_description') }}
                         </div>
                     </div>
                 </ng-template>
@@ -45,10 +45,10 @@
                     <ng-template matStepLabel>
                         <div class="flex flex-col items-start">
                             <div class="text-lg font-semibold">
-                                {{ t('entities.user.form.step_three_title') }}
+                                {{ t('entities.user.form.steps.step_three_title') }}
                             </div>
                             <div class="text-sm text-gray-500">
-                                {{ t('entities.user.form.step_three_description') }}
+                                {{ t('entities.user.form.steps.step_three_description') }}
                             </div>
                         </div>
                     </ng-template>
@@ -60,10 +60,10 @@
             <ng-template matStepLabel>
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('entities.user.form.step_four_title') }}
+                        {{ t('entities.user.form.steps.step_four_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('entities.user.form.step_four_description') }}
+                        {{ t('entities.user.form.steps.step_four_description') }}
                     </div>
                 </div>
             </ng-template>
@@ -73,28 +73,28 @@
             <ng-template matStepLabel>
                 <div class="flex flex-col items-start">
                     <div class="text-lg font-semibold">
-                        {{ t('entities.user.form.step_five_title') }}
+                        {{ t('entities.user.form.steps.step_five_title') }}
                     </div>
                     <div class="text-sm text-gray-500">
-                        {{ t('entities.user.form.step_five_description') }}
+                        {{ t('entities.user.form.steps.step_five_description') }}
                     </div>
                 </div>
             </ng-template>
             <div class="flex flex-col gap-4 py-4">
                 <div class="text-lg font-semibold">
-                    {{t('entities.user.form.step_five_summary')}}
+                    {{t('entities.user.form.steps.step_five_summary')}}
                 </div>
                 <div class="flex flex-col gap-2">
                     <div class="flex gap-6">
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('entities.user.form.step_five_name')}}
+                                {{t('entities.user.form.steps.step_five_name')}}
                             </div>
                             <div>{{ data.lastName }}</div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('entities.user.form.step_five_firstname')}}
+                                {{t('entities.user.form.steps.step_five_firstname')}}
                             </div>
                             <div>{{ data.firstName }}</div>
                         </div>
@@ -102,26 +102,26 @@
                     <div class="flex gap-6">
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('entities.user.form.step_five_email')}}
+                                {{t('entities.user.form.steps.step_five_email')}}
                             </div>
                             <div>{{ data.email }}</div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('entities.user.form.step_five_phone')}}
+                                {{t('entities.user.form.steps.step_five_phone')}}
                             </div>
                             <div>{{ data.phone }}</div>
                         </div>
                     </div>
                 </div>
                 <div class="text-lg font-semibold">
-                    {{t('entities.user.form.step_five_profile')}}
+                    {{t('entities.user.form.steps.step_five_profile')}}
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <div class="flex gap-6">
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('entities.user.form.step_five_profile_name')}}
+                                {{t('entities.user.form.steps.step_five_profile_name')}}
                             </div>
                             <!-- Profiles -->
                             <span *ngFor="let profile of data.profiles" class="text-sm mr-2">
@@ -130,7 +130,7 @@
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="text-sm font-semibold">
-                                {{t('entities.user.form.step_five_profile_description')}}
+                                {{t('entities.user.form.steps.step_five_profile_description')}}
                             </div>
                             <div>{{ data.managementEntityName }}</div>
                         </div>
@@ -139,10 +139,10 @@
             </div>
             <div class="flex justify-end gap-4">
                 <button mat-button matStepperPrevious class="mat-button-large mt-6" mat-flat-button [color]="'primary'">
-                    {{t('entities.user.form.step_five_previous')}}
+                    {{t('entities.user.form.steps.step_five_previous')}}
                 </button>
                 <button mat-button class="mat-button-large mt-6" mat-flat-button [color]="'primary'" (click)="save()">
-                    {{t('entities.user.form.step_five_confirm')}}
+                    {{t('entities.user.form.steps.step_five_confirm')}}
                 </button>
             </div>
         </mat-step>

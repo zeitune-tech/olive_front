@@ -190,7 +190,12 @@
           "step_two_description": "Sélectionnez les garanties à associer au produit.",
           "step_three_title": "Résumé & confirmation",
           "step_three_description": "Vérifiez les détails du produit avant la création.",
-          "step_three_summary": "Résumé du produit"
+          "step_three_summary": "Résumé du produit",
+          "step_three_name": "Nom du produit",
+          "step_three_description_2": "Description du produit",
+          "step_three_coverages": "Garanties associées",
+          "step_three_previous": "Précédent",
+          "step_three_create": "Créer"
         }
       },
       "table": {
@@ -344,9 +349,9 @@
         "description": "Créez ou modifiez les détails des points de vente."
       },
       "table": {
-        "title": "Organisations niveau compagnie",
-        "subtitle": "Gérer les groupes organisationnels",
-        "description": "Liste et gestion des organisations niveau compagnie.",
+        "title": "Points de vente",
+        "subtitle": "Gérer les points de vente",
+        "description": "Liste et gestion des points de vente.",
         "empty_state": "Aucun point de vente trouvé"
       },
       "fields": {
@@ -356,7 +361,10 @@
         "address": "Adresse",
         "type": "Type",
         "linked": "Lié",
-        "actions": "Actions"
+        "actions": {
+          "edit": "Modifier",
+          "delete": "Supprimer"
+        }
       },
       "options": {
         "type": {
@@ -367,7 +375,7 @@
       },
       "subsections": {
         "broker_list_title": "Liste des courtiers",
-        "broker_list_description": "Liste des courtiers"
+        "broker_list_description": "Liste et gestion des courtiers"
       }
     },
     "user": {
@@ -403,7 +411,7 @@
       "table": {
         "title": "Liste des utilisateurs",
         "subtitle": "Gérer les utilisateurs du système",
-        "description": "Liste de tous les utilisateurs enregistrés dans le système.",
+        "description": "Liste de tous les utilisateurs de la compagnie.",
         "empty_state": "Aucun utilisateur trouvé"
       },
       "fields": {
@@ -1035,6 +1043,7 @@
       "description": "Permissions",
       "module": "Module",
       "levels" : {
+        "level": "Niveau d'entité",
         "company": "Compagnie",
         "point_of_sale": "Point de vente",
         "market_level_organization": "Organisation de niveau marché"
@@ -1135,5 +1144,11 @@
   },
   "select-module": {
     "title": "Sélectionner un module"
+  },
+  "message" : {
+    "success": "Opération réussie",
+    "error": "Une erreur s'est produite",
+    "warning": "Avertissement",
+    "info": "Information"
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { EntitySuperiorService } from '@core/services/entity-superior/entity-superior.service';
-import { forkJoin, map, Observable } from 'rxjs';
+import { MarketLevelOrganizationService } from '@core/services/administration/market-level-organization/market-level-organization.service';
+import { forkJoin, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: "root"
@@ -9,7 +9,7 @@ import { forkJoin, map, Observable } from 'rxjs';
 export class EntitiesSuperiorResolver implements Resolve<any> { 
 
     constructor(
-        private _entitySuperiorService: EntitySuperiorService
+        private _marketLevelService: MarketLevelOrganizationService
     ) { }
 
     resolve(
@@ -17,8 +17,8 @@ export class EntitiesSuperiorResolver implements Resolve<any> {
         state: RouterStateSnapshot
     ): Observable<any> {
         return forkJoin([
-            this._entitySuperiorService.getEntitiesSuperiorLinked(),
-            this._entitySuperiorService.getEntitiesSuperior()
+            this._marketLevelService.getLinked(),
+            this._marketLevelService.getAll()
         ])
     }
 }

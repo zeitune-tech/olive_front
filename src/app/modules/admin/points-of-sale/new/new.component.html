@@ -27,7 +27,7 @@
         <div class="space-y-6 mt-4">
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('entities.point_of_sale.form.fields.name.label') }}
+                    {{ t('entities.point_of_sale.fields.name') }}
                 </mat-label>
                 <input
                     id="name"
@@ -39,7 +39,7 @@
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('entities.point_of_sale.form.fields.type.label') }}
+                    {{ t('entities.point_of_sale.fields.type') }}
                 </mat-label>
                 <mat-select [formControlName]="'typePointOfSale'">
                     <mat-option *ngFor="let type of types" [value]="type.value">
@@ -49,7 +49,7 @@
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('entities.point_of_sale.form.fields.email.label') }}
+                    {{ t('entities.point_of_sale.fields.email') }}
                 </mat-label>
                 <input
                     id="email"
@@ -64,7 +64,7 @@
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('entities.point_of_sale.form.fields.phone.label') }}
+                    {{ t('entities.point_of_sale.fields.phone') }}
                 </mat-label>
                 <input
                     id="phone"
@@ -73,7 +73,7 @@
             </mat-form-field>
             <mat-form-field class="w-full" appearance="outline">
                 <mat-label>
-                    {{ t('entities.point_of_sale.form.fields.address.label') }}
+                    {{ t('entities.point_of_sale.fields.address') }}
                 </mat-label>
                 <input
                     id="address"

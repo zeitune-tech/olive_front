@@ -1,4 +1,4 @@
-import { ManagementEntity } from "../administration/management-entity/management-entity.interface";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 
 
 export class Restriction {

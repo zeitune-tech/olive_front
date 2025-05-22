@@ -23,13 +23,13 @@ export class ProfilesListComponent {
     tableOptions: TableOptions<Profile> = {
         title: '',
         columns: [
-            { label: 'entities.profile.table.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'entities.profile.table.columns.description', property: 'description', type: 'text', visible: true },
-            { label: 'entities.profile.table.columns.level', property: 'level', type: 'text', visible: true },
-            { label: 'entities.profile.table.columns.permissions_count', property: 'permissions', type: 'text', visible: true },
+            { label: 'entities.profile.fields.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.profile.fields.description', property: 'description', type: 'text', visible: true },
+            { label: 'entities.profile.fields.level', property: 'level', type: 'text', visible: true },
+            { label: 'entities.profile.fields.permissions_count', property: 'permissions', type: 'text', visible: true },
         ],
         imageOptions: {
-            label: 'entities.profile.table.columns.logo',
+            label: 'entities.profile.fields.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },
@@ -40,7 +40,7 @@ export class ProfilesListComponent {
         ],
         renderItem: (element: Profile, property: keyof Profile) => {
             if (property === 'level') {
-                return this._translateService.translate('entities.management_entity.level.' + element[property]);
+                return this._translateService.translate('entities.management_entity.options.level.' + element[property]);
             }
 
             if (property === 'permissions') {

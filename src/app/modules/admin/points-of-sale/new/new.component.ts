@@ -15,8 +15,8 @@ export class PointsOfSaleNewComponent {
     user: User | null = null;
 
     types = [
-        { value: 'GENERAL_AGENT', label: 'entities.point_of_sale.form.fields.type.options.GENERAL_AGENT' },
-        { value: 'DIRECT_OFFICE', label: 'entities.point_of_sale.form.fields.type.options.DIRECT_OFFICE' },
+        { value: 'GENERAL_AGENT', label: 'entities.point_of_sale.options.type.GENERAL_AGENT' },
+        { value: 'DIRECT_OFFICE', label: 'entities.point_of_sale.options.type.DIRECT_OFFICE' },
     ];
 
     formGroup!: UntypedFormGroup;
@@ -76,12 +76,12 @@ export class PointsOfSaleNewComponent {
         ).subscribe({
             next: (pointOfSale: PointOfSale) => {
                 this._pointOfSaleService.getAll().subscribe();
-                this.message = 'entities.point_of_sale.form.messages.success';
+                this.message = 'message.success';
                 this.formGroup.reset();
                 this.formGroup.enable();
             },
             error: (error) => {
-                this.message = 'entities.point_of_sale.form.messages.error';
+                this.message = 'message.error';
                 this.formGroup.enable();
 
             }

@@ -1,9 +1,12 @@
 import { ManagementEntity } from "../management-entity/management-entity.interface";
 
 export class PointOfSale extends ManagementEntity {
+
+    typePointOfSale: string = '';
     
     constructor(entity: any) {
         super(entity);
+        this.typePointOfSale = entity?.typePointOfSale || '';
     }
 }
 

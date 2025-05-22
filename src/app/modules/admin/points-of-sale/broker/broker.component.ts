@@ -24,10 +24,10 @@ export class BrokerPointsOfSaleListComponent {
     tableOptions: TableOptions<PointOfSale> = {
         title: '',
         columns: [
-            { label: 'entities.point_of_sale.table.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'entities.point_of_sale.table.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'entities.point_of_sale.table.columns.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'entities.point_of_sale.table.columns.address', property: 'address', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.phone', property: 'phone', type: 'text', visible: true },
+            { label: 'entities.point_of_sale.fields.address', property: 'address', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],

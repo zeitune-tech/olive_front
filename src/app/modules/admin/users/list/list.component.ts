@@ -24,9 +24,9 @@ export class UsersListComponent {
     tableOptions: TableOptions<User> = {
         title: '',
         columns: [
-            { label: 'entities.user.table.columns.first_name', property: 'firstName', type: 'text', visible: true },
-            { label: 'entities.user.table.columns.last_name', property: 'lastName', type: 'text', visible: true },
-            { label: 'entities.user.table.columns.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.user.fields.first_name', property: 'firstName', type: 'text', visible: true },
+            { label: 'entities.user.fields.last_name', property: 'lastName', type: 'text', visible: true },
+            { label: 'entities.user.fields.email', property: 'email', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],

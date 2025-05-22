@@ -8,7 +8,7 @@
     <div class="flex flex-col gap-6">
         <!-- Name -->
         <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.product.form.fields.name.label') }}</mat-label>
+            <mat-label>{{ t('entities.product.fields.name') }}</mat-label>
             <input matInput formControlName="name" />
             <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
                 {{ t('form.errors.required') }}
@@ -18,21 +18,21 @@
             </mat-error>
         </mat-form-field>
 
-        <!-- Name -->
+        <!-- Description -->
         <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.product.form.fields.description.label') }}</mat-label>
+            <mat-label>{{ t('entities.product.fields.description') }}</mat-label>
             <input matInput formControlName="description" />
             <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
                 {{ t('form.errors.required') }}
             </mat-error>
-            <mat-error *ngIf="formGroup.get('description')?.hasError('minlength')">
-                {{ t('form.errors.minLength') }}
-            </mat-error>
+            <!-- <mat-error *ngIf="formGroup.get('description')?.hasError('minlength')">
+                {{ t('form.errors.minLength', {}) }}
+            </mat-error> -->
         </mat-form-field>
 
         <!-- Branch UUID -->
         <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.product.form.fields.branch.label') }}</mat-label>
+            <mat-label>{{ t('entities.product.fields.branch') }}</mat-label>
             <mat-select [formControlName]="'branch'">
                 <mat-option *ngFor="let branch of branches" [value]="branch.id">
                     {{ t(branch.name) }}
@@ -45,7 +45,7 @@
 
         <!-- Fleet -->
         <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.product.form.fields.fleet.label') }}</mat-label>
+            <mat-label>{{ t('entities.product.fields.fleet') }}</mat-label>
             <mat-select formControlName="fleet">
                 <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
                 <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
@@ -58,7 +58,7 @@
 
         <!-- Min Risk -->
         <mat-form-field class="w-full" appearance="outline" [ngClass]="{ 'hidden': !formGroup.get('fleet')?.value }">
-            <mat-label>{{ t('entities.product.form.fields.minRisk.label') }}</mat-label>
+            <mat-label>{{ t('entities.product.fields.minRisk') }}</mat-label>
             <input type="number" matInput formControlName="minRisk" />
             <mat-error *ngIf="formGroup.get('minRisk')?.hasError('min')">
                 {{ t('form.errors.min', { value: 1 }) }}
@@ -70,10 +70,10 @@
 
         <!-- Max Risk -->
         <mat-form-field class="w-full" appearance="outline" [ngClass]="{ 'hidden': !formGroup.get('fleet')?.value }">
-            <mat-label>{{ t('entities.product.form.fields.maxRisk.label') }}</mat-label>
+            <mat-label>{{ t('entities.product.fields.maxRisk') }}</mat-label>
             <input type="number" matInput formControlName="maxRisk" />
             <mat-error *ngIf="formGroup.get('maxRisk')?.hasError('min')">
-                {{ t('form.errors.min', { value: 1 }) }}
+                {{ t('form.errors.min', { min: 1 }) }}
             </mat-error>
             <mat-error *ngIf="formGroup.get('maxRisk')?.hasError('required')">
                 {{ t('form.errors.required') }}
@@ -82,10 +82,10 @@
 
         <!-- Minimum Guarantee Number -->
         <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.product.form.fields.minimumGuaranteeNumber.label') }}</mat-label>
+            <mat-label>{{ t('entities.product.fields.minimumGuaranteeNumber') }}</mat-label>
             <input type="number" matInput formControlName="minimumGuaranteeNumber" />
             <mat-error *ngIf="formGroup.get('minimumGuaranteeNumber')?.hasError('min')">
-                {{ t('form.errors.min', { value: 1 }) }}
+                {{ t('form.errors.min', { min: 1 }) }}
             </mat-error>
             <mat-error *ngIf="formGroup.get('minimumGuaranteeNumber')?.hasError('required')">
                 {{ t('form.errors.required') }}
@@ -96,7 +96,7 @@
 
         <!-- Has Reduction -->
         <mat-checkbox formControlName="hasReduction">
-            {{ t('entities.product.form.fields.hasReduction.label') }}
+            {{ t('entities.product.fields.hasReduction') }}
         </mat-checkbox>
 
     </div>

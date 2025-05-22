@@ -8,7 +8,7 @@
     <div class="flex flex-col gap-6">
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('entities.profile.form.fields.name.label') }}
+                {{ t('entities.profile.fields.name') }}
             </mat-label>
             <input
                 matInput
@@ -19,11 +19,11 @@
         </mat-form-field>
         <mat-form-field class="w-full" appearance="outline" [ngClass]="entity.type != 'COMPANY' ? 'hidden' : ''">
             <mat-label>
-                {{ t('entities.profile.form.fields.level.label') }}
+                {{ t('entities.profile.fields.level') }}
             </mat-label>
             <mat-select [formControlName]="'level'">
                 <mat-option *ngFor="let level of levels" [value]="level">
-                    {{ t("entities.profile.form.fields.level.options."+level) }}
+                    {{ t("entities.profile.options.level."+level) }}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="formGroup.get('level')?.hasError('required')">
@@ -32,7 +32,7 @@
         </mat-form-field>
         <mat-form-field class="w-full" appearance="outline">
             <mat-label>
-                {{ t('entities.profile.form.fields.description.label') }}
+                {{ t('entities.profile.fields.description') }}
             </mat-label>
             <input
                 matInput

@@ -25,8 +25,8 @@ export class ProductNewStepTwoComponent implements OnInit {
     tableOptions: TableOptions<CoverageReference> = {
         title: '',
         columns: [
-            { label: 'entities.coverage_reference.table.columns.designation', property: 'designation', visible: true, type: 'text' },
-            { label: 'entities.coverage_reference.table.columns.family', property: 'family', visible: true, type: 'text' },
+            { label: 'entities.coverage_reference.fields.designation', property: 'designation', visible: true, type: 'text' },
+            { label: 'entities.coverage_reference.fields.family', property: 'family', visible: true, type: 'text' },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
