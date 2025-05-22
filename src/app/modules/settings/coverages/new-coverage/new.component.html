@@ -21,7 +21,7 @@
         <div class="flex flex-col gap-6">
           <!-- Nature -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.nature.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.nature') }}</mat-label>
             <input matInput formControlName="nature" />
             <mat-error *ngIf="formGroup.get('nature')?.hasError('required')">
               {{ t('form.errors.required') }}
@@ -30,7 +30,7 @@
       
           <!-- Is Free -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.isFree.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.isFree') }}</mat-label>
             <mat-select formControlName="isFree">
               <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
               <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
@@ -39,7 +39,7 @@
       
           <!-- Is Fixed -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.isFixed.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.isFixed') }}</mat-label>
             <mat-select formControlName="isFixed">
               <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
               <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
@@ -48,7 +48,7 @@
       
           <!-- Calculation Mode -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.calculationMode.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.calculationMode') }}</mat-label>
             <mat-select formControlName="calculationMode">
               <mat-option *ngFor="let mode of calculationModes" [value]="mode.value">
                 {{ mode.label }}
@@ -58,37 +58,37 @@
       
           <!-- Fixed Capital -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.fixedCapital.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.fixedCapital') }}</mat-label>
             <input matInput type="number" formControlName="fixedCapital" />
           </mat-form-field>
       
           <!-- Min Capital -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.minCapital.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.minCapital') }}</mat-label>
             <input matInput type="number" formControlName="minCapital" />
           </mat-form-field>
       
           <!-- Max Capital -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.maxCapital.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.maxCapital') }}</mat-label>
             <input matInput type="number" formControlName="maxCapital" />
           </mat-form-field>
       
           <!-- Order -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.order.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.order') }}</mat-label>
             <input matInput type="number" formControlName="order" />
           </mat-form-field>
       
           <!-- Prorata -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.prorata.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.prorata') }}</mat-label>
             <input matInput formControlName="prorata" />
           </mat-form-field>
       
           <!-- Display Prime -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.displayPrime.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.displayPrime') }}</mat-label>
             <mat-select formControlName="displayPrime">
               <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
               <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
@@ -97,7 +97,7 @@
       
           <!-- Generates Characteristic -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.generatesCharacteristic.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.generatesCharacteristic') }}</mat-label>
             <mat-select formControlName="generatesCharacteristic">
               <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
               <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
@@ -106,19 +106,19 @@
       
           <!-- Coverage Reference -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.coverageReferenceId.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.coverageReferenceId') }}</mat-label>
             <input matInput formControlName="coverageReferenceId" />
           </mat-form-field>
       
           <!-- Product -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.product.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.product') }}</mat-label>
             <input matInput formControlName="product" />
           </mat-form-field>
       
           <!-- Management Entity -->
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>{{ t('entities.coverage.form.fields.managementEntity.label') }}</mat-label>
+            <mat-label>{{ t('entities.coverage.fields.managementEntity') }}</mat-label>
             <input matInput formControlName="managementEntity" />
           </mat-form-field>
       

@@ -24,9 +24,9 @@ export class InsuredRegistriesListComponent {
     tableOptions: TableOptions<InsuredRegistry> = {
         title: '',
         columns: [
-            { label: 'entities.insured_registry.table.columns.prefix', property: 'prefix', type: 'text', visible: true },
-            { label: 'entities.insured_registry.table.columns.length', property: 'length', type: 'text', visible: true },
-            { label: 'entities.insured_registry.table.columns.counter', property: 'counter', type: 'text', visible: true },
+            { label: 'entities.insured_registry.fields.prefix', property: 'prefix', type: 'text', visible: true },
+            { label: 'entities.insured_registry.fields.length', property: 'length', type: 'text', visible: true },
+            { label: 'entities.insured_registry.fields.counter', property: 'counter', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],

@@ -29,8 +29,8 @@ export class IncompatibleCoveragesListComponent {
     tableOptions: TableOptions<IncompatibleCoverage> = {
         title: '',
         columns: [
-            { label: 'entities.incompatible_coverage.table.columns.coverage', property: 'coverage', type: 'text', visible: true },
-            { label: 'entities.incompatible_coverage.table.columns.incompatibleCoverage', property: 'incompatibleCoverage', type: 'text', visible: true },
+            { label: 'entities.incompatible_coverage.fields.coverage', property: 'coverage', type: 'text', visible: true },
+            { label: 'entities.incompatible_coverage.fields.incompatible', property: 'incompatibleCoverage', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'incompatibleCoverage.columns.logo',

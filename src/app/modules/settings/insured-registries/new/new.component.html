@@ -27,7 +27,7 @@
         <div class="flex flex-col gap-6">
             <!-- Prefix -->
             <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.insured_registry.form.fields.prefix.label') }}</mat-label>
+                <mat-label>{{ t('entities.insured_registry.fields.prefix') }}</mat-label>
                 <input matInput formControlName="prefix" />
                 <mat-error *ngIf="formGroup.get('prefix')?.hasError('required')">
                     {{ t('form.errors.required') }}
@@ -36,7 +36,7 @@
 
             <!-- Length -->
             <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.insured_registry.form.fields.length.label') }}</mat-label>
+                <mat-label>{{ t('entities.insured_registry.fields.length') }}</mat-label>
                 <input type="number" matInput formControlName="length" />
                 <mat-error *ngIf="formGroup.get('length')?.hasError('min')">
                     {{ t('form.errors.min', { min: 1 }) }}

@@ -24,9 +24,9 @@ export class ProductionRegistriesListComponent {
     tableOptions: TableOptions<ProductionRegistry> = {
         title: '',
         columns: [
-            { label: 'entities.production_registry.table.columns.prefix', property: 'prefix', type: 'text', visible: true },
-            { label: 'entities.production_registry.table.columns.length', property: 'length', type: 'text', visible: true },
-            { label: 'entities.production_registry.table.columns.counter', property: 'counter', type: 'text', visible: true },
+            { label: 'entities.production_registry.fields.prefix', property: 'prefix', type: 'text', visible: true },
+            { label: 'entities.production_registry.fields.length', property: 'length', type: 'text', visible: true },
+            { label: 'entities.production_registry.fields.counter', property: 'counter', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'production_registrie.columns.logo',

@@ -32,16 +32,16 @@ export class LinkedCompaniesListComponent {
     tableOptions: TableOptions<Company> = {
         title: '',
         columns: [
-            { label: 'entities.company.table.columns.logo', property: 'logo', type: 'image', visible: true },
-            { label: 'entities.company.table.columns.name', property: 'name', type: 'text', visible: true },
-            { label: 'entities.company.table.columns.email', property: 'email', type: 'text', visible: true },
-            { label: 'entities.company.table.columns.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'entities.company.table.columns.address', property: 'address', type: 'text', visible: true },
+            { label: 'entities.company.fields.logo', property: 'logo', type: 'image', visible: true },
+            { label: 'entities.company.fields.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.company.fields.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.company.fields.phone', property: 'phone', type: 'text', visible: true },
+            { label: 'entities.company.fields.address', property: 'address', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         imageOptions: {
-            label: 'entities.company.table.columns.logo',
+            label: 'entities.company.fields.logo',
             property: 'logo',
             cssClasses: ['object-cover'],
         },

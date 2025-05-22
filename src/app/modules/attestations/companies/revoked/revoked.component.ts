@@ -28,11 +28,6 @@ export class RevokedCompaniesAttestationsComponent implements OnInit, OnDestroy 
         pageSizeOptions: [5, 6, 8],
         actions: [
         ],
-        imageOptions: {
-            label: 'entities.compCompanyAttestations.table.columns.logo',
-            property: 'logo',
-            cssClasses: ['w-24 h-24']
-        },
         renderItem: (element: CompanyAttestations, property: keyof CompanyAttestations) => {
             
             return element[property];

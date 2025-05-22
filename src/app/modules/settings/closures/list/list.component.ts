@@ -24,16 +24,11 @@ export class ClosuresListComponent {
     tableOptions: TableOptions<Closure> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.closure.fields.type', property: 'type', type: 'text', visible: true },
+            { label: 'entities.closure.fields.date', property: 'date', type: 'text', visible: true },
+            { label: 'entities.closure.fields.managementEntity', property: 'managementEntity', type: 'text', visible: true },
+            { label: 'entities.closure.fields.product', property: 'product', type: 'text', visible: true }
         ],
-        imageOptions: {
-            label: 'closure.columns.logo',
-            property: 'logo',
-            cssClasses: ['w-16 h-16']
-        },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [

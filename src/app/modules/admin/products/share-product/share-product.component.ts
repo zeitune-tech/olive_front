@@ -20,14 +20,14 @@ export class ShareProductComponent {
     tableOptions: TableOptions<Company> = {
         title: 'Share Product',
         columns: [
-            { label: 'entities.company.table.columns.logo', property: 'logo', type: 'image', visible: true },
-            { label: 'entities.company.table.columns.name', property: 'name', type: 'text', visible: true },
+            { label: 'entities.company.fields.logo', property: 'logo', type: 'image', visible: true },
+            { label: 'entities.company.fields.name', property: 'name', type: 'text', visible: true },
         ],
         pageSizeOptions: [5, 6, 8],
         pageSize: 8,
         actions: [],
         imageOptions: {
-            label: 'entities.company.table.columns.logo',
+            label: 'entities.company.fields.logo',
             property: 'logo',
             cssClasses: ['w-12 h-12']
         },

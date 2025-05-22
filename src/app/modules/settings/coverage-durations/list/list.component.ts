@@ -25,27 +25,22 @@ export class CoverageDurationsListComponent {
     tableOptions: TableOptions<CoverageDuration> = {
         title: '',
         columns: [
-            { label: 'entities.coverage_duration.table.columns.type.label', property: 'type', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.table.columns.unit.label', property: 'unit', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.table.columns.from', property: 'from', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.table.columns.to', property: 'to', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.table.columns.prorotaMode', property: 'prorotaMode', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.fields.type', property: 'type', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.fields.unit', property: 'unit', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.fields.from', property: 'from', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.fields.to', property: 'to', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.fields.prorotaMode', property: 'prorotaMode', type: 'text', visible: true },
         ],
-        imageOptions: {
-            label: 'coverageDuration.columns.logo',
-            property: 'logo',
-            cssClasses: ['w-16 h-16']
-        },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [],
         renderItem: (element: CoverageDuration, property: keyof CoverageDuration) => {
 
             if(property === 'type') {
-                return this._translateService.translate('entities.coverage_duration.table.columns.type.' + element.type.toLowerCase());
+                return this._translateService.translate('entities.coverage_duration.fields.type.' + element.type.toLowerCase());
             }
             if(property === 'unit') {
-                return  this._translateService.translate('entities.coverage_duration.table.columns.unit.' + element.unit.toLowerCase());
+                return  this._translateService.translate('entities.coverage_duration.fields.unit.' + element.unit.toLowerCase());
             }
         
             return element[property];

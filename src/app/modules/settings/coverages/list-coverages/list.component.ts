@@ -61,31 +61,31 @@ export class CoveragesListComponent {
     tableOptions: TableOptions<Coverage> = {
         title: '',
         columns: [
-            { label: 'entities.coverage.table.columns.reference', property: 'reference', type: 'text', visible: true, cssClasses: ["min-w-64"] },
-            { label: 'entities.coverage.table.columns.nature', property: 'nature', type: 'text', visible: true,  },
-            { label: 'entities.coverage.table.columns.isFixed', property: 'isFixed', type: 'select', visible: true, options: [
+            { label: 'entities.coverage.fields.reference', property: 'reference', type: 'text', visible: true, cssClasses: ["min-w-64"] },
+            { label: 'entities.coverage.fields.nature', property: 'nature', type: 'text', visible: true,  },
+            { label: 'entities.coverage.fields.isFixed', property: 'isFixed', type: 'select', visible: true, options: [
                 { label: 'form.fields.yes', value: true },
                 { label: 'form.fields.no', value: false }
             ] },
-            { label: 'entities.coverage.form.fields.calculationMode.label', property: 'calculationMode', type: 'select', visible: true, options: [
-                { label: 'entities.coverage.form.fields.calculationMode.options.FIXED', value: 'FIXE' },
-                { label: 'entities.coverage.form.fields.calculationMode.options.VARIABLE', value: 'VARIABLE' },
+            { label: 'entities.coverage.fileds.calculationMode', property: 'calculationMode', type: 'select', visible: true, options: [
+                { label: 'entities.coverage.options.calculationMode.FIXED', value: 'FIXE' },
+                { label: 'entities.coverage.options.calculationMode.VARIABLE', value: 'VARIABLE' },
 
             ] },
-            { label: 'entities.coverage.table.columns.fixedCapital', property: 'fixedCapital', type: 'input', visible: true,},
-            { label: 'entities.coverage.table.columns.minCapital', property: 'minCapital', type: 'input', visible: true },
-            { label: 'entities.coverage.table.columns.maxCapital', property: 'maxCapital', type: 'input', visible: true },
-            { label: 'entities.coverage.table.columns.order', property: 'order', type: 'input', visible: true },
-            { label: 'entities.coverage.table.columns.prorata', property: 'prorata', type: 'input', visible: true },
-            { label: 'entities.coverage.table.columns.displayPrime', property: 'displayPrime', type: 'select', visible: true, options: [
+            { label: 'entities.coverage.fields.fixedCapital', property: 'fixedCapital', type: 'input', visible: true,},
+            { label: 'entities.coverage.fields.minCapital', property: 'minCapital', type: 'input', visible: true },
+            { label: 'entities.coverage.fields.maxCapital', property: 'maxCapital', type: 'input', visible: true },
+            { label: 'entities.coverage.fields.order', property: 'order', type: 'input', visible: true },
+            { label: 'entities.coverage.fields.prorata', property: 'prorata', type: 'input', visible: true },
+            { label: 'entities.coverage.fields.displayPrime', property: 'displayPrime', type: 'select', visible: true, options: [
                 { label: 'form.fields.yes', value: true },
                 { label: 'form.fields.no', value: false }
             ] },
-            { label: 'entities.coverage.table.columns.generatesCharacteristic', property: 'generatesCharacteristic', type: 'select', visible: true, options: [
+            { label: 'entities.coverage.fields.generatesCharacteristic', property: 'generatesCharacteristic', type: 'select', visible: true, options: [
                 { label: 'form.fields.yes', value: true },
                 { label: 'form.fields.no', value: false }
             ] },
-            { label: 'entities.coverage.table.columns.isFree', property: 'isFree', type: 'select', visible: true, options: [
+            { label: 'entities.coverage.fields.isFree', property: 'isFree', type: 'select', visible: true, options: [
                 { label: 'form.fields.yes', value: true },
                 { label: 'form.fields.no', value: false }
             ] },

@@ -62,11 +62,11 @@ export class LotAttestationsListComponent {
     tableOptions: TableOptions<LotAttestation> = {
         title: '',
         columns: [
-            { label: 'entities.lot_attestations.table.columns.prefix', property: 'prefix', type: 'text', visible: true },
-            { label: 'entities.lot_attestations.table.columns.quantity', property: 'quantity', type: 'text', visible: true },
-            { label: 'entities.lot_attestations.table.columns.stock', property: 'stock', type: 'text', visible: true },
-            { label: 'entities.lot_attestations.table.columns.start_date', property: 'startDate', type: 'text', visible: true },
-            { label: 'entities.lot_attestations.table.columns.end_date', property: 'endDate', type: 'text', visible: true },
+            { label: 'entities.lot_attestations.fields.prefix', property: 'prefix', type: 'text', visible: true },
+            { label: 'entities.lot_attestations.fields.quantity', property: 'quantity', type: 'text', visible: true },
+            { label: 'entities.lot_attestations.fields.stock', property: 'stock', type: 'text', visible: true },
+            { label: 'entities.lot_attestations.fields.start_date', property: 'startDate', type: 'text', visible: true },
+            { label: 'entities.lot_attestations.fields.end_date', property: 'endDate', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'coverage.columns.logo',

@@ -21,7 +21,7 @@
 
 		<div class="flex flex-col gap-6">
 			<mat-form-field appearance="outline" class="w-full">
-				<mat-label>{{ t('entities.coverage.form.fields.product.label') }}</mat-label>
+				<mat-label>{{ t('entities.coverage.fields.product') }}</mat-label>
 				<mat-select >
 					<mat-option *ngFor="let product of products" [value]="product.id">
 						{{ product.name }}
@@ -29,7 +29,7 @@
 				</mat-select>
 			</mat-form-field>
 			<mat-form-field appearance="outline" class="w-full">
-				<mat-label>{{ t('entities.incompatible_coverage.form.fields.coverage.label') }}</mat-label>
+				<mat-label>{{ t('entities.incompatible_coverage.fields.coverage') }}</mat-label>
 				<mat-select formControlName="coverageId">
 					<mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
 						{{ coverage.reference.designation }}
@@ -38,7 +38,7 @@
 			</mat-form-field>
 
 			<mat-form-field appearance="outline" class="w-full">
-				<mat-label>{{ t('entities.incompatible_coverage.form.fields.incompatible.label') }}</mat-label>
+				<mat-label>{{ t('entities.incompatible_coverage.fields.incompatible') }}</mat-label>
 				<mat-select formControlName="incompatibleId">
 					<mat-option *ngFor="let incompatible of incompatibles" [value]="incompatible.id">
 						{{ incompatible.reference.designation }}

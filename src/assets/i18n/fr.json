@@ -125,7 +125,7 @@
         "prorata": "Mode prorata",
         "displayPrime": "Afficher la prime",
         "generatesCharacteristic": "Génère des caractéristiques",
-        "coverageReferenceId": "Référence de garantie",
+        "reference": "Référenciel Garantie",
         "product": "Produit",
         "managementEntity": "Entité de gestion"
       },

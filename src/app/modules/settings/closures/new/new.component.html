@@ -25,7 +25,7 @@
         <div class="flex flex-col gap-6">
           <!-- Closure Type -->
           <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.closure.form.fields.type.label') }}</mat-label>
+            <mat-label>{{ t('entities.closure.fields.type') }}</mat-label>
             <mat-select formControlName="type">
               <mat-option *ngFor="let option of closureTypes" [value]="option.value">
                 {{ option.label }}
@@ -38,7 +38,7 @@
       
           <!-- Effective Date -->
           <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.closure.form.fields.date.label') }}</mat-label>
+            <mat-label>{{ t('entities.closure.fields.date') }}</mat-label>
             <input matInput type="date" formControlName="date">
             <mat-error *ngIf="formGroup.get('date')?.hasError('required')">
               {{ t('form.errors.required') }}
@@ -50,7 +50,7 @@
       
           <!-- Management Entity -->
           <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.closure.form.fields.managementEntity.label') }}</mat-label>
+            <mat-label>{{ t('entities.closure.fields.managementEntity') }}</mat-label>
             <input matInput formControlName="managementEntity" />
             <mat-error *ngIf="formGroup.get('managementEntity')?.hasError('required')">
               {{ t('form.errors.required') }}
@@ -59,7 +59,7 @@
       
           <!-- Product -->
           <mat-form-field class="w-full" appearance="outline">
-            <mat-label>{{ t('entities.closure.form.fields.product.label') }}</mat-label>
+            <mat-label>{{ t('entities.closure.fields.product') }}</mat-label>
             <input matInput formControlName="product" />
             <mat-error *ngIf="formGroup.get('product')?.hasError('required')">
               {{ t('form.errors.required') }}
