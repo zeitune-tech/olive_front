@@ -1,3 +1,8 @@
+import { Product } from "@core/services/administration/product/product.interface";
+import { Tax } from "../tax/tax.interface";
+import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
+import { CoverageReference } from "../coverage-reference/coverage-reference.interface";
+
 export class BaseTax {
   id: string;
   dateEffective: string;
@@ -5,10 +10,9 @@ export class BaseTax {
   isFlat: boolean;
   rate: number;
   fixedAmount: number;
-  tax: string;
-  coverage: string;
-  pointOfSale: string;
-  product: string;
+  tax: Tax;
+  coverage: CoverageReference;
+  product: Product;
   managementEntity: string;
 
   constructor(data: any) {
@@ -20,7 +24,6 @@ export class BaseTax {
     this.fixedAmount = data.fixedAmount ?? 0;
     this.tax = data.tax || '';
     this.coverage = data.coverage || '';
-    this.pointOfSale = data.pointOfSale || '';
     this.product = data.product || '';
     this.managementEntity = data.managementEntity || '';
   }

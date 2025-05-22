@@ -1,0 +1,69 @@
+<div class="w-full pb-10" *transloco="let t">
+  <div class="flex flex-col mb-10">
+    <h1 class="text-2xl md:text-4xl font-bold py-4">
+      {{ t('entities.commission_tax.form.title') }}
+    </h1>
+    <p class="text-sm text-gray-600">
+      {{ t('entities.commission_tax.form.subtitle') }}
+    </p>
+  </div>
+
+  <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+
+    <div class="flex flex-col mb-6 text-center text-primary">
+      <h1 class="text-2xl font-bold">
+        {{ t('entities.commission_tax.form.title') }}
+      </h1>
+      <p class="text-sm text-gray-600">
+        {{ t('entities.commission_tax.form.subtitle') }}
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-6">
+
+      <!-- Date Effective -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.commission_tax.fields.dateEffective') }}</mat-label>
+        <input matInput type="date" formControlName="dateEffective" />
+      </mat-form-field>
+
+      <!-- Commission Tax Type -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.commission_tax.fields.commissionTaxType') }}</mat-label>
+        <mat-select formControlName="commissionTaxType">
+          <mat-option *ngFor="let type of commissionTaxTypes" [value]="type.value">
+            {{ t(type.label) }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Rate -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.commission_tax.fields.rate') }}</mat-label>
+        <input matInput type="number" formControlName="rate" />
+      </mat-form-field>
+
+      <!-- Point of Sale -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.commission_tax.fields.pointOfSale') }}</mat-label>
+        <input matInput formControlName="pointOfSaleId" />
+      </mat-form-field>
+
+      <!-- Product -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.commission_tax.fields.product') }}</mat-label>
+        <mat-select formControlName="productId">
+          <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Submit -->
+      <div class="flex items-center justify-end gap-4 mt-6">
+        <div>{{ t(message) }}</div>
+        <button mat-flat-button color="primary" [disabled]="formGroup.invalid" (click)="onSubmit()">
+          {{ t('form.actions.save') }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,9 +1,11 @@
+import { Product } from "@core/services/administration/product/product.interface";
+
 export class Accessory {
   id: string;
   dateEffective: string;
   actType: string;
   accessoryAmount: number;
-  product: string;
+  product: Product;
   managementEntity: string;
 
   constructor(data: any) {

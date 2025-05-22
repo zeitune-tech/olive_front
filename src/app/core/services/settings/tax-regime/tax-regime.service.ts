@@ -56,9 +56,8 @@ export class TaxRegimeService {
 
   getAll(): Observable<TaxRegime[]> {
     return this._httpClient.get<TaxRegime[]>(this.baseUrl).pipe(
-      tap((response: any) => {
-        this.taxRegimes = response?.content || [];
-        this.metadata = response;
+      tap((response: TaxRegime[]) => {
+        this.taxRegimes = response;
         return response;
       }),
       catchError(() => of([] as TaxRegime[]))

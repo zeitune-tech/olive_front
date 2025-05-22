@@ -33,13 +33,9 @@
       <!-- Product -->
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>{{ t('entities.accessory.fields.product') }}</mat-label>
-        <input matInput formControlName="product" />
-      </mat-form-field>
-
-      <!-- Management Entity -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>{{ t('entities.accessory.fields.managementEntity') }}</mat-label>
-        <input matInput formControlName="managementEntity" />
+        <mat-select formControlName="productId">
+          <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <!-- Submit -->

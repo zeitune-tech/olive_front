@@ -32,7 +32,7 @@ export class ModuleService {
 
     private activeCssClass = "card w-72 flex-1 flex flex-col items-center cursor-pointer shadow-md overflow-hidden rounded-md hover:bg-gray-200";
     private disabledCssClass = "bg-gray-300 rounded-md text-gray-500 cursor-not-allowed w-72 flex-1 flex flex-col items-center shadow-md overflow-hidden";
-    
+
     private modules: Module[] = [
         {
             name: "administration",
@@ -176,12 +176,56 @@ export class ModuleService {
             name: "insureds",
             title: "modules.insureds.title",
             description: "modules.insureds.description",
-            icon: "assets/images/modules/insureds.png",
+            icon: "assets/images/modules/assure__icon.png",
             route: "/insured",
             permissions: [
-                
+                // PERMISSIONS.VIEW_INSUREDS,
+                // PERMISSIONS.CREATE_INSUREDS,
+                // PERMISSIONS.VIEW_VEHICLES,
+                // PERMISSIONS.CREATE_VEHICLES
             ],
-            features: []
+            features: [
+                {
+                    name: "insureds",
+                    title: "modules.insureds.features.insureds",
+                    description: "modules.insureds.features.insureds_description",
+                    icon: "badge",
+                    route: "/insureds/list",
+                    permissions: [
+                        // PERMISSIONS.VIEW_INSUREDS
+                    ]
+                },
+                {
+                    name: "insureds_create",
+                    title: "modules.insureds.features.insureds_create",
+                    description: "modules.insureds.features.insureds_create_description",
+                    icon: "person_add",
+                    route: "/insureds/new",
+                    permissions: [
+                        // PERMISSIONS.CREATE_INSUREDS
+                    ]
+                },
+                {
+                    name: "vehicles",
+                    title: "modules.insureds.features.vehicles",
+                    description: "modules.insureds.features.vehicles_description",
+                    icon: "directions_car",
+                    route: "/vehicles/list",
+                    permissions: [
+                        // PERMISSIONS.VIEW_VEHICLES
+                    ]
+                },
+                {
+                    name: "vehicles_create",
+                    title: "modules.insureds.features.vehicles_create",
+                    description: "modules.insureds.features.vehicles_create_description",
+                    icon: "add_circle",
+                    route: "/vehicles/new",
+                    permissions: [
+                        // PERMISSIONS.CREATE_VEHICLES
+                    ]
+                }
+            ]
         },
         {
             name: "productions",
@@ -199,7 +243,7 @@ export class ModuleService {
             route: "/production",
             permissions: [
                 PERMISSIONS.VIEW_ATTESTATIONS,
-                
+
             ],
             features: [
                 {
@@ -255,10 +299,10 @@ export class ModuleService {
     set module(value: Module) {
         this._module.next(value);
     }
-    
+
     constructor(
         private _permissionsService: PermissionsService,
-    ) { 
+    ) {
 
         this.modules.forEach((module: Module) => {
             module.cssClass = this.disabledCssClass;
@@ -281,11 +325,11 @@ export class ModuleService {
     }
 
 
-    getModules () : Module[] {
+    getModules(): Module[] {
         return this.modules;
     }
 
-    getCurrentModule () : Module {
+    getCurrentModule(): Module {
         const moduleName = localStorage.getItem("module");
         return this.modules.find(module => module.name === moduleName) || this.modules[0];
     }

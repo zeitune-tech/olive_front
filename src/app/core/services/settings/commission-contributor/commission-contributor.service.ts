@@ -56,9 +56,8 @@ export class CommissionContributorService {
 
   getAll(): Observable<CommissionContributor[]> {
     return this._httpClient.get<CommissionContributor[]>(this.baseUrl).pipe(
-      tap((response: any) => {
-        this.commissionContributors = response?.content || [];
-        this.metadata = response;
+      tap((response: CommissionContributor[]) => {
+        this.commissionContributors = response;
         return response;
       }),
       catchError(() => of([] as CommissionContributor[]))

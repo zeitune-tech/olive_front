@@ -5,8 +5,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Closure } from "@core/services/settings/closure/closure.interface";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { CommissionTax } from "@core/services/settings/commission-tax/commission-tax.interface";
+import { CommissionTaxService } from "@core/services/settings/commission-tax/commission-tax.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -21,16 +21,16 @@ export class TaxesListComponent {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Closure> = {
+    tableOptions: TableOptions<CommissionTax> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.commission_tax.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
+            { label: 'entities.commission_tax.fields.pointOfSale', property: 'pointOfSale', type: 'text', visible: true },
+            { label: 'entities.commission_tax.fields.commissionTaxType', property: 'commissionTaxType', type: 'text', visible: true },
+            { label: 'entities.commission_tax.fields.product', property: 'product', type: 'text', visible: true }
         ],
         imageOptions: {
-            label: 'closure.columns.logo',
+            label: 'commission_tax.columns.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },
@@ -39,30 +39,39 @@ export class TaxesListComponent {
         actions: [
 
         ],
-        renderItem: (element: Closure, property: keyof Closure) => {
+        renderItem: (element: CommissionTax, property: keyof CommissionTax) => {
 
+            if (property === 'pointOfSale') {
+                return element.pointOfSale?.name;
+            }
+
+            if (property === 'product') {
+                return element.product?.name;
+            }
+
+             
             return element[property];
         },
     };
-    data: Closure[] = [];
+    data: CommissionTax[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Closure> = new MatTableDataSource();
-    selection = new SelectionModel<Closure>(true, []);
+    dataSource: MatTableDataSource<CommissionTax> = new MatTableDataSource();
+    selection = new SelectionModel<CommissionTax>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private dclosureService: ClosureService,
+        private _commissionTax: CommissionTaxService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
-        this.dclosureService.closures$
+        this._commissionTax.commissionTaxes$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Closure[]) => {
+            .subscribe((data: CommissionTax[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -83,9 +92,9 @@ export class TaxesListComponent {
     }
 
     /**
-        * Edit Closure Closure
+        * Edit CommissionTax CommissionTax
         */
-    onDemand(item: Closure | null): void {
+    onDemand(item: CommissionTax | null): void {
 
     }
 
@@ -95,7 +104,7 @@ export class TaxesListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Closure>) {
+    trackByProperty(index: number, column: TableColumn<CommissionTax>) {
         return column.property;
     }
 }

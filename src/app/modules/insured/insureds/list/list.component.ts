@@ -5,29 +5,29 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Closure } from "@core/services/settings/closure/closure.interface";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { Insured } from "@core/services/insured/insured/insured.interface";
+import { InsuredService } from "@core/services/insured/insured/insured.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
-    selector: "app-closures-list",
+    selector: "app-insureds-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class PrimesListComponent {
+export class InsuredsListComponent {
 
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Closure> = {
+    tableOptions: TableOptions<Insured> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.insured.fields.firstName', property: 'firstName', visible: true, type: 'text' },
+            { label: 'entities.insured.fields.lastName', property: 'lastName', visible: true, type: 'text' },
+            { label: 'entities.insured.fields.birthDate', property: 'birthDate', visible: true, type: 'text' },
+            { label: 'entities.insured.fields.gender', property: 'gender', visible: true, type: 'text' },
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -39,30 +39,31 @@ export class PrimesListComponent {
         actions: [
 
         ],
-        renderItem: (element: Closure, property: keyof Closure) => {
+        renderItem: (element: Insured, property: keyof Insured) => {
+
 
             return element[property];
         },
     };
-    data: Closure[] = [];
+    data: Insured[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Closure> = new MatTableDataSource();
-    selection = new SelectionModel<Closure>(true, []);
+    dataSource: MatTableDataSource<Insured> = new MatTableDataSource();
+    selection = new SelectionModel<Insured>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private dclosureService: ClosureService,
+        private _insuredService: InsuredService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
-        this.dclosureService.closures$
+        this._insuredService.insureds$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Closure[]) => {
+            .subscribe((data: Insured[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -83,9 +84,9 @@ export class PrimesListComponent {
     }
 
     /**
-        * Edit Closure Closure
+        * Edit Insured Insured
         */
-    onDemand(item: Closure | null): void {
+    onDemand(item: Insured | null): void {
 
     }
 
@@ -95,7 +96,7 @@ export class PrimesListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Closure>) {
+    trackByProperty(index: number, column: TableColumn<Insured>) {
         return column.property;
     }
 }

@@ -1,10 +1,10 @@
 import { Routes } from "@angular/router";
-import { PERMISSIONS } from "@core/permissions/permissions.data";
-import { PrimesListComponent } from "./list-primes/list.component";
 import { ContributorsListComponent } from "./list-contributors/list.component";
 import { TaxesListComponent } from "./list-taxes/list.component";
-import { AccessoriesListComponent } from "./list-accessories/list.component";
 import { CommissionNewComponent } from "./new/new.component";
+import { CommissionListComponent } from "./list/list.component";
+import { CommissionContributorNewComponent } from "./new-contributor/new-contributor.component";
+import { CommissionTaxNewComponent } from "./new-tax/new-tax.component";
 
 export const routes: Routes = [
     {
@@ -13,8 +13,8 @@ export const routes: Routes = [
         redirectTo: "primes",
     },
     {
-        path: "primes",
-        component: PrimesListComponent
+        path: "list",
+        component: CommissionListComponent
     },
     {
         path: "contributors",
@@ -25,11 +25,15 @@ export const routes: Routes = [
         component: TaxesListComponent
     },
     {
-        path: "accessories",
-        component: AccessoriesListComponent
-    },
-    {
         path: "new",
         component: CommissionNewComponent
+    },
+    {
+        path: "contributors-new",
+        component: CommissionContributorNewComponent
+    },
+    {
+        path: "taxes-new",
+        component: CommissionTaxNewComponent
     }
 ];

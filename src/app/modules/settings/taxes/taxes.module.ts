@@ -17,11 +17,14 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
 import { TaxRegimesListComponent } from "./tax-regimes/list.component";
-import { TaxesNewComponent } from "./new/new.component";
+import { TaxNewComponent } from "./new/new.component";
 import { BaseTaxesListComponent } from "./base-taxes/list.component";
 import { AccessoriesListComponent } from "./list-accessories/list.component";
 import { PrimesListComponent } from "./list-primes/list.component";
 import { TaxesListComponent } from "./list/list.component";
+import { BaseTaxNewComponent } from "./new-base-tax/new-base-tax.component";
+import { TaxRegimeNewComponent } from "./new-tax-regime/new-tax-regime.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -30,7 +33,9 @@ import { TaxesListComponent } from "./list/list.component";
         BaseTaxesListComponent,
         AccessoriesListComponent,
         PrimesListComponent,
-        TaxesNewComponent
+        TaxNewComponent,
+        BaseTaxNewComponent,
+        TaxRegimeNewComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -48,7 +53,8 @@ import { TaxesListComponent } from "./list/list.component";
         MatSelectModule,
         MatDividerModule,
         ReactiveFormsModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatCheckboxModule
     ],
     providers: [],
     exports: [],

@@ -5,64 +5,64 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Closure } from "@core/services/settings/closure/closure.interface";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { Vehicle } from "@core/services/insured/vehicle/vehicle.interface";
+import { VehicleService } from "@core/services/insured/vehicle/vehicle.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
-    selector: "app-closures-list",
+    selector: "app-vehicles-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class AccessoriesListComponent {
+export class VehiclesListComponent {
 
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Closure> = {
+    tableOptions: TableOptions<Vehicle> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.vehicle.fields.licensePlate', property: 'licensePlate', visible: true, type: 'text' },
+            { label: 'entities.vehicle.fields.brand', property: 'brand', visible: true, type: 'text' },
+            { label: 'entities.vehicle.fields.model', property: 'model', visible: true, type: 'text' },
+            { label: 'entities.vehicle.fields.fuelType', property: 'fuelType', visible: true, type: 'text' },
+            { label: 'entities.vehicle.fields.gearboxType', property: 'gearboxType', visible: true, type: 'text' },
+            { label: 'entities.vehicle.fields.fiscalPower', property: 'fiscalPower', visible: true, type: 'text' },
+            { label: 'entities.vehicle.fields.realPower', property: 'realPower', visible: true, type: 'text' },
+            { label: 'entities.vehicle.fields.seatingCapacity', property: 'seatingCapacity', visible: true, type: 'text' },
         ],
-        imageOptions: {
-            label: 'closure.columns.logo',
-            property: 'logo',
-            cssClasses: ['w-16 h-16']
-        },
+       
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [
 
         ],
-        renderItem: (element: Closure, property: keyof Closure) => {
+        renderItem: (element: Vehicle, property: keyof Vehicle) => {
 
             return element[property];
         },
     };
-    data: Closure[] = [];
+    data: Vehicle[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Closure> = new MatTableDataSource();
-    selection = new SelectionModel<Closure>(true, []);
+    dataSource: MatTableDataSource<Vehicle> = new MatTableDataSource();
+    selection = new SelectionModel<Vehicle>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private dclosureService: ClosureService,
+        private _vehicleService: VehicleService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
-        this.dclosureService.closures$
+        this._vehicleService.vehicles$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Closure[]) => {
+            .subscribe((data: Vehicle[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -83,9 +83,9 @@ export class AccessoriesListComponent {
     }
 
     /**
-        * Edit Closure Closure
+        * Edit Vehicle Vehicle
         */
-    onDemand(item: Closure | null): void {
+    onDemand(item: Vehicle | null): void {
 
     }
 
@@ -95,7 +95,7 @@ export class AccessoriesListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Closure>) {
+    trackByProperty(index: number, column: TableColumn<Vehicle>) {
         return column.property;
     }
 }

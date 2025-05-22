@@ -5,14 +5,14 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Closure } from "@core/services/settings/closure/closure.interface";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { TaxService } from "@core/services/settings/tax/tax.service";
+import { Tax } from "@core/services/settings/tax/tax.interface";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
-    selector: "app-closures-list",
+    selector: "app-taxs-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
@@ -21,16 +21,15 @@ export class TaxesListComponent {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Closure> = {
+    tableOptions: TableOptions<Tax> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.tax.fields.designation', property: 'designation', type: 'text', visible: true },
+            { label: 'entities.tax.fields.nature', property: 'nature', type: 'text', visible: true },
+            { label: 'entities.tax.fields.rgr', property: 'rgr', type: 'text', visible: true },
         ],
         imageOptions: {
-            label: 'closure.columns.logo',
+            label: 'tax.columns.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },
@@ -39,30 +38,31 @@ export class TaxesListComponent {
         actions: [
 
         ],
-        renderItem: (element: Closure, property: keyof Closure) => {
+        renderItem: (element: Tax, property: keyof Tax) => {
+
 
             return element[property];
         },
     };
-    data: Closure[] = [];
+    data: Tax[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Closure> = new MatTableDataSource();
-    selection = new SelectionModel<Closure>(true, []);
+    dataSource: MatTableDataSource<Tax> = new MatTableDataSource();
+    selection = new SelectionModel<Tax>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private dclosureService: ClosureService,
+        private _taxService: TaxService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
-        this.dclosureService.closures$
+        this._taxService.taxes$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Closure[]) => {
+            .subscribe((data: Tax[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -83,9 +83,9 @@ export class TaxesListComponent {
     }
 
     /**
-        * Edit Closure Closure
+        * Edit Tax Tax
         */
-    onDemand(item: Closure | null): void {
+    onDemand(item: Tax | null): void {
 
     }
 
@@ -95,7 +95,7 @@ export class TaxesListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Closure>) {
+    trackByProperty(index: number, column: TableColumn<Tax>) {
         return column.property;
     }
 }

@@ -5,8 +5,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Closure } from "@core/services/settings/closure/closure.interface";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { TaxRegime } from "@core/services/settings/tax-regime/tax-regime.interface";
+import { TaxRegimeService } from "@core/services/settings/tax-regime/tax-regime.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -21,13 +21,13 @@ export class TaxRegimesListComponent {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Closure> = {
+    tableOptions: TableOptions<TaxRegime> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.tax_regime.fields.designation', property: 'designation', type: 'text', visible: true },
+            { label: 'entities.tax_regime.fields.nature', property: 'nature', type: 'text', visible: true },
+            { label: 'entities.tax_regime.fields.stampExemption', property: 'stampExemption', type: 'text', visible: true },
+            { label: 'entities.tax_regime.fields.exemptedTaxes', property: 'exemptedTaxes', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -39,30 +39,42 @@ export class TaxRegimesListComponent {
         actions: [
 
         ],
-        renderItem: (element: Closure, property: keyof Closure) => {
+        renderItem: (element: TaxRegime, property: keyof TaxRegime) => {
+
+            if (property === 'exemptedTaxes') {
+                return element.exemptedTaxes?.map(t => t.designation).join(', ');
+            }
+
+            if (property === 'stampExemption') {
+                return element.stampExemption ? 'Oui' : 'Non';
+            }
+
+            if (property === 'nature') {
+                return element.nature === 'EXCEPTIONAL' ? 'Exceptionnel' : 'Normal';
+            }
 
             return element[property];
         },
     };
-    data: Closure[] = [];
+    data: TaxRegime[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Closure> = new MatTableDataSource();
-    selection = new SelectionModel<Closure>(true, []);
+    dataSource: MatTableDataSource<TaxRegime> = new MatTableDataSource();
+    selection = new SelectionModel<TaxRegime>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private dclosureService: ClosureService,
+        private _taxRegime: TaxRegimeService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
-        this.dclosureService.closures$
+        this._taxRegime.taxRegimes$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Closure[]) => {
+            .subscribe((data: TaxRegime[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -83,9 +95,9 @@ export class TaxRegimesListComponent {
     }
 
     /**
-        * Edit Closure Closure
+        * Edit TaxRegime TaxRegime
         */
-    onDemand(item: Closure | null): void {
+    onDemand(item: TaxRegime | null): void {
 
     }
 
@@ -95,7 +107,7 @@ export class TaxRegimesListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Closure>) {
+    trackByProperty(index: number, column: TableColumn<TaxRegime>) {
         return column.property;
     }
 }

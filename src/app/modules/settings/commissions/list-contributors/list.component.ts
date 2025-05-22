@@ -5,8 +5,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Closure } from "@core/services/settings/closure/closure.interface";
-import { ClosureService } from "@core/services/settings/closure/closure.service";
+import { CommissionContributor } from "@core/services/settings/commission-contributor/commission-contributor.interface";
+import { CommissionContributorService } from "@core/services/settings/commission-contributor/commission-contributor.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -21,13 +21,14 @@ export class ContributorsListComponent {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Closure> = {
+    tableOptions: TableOptions<CommissionContributor> = {
         title: '',
         columns: [
-            { label: 'entities.closure.table.columns.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.date', property: 'date', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.managementEntity', property: 'managementEntity', type: 'text', visible: true },
-            { label: 'entities.closure.table.columns.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.commission_contributor.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
+            { label: 'entities.commission_contributor.fields.contributor', property: 'contributor', type: 'text', visible: true },
+            { label: 'entities.commission_contributor.fields.commissionBase', property: 'commissionBase', type: 'text', visible: true },
+            { label: 'entities.commission_contributor.fields.upperEntityContributorRate', property: 'upperEntityContributorRate', type: 'text', visible: true },
+            { label: 'entities.commission_contributor.fields.product', property: 'product', type: 'text', visible: true }
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -39,30 +40,37 @@ export class ContributorsListComponent {
         actions: [
 
         ],
-        renderItem: (element: Closure, property: keyof Closure) => {
+        renderItem: (element: CommissionContributor, property: keyof CommissionContributor) => {
 
+            if (property === 'contributor') {
+                return element.contributor?.name;
+            }
+
+            if (property === 'product') {
+                return element.product?.name;
+            }
             return element[property];
         },
     };
-    data: Closure[] = [];
+    data: CommissionContributor[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Closure> = new MatTableDataSource();
-    selection = new SelectionModel<Closure>(true, []);
+    dataSource: MatTableDataSource<CommissionContributor> = new MatTableDataSource();
+    selection = new SelectionModel<CommissionContributor>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private dclosureService: ClosureService,
+        private _commissionContributorService: CommissionContributorService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
-        this.dclosureService.closures$
+        this._commissionContributorService.commissionContributors$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Closure[]) => {
+            .subscribe((data: CommissionContributor[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -83,9 +91,9 @@ export class ContributorsListComponent {
     }
 
     /**
-        * Edit Closure Closure
+        * Edit CommissionContributor CommissionContributor
         */
-    onDemand(item: Closure | null): void {
+    onDemand(item: CommissionContributor | null): void {
 
     }
 
@@ -95,7 +103,7 @@ export class ContributorsListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Closure>) {
+    trackByProperty(index: number, column: TableColumn<CommissionContributor>) {
         return column.property;
     }
 }

@@ -1,10 +1,10 @@
 import { Routes } from "@angular/router";
 import { TaxRegimesListComponent } from "./tax-regimes/list.component";
-import { TaxesNewComponent } from "./new/new.component";
+import { TaxNewComponent } from "./new/new.component";
 import { BaseTaxesListComponent } from './base-taxes/list.component';
 import { TaxesListComponent } from "./list/list.component";
-import { AccessoriesListComponent } from "./list-accessories/list.component";
-import { PrimesListComponent } from "./list-primes/list.component";
+import { BaseTaxNewComponent } from "./new-base-tax/new-base-tax.component";
+import { TaxRegimeNewComponent } from "./new-tax-regime/new-tax-regime.component";
 
 export const routes: Routes = [
     {
@@ -17,23 +17,23 @@ export const routes: Routes = [
         component: TaxesListComponent
     },
     {
-        path: "accessories",
-        component: AccessoriesListComponent
+        path: "regimes",
+        component: TaxRegimesListComponent
     },
     {
-        path: "tax-regimes",
-        component: TaxRegimesListComponent
+        path: "regimes-new",
+        component: TaxRegimeNewComponent
     },
     {
         path: "base-taxes",
         component: BaseTaxesListComponent
     },
     {
-        path: "primes",
-        component: PrimesListComponent
+        path: "base-taxes-new",
+        component: BaseTaxNewComponent
     },
     {
         path: "new",
-        component: TaxesNewComponent
+        component: TaxNewComponent
     }
 ];

@@ -16,22 +16,24 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
-import { PrimesListComponent } from "./list-primes/list.component";
 import { ContributorsListComponent } from "./list-contributors/list.component";
 import { TaxesListComponent } from "./list-taxes/list.component";
-import { AccessoriesListComponent } from "./list-accessories/list.component";
 import { CommissionNewComponent } from "./new/new.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatRadioModule } from "@angular/material/radio";
+import { CommissionListComponent } from "./list/list.component";
+import { CommissionTaxNewComponent } from "./new-tax/new-tax.component";
+import { CommissionContributorNewComponent } from "./new-contributor/new-contributor.component";
 
 @NgModule({
     declarations: [
-        PrimesListComponent,
+        CommissionListComponent,
         ContributorsListComponent,
         TaxesListComponent,
-        AccessoriesListComponent,
-        CommissionNewComponent
+        CommissionNewComponent,
+        CommissionTaxNewComponent,
+        CommissionContributorNewComponent
     ],
     imports: [
         RouterModule.forChild(routes),

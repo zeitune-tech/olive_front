@@ -1,0 +1,121 @@
+<div class="w-full pb-10" *transloco="let t">
+  <div class="flex flex-col mb-10">
+    <h1 class="text-2xl md:text-4xl font-bold py-4">
+      {{ t('entities.insured.table.title') }}
+    </h1>
+    <p class="text-sm text-gray-600">
+      {{ t('entities.insured.form.subtitle') }}
+    </p>
+  </div>
+
+  <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+    <div class="flex flex-col gap-6">
+
+      <!-- Nom / Prénom -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.lastName') }}</mat-label>
+        <input matInput formControlName="lastName" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.firstName') }}</mat-label>
+        <input matInput formControlName="firstName" />
+      </mat-form-field>
+
+      <!-- Date de naissance -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.birthDate') }}</mat-label>
+        <input matInput type="date" formControlName="birthDate" />
+      </mat-form-field>
+
+      <!-- Sexe -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.gender') }}</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option *ngFor="let gender of genders" [value]="gender.value">{{ gender.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Situation familiale -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.maritalStatus') }}</mat-label>
+        <mat-select formControlName="maritalStatus">
+          <mat-option *ngFor="let status of maritalStatuses" [value]="status.value">{{ status.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Adresse -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.address') }}</mat-label>
+        <input matInput formControlName="address" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.city') }}</mat-label>
+        <input matInput formControlName="city" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.postalCode') }}</mat-label>
+        <input matInput formControlName="postalCode" />
+      </mat-form-field>
+
+      <!-- Email & Téléphone -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.email') }}</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.phone') }}</mat-label>
+        <input matInput formControlName="phone" />
+      </mat-form-field>
+
+      <!-- Permis -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.licenseNumber') }}</mat-label>
+        <input matInput formControlName="licenseNumber" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.licenseIssueDate') }}</mat-label>
+        <input matInput type="date" formControlName="licenseIssueDate" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.licenseCategory') }}</mat-label>
+        <mat-select formControlName="licenseCategory">
+          <mat-option *ngFor="let category of licenseCategories" [value]="category.value">{{ category.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Profession -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.profession') }}</mat-label>
+        <input matInput formControlName="profession" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.employmentStatus') }}</mat-label>
+        <mat-select formControlName="employmentStatus">
+          <mat-option *ngFor="let status of employmentStatuses" [value]="status.value">{{ status.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Date enregistrement -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.insured.fields.registrationDate') }}</mat-label>
+        <input matInput type="date" formControlName="registrationDate" />
+      </mat-form-field>
+
+      <!-- Submit -->
+      <div class="flex items-center justify-end gap-4 mt-6">
+        <div *ngIf="message">{{ t(message) }}</div>
+        <button mat-flat-button color="primary" [disabled]="formGroup.invalid" (click)="onSubmit()">
+          {{ t('form.actions.save') }}
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>

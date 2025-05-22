@@ -1,0 +1,78 @@
+<div class="w-full pb-10" *transloco="let t">
+  <div class="flex flex-col mb-10">
+    <h1 class="text-2xl md:text-4xl font-bold py-4">
+      {{ t('entities.tax_regime.table.title') }}
+    </h1>
+    <p class="text-sm md:text-base text-gray-600">
+      {{ t('entities.tax_regime.form.subtitle') }}
+    </p>
+  </div>
+
+  <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+    <div class="flex flex-col mb-6 text-center text-primary">
+      <h1 class="text-2xl font-bold">
+        {{ t('entities.tax_regime.form.title') }}
+      </h1>
+      <p class="text-sm text-gray-600">
+        {{ t('entities.tax_regime.form.subtitle') }}
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-6">
+      <!-- Designation -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.tax_regime.fields.designation') }}</mat-label>
+        <input matInput formControlName="designation" />
+        <mat-error *ngIf="formGroup.get('designation')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Nature -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.tax_regime.fields.nature') }}</mat-label>
+        <mat-select formControlName="nature">
+          <mat-option *ngFor="let option of regimeNatureOptions" [value]="option.value">
+            {{ option.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.get('nature')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Stamp Exemption -->
+      <mat-checkbox formControlName="stampExemption">
+        {{ t('entities.tax_regime.fields.stampExemption') }}
+      </mat-checkbox>
+
+      <!-- Exempted Taxes -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.tax_regime.fields.exemptedTaxes') }}</mat-label>
+        <mat-select formControlName="exemptedTaxIds" multiple>
+          <mat-option *ngFor="let tax of taxes" [value]="tax.id">{{ tax.designation }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Submit -->
+      <div class="flex items-center justify-end gap-4 mt-6">
+        <div>{{ t(message) }}</div>
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="formGroup.invalid || formGroup.disabled"
+          (click)="onSubmit()"
+        >
+          <span *ngIf="!formGroup.disabled">
+            {{ t('form.actions.save') }}
+          </span>
+          <mat-progress-spinner
+            *ngIf="formGroup.disabled"
+            [diameter]="24"
+            mode="indeterminate"
+          ></mat-progress-spinner>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

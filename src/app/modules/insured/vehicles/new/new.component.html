@@ -1,0 +1,121 @@
+<div class="w-full pb-10" *transloco="let t">
+  <div class="flex flex-col mb-10">
+    <h1 class="text-2xl md:text-4xl font-bold py-4">
+      {{ t('entities.vehicle.table.title') }}
+    </h1>
+    <p class="text-sm text-gray-600">
+      {{ t('entities.vehicle.form.subtitle') }}
+    </p>
+  </div>
+
+  <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+    <div class="flex flex-col gap-6">
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.licensePlate') }}</mat-label>
+        <input matInput formControlName="licensePlate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.brand') }}</mat-label>
+        <input matInput formControlName="brand" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.model') }}</mat-label>
+        <input matInput formControlName="model" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.fuelType') }}</mat-label>
+        <mat-select formControlName="fuelType">
+          <mat-option *ngFor="let type of fuelTypes" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.gearboxType') }}</mat-label>
+        <mat-select formControlName="gearboxType">
+          <mat-option *ngFor="let type of gearboxTypes" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.fiscalPower') }}</mat-label>
+        <input matInput type="number" formControlName="fiscalPower" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.realPower') }}</mat-label>
+        <input matInput type="number" formControlName="realPower" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.seatingCapacity') }}</mat-label>
+        <input matInput type="number" formControlName="seatingCapacity" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.firstRegistrationDate') }}</mat-label>
+        <input matInput type="date" formControlName="firstRegistrationDate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.initialValue') }}</mat-label>
+        <input matInput type="number" formControlName="initialValue" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.currentValue') }}</mat-label>
+        <input matInput type="number" formControlName="currentValue" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.vin') }}</mat-label>
+        <input matInput formControlName="vin" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.vehicleUsage') }}</mat-label>
+        <mat-select formControlName="vehicleUsage">
+          <mat-option *ngFor="let usage of vehicleUsages" [value]="usage">{{ usage }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.vehicleType') }}</mat-label>
+        <mat-select formControlName="vehicleType">
+          <mat-option *ngFor="let type of vehicleTypes" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.mileage') }}</mat-label>
+        <input matInput type="number" formControlName="mileage" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.usualParkingLocation') }}</mat-label>
+        <input matInput formControlName="usualParkingLocation" />
+      </mat-form-field>
+
+      <!-- Assuré lié -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.vehicle.fields.insured') }}</mat-label>
+        <mat-select formControlName="insuredId">
+          <mat-option *ngFor="let insured of insureds" [value]="insured.id">
+            {{ insured.firstName }} {{ insured.lastName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="flex justify-end gap-4 mt-6">
+        <div *ngIf="message">{{ t(message) }}</div>
+        <button mat-flat-button color="primary" [disabled]="formGroup.invalid" (click)="onSubmit()">
+          {{ t('form.actions.save') }}
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>
