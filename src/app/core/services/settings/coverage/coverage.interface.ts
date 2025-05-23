@@ -1,4 +1,6 @@
+import { Product } from "@core/services/administration/product/product.interface";
 import { CoverageReference } from "../coverage-reference/coverage-reference.interface";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 
 export class Coverage {
     id: string;
@@ -14,8 +16,8 @@ export class Coverage {
     displayPrime: boolean;
     generatesCharacteristic: boolean;
     reference: CoverageReference;
-    product: string;
-    managementEntity: string;
+    product: Product;
+    managementEntity: ManagementEntity;
   
     constructor(coverage: any) {
       this.id = coverage.id || '';

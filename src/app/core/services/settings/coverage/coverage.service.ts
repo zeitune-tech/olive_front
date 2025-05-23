@@ -45,17 +45,6 @@ export class CoverageService {
         private _httpClient: HttpClient
     ) { }
 
-    create(coverage: Coverage): Observable<Coverage> {
-        return this._httpClient.post<Coverage>(`${this.baseUrl}/coverages`, coverage)
-        .pipe(
-            tap((coverage) => {
-                this.coverage = coverage;
-                return (coverage);
-            }),
-            catchError(() => of({} as Coverage))
-        );
-    }
-
 
     get(id: string): Observable<Coverage> {
         return this._httpClient.get<Coverage>(`${this.baseUrl}${id}`)
@@ -72,11 +61,8 @@ export class CoverageService {
     getAll(): Observable<Coverage[]> {
         return this._httpClient.get<Coverage[]>(`${this.baseUrl}`)
         .pipe(
-            tap((response : any) => {
-                this.coverages = response?.content.map((coverage: Coverage) => {
-                    return coverage;
-                });
-                this.metadata = response;
+            tap((response : Coverage[]) => {
+                this.coverages = response;
                 return response;
             }),
             catchError(() => of([] as Coverage[]))
@@ -90,6 +76,17 @@ export class CoverageService {
                 return response;
             }),
             catchError(() => of([] as Coverage[]))
+        );
+    }
+
+    update(id: string, coverage: any): Observable<Coverage> {
+        return this._httpClient.put<Coverage>(`${this.baseUrl}/${id}`, coverage)
+        .pipe(
+            tap((coverage) => {
+                this.coverage = coverage;
+                return (coverage);
+            }),
+            catchError(() => of({} as Coverage))
         );
     }
 }

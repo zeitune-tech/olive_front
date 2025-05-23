@@ -1,0 +1,112 @@
+<div class="" *transloco="let t">
+  <!-- Dialog header -->
+  <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+    <h1 class="text-2xl font-bold">
+      {{ t('entities.coverage.form.title') }}
+    </h1>
+    <button [matDialogClose]="false" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Dialog content -->
+  <mat-dialog-content class="overflow-y-auto px-6 py-4 max-h-[80vh]">
+    <form [formGroup]="formGroup" class="w-full space-y-6">
+      <!-- Nature -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.coverage.fields.nature') }}</mat-label>
+        <input matInput formControlName="nature" />
+        <mat-error *ngIf="formGroup.get('nature')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Is Free -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.coverage.fields.isFree') }}</mat-label>
+        <mat-select formControlName="isFree">
+          <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+          <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Calculation Mode -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.coverage.fields.calculationMode') }}</mat-label>
+        <mat-select formControlName="calculationMode">
+          <mat-option *ngFor="let mode of calculationModes" [value]="mode.value">
+            {{ mode.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Fixed Capital -->
+      <mat-form-field appearance="outline" class="w-full" *ngIf="formGroup.get('calculationMode')?.value === 'FIXE'">
+        <mat-label>{{ t('entities.coverage.fields.fixedCapital') }}</mat-label>
+        <input matInput type="number" formControlName="fixedCapital" />
+        <mat-error *ngIf="formGroup.get('fixedCapital')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+      </mat-form-field>
+
+      <ng-container class="flex gap-4" *ngIf="formGroup.get('calculationMode')?.value !== 'FIXE'">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>{{ t('entities.coverage.fields.minCapital') }}</mat-label>
+          <input matInput type="number" formControlName="minCapital" />
+          <mat-error *ngIf="formGroup.get('minCapital')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>{{ t('entities.coverage.fields.maxCapital') }}</mat-label>
+          <input matInput type="number" formControlName="maxCapital" />
+          <mat-error *ngIf="formGroup.get('maxCapital')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+
+      <!-- Order -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.coverage.fields.order') }}</mat-label>
+        <input matInput type="number" formControlName="order" />
+      </mat-form-field>
+
+      <!-- Prorata -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.coverage.fields.prorata') }}</mat-label>
+        <input matInput formControlName="prorata" />
+      </mat-form-field>
+
+      <!-- Display Prime -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.coverage.fields.displayPrime') }}</mat-label>
+        <mat-select formControlName="displayPrime">
+          <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+          <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Generates Characteristic -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.coverage.fields.generatesCharacteristic') }}</mat-label>
+        <mat-select formControlName="generatesCharacteristic">
+          <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+          <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <!-- Dialog actions -->
+  <mat-dialog-actions align="end" class="px-6 py-4 border-t border-gray-200">
+    <button mat-stroked-button color="primary" [matDialogClose]="false">
+      {{ t('form.actions.cancel') }}
+    </button>
+    <button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled" (click)="onSubmit()">
+      <span *ngIf="!formGroup.disabled">{{ t('form.actions.save') }}</span>
+      <mat-progress-spinner *ngIf="formGroup.disabled" [diameter]="24" mode="indeterminate"></mat-progress-spinner>
+    </button>
+  </mat-dialog-actions>
+</div>

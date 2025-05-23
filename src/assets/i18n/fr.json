@@ -764,7 +764,11 @@
         "title": "Assurés"
       },
       "form": {
-        "subtitle": "Créer un nouvel assuré"
+        "title": "Créer un assuré",
+        "subtitle": "Créer un nouvel assuré",
+        "description": "Remplissez les informations de l'assuré",
+        "select_label": "Sélectionner un assuré",
+        "selected_message": "Assuré sélectionné avec succès"
       },
       "fields": {
         "lastName": "Nom",
@@ -790,7 +794,11 @@
         "title": "Véhicules"
       },
       "form": {
-        "subtitle": "Ajouter un nouveau véhicule"
+        "title": "Créer un véhicule",
+        "subtitle": "Ajouter un nouveau véhicule",
+        "description": "Remplissez les informations du véhicule",
+        "select_label": "Sélectionner un véhicule",
+        "selected_message": "Véhicule sélectionné avec succès"
       },
       "fields": {
         "licensePlate": "Immatriculation",
@@ -810,6 +818,31 @@
         "mileage": "Kilométrage",
         "usualParkingLocation": "Lieu de stationnement habituel",
         "insured": "Assuré"
+      }
+    },
+    "contract": {
+      "form": {
+        "title": "Nouveau contrat",
+        "subtitle": "Remplissez les informations générales"
+      },
+      "fields": {
+        "contractNumber": "Numéro du contrat",
+        "contractType": "Type de contrat",
+        "status": "Statut",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "durationMonths": "Durée (mois)",
+        "agencyCode": "Code agence",
+        "agencyName": "Nom agence",
+        "agencyLocation": "Localisation"
+      },
+      "steps": {
+        "contract_info": "Informations du contrat",
+        "insured": "Assuré",
+        "vehicle": "Véhicule",
+        "coverages": "Garanties",
+        "premiums": "Prime",
+        "summary": "Résumé"
       }
     }
   },
@@ -1004,6 +1037,16 @@
       "contributors": "Commissions / Apporteurs",
       "contributors_new": "Ajouter / Modifier une Commission / Apporteur",
       "new": "Ajouter / Modifier une commission"
+    },
+    "insureds": {
+      "title": "Assurés",
+      "list": "Liste des assurés",
+      "new": "Ajouter / Modifier un assuré"
+    },
+    "vehicles": {
+      "title": "Véhicules",
+      "list": "Liste des véhicules",
+      "new": "Ajouter / Modifier un véhicule"
     }
   },
   "form": {
@@ -1268,7 +1311,7 @@
   "select-module": {
     "title": "Sélectionner un module"
   },
-  "message" : {
+  "message": {
     "success": "Opération réussie",
     "error": "Une erreur s'est produite",
     "warning": "Avertissement",

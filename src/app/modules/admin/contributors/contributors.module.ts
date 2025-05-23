@@ -1,6 +1,8 @@
 import { NgModule } from "@angular/core";
+import { ContributorsListComponent } from "./list/list.component";
 import { RouterModule } from "@angular/router";
-import { routes } from "./coverages.routing";
+import { routes } from "./contributors.routing";
+import { ContributorNewComponent } from "./new/new.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -16,28 +18,11 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { CoverageReferenceListComponent } from "./list-references/list.component";
-import { CoveragesListComponent } from "./list-coverages/list.component";
-import { IncompatibleCoveragesListComponent } from "./list-incompatibilities/list.component";
-import { CoveragesEditDialogComponent } from "./new-coverage/edit.component";
-import { IncompatibleCoveragesNewComponent } from "./new-incompatibility/new.component";
-import { CoverageReferenceNewComponent } from "./new-reference/new.component";
-import { SelectProductComponent } from "./select-product/select-product.component";
-import { CoverageLayoutComponent } from "./layout/layout.component";
-import { LayoutService } from "./layout.service";
-import { AlertModule } from "@lhacksrt/components";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
     declarations: [
-        CoverageReferenceListComponent,
-        CoveragesListComponent,
-        IncompatibleCoveragesListComponent,
-        CoveragesEditDialogComponent,
-        IncompatibleCoveragesNewComponent,
-        CoverageReferenceNewComponent,
-        SelectProductComponent,
-        CoverageLayoutComponent
+        ContributorsListComponent,
+        ContributorNewComponent,
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -55,12 +40,9 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         MatSelectModule,
         MatDividerModule,
         ReactiveFormsModule,
-        MatProgressSpinnerModule,
-        MatSnackBarModule,
+        MatProgressSpinnerModule
     ],
-    providers: [
-        LayoutService
-    ],
-    exports: [],
+    providers: [],
+    exports: []
 })
-export class CoveragesModule { }
+export class ContributorsModule { }

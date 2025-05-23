@@ -9,7 +9,8 @@ import { PermissionsService } from '@core/permissions/permissions.service';
 import { NavigationItem } from '@lhacksrt/components';
 import { compactSettingsNavigation, defaultSettingsNavigation } from './nav/settings.nav';
 import { compactAttestationNavigation, defaultAttestationNavigation } from './nav/attestation.nav';
-
+import { compactInsuredNavigation, defaultInsuredNavigation } from './nav/insured.nav';
+import { compactProductionNavigation } from './nav/production.nav';
 @Injectable({
     providedIn: 'root'
 })
@@ -28,6 +29,14 @@ export class NavigationService {
         {
             compact: compactAttestationNavigation,
             default: defaultAttestationNavigation
+        },
+        {
+            compact: compactInsuredNavigation,
+            default: defaultInsuredNavigation
+        },
+        {
+            compact: compactProductionNavigation,
+            default: defaultInsuredNavigation
         }
     ] as Navigation [];
 
@@ -89,6 +98,8 @@ export class NavigationService {
             case "administration" : return this.items[0];
             case "settings": return this.items[1];
             case "attestations": return this.items[2];
+            case "insureds": return this.items[3];
+            case "productions": return this.items[4];
             default : return this.items[0];
         }
     }

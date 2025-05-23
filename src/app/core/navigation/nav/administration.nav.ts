@@ -131,6 +131,31 @@ export const defaultAdministrationNavigation: NavigationItem[] = [
         ]
     },
     {
+        id: 'contributors',
+        title: 'sidebar.contributors.title',
+        type: 'collapsable',
+        icon: 'fluent:people-team',
+        // permission: PERMISSIONS.VIEW_CONTRIBUTORS,
+        children: [
+            {
+                id: 'contributors-list',
+                title: 'sidebar.contributors.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/administration/contributors/list',
+                // permission: PERMISSIONS.VIEW_CONTRIBUTORS
+            },
+            {
+                id: 'contributors-new',
+                title: 'sidebar.contributors.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/administration/contributors/new',
+                // permission: PERMISSIONS.CREATE_CONTRIBUTORS
+            }
+        ]
+    },
+    {
         id: 'profiles',
         title: 'sidebar.profiles.title',
         type: 'collapsable',

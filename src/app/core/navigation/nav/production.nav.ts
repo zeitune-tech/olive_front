@@ -3,7 +3,7 @@
 import { NavigationItem } from "@lhacksrt/components";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
 
-export const defaultInsuredNavigation: NavigationItem[] = [
+export const defaultProductionNavigation: NavigationItem[] = [
     {
         id: 'insured-module',
         title: 'sidebar.insureds.title', // Ajoute la clé i18n correspondante
@@ -16,7 +16,7 @@ export const defaultInsuredNavigation: NavigationItem[] = [
                 title: 'sidebar.insureds.list',
                 type: 'basic',
                 icon: 'fluent:person-accounts',
-                link: '/insured/insureds/list',
+                link: '/insureds/list',
                 // permission: PERMISSIONS.VIEW_INSUREDS
             },
             {
@@ -24,7 +24,7 @@ export const defaultInsuredNavigation: NavigationItem[] = [
                 title: 'sidebar.insureds.new',
                 type: 'basic',
                 icon: 'fluent:person-add',
-                link: '/insured/insureds/new',
+                link: '/insureds/new',
                 // permission: PERMISSIONS.CREATE_INSUREDS
             }
         ]
@@ -41,7 +41,7 @@ export const defaultInsuredNavigation: NavigationItem[] = [
                 title: 'sidebar.vehicles.list',
                 type: 'basic',
                 icon: 'fluent:vehicle-car',
-                link: '/insured/vehicles/list',
+                link: '/vehicles/list',
                 // permission: PERMISSIONS.VIEW_VEHICLES
             },
             {
@@ -49,7 +49,7 @@ export const defaultInsuredNavigation: NavigationItem[] = [
                 title: 'sidebar.vehicles.new',
                 type: 'basic',
                 icon: 'fluent:vehicle-car-profile-ltr',
-                link: '/insured/vehicles/new',
+                link: '/vehicles/new',
                 // permission: PERMISSIONS.CREATE_VEHICLES
             }
         ]
@@ -57,7 +57,7 @@ export const defaultInsuredNavigation: NavigationItem[] = [
 ];
 
 
-export const compactInsuredNavigation: NavigationItem[] = [
+export const compactProductionNavigation: NavigationItem[] = [
     {
         id: 'insured-module',
         title: 'sidebar.insureds.title', // Ajoute la clé i18n correspondante

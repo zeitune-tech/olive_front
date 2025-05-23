@@ -11,6 +11,7 @@ import { CoverageService } from "@core/services/settings/coverage/coverage.servi
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { CoveragesEditDialogComponent } from "../new-coverage/edit.component";
 
 @Component({
     selector: "app-coverages-list",
@@ -61,34 +62,20 @@ export class CoveragesListComponent {
     tableOptions: TableOptions<Coverage> = {
         title: '',
         columns: [
-            { label: 'entities.coverage.fields.reference', property: 'reference', type: 'text', visible: true, cssClasses: ["min-w-64"] },
-            { label: 'entities.coverage.fields.nature', property: 'nature', type: 'text', visible: true,  },
-            { label: 'entities.coverage.fields.isFixed', property: 'isFixed', type: 'select', visible: true, options: [
-                { label: 'form.fields.yes', value: true },
-                { label: 'form.fields.no', value: false }
-            ] },
-            { label: 'entities.coverage.fileds.calculationMode', property: 'calculationMode', type: 'select', visible: true, options: [
-                { label: 'entities.coverage.options.calculationMode.FIXED', value: 'FIXE' },
-                { label: 'entities.coverage.options.calculationMode.VARIABLE', value: 'VARIABLE' },
-
-            ] },
-            { label: 'entities.coverage.fields.fixedCapital', property: 'fixedCapital', type: 'input', visible: true,},
-            { label: 'entities.coverage.fields.minCapital', property: 'minCapital', type: 'input', visible: true },
-            { label: 'entities.coverage.fields.maxCapital', property: 'maxCapital', type: 'input', visible: true },
-            { label: 'entities.coverage.fields.order', property: 'order', type: 'input', visible: true },
-            { label: 'entities.coverage.fields.prorata', property: 'prorata', type: 'input', visible: true },
-            { label: 'entities.coverage.fields.displayPrime', property: 'displayPrime', type: 'select', visible: true, options: [
-                { label: 'form.fields.yes', value: true },
-                { label: 'form.fields.no', value: false }
-            ] },
-            { label: 'entities.coverage.fields.generatesCharacteristic', property: 'generatesCharacteristic', type: 'select', visible: true, options: [
-                { label: 'form.fields.yes', value: true },
-                { label: 'form.fields.no', value: false }
-            ] },
-            { label: 'entities.coverage.fields.isFree', property: 'isFree', type: 'select', visible: true, options: [
-                { label: 'form.fields.yes', value: true },
-                { label: 'form.fields.no', value: false }
-            ] },
+            { label: 'entities.coverage.fields.product', property: 'product', type: 'text', visible: true, cssClasses: ["min-w-32"] },
+            { label: 'entities.coverage.fields.managementEntity', property: 'managementEntity', type: 'text', visible: true, cssClasses: ["min-w-44"] },
+            { label: 'entities.coverage.fields.reference', property: 'reference', type: 'text', visible: true, cssClasses: ["min-w-52"] },
+            { label: 'entities.coverage.fields.nature', property: 'nature', type: 'text', visible: true, },
+   
+            { label: 'entities.coverage.fields.calculationMode', property: 'calculationMode', type: 'text', visible: true,},
+            { label: 'entities.coverage.fields.fixedCapital', property: 'fixedCapital', type: 'text', visible: true, },
+            { label: 'entities.coverage.fields.minCapital', property: 'minCapital', type: 'text', visible: true },
+            { label: 'entities.coverage.fields.maxCapital', property: 'maxCapital', type: 'text', visible: true },
+            { label: 'entities.coverage.fields.order', property: 'order', type: 'text', visible: true },
+            { label: 'entities.coverage.fields.prorata', property: 'prorata', type: 'text', visible: true },
+            { label: 'entities.coverage.fields.displayPrime', property: 'displayPrime', type: 'text', visible: true, },
+            { label: 'entities.coverage.fields.generatesCharacteristic', property: 'generatesCharacteristic', type: 'text', visible: true, },
+            { label: 'entities.coverage.fields.isFree', property: 'isFree', type: 'text', visible: true, },
         ],
         imageOptions: {
             label: 'coverage.columns.logo',
@@ -107,6 +94,14 @@ export class CoveragesListComponent {
 
             if (element[property] === null || element[property] === undefined) {
                 return " - ";
+            }
+
+            if (property === 'product') {
+                return element.product?.name || " - ";
+            }
+
+            if (property === 'managementEntity') {
+                return element.managementEntity.name || " - ";
             }
 
             return element[property];
@@ -151,15 +146,34 @@ export class CoveragesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Coverage Coverage
-        */
-    onDemand(item: Coverage | null): void {
 
+    openEditDialog(item: any): void {
+        const dialogRef = this._dialog.open(CoveragesEditDialogComponent, {
+            width: '700px',
+            data: item
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // Appeler ici le service pour mettre à jour les données
+                this._coverageService.update(item.id, result).subscribe(() => {
+                    // rechargement, toast, etc.
+                    this._coverageService.getAll().subscribe((data: Coverage[]) => {
+                        this.data = data;
+                        this.dataSource.data = data;
+                        this._changeDetectorRef.detectChanges();
+                    });
+                });
+            }
+        });
     }
+
+    openDeleteDialog(item: any): void {}
+
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
+        columns.push('actions');
         return columns;
     }
 

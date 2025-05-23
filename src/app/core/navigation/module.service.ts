@@ -89,6 +89,16 @@ export class ModuleService {
                     ]
                 },
                 {
+                    name: "contributors",
+                    title: "modules.administration.features.contributors",
+                    description: "modules.administration.features.contributors_description",
+                    icon: "business",
+                    route: "/administration/contributors",
+                    permissions: [
+                        PERMISSIONS.VIEW_COMPANIES,
+                    ]
+                },
+                {
                     name: "profiles",
                     title: "modules.administration.features.profiles",
                     description: "modules.administration.features.profiles_description",
@@ -306,7 +316,7 @@ export class ModuleService {
 
         this.modules.forEach((module: Module) => {
             module.cssClass = this.disabledCssClass;
-            let canAccess = false;
+            let canAccess = true;
             module.permissions.forEach(permission => {
                 canAccess = this._permissionsService.hasPermission(permission)
             })
