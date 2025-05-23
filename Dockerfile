@@ -1,14 +1,11 @@
-# Étape 1 : Utiliser Oracle JDK 21
-FROM container-registry.oracle.com/java/openjdk:21
-
-# Étape 2 : Définir le répertoire de travail
+# Étape de build
+FROM node:18 AS builder
 WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build --prod
 
-# Étape 3 : Copier le fichier JAR compilé dans le conteneur
-COPY target/*.jar app.jar
-
-# Étape 4 : Exposer le port utilisé par Spring Boot
-EXPOSE 8080
-
-# Étape 5 : Démarrer l’application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Étape de production
+FROM nginx:alpine
+COPY --from=builder /app/dist/olive_front /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf

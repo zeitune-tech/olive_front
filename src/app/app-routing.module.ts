@@ -117,6 +117,19 @@ const routes: Routes = [
                 },
                 loadChildren: () => import('./modules/insured/insured.module').then(m => m.InsuredModule)
             },
+
+            {
+                path: 'production',
+                canActivate: [],
+                canActivateChild: [],
+                data: {
+                    // permission: PERMISSIONS.VIEW_PRODUCTION
+                },
+                resolve: {
+                    // ProductionResolver
+                },
+                loadChildren: () => import('./modules/production/production.module').then(m => m.ProductionModule)
+            },
             
             // 404 & Catch all
             {path: '404-not-found', pathMatch: 'full', loadChildren: () => import('./modules/error/error.module').then(m => m.ErrorModule), data: {layout: "empty"}},

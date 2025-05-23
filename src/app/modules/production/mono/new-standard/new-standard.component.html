@@ -1,0 +1,60 @@
+<div class="w-full pb-10" *transloco="let t">
+
+  <div class="flex flex-col mb-10">
+    <h1 class="text-2xl md:text-4xl font-bold py-4">
+      {{ t('entities.contract.form.title') }}
+    </h1>
+    <p class="text-sm text-gray-600">
+      {{ t('entities.contract.form.subtitle') }}
+    </p>
+  </div>
+
+  <mat-vertical-stepper [selectedIndex]="selectedIndex">
+    <!-- Step 1: Contract Info -->
+    <mat-step [stepControl]="formStepOne">
+      <ng-template matStepLabel>{{ t('entities.contract.steps.contract_info') }}</ng-template>
+      <contract-info (formReady)="onStepOneNext($event)"></contract-info>
+    </mat-step>
+
+    <!-- Step 2: Insured -->
+    <mat-step [stepControl]="formStepTwo">
+      <ng-template matStepLabel>{{ t('entities.contract.steps.insured') }}</ng-template>
+      <insured-selector (formReady)="onStepTwoNext($event)"></insured-selector>
+    </mat-step>
+
+    <!-- Step 3: Vehicle -->
+    <mat-step [stepControl]="formStepThree">
+      <ng-template matStepLabel>{{ t('entities.contract.steps.vehicle') }}</ng-template>
+      <vehicle-selector (formReady)="onStepThreeNext($event)"></vehicle-selector>
+    </mat-step>
+
+    <!-- Step 4: Coverages -->
+    <!-- <mat-step [stepControl]="formStepFour">
+      <ng-template matStepLabel>{{ t('entities.contract.steps.coverages') }}</ng-template>
+      <coverages (formReady)="onStepFourNext($event)"></coverages>
+    </mat-step> -->
+
+    <!-- Step 5: Premium breakdown -->
+    <!-- <mat-step [stepControl]="formStepFive">
+      <ng-template matStepLabel>{{ t('entities.contract.steps.premiums') }}</ng-template>
+      <premium-breakdown (formReady)="onStepFiveNext($event)"></premium-breakdown>
+    </mat-step> -->
+
+    <!-- Step 6: Summary -->
+    <mat-step>
+      <ng-template matStepLabel>{{ t('entities.contract.steps.summary') }}</ng-template>
+      <!-- <contract-summary [contractData]="{
+        ...formStepOne?.value,
+        insured: formStepTwo?.value,
+        vehicle: formStepThree?.value,
+        coverages: formStepFour?.value.coverages,
+        premiums: formStepFive?.value
+      }"></contract-summary> -->
+
+      <div class="flex justify-end gap-4 mt-4">
+        <button mat-button matStepperPrevious>{{ t('form.actions.back') }}</button>
+        <button mat-flat-button color="primary" (click)="submit()">{{ t('form.actions.save') }}</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
