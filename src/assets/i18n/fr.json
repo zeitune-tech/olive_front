@@ -156,6 +156,27 @@
         "managementEntity": "Entité de gestion"
       }
     },
+    "duration-rate": {
+      "label": "Taux Durée",
+      "description": "Définition des taux appliqués aux différentes durées de couverture.",
+      "form": {
+        "title": "Configuration des taux de durée",
+        "subtitle": "Ajouter ou modifier un taux de durée"
+      },
+      "table": {
+        "title": "Taux Durées",
+        "description": "Liste des taux associés aux durées de couverture",
+        "empty_state": "Aucun taux de durée trouvé"
+      },
+      "fields": {
+        "dateEffective": "Date d'effet",
+        "duration": "Durée de couverture",
+        "rate": "Taux (%)",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      }
+    },
     "production_registry": {
       "label": "Registre de production",
       "description": "Paramètres de génération des enregistrements de production",
@@ -998,6 +1019,7 @@
       "min_length": "Ce champ doit contenir au moins {min} caractères",
       "password_mismatch": "Les mots de passe doivent être identiques",
       "min": "La valeur minimale est {{ min }}.",
+      "max": "La valeur maximale est {{ max }}.",
       "inferieurToFrom": "Cette valeur doit être supérieure à la précédente.",
       "inferieurTo0": "Cette valeur doit être positive."
     },

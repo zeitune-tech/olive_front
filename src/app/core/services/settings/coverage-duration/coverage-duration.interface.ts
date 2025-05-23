@@ -1,4 +1,5 @@
 export class CoverageDuration {
+  id: string;
     type: string;
     unit: string;
     from: number;
@@ -7,6 +8,7 @@ export class CoverageDuration {
     managementEntity: string;
   
     constructor(coverageDuration: any) {
+      this.id = coverageDuration.id || '';
       this.type = coverageDuration.type || null;
       this.unit = coverageDuration.unit || null;
       this.from = coverageDuration.from || null;

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
-import { UserService } from '@core/services/auth/user/user.service';
 import { PermissionsService } from '@core/permissions/permissions.service';
 import { PERMISSIONS } from '@core/permissions/permissions.data';
 import { CoverageService } from '@core/services/settings/coverage/coverage.service';
@@ -9,7 +8,6 @@ import { CoverageReferenceService } from '@core/services/settings/coverage-refer
 import { InsuredRegistryService } from '@core/services/settings/insured-registry/insured-registry.service';
 import { ProductionRegistryService } from '@core/services/settings/production-registry/production-registry.service';
 import { IncompatibleCoverageService } from '@core/services/settings/incompatible-coverage/incompatible-coverage.service';
-import { CoverageDuration } from '@core/services/settings/coverage-duration/coverage-duration.interface';
 import { CoverageDurationService } from '@core/services/settings/coverage-duration/coverage-duration.service';
 import { AccessoryService } from '@core/services/settings/accessory/accessory.service';
 import { BaseTaxService } from '@core/services/settings/base-tax/base-tax.service';
@@ -18,6 +16,7 @@ import { TaxRegimeService } from '@core/services/settings/tax-regime/tax-regime.
 import { CommissionService } from '@core/services/settings/commission/commission.service';
 import { CommissionContributorService } from './../../core/services/settings/commission-contributor/commission-contributor.service';
 import { CommissionTaxService } from '@core/services/settings/commission-tax/commission-tax.service';
+import { DurationRateService } from '@core/services/settings/duration-rate/duration-rate.service';
 
 @Injectable({
     providedIn: 'root'
@@ -41,7 +40,8 @@ export class SettingsResolver implements Resolve<any> {
         private _taxRegimeService: TaxRegimeService,
         private _commissionService: CommissionService,
         private _commissionContributorService: CommissionContributorService,
-        private _commissionTaxService: CommissionTaxService
+        private _commissionTaxService: CommissionTaxService,
+        private _durationRateService: DurationRateService,
     ) {
      
     }
@@ -110,6 +110,10 @@ export class SettingsResolver implements Resolve<any> {
             resolList.push(this._commissionTaxService.getAll());
         //}
 
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_DURATION_RATES)) {
+            resolList.push(this._durationRateService.getAll());
+        // }
+        
         return forkJoin(resolList);
     }
 }

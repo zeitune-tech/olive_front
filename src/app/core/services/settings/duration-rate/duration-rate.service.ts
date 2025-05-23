@@ -56,9 +56,8 @@ export class DurationRateService {
 
   getAll(): Observable<DurationRate[]> {
     return this._httpClient.get<DurationRate[]>(this.baseUrl).pipe(
-      tap((response: any) => {
-        this.durationRates = response?.content || [];
-        this.metadata = response;
+      tap((response: DurationRate[]) => {
+        this.durationRates = response;
         return response;
       }),
       catchError(() => of([] as DurationRate[]))

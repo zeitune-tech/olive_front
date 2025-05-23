@@ -73,5 +73,12 @@ export const routes: Routes = [
             // permission: PERMISSIONS.VIEW_COMMISSIONS
         },
         loadChildren: () => import('./commissions/commissions.module').then(m => m.CommissionsModule)
+    },
+    {
+        path: 'duration-rates',
+        canActivate: [],
+        canActivateChild: [],
+        data: {},
+        loadChildren: () => import('./taux-duration/duration-rate.module').then(m => m.DurationRateModule)
     }
 ];
