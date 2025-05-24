@@ -34,7 +34,7 @@
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>{{ t('entities.base_tax.fields.calculationBase') }}</mat-label>
         <mat-select formControlName="calculationBase">
-          <mat-option *ngFor="let option of calculationBaseOptions" [value]="option.value">{{ option }}</mat-option>
+          <mat-option *ngFor="let option of calculationBaseOptions" [value]="option.value">{{ option.label }}</mat-option>
         </mat-select>
         <mat-error *ngIf="formGroup.get('calculationBase')?.hasError('required')">
           {{ t('form.errors.required') }}

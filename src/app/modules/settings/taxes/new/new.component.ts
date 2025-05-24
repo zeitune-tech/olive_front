@@ -45,8 +45,6 @@ export class TaxNewComponent implements OnInit {
       designation: ['', Validators.required],
       rgr: [null, Validators.required],
       nature: [null, Validators.required],
-      product: [null, Validators.required],
-      managementEntity: [''] // optionnel ou dynamique selon l'utilisateur connecté
     });
 
     this._productService.products$.subscribe((products) => {

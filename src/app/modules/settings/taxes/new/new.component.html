@@ -40,14 +40,6 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- Product -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>{{ t('entities.tax.fields.product') }}</mat-label>
-        <mat-select formControlName="product">
-          <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
       <!-- Submit -->
       <div class="flex items-center justify-end gap-4 mt-6">
         <div>{{ t(message) }}</div>

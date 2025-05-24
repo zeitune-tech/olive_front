@@ -24,7 +24,6 @@ export class BaseTaxNewComponent implements OnInit {
   calculationBaseOptions = [
     { value: 'PRIME', label: 'Sur la prime' },
     { value: 'ACCESSORY', label: 'Sur les accessoires' },
-    { value: 'GARANTIE', label: 'Sur la garantie' }
   ];
 
   constructor(

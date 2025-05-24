@@ -715,7 +715,7 @@
       },
       "fields": {
         "designation": "Désignation",
-        "rgr": "Régime de regroupement",
+        "rgr": "Regroupement",
         "nature": "Nature de la taxe",
         "pointOfSale": "Point de vente",
         "product": "Produit",
