@@ -1,0 +1,88 @@
+<div class="w-full pb-10" *transloco="let t">
+  <div class="flex flex-col mb-10">
+    <h1 class="text-2xl md:text-4xl font-bold py-4">
+      {{ t('entities.duration-rate.table.title') }}
+    </h1>
+    <p class="text-sm text-gray-600">
+      {{ t('entities.duration-rate.form.subtitle') }}
+    </p>
+  </div>
+
+  <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+    <div class="flex flex-col mb-6 text-center text-primary">
+      <h1 class="text-2xl font-bold">
+        {{ t('entities.duration-rate.form.title') }}
+      </h1>
+      <p class="text-sm text-gray-600">
+        {{ t('entities.duration-rate.form.subtitle') }}
+      </p>
+    </div>
+ 
+    <div class="flex flex-col gap-6">
+      
+      <!-- Product -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.duration-rate.fields.product') }}</mat-label>
+        <mat-select formControlName="productId">
+          <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+      </mat-form-field>
+      
+      <!-- Date Effective -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.duration-rate.fields.dateEffective') }}</mat-label>
+        <input matInput type="date" formControlName="dateEffective" />
+        <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+      </mat-form-field>
+      
+      <!-- Rate -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.duration-rate.fields.rate') }}</mat-label>
+        <input matInput type="number" formControlName="rate" />
+        <mat-error *ngIf="formGroup.get('rate')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+        <mat-error *ngIf="formGroup.get('rate')?.hasError('min')">
+          {{ t('form.errors.min', { min: 0 }) }}
+        </mat-error>
+        <mat-error *ngIf="formGroup.get('rate')?.hasError('max')">
+          {{ t('form.errors.max', { max: 100 }) }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Duration -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.duration-rate.fields.duration') }}</mat-label>
+        <mat-select formControlName="durationId">
+          <mat-option *ngFor="let duration of durations" [value]="duration.id">
+            @if (duration.type === "FIXED") {
+              {{ duration.from }} {{ t('entities.coverage_duration.options.unit.' + duration.unit.toLowerCase()) }}
+            } @else {
+              {{ duration.from }} - {{ duration.to }} {{ t('entities.coverage_duration.options.unit.' + duration.unit.toLowerCase()) }}
+            }
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.get('duration')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Submit -->
+      <div class="flex items-center justify-end gap-4 mt-6">
+        <div>{{ t(message) }}</div>
+        <button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
+          (click)="onSubmit()">
+          <span *ngIf="!formGroup.disabled">
+            {{ t('form.actions.save') }}
+          </span>
+          <mat-progress-spinner *ngIf="formGroup.disabled" [diameter]="24" mode="indeterminate"></mat-progress-spinner>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

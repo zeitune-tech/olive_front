@@ -37,10 +37,10 @@ export class CoverageDurationsListComponent {
         renderItem: (element: CoverageDuration, property: keyof CoverageDuration) => {
 
             if(property === 'type') {
-                return this._translateService.translate('entities.coverage_duration.fields.type.' + element.type.toLowerCase());
+                return this._translateService.translate('entities.coverage_duration.options.type.' + element.type.toLowerCase());
             }
             if(property === 'unit') {
-                return  this._translateService.translate('entities.coverage_duration.fields.unit.' + element.unit.toLowerCase());
+                return  this._translateService.translate('entities.coverage_duration.options.unit.' + element.unit.toLowerCase());
             }
         
             return element[property];

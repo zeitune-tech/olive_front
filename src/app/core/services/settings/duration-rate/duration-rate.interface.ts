@@ -1,17 +1,17 @@
 export class DurationRate {
   id: string;
   dateEffective: string;
-  duration: string;
+  durationId: string;
   rate: number;
-  product: string;
+  productId: string;
   managementEntity: string;
 
   constructor(data: any) {
     this.id = data.id || '';
     this.dateEffective = data.dateEffective || '';
-    this.duration = data.duration || '';
+    this.durationId = data.duration || '';
     this.rate = data.rate ?? 0;
-    this.product = data.product || '';
+    this.productId = data.product || '';
     this.managementEntity = data.managementEntity || '';
   }
 }
