@@ -9,6 +9,7 @@ import { Commission } from "@core/services/settings/commission/commission.interf
 import { CommissionService } from "@core/services/settings/commission/commission.service";
 import { DurationRate } from "@core/services/settings/duration-rate/duration-rate.interface";
 import { DurationRateService } from "@core/services/settings/duration-rate/duration-rate.service";
+import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -27,9 +28,9 @@ export class DurationRateListComponent {
         title: '',
         columns: [
             { label: 'entities.duration_rate.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
-            { label: 'entities.duration_rate.fields.duration', property: 'durationId', type: 'text', visible: true },
+            { label: 'entities.duration_rate.fields.duration', property: 'duration', type: 'text', visible: true },
             { label: 'entities.duration_rate.fields.rate', property: 'rate', type: 'text', visible: true },
-            { label: 'entities.duration_rate.fields.product', property: 'productId', type: 'text', visible: true },   
+            { label: 'entities.duration_rate.fields.product', property: 'product', type: 'text', visible: true },   
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -42,6 +43,19 @@ export class DurationRateListComponent {
 
         ],
         renderItem: (element: DurationRate, property: keyof DurationRate) => {
+
+            if (property === 'duration') {
+                let duration: string = element.duration.from.toString();
+                if (element.duration.type !== "FIXED") {
+                    duration += ' - ' + element.duration.to;
+                }
+                let unit =this._translationService.translate('entities.duration_rate.options.unit.' + element.duration.unit);
+                return `${duration} ${unit}`;
+            }
+
+            if (property === 'product') {
+                return element.product ? element.product.name : '-';
+            }
 
             return element[property];
         },
@@ -58,6 +72,7 @@ export class DurationRateListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _durationRateService: DurationRateService,
+        private _translationService: TranslocoService,
         private _dialog: MatDialog
     ) { }
 

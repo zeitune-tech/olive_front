@@ -1,5 +1,12 @@
 import { Product } from "@core/services/administration/product/product.interface";
 
+export const  AccessoryType = {
+  NEW_BUSINESS: 'NEW_BUSINESS',
+  MODIFICATION: 'MODIFICATION',
+  SUSPENSION: 'SUSPENSION',
+  REINSTATEMENT: 'REINSTATEMENT'
+}
+
 export class Accessory {
   id: string;
   dateEffective: string;

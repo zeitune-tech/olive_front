@@ -1,6 +1,6 @@
 export class CoverageDuration {
   id: string;
-    type: string;
+    type: "FIXED" | "VARIABLE";
     unit: string;
     from: number;
     to: number;

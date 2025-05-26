@@ -7,6 +7,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Commission } from "@core/services/settings/commission/commission.interface";
 import { CommissionService } from "@core/services/settings/commission/commission.service";
+import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -25,11 +26,11 @@ export class CommissionListComponent {
         title: '',
         columns: [
             { label: 'entities.commission.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
+            { label: 'entities.commission.fields.product', property: 'product', type: 'text', visible: true },
             { label: 'entities.commission.fields.calculationBase', property: 'calculationBase', type: 'text', visible: true },
+            { label: 'entities.commission.fields.pointOfSale', property: 'pointOfSale', type: 'text', visible: true },
             { label: 'entities.commission.fields.managementRate', property: 'managementRate', type: 'text', visible: true },
             { label: 'entities.commission.fields.contributionRate', property: 'contributionRate', type: 'text', visible: true },
-            { label: 'entities.commission.fields.pointOfSale', property: 'pointOfSale', type: 'text', visible: true },
-            { label: 'entities.commission.fields.product', property: 'product', type: 'text', visible: true }
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -42,6 +43,18 @@ export class CommissionListComponent {
 
         ],
         renderItem: (element: Commission, property: keyof Commission) => {
+
+            if (property === "product") {
+                return element.product ? element.product.name : '';
+            }
+
+            if (property === "pointOfSale") {
+                return element.pointOfSale ? element.pointOfSale.name : '';
+            }
+
+            if (property === "calculationBase") {
+                return this._translateService.translate(`entities.commission.options.calculationBase.${element.calculationBase}`);
+            }
 
             return element[property];
         },
@@ -58,6 +71,7 @@ export class CommissionListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _commisionService: CommissionService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) { }
 

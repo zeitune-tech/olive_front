@@ -1,54 +1,47 @@
 <div class="flex flex-col gap-6 py-4" [formGroup]="form" *transloco="let t">
 
-  <mat-form-field class="w-full" appearance="outline">
-    <mat-label>{{ t('entities.contract.fields.contractNumber') }}</mat-label>
-    <input matInput formControlName="contractNumber" />
-  </mat-form-field>
 
-  <mat-form-field class="w-full" appearance="outline">
-    <mat-label>{{ t('entities.contract.fields.contractType') }}</mat-label>
-    <input matInput formControlName="contractType" />
-  </mat-form-field>
-
-  <mat-form-field class="w-full" appearance="outline">
-    <mat-label>{{ t('entities.contract.fields.status') }}</mat-label>
-    <mat-select formControlName="status">
-      <mat-option value="ACTIF">Actif</mat-option>
-      <mat-option value="RESILIE">Résilié</mat-option>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.contract.fields.pointOfSale') }}</mat-label>
+    <mat-select formControlName="pointOfSale">
+      <mat-option *ngFor="let pos of pointsOfSale" [value]="pos.id">
+        {{ pos.name }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.contract.fields.startDate') }}</mat-label>
-      <input matInput type="date" formControlName="startDate" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.contract.fields.endDate') }}</mat-label>
-      <input matInput type="date" formControlName="endDate" />
-    </mat-form-field>
-  </div>
-
-  <mat-form-field class="w-full" appearance="outline">
-    <mat-label>{{ t('entities.contract.fields.durationMonths') }}</mat-label>
-    <input matInput type="number" formControlName="durationMonths" />
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.contract.fields.product') }}</mat-label>
+    <mat-select formControlName="product">
+      <mat-option *ngFor="let product of products" [value]="product.id">
+        {{ product.name }} <span *ngIf="product.description">({{ product.description }})</span>
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.contract.fields.agencyCode') }}</mat-label>
-      <input matInput formControlName="agencyCode" />
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.contract.fields.productionRegistry') }}</mat-label>
+    <mat-select formControlName="productionRegistry">
+      <mat-option *ngFor="let registry of productionRegistries" [value]="registry.id">
+        {{ registry.prefix }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.contract.fields.agencyName') }}</mat-label>
-      <input matInput formControlName="agencyName" />
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.contract.fields.durationRate') }}</mat-label>
+    <mat-select formControlName="durationRate">
+      <mat-option *ngFor="let rate of durationRates" [value]="rate.id">
+        {{ rate.duration.from }} - {{ rate.duration.to }} {{ t('entities.duration_rate.options.unit.' +
+        rate.duration.unit) }}
+        ({{ t('entities.duration_rate.fields.rate') }}: {{ rate.rate }})
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.contract.fields.agencyLocation') }}</mat-label>
-      <input matInput formControlName="agencyLocation" />
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.contract.fields.startDate') }}</mat-label>
+    <input matInput type="date" formControlName="startDate" />
+  </mat-form-field>
+
 </div>

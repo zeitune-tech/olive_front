@@ -13,6 +13,7 @@ import { resolve } from 'path';
 import { SettingsResolver } from './modules/settings/settings.resolver';
 import { AttestationsResolver } from './modules/attestations/attestations.resolver';
 import { InsuredResolver } from './modules/insured/insured.resolver';
+import { ProductionResolver } from './modules/production/production.resolver';
 
 const routerConfig: ExtraOptions = {
   preloadingStrategy       : PreloadAllModules,
@@ -126,7 +127,7 @@ const routes: Routes = [
                     // permission: PERMISSIONS.VIEW_PRODUCTION
                 },
                 resolve: {
-                    // ProductionResolver
+                    ProductionResolver
                 },
                 loadChildren: () => import('./modules/production/production.module').then(m => m.ProductionModule)
             },

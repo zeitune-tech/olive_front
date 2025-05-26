@@ -7,6 +7,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { TaxRegime } from "@core/services/settings/tax-regime/tax-regime.interface";
 import { TaxRegimeService } from "@core/services/settings/tax-regime/tax-regime.service";
+import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -50,7 +51,7 @@ export class TaxRegimesListComponent {
             }
 
             if (property === 'nature') {
-                return element.nature === 'EXCEPTIONAL' ? 'Exceptionnel' : 'Normal';
+                return this._translateService.translate(`entities.tax_regime.options.nature.${element.nature}`);
             }
 
             return element[property];
@@ -68,6 +69,7 @@ export class TaxRegimesListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _taxRegime: TaxRegimeService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) { }
 

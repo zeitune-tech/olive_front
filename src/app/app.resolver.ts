@@ -7,6 +7,8 @@ import { ManagementEntityService } from '@core/services/administration/managemen
 import { BranchService } from '@core/services/administration/branch/branch.service';
 import { ProductService } from '@core/services/administration/product/product.service';
 import { CoverageReferenceService } from '@core/services/settings/coverage-reference/coverage-reference.service';
+import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
+import { ContributorService } from '@core/services/administration/contributor/contributor.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +21,8 @@ export class InitialDataResolver implements Resolve<any> {
         private _managementService: ManagementEntityService,
         private _productService: ProductService,
         private _branchService: BranchService,
+        private _pointOfSaleService: PointOfSaleService,
+        private _contributorService: ContributorService
     ) {}
 
     resolve(
@@ -31,7 +35,9 @@ export class InitialDataResolver implements Resolve<any> {
             this._coverageReferenceService.getAll(),
             this._managementService.get(),
             this._productService.getAll(),
-            this._branchService.getAll()
+            this._branchService.getAll(),
+            this._pointOfSaleService.getAll(),
+            this._contributorService.getAll()
         ])
     }
 }

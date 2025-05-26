@@ -568,8 +568,11 @@
       },
       "options": {
         "actType": {
-          "INCLUSION": "Inclusion",
-          "EXCLUSION": "Exclusion"
+          "NEW_BUSINESS": "Affaire nouvelle",
+          "MODIFICATION": "Modification",
+          "SUSPENSION": "Suspension",
+          "REINSTATEMENT": "Remise en vigueur"
+
         }
       }
     },
@@ -600,9 +603,8 @@
       },
       "options": {
         "calculationBase": {
-          "PRIME": "Sur la prime",
-          "ACCESSORY": "Sur les accessoires",
-          "GARANTIE": "Sur la garantie"
+          "PRIME": "Prime",
+          "ACCESSORY": "Accessoire"
         },
         "isFlat": {
           "true": "Oui (montant fixe)",
@@ -625,6 +627,12 @@
         "stampExemption": "Exonération de timbre",
         "exemptedTaxes": "Taxes exonérées",
         "managementEntity": "Entité de gestion"
+      },
+      "options": {
+        "nature": {
+          "NORMAL": "Régime Normal",
+          "EXCEPTIONAL": "Régime Exceptionnel"
+        }
       }
     },
     "commission": {
@@ -652,9 +660,8 @@
 
       "options": {
         "calculationBase": {
-          "PRIME": "Sur la prime",
-          "ACCESSORY": "Sur les accessoires",
-          "GARANTIE": "Sur la garantie"
+          "PRIME": "Prime",
+          "ACCESSORY": "Accessoire"
         }
       }
     },
@@ -685,6 +692,37 @@
           "PRIME": "Sur la prime",
           "ACCESSORY": "Sur les accessoires",
           "GARANTIE": "Sur la garantie"
+        }
+      }
+    },
+    "contributor": {
+      "label": "Apporteur",
+      "description": "Liste des apporteurs et leurs informations.",
+      "form": {
+        "title": "Créer ou modifier un apporteur",
+        "subtitle": "Veuillez remplir les informations de l'apporteur"
+      },
+      "table": {
+        "title": "Apporteurs",
+        "description": "Liste des apporteurs",
+        "empty_state": "Aucun apporteur trouvé"
+      },
+      "fields": {
+        "firstname": "Prénom",
+        "lastname": "Nom",
+        "name": "Nom de l'apporteur",
+        "email": "Email",
+        "level": "Niveau d'accès",
+        "phone": "Téléphone",
+        "address": "Adresse",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      },
+      "options": {
+        "level": {
+          "COMPANY": "Compagnie",
+          "POINT_OF_SALE": "Point de vente",
+          "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché"
         }
       }
     },
@@ -720,6 +758,14 @@
         "product": "Produit",
         "managementEntity": "Entité de gestion",
         "actions": "Actions"
+      },
+      "options": {
+        "unit": {
+          "DAY": "Jour",
+          "WEEK": "Semaine",
+          "MONTH": "Mois",
+          "YEAR": "Année"
+        }
       }
     },
     "tax": {
@@ -748,14 +794,16 @@
       },
       "options": {
         "rgr": {
-          "FISCAL": "Fiscal",
-          "PARAFISCAL": "Parafiscal",
-          "COMMUNAL": "Communal"
+          "RGR1": "1",
+          "RGR2": "2",
+          "RGR3": "3",
+          "RGR4": "4",
+          "RGR5": "5"
         },
         "nature": {
-          "FIXED": "Montant fixe",
-          "VARIABLE": "Taux variable",
-          "HYBRID": "Mixte"
+          "TAX": "Taxe",
+          "FGA": "FGA",
+          "OTHERS": "Autres"
         }
       }
     },
@@ -826,15 +874,11 @@
         "subtitle": "Remplissez les informations générales"
       },
       "fields": {
-        "contractNumber": "Numéro du contrat",
-        "contractType": "Type de contrat",
-        "status": "Statut",
-        "startDate": "Date de début",
-        "endDate": "Date de fin",
-        "durationMonths": "Durée (mois)",
-        "agencyCode": "Code agence",
-        "agencyName": "Nom agence",
-        "agencyLocation": "Localisation"
+        "pointOfSale": "Point de vente",
+        "productionRegistry": "Registre de production",
+        "product": "Produit",
+        "durationRate": "Taux de durée",
+        "startDate": "Date de début"
       },
       "steps": {
         "contract_info": "Informations du contrat",
@@ -1047,6 +1091,26 @@
       "title": "Véhicules",
       "list": "Liste des véhicules",
       "new": "Ajouter / Modifier un véhicule"
+    },
+    "contributors": {
+      "title": "Apporteurs",
+      "list": "Liste des apporteurs",
+      "new": "Ajouter / Modifier un apporteur"
+    },
+    "production": {
+      "title": "Production",
+      "list": "Liste des productions",
+      "new": "Ajouter / Modifier une production"
+    },
+    "production_mono": {
+      "title": "Production Mono",
+      "list": "Liste des productions mono",
+      "new": "Ajouter / Modifier une production mono"
+    },
+    "production_fleet": {
+      "title": "Production Flotte",
+      "list": "Liste des productions flotte",
+      "new": "Ajouter / Modifier une production flotte"
     }
   },
   "form": {
@@ -1068,7 +1132,9 @@
     },
     "options": {
       "yes": "Oui",
-      "no": "Non"
+      "no": "Non",
+      "none": "Pas de sélection",
+      "select": "Sélectionner une option"
     },
     "actions": {
       "save": "Enregistrer",

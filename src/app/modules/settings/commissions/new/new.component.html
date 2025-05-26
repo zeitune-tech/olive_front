@@ -19,11 +19,25 @@
     </div>
 
     <div class="flex flex-col gap-6">
-      <!-- Date Effective -->
+
+      <!-- Product -->
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>{{ t('entities.commission.fields.dateEffective') }}</mat-label>
-        <input matInput type="date" formControlName="dateEffective" />
-        <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
+        <mat-label>{{ t('entities.commission.fields.product') }}</mat-label>
+        <mat-select formControlName="productId">
+          <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">
+          {{ t('form.errors.required') }}
+        </mat-error>
+      </mat-form-field>
+      
+      <!-- Point of Sale -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>{{ t('entities.commission.fields.pointOfSale') }}</mat-label>
+        <mat-select formControlName="salesPointId">
+          <mat-option *ngFor="let pos of pointsOfSale" [value]="pos.id">{{ pos.name }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.get('salesPointId')?.hasError('required')">
           {{ t('form.errors.required') }}
         </mat-error>
       </mat-form-field>
@@ -32,8 +46,9 @@
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>{{ t('entities.commission.fields.calculationBase') }}</mat-label>
         <mat-select formControlName="calculationBase">
-          <mat-option *ngFor="let option of calculationBaseOptions" [value]="option.value">{{ option.label
-            }}</mat-option>
+          <mat-option *ngFor="let option of calculationBaseOptions" [value]="option.value">
+            {{ t(option.label) }}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="formGroup.get('calculationBase')?.hasError('required')">
           {{ t('form.errors.required') }}
@@ -58,24 +73,11 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Point of Sale -->
+      <!-- Date Effective -->
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>{{ t('entities.commission.fields.pointOfSale') }}</mat-label>
-        <mat-select formControlName="salesPointId">
-          <mat-option *ngFor="let pos of pointsOfSale" [value]="pos.id">{{ pos.name }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="formGroup.get('salesPointId')?.hasError('required')">
-          {{ t('form.errors.required') }}
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Product -->
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>{{ t('entities.commission.fields.product') }}</mat-label>
-        <mat-select formControlName="productId">
-          <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">
+        <mat-label>{{ t('entities.commission.fields.dateEffective') }}</mat-label>
+        <input matInput type="date" formControlName="dateEffective" />
+        <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
           {{ t('form.errors.required') }}
         </mat-error>
       </mat-form-field>

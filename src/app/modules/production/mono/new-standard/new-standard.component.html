@@ -19,7 +19,7 @@
     <!-- Step 2: Insured -->
     <mat-step [stepControl]="formStepTwo">
       <ng-template matStepLabel>{{ t('entities.contract.steps.insured') }}</ng-template>
-      <insured-selector (formReady)="onStepTwoNext($event)"></insured-selector>
+      <app-insured-step (formReady)="onStepTwoNext($event)"></app-insured-step>
     </mat-step>
 
     <!-- Step 3: Vehicle -->

@@ -27,6 +27,7 @@ export class ProductionRegistriesListComponent {
             { label: 'entities.production_registry.fields.prefix', property: 'prefix', type: 'text', visible: true },
             { label: 'entities.production_registry.fields.length', property: 'length', type: 'text', visible: true },
             { label: 'entities.production_registry.fields.counter', property: 'counter', type: 'text', visible: true },
+            { label: 'entities.production_registry.fields.product', property: 'product', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'production_registrie.columns.logo',
@@ -39,7 +40,9 @@ export class ProductionRegistriesListComponent {
 
         ],
         renderItem: (element: ProductionRegistry, property: keyof ProductionRegistry) => {
-
+            if (property === 'product') {
+                return element.product ? element.product.name : '';
+            }
             return element[property];
         },
     };

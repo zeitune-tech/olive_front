@@ -10,6 +10,7 @@ import { CompanyService } from '@core/services/administration/company/company.se
 import { PermissionsService } from '@core/permissions/permissions.service';
 import { PERMISSIONS } from '@core/permissions/permissions.data';
 import { ProfileService } from '@core/services/auth/profile/profile.service';
+import { ContributorService } from '@core/services/administration/contributor/contributor.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class AdministrationResolver implements Resolve<any> {
         private _companyLevelOrganizationService: CompanyLevelOrganizationService,
         private _companyService: CompanyService,
         private _profileService: ProfileService,
+        private _contributorService: ContributorService
     ) {
         this._userService.user$.subscribe((user) => {
             if (user) {
@@ -80,6 +82,10 @@ export class AdministrationResolver implements Resolve<any> {
             resolList.push(this._companyService.getAll());
             resolList.push(this._companyService.getLinked());
         }
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_CONTRIBUTORS)) {
+            resolList.push(this._contributorService.getAll());
+        // }
 
         return forkJoin(resolList)
     }

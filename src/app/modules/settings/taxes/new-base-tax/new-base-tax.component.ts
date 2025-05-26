@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ProductService } from '@core/services/administration/product/product.service';
 import { TaxService } from '@core/services/settings/tax/tax.service';
-import { CoverageReferenceService } from '@core/services/settings/coverage-reference/coverage-reference.service';
-import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
 import { BaseTaxService } from '@core/services/settings/base-tax/base-tax.service';
 import { Product } from '@core/services/administration/product/product.interface';
 import { Tax } from '@core/services/settings/tax/tax.interface';
-import { CoverageReference } from '@core/services/settings/coverage-reference/coverage-reference.interface';
 import { PointOfSale } from '@core/services/administration/point-of-sale/point-of-sale.interface';
+import { CoverageService } from '@core/services/settings/coverage/coverage.service';
+import { Coverage } from '@core/services/settings/coverage/coverage.interface';
 
 @Component({
   selector: 'app-base-tax-new',
@@ -18,22 +17,21 @@ export class BaseTaxNewComponent implements OnInit {
   formGroup!: UntypedFormGroup;
   products: Product[] = [];
   taxes: Tax[] = [];
-  coverages: CoverageReference[] = [];
+  coverages: Coverage[] = [];
   pointsOfSale: PointOfSale[] = [];
 
   calculationBaseOptions = [
-    { value: 'PRIME', label: 'Sur la prime' },
-    { value: 'ACCESSORY', label: 'Sur les accessoires' },
+    { value: 'PRIME', label: 'entities.base_tax.options.calculationBase.PRIME' },
+    { value: 'ACCESSORY', label: 'entities.base_tax.options.calculationBase.ACCESSORY' },
   ];
 
   constructor(
     private _formBuilder: FormBuilder,
     private _productService: ProductService,
     private _taxService: TaxService,
-    private _coverageService: CoverageReferenceService,
-    private _pointOfSaleService: PointOfSaleService,
+    private _coverageService: CoverageService,
     private _baseTaxService: BaseTaxService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
@@ -49,14 +47,43 @@ export class BaseTaxNewComponent implements OnInit {
 
     this._productService.products$.subscribe(p => this.products = p);
     this._taxService.taxes$.subscribe(t => this.taxes = t);
-    this._coverageService.coverageReferences$.subscribe(c => this.coverages = c);
-    this._pointOfSaleService.pointsOfSale$.subscribe(pos => this.pointsOfSale = pos);
+    let allCoverages: Coverage[] = [];
+
+    this._coverageService.coverages$.subscribe(c => {
+      allCoverages = c;
+
+      this.formGroup.get('productId')?.valueChanges.subscribe(productId => {
+        this.coverages = allCoverages.filter(cov => cov.product.id === productId);
+        this.formGroup.get('coverageId')?.setValue(null); // réinitialise le champ si la couverture devient invalide
+      });
+    });
+
+
+    // 💡 Mise à jour de l'affichage des champs selon isFlat
+    this.formGroup.get('isFlat')?.valueChanges.subscribe((isFlat: boolean) => {
+      if (isFlat) {
+        this.formGroup.get('rate')?.disable();
+        this.formGroup.get('fixedAmount')?.enable();
+      } else {
+        this.formGroup.get('fixedAmount')?.disable();
+        this.formGroup.get('rate')?.enable();
+      }
+    });
+
+    // Appliquer l'état initial
+    const initialIsFlat = this.formGroup.get('isFlat')?.value;
+    if (initialIsFlat) {
+      this.formGroup.get('rate')?.disable();
+    } else {
+      this.formGroup.get('fixedAmount')?.disable();
+    }
   }
 
+
   onCancel(): void {
-  this.formGroup.reset();
-  // ou navigate si besoin : this.router.navigate(['/base-taxes']);
-}
+    this.formGroup.reset();
+    // ou navigate si besoin : this.router.navigate(['/base-taxes']);
+  }
 
 
   onSubmit(): void {

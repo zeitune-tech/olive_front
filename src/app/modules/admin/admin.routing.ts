@@ -43,6 +43,15 @@ export const routes: Routes = [
         loadChildren: () => import('./points-of-sale/points-of-sale.module').then(m => m.PointsOfSaleModule)
     },
     {
+        path: 'contributors',
+        canActivate: [],
+        canActivateChild: [],
+        data: {
+            // permission: PERMISSIONS.VIEW_CONTRIBUTORS
+        },
+        loadChildren: () => import('./contributors/contributors.module').then(m => m.ContributorsModule)
+    },
+    {
         path: 'company-level-organizations',
         canActivate: [],
         canActivateChild: [],

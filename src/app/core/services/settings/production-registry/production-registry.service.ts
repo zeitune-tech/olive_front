@@ -72,11 +72,8 @@ export class ProductionRegistryService {
     getAll(): Observable<ProductionRegistry[]> {
         return this._httpClient.get<ProductionRegistry[]>(`${this.baseUrl}`)
         .pipe(
-            tap((response : any) => {
-                this.productionRegistries = response?.content.map((productionRegistry: ProductionRegistry) => {
-                    return productionRegistry;
-                });
-                this.metadata = response;
+            tap((response : ProductionRegistry[]) => {
+                this.productionRegistries = response;
                 return response;
             }),
             catchError(() => of([] as ProductionRegistry[]))

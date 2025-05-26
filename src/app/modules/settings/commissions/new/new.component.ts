@@ -16,9 +16,8 @@ export class CommissionNewComponent implements OnInit {
   pointsOfSale: any[] = [];
 
   calculationBaseOptions = [
-    { value: 'PRIME', label: 'Sur la prime' },
-    { value: 'ACCESSORY', label: 'Sur les accessoires' },
-    { value: 'GARANTIE', label: 'Sur la garantie' }
+    { value: 'PRIME', label: 'entities.commission.options.calculationBase.PRIME' },
+    { value: 'ACCESSORY', label: 'entities.commission.options.calculationBase.ACCESSORY' }
   ];
 
   constructor(
@@ -32,8 +31,8 @@ export class CommissionNewComponent implements OnInit {
     this.formGroup = this._formBuilder.group({
       dateEffective: [null, Validators.required],
       calculationBase: [null, Validators.required],
-      managementRate: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
-      contributionRate: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+      managementRate: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+      contributionRate: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       salesPointId: [null],
       productId: [null, Validators.required]
     });

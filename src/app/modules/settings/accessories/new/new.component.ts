@@ -14,18 +14,16 @@ export class AccessoryNewComponent implements OnInit {
 
   /**
    *     
-   * NEW_BUSINESS,
-    MODIFICATION,
-    SUSPENSION,
-    REINSTATEMENT
+   * 
+   * 
    */
 
 
   actTypes = [
-    { value: 'NEW_BUSINESS', label: 'Affaire Nouvelle' },
-    { value: 'MODIFICATION', label: 'Modification' },
-    { value: 'SUSPENSION', label: 'Suspension' },
-    { value: 'REINSTATEMENT', label: 'Réintégration' }
+    { value: 'NEW_BUSINESS', label: 'entities.accessory.options.actType.NEW_BUSINESS' },
+    { value: 'MODIFICATION', label: 'entities.accessory.options.actType.MODIFICATION' },
+    { value: 'SUSPENSION', label: 'entities.accessory.options.actType.SUSPENSION' },
+    { value: 'REINSTATEMENT', label: 'entities.accessory.options.actType.REINSTATEMENT' }
   ];
 
   products: Product[] = [];

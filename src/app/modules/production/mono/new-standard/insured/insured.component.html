@@ -1,0 +1,107 @@
+<div class="flex flex-col gap-6 py-4 w-full" [formGroup]="form" *transloco="let t">
+
+    <mat-radio-group formControlName="insuredMode" class="flex flex-col gap-2">
+        <mat-radio-button value="existing">
+            {{ t('entities.contract.fields.chooseExistingInsured') }}
+        </mat-radio-button>
+        <mat-radio-button value="new">
+            {{ t('entities.contract.fields.enterNewInsured') }}
+        </mat-radio-button>
+    </mat-radio-group>
+
+    <!-- Bloc : Assuré existant -->
+    <div *ngIf="isExisting">
+        <insured-selector (selected)="onInsuredSelected($event)"></insured-selector>
+    </div>
+
+    <!-- Bloc : Nouvel assuré -->
+    <div *ngIf="isNew" [formGroup]="insuredForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        <div class="flex flex-col gap-8 w-full" [formGroup]="insuredForm">
+
+            <!-- 📂 Identité -->
+            <section class="w-full">
+                <h2 class="text-lg font-semibold mb-4">{{ t('entities.insured.sections.identity') }}</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.lastName') }}</mat-label>
+                        <input matInput formControlName="lastName" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.firstName') }}</mat-label>
+                        <input matInput formControlName="firstName" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.birthDate') }}</mat-label>
+                        <input matInput type="date" formControlName="birthDate" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.gender') }}</mat-label>
+                        <mat-select formControlName="gender">
+                            <mat-option *ngFor="let gender of genders" [value]="gender.value">
+                                {{ gender.label }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.maritalStatus') }}</mat-label>
+                        <mat-select formControlName="maritalStatus">
+                            <mat-option *ngFor="let status of maritalStatuses" [value]="status.value">
+                                {{ status.label }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+            </section>
+
+            <!-- 🏠 Coordonnées -->
+            <section class="w-full">
+                <h2 class="text-lg font-semibold mb-4">{{ t('entities.insured.sections.contact') }}</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.address') }}</mat-label>
+                        <input matInput formControlName="address" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.phone') }}</mat-label>
+                        <input matInput formControlName="phone" />
+                    </mat-form-field>
+
+                    <mat-form-field class="md:col-span-2" appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.email') }}</mat-label>
+                        <input matInput formControlName="email" />
+                    </mat-form-field>
+
+                </div>
+            </section>
+
+            <!-- 🚗 Permis de conduire -->
+            <section class="w-full">
+                <h2 class="text-lg font-semibold mb-4">{{ t('entities.insured.sections.license') }}</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.licenseNumber') }}</mat-label>
+                        <input matInput formControlName="licenseNumber" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.insured.fields.licenseIssueDate') }}</mat-label>
+                        <input matInput type="date" formControlName="licenseIssueDate" />
+                    </mat-form-field>
+
+                </div>
+            </section>
+
+        </div>
+
+
+    </div>
+</div>

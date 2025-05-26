@@ -15,8 +15,8 @@ export class TaxRegimeNewComponent implements OnInit {
   taxes: Tax[] = [];
 
   regimeNatureOptions = [
-    { value: 'EXCEPTIONAL', label: 'Exceptionnel' },
-    { value: 'NORMAL', label: 'Normal' }
+    { value: 'EXCEPTIONAL', label: 'entities.tax_regime.options.nature.EXCEPTIONAL' },
+    { value: 'NORMAL', label: 'entities.tax_regime.options.nature.NORMAL' },
   ];
 
   constructor(

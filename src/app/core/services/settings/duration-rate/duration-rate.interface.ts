@@ -1,17 +1,20 @@
+import { Product } from "@core/services/administration/product/product.interface";
+import { CoverageDuration } from "../coverage-duration/coverage-duration.interface";
+
 export class DurationRate {
   id: string;
   dateEffective: string;
-  durationId: string;
+  duration: CoverageDuration;
   rate: number;
-  productId: string;
+  product: Product;
   managementEntity: string;
 
   constructor(data: any) {
     this.id = data.id || '';
     this.dateEffective = data.dateEffective || '';
-    this.durationId = data.duration || '';
+    this.duration = data.duration || new CoverageDuration({});
     this.rate = data.rate ?? 0;
-    this.productId = data.product || '';
+    this.product = data.product || new Product({});
     this.managementEntity = data.managementEntity || '';
   }
 }

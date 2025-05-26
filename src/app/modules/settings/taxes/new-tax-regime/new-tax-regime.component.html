@@ -33,7 +33,7 @@
         <mat-label>{{ t('entities.tax_regime.fields.nature') }}</mat-label>
         <mat-select formControlName="nature">
           <mat-option *ngFor="let option of regimeNatureOptions" [value]="option.value">
-            {{ option.label }}
+            {{ t(option.label) }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="formGroup.get('nature')?.hasError('required')">

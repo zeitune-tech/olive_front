@@ -1,11 +1,14 @@
+import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
+import { Product } from "@core/services/administration/product/product.interface";
+
 export class Commission {
   id: string;
   dateEffective: string;
   calculationBase: string;
   managementRate: number;
   contributionRate: number;
-  pointOfSale: string;
-  product: string;
+  pointOfSale: PointOfSale;
+  product: Product;
   managementEntity: string;
 
   constructor(data: any) {
@@ -14,8 +17,8 @@ export class Commission {
     this.calculationBase = data.calculationBase || '';
     this.managementRate = data.managementRate ?? 0;
     this.contributionRate = data.contributionRate ?? 0;
-    this.pointOfSale = data.pointOfSale || '';
-    this.product = data.product || '';
+    this.pointOfSale = data.pointOfSale || new PointOfSale({});
+    this.product = data.product || new Product({});
     this.managementEntity = data.managementEntity || '';
   }
 }

@@ -10,7 +10,7 @@ import { NavigationItem } from '@lhacksrt/components';
 import { compactSettingsNavigation, defaultSettingsNavigation } from './nav/settings.nav';
 import { compactAttestationNavigation, defaultAttestationNavigation } from './nav/attestation.nav';
 import { compactInsuredNavigation, defaultInsuredNavigation } from './nav/insured.nav';
-import { compactProductionNavigation } from './nav/production.nav';
+import { compactProductionNavigation, defaultProductionNavigation } from './nav/production.nav';
 @Injectable({
     providedIn: 'root'
 })
@@ -36,7 +36,7 @@ export class NavigationService {
         },
         {
             compact: compactProductionNavigation,
-            default: defaultInsuredNavigation
+            default: defaultProductionNavigation
         }
     ] as Navigation [];
 

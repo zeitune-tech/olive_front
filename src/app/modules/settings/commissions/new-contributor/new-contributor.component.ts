@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Contributor } from '@core/services/administration/contributor/contributor.interface';
+import { ContributorService } from '@core/services/administration/contributor/contributor.service';
 import { Product } from '@core/services/administration/product/product.interface';
 import { ProductService } from '@core/services/administration/product/product.service';
-import { Contributor } from '@core/services/settings/commission-contributor/commission-contributor.interface';
 import { CommissionContributorService } from '@core/services/settings/commission-contributor/commission-contributor.service';
 
 @Component({
@@ -17,15 +18,15 @@ export class CommissionContributorNewComponent implements OnInit {
 
   
   calculationBaseOptions = [
-    { value: 'PRIME', label: 'Sur la prime' },
-    { value: 'ACCESSORY', label: 'Sur les accessoires' },
-    { value: 'GARANTIE', label: 'Sur la garantie' }
+    { value: 'PRIME', label: 'entities.commission.options.calculationBase.PRIME' },
+    { value: 'ACCESSORY', label: 'entities.commission.options.calculationBase.ACCESSORY' },
   ];
 
   constructor(
     private _formBuilder: FormBuilder,
     private _productService: ProductService,
-    private _commissionContributorService: CommissionContributorService
+    private _commissionContributorService: CommissionContributorService,
+    private _contributorService: ContributorService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +41,10 @@ export class CommissionContributorNewComponent implements OnInit {
 
     this._productService.products$.subscribe((products) => {
       this.products = products;
+    });
+
+    this._contributorService.contributors$.subscribe((contributors) => {
+      this.contributors = contributors;
     });
   }
 

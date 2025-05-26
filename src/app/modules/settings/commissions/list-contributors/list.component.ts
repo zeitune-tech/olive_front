@@ -43,7 +43,7 @@ export class ContributorsListComponent {
         renderItem: (element: CommissionContributor, property: keyof CommissionContributor) => {
 
             if (property === 'contributor') {
-                return element.contributor?.name;
+                return element.contributor ? (element.contributor.firstname + ' ' + element.contributor.lastname) : '--';
             }
 
             if (property === 'product') {

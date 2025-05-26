@@ -176,22 +176,6 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 // permission: PERMISSIONS.CREATE_TAXES
             },
             {
-                id: 'taxes.base-taxes',
-                title: 'sidebar.taxes.base_taxes',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/taxes/base-taxes',
-                // permission: PERMISSIONS.VIEW_TAXES
-            },
-                      {
-                id: 'taxes.base-taxes.new',
-                title: 'sidebar.taxes.base_taxes_new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/taxes/base-taxes-new',
-                // permission: PERMISSIONS.VIEW_TAXES
-            },
-            {
                 id: 'taxes.regime-taxes.list',
                 title: 'sidebar.taxes.tax_regime',
                 type: 'basic',
@@ -205,6 +189,22 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/parameters/taxes/regimes-new',
+                // permission: PERMISSIONS.VIEW_TAXES
+            },
+            {
+                id: 'taxes.base-taxes',
+                title: 'sidebar.taxes.base_taxes',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/taxes/base-taxes',
+                // permission: PERMISSIONS.VIEW_TAXES
+            },
+                      {
+                id: 'taxes.base-taxes.new',
+                title: 'sidebar.taxes.base_taxes_new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/taxes/base-taxes-new',
                 // permission: PERMISSIONS.VIEW_TAXES
             },
         ],

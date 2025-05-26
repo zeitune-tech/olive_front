@@ -7,6 +7,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Accessory } from "@core/services/settings/accessory/accessory.interface";
 import { AccessoryService } from "@core/services/settings/accessory/accessory.service";
+import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -45,6 +46,10 @@ export class AccessoriesListComponent {
                 return element.product?.name;
             }
 
+            if (property === 'actType') {
+                return this._translateService.translate(`entities.accessory.options.actType.${element.actType}`);
+            }
+
             return element[property];
         },
     };
@@ -60,6 +65,7 @@ export class AccessoriesListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _accessoryService: AccessoryService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) { }
 

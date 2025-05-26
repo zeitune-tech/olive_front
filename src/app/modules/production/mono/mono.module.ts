@@ -21,13 +21,16 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { ContractInfoComponent } from "./new-standard/contract-info/contract-info.component";
 import { InsuredSelectorComponent } from "./new-standard/insured-selector/insured-selector.component";
 import { VehicleSelectorComponent } from "./new-standard/vehicle-selector/vehicle-selector.component";
+import { InsuredStepComponent } from "./new-standard/insured/insured.component";
+import { MatRadioModule } from "@angular/material/radio";
 
 @NgModule({
     declarations: [
         ContractNewComponent,
         ContractInfoComponent,
         InsuredSelectorComponent,
-        VehicleSelectorComponent
+        VehicleSelectorComponent,
+        InsuredStepComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -46,7 +49,8 @@ import { VehicleSelectorComponent } from "./new-standard/vehicle-selector/vehicl
         MatDividerModule,
         ReactiveFormsModule,
         MatProgressSpinnerModule,
-        MatStepperModule
+        MatStepperModule,
+        MatRadioModule
     ],
     providers: [],
     exports: [],

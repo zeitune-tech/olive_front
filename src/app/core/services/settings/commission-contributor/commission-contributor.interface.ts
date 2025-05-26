@@ -1,20 +1,5 @@
+import { Contributor } from "@core/services/administration/contributor/contributor.interface";
 import { Product } from "@core/services/administration/product/product.interface";
-
-export class Contributor {
-  id: string;
-  name: string;
-  code: string;
-  type: string;
-  logo: string;
-
-  constructor(data: any) {
-    this.id = data.id || '';
-    this.name = data.name || '';
-    this.code = data.code || '';
-    this.type = data.type || '';
-    this.logo = data.logo || '';
-  }
-}
 
 export class CommissionContributor {
   id: string;
@@ -32,8 +17,8 @@ export class CommissionContributor {
     this.commissionBase = data.commissionBase || '';
     this.contributorRate = data.contributorRate ?? 0;
     this.upperEntityContributorRate = data.upperEntityContributorRate ?? 0;
-    this.contributor = data.contributor || '';
-    this.product = data.product || '';
+    this.contributor = data.contributor || new Contributor({});
+    this.product = data.product || new Product({});
     this.managementEntity = data.managementEntity || '';
   }
 }

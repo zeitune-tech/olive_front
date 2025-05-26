@@ -1,91 +1,66 @@
-import { Component } from "@angular/core";
-import { UntypedFormGroup, FormBuilder, Validators } from "@angular/forms";
-import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
-import { PointOfSaleService } from "@core/services/administration/point-of-sale/point-of-sale.service";
-import { User } from "@core/services/auth/user/user.interface";
-import { UserService } from "@core/services/auth/user/user.service";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ContributorLevel } from "@core/services/administration/contributor/contributor.interface";
+import { ContributorService } from "@core/services/administration/contributor/contributor.service";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
+import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 
 @Component({
-    selector: "app-points-of-sale-new",
-    templateUrl: "./new.component.html",
+    selector: "app-contributor-new",
+    templateUrl: "./new.component.html"
 })
-export class ContributorNewComponent { 
+export class ContributorNewComponent implements OnInit {
 
-    loading = false;
-    user: User | null = null;
-
-    types = [
-        { value: 'GENERAL_AGENT', label: 'entities.point_of_sale.options.type.GENERAL_AGENT' },
-        { value: 'DIRECT_OFFICE', label: 'entities.point_of_sale.options.type.DIRECT_OFFICE' },
+    formGroup!: FormGroup;
+    message: string = '';
+    levels: {
+        value: typeof ContributorLevel[keyof typeof ContributorLevel];
+        label: string;
+    }[] = [
+        { value: ContributorLevel.COMPANY, label: 'entities.contributor.options.level.COMPANY' },
+        { value: ContributorLevel.POINT_OF_SALE, label: 'entities.contributor.options.level.POINT_OF_SALE' },
     ];
 
-    formGroup!: UntypedFormGroup;
-    /**
-     * Constructor
-     */
     constructor(
-        private formBuilder: FormBuilder,
-        private _userService: UserService,
-        private _pointOfSaleService: PointOfSaleService,
-    ) { 
-        this._userService.user$.subscribe((user: User) => {
-            this.user = user;
-        });
-        this.formGroup = this.formBuilder.group({
-            name: ['', Validators.required],
+        private fb: FormBuilder,
+        private contributorService: ContributorService,
+        private _managementEntityService: ManagementEntityService
+    ) {
+        this.formGroup = this.fb.group({
+            firstname: ['', Validators.required],
+            lastname: ['', Validators.required],
             email: ['', [Validators.email]],
-            phone: ['', Validators.required],
-            address: [''],
-            typePointOfSale: ['GENERAL_AGENT', Validators.required],
+            level: [ContributorLevel.COMPANY, Validators.required],
+        });
+
+        this._managementEntityService.entity$.subscribe((entity: ManagementEntity | null) => {
+            if (entity?.type === 'POINT_OF_SALE') {
+                this.levels = [
+                    { value: ContributorLevel.POINT_OF_SALE, label: 'entities.contributor.options.level.POINT_OF_SALE' }
+                ]
+            }
         });
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    ngOnInit(): void {}
 
-    /**
-     * On init
-     */
-    ngOnInit(): void {
-        
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-        /**
-     * Step one next
-     */
-
-    message: string = '';
     onSubmit(): void {
-         // Return if the form is invalid
-         if ( this.formGroup.invalid ) {
-            return;
-        }
+        if (this.formGroup.invalid) return;
 
-        // Disable the form
         this.formGroup.disable();
 
-        const pos: PointOfSale = this.formGroup.value;
+        const contributor = this.formGroup.value;
 
-        this._pointOfSaleService.create(
-            pos
-        ).subscribe({
-            next: (pointOfSale: PointOfSale) => {
-                this._pointOfSaleService.getAll().subscribe();
+        this.contributorService.create(contributor).subscribe({
+            next: () => {
                 this.message = 'message.success';
                 this.formGroup.reset();
                 this.formGroup.enable();
             },
-            error: (error) => {
+            error: () => {
                 this.message = 'message.error';
                 this.formGroup.enable();
-
             }
         });
     }
-    
 }
