@@ -14,25 +14,25 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { TableModule } from "@lhacksrt/components/table/table.module";
-import { SharedModule } from "@shared/shared.module";
 import { AccessoriesListComponent } from "./list/list.component";
 import { AccessoryNewComponent } from "./new/new.component";
+import { LayoutService } from "./layout.service";
+import { SharedModule } from "@shared/shared.module";
+import { TableModule } from "@lhacksrt/components/table/table.module";
 
 @NgModule({
     declarations: [
         AccessoriesListComponent,
         AccessoryNewComponent
     ],
+
     imports: [
         RouterModule.forChild(routes),
         MatIconModule,
-        SharedModule,
         MatTableModule,
         MatPaginatorModule,
         MatMenuModule,
         MatTooltipModule,
-        TableModule,
         MatDialogModule,
         MatButtonModule,
         MatFormFieldModule,
@@ -40,9 +40,13 @@ import { AccessoryNewComponent } from "./new/new.component";
         MatSelectModule,
         MatDividerModule,
         ReactiveFormsModule,
-        MatProgressSpinnerModule
+        SharedModule,
+        TableModule,
+        MatProgressSpinnerModule,
     ],
-    providers: [],
+    providers: [
+        LayoutService
+    ],
     exports: [],
 })
 export class AccessoriesModule { }

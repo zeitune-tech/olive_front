@@ -69,4 +69,15 @@ export class AccessoryService {
       catchError(() => of([] as Accessory[]))
     );
   }
+
+  update(id: string, accessory: any): Observable<Accessory> {
+    return this._httpClient.put<Accessory>(`${this.baseUrl}/${id}`, accessory).pipe(
+      tap((res) => {
+        this.accessory = res;
+        return (res);
+      }),
+      catchError(() => of({} as Accessory))
+    );
+  }
+
 }
