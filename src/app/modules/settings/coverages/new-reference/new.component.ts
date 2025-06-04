@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { Subject, takeUntil } from "rxjs";
-import { ProductService } from "@core/services/administration/product/product.service";
 import { CoverageReferenceService } from "@core/services/settings/coverage-reference/coverage-reference.service";
-import { Product } from "@core/services/administration/product/product.interface";
 import { TranslocoService } from "@jsverse/transloco";
 import { CoverageService } from "@core/services/settings/coverage/coverage.service";
+import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
+import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 
 @Component({
     selector: "app-coverage-referentials-new",
@@ -15,6 +15,7 @@ import { CoverageService } from "@core/services/settings/coverage/coverage.servi
 export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
 
     formGroup!: UntypedFormGroup;
+    entity: ManagementEntity | null = null;
 
     private destroy$ = new Subject<void>();
 
@@ -28,22 +29,42 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
         private _formBuilder: FormBuilder,
         private _coverageReferentialService: CoverageReferenceService,
         private _coverageService: CoverageService,
-        private _productService: ProductService,
         private _translocoService: TranslocoService,
+        private _managementEntityService: ManagementEntityService,
         private _snackBar: MatSnackBar
     ) {}
 
     ngOnInit(): void {
         this.initForm();
 
+        this._managementEntityService.entity$.pipe(takeUntil(this.destroy$)).subscribe({
+            next: (entity) => {
+                this.entity = entity;
+                
+                if (entity && entity.type === 'COMPANY') {
+                    this.formGroup.patchValue({
+                        accessCharacteristic: true,
+                        tariffAccess: true,
+                        toShareOut: false
+                    });
+                    this.formGroup.get('accessCharacteristic')?.disable();
+                    this.formGroup.get('tariffAccess')?.disable();
+                    this.formGroup.get('toShareOut')?.disable();
+                }
+            },
+            error: () => {
+                this.showSnackBar('form.errors.management_entity', 'error');
+            }
+        });
     }
 
     private initForm(): void {
         this.formGroup = this._formBuilder.group({
             designation: ['', Validators.required],
             family: [''],
-            accessCharacteristic: [null, Validators.required],
-            tariffAccess: [null, Validators.required],
+            accessCharacteristic: [false, Validators.required],
+            tariffAccess: [false, Validators.required],
+            toShareOut: [false],
         });
     }
 

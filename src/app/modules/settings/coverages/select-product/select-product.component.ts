@@ -2,10 +2,7 @@ import { Component, Inject } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Product } from "@core/services/administration/product/product.interface";
-import { ProductService } from "@core/services/administration/product/product.service";
-import { RequestMetadata } from "@core/services/common.interface";
 import { debounceTime, distinctUntilChanged } from "rxjs";
-import { LayoutService } from "../layout.service";
 
 @Component({
     selector: "app-select-product",
@@ -18,22 +15,17 @@ export class SelectProductComponent {
     filteredEntity: Product[] = [];
 
     products: Product[] = [];
-    metadata: RequestMetadata = {} as RequestMetadata;
+    selected: Product | null = null;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: { selected: Product },
-        private _matDialogRef: MatDialogRef<SelectProductComponent>,
-        private _productService: LayoutService
+        @Inject(MAT_DIALOG_DATA) public data: { selected: Product, products: Product[] },
+        private _matDialogRef: MatDialogRef<SelectProductComponent>
     ) {
 
-        this._productService.products$.subscribe((products) => {
-            this.products = products;
-            this.filteredEntity = products;
-        })
-
-        this._productService.productMetadata$.subscribe((metadata) => {
-            this.metadata = metadata;
-        })
+        // Initialize products
+        this.products = data.products || [];
+        this.filteredEntity = this.products;
+        this.selected = data.selected || null;
 
         // Set up search with debounce
         this.searchControl.valueChanges

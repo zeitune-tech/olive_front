@@ -35,7 +35,7 @@ export class CoverageDurationNewComponent implements OnInit {
             unit: ['', Validators.required],
             from: [null, [Validators.required, Validators.min(0)]],
             to: [null, [this.inferieurToFromValidator(), Validators.min(0)]],
-            prorotaMode: ['', Validators.required],
+            designation: ['', Validators.required],
           });
           
     }

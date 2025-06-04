@@ -4,7 +4,7 @@ export class CoverageDuration {
     unit: string;
     from: number;
     to: number;
-    prorotaMode: string;
+    designation: string;
     managementEntity: string;
   
     constructor(coverageDuration: any) {
@@ -13,7 +13,7 @@ export class CoverageDuration {
       this.unit = coverageDuration.unit || null;
       this.from = coverageDuration.from || null;
       this.to = coverageDuration.to || null;
-      this.prorotaMode = coverageDuration.prorotaMode || null;
+      this.designation = coverageDuration.designation || null;
       this.managementEntity = coverageDuration.managementEntity || null;
     }
   }

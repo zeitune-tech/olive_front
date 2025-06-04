@@ -8,8 +8,6 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Product } from "@core/services/administration/product/product.interface";
 import { CoverageReference } from "@core/services/settings/coverage-reference/coverage-reference.interface";
 import { CoverageReferenceService } from "@core/services/settings/coverage-reference/coverage-reference.service";
-import { Coverage } from "@core/services/settings/coverage/coverage.interface";
-import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
@@ -27,10 +25,12 @@ export class CoverageReferenceListComponent {
     tableOptions: TableOptions<CoverageReference> = {
         title: '',
         columns: [
+            { label: 'entities.coverage_reference.fields.managementEntity', property: 'managementEntity', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.designation', property: 'designation', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.family', property: 'family', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.accessCharacteristic', property: 'accessCharacteristic', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.tariffAccess', property: 'tariffAccess', type: 'text', visible: true },
+            { label: 'entities.coverage_reference.fields.toShareOut', property: 'toShareOut', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],

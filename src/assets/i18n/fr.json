@@ -60,6 +60,7 @@
         "delete": "Supprimer"
       },
       "fields": {
+        "designation": "Désignation",
         "from": "De",
         "to": "à",
         "type": "Type",
@@ -98,7 +99,8 @@
         "family": "Famille",
         "accessCharacteristic": "Accès aux caractéristiques",
         "tariffAccess": "Accès aux tarifs",
-        "managementEntity": "Entité de gestion"
+        "managementEntity": "Entité de gestion",
+        "toShareOut": "À répartir"
       },
       "options": {
         "family": {

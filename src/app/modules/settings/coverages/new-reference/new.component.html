@@ -47,6 +47,7 @@
                 </mat-error>
             </mat-form-field>
 
+
             <!-- Access Characteristic -->
             <mat-form-field appearance="outline" class="w-full">
                 <mat-label>{{ t('entities.coverage_reference.fields.accessCharacteristic') }}</mat-label>
@@ -67,6 +68,18 @@
                     <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="formGroup.get('tariffAccess')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- TO Share Out -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.coverage_reference.fields.toShareOut') }}</mat-label>
+                <mat-select formControlName="toShareOut">
+                    <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+                    <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="formGroup.get('toShareOut')?.hasError('required')">
                     {{ t('form.errors.required') }}
                 </mat-error>
             </mat-form-field>

@@ -11,6 +11,7 @@ import { IncompatibleCoverageService } from "@core/services/settings/incompatibl
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { SelectProductComponent } from "../select-product/select-product.component";
 
 @Component({
     selector: "app-incompatible-coverages-list",
@@ -18,9 +19,6 @@ import { Subject, takeUntil } from "rxjs";
     animations: animations
 })
 export class IncompatibleCoveragesListComponent {
-    openSelection() {
-        throw new Error('Method not implemented.');
-    }
 
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -61,7 +59,7 @@ export class IncompatibleCoveragesListComponent {
     selection = new SelectionModel<IncompatibleCoverage>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
     selectedProduct: Product = {} as Product;
-    
+    products: Product[] = [];
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
@@ -92,12 +90,6 @@ export class IncompatibleCoveragesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit IncompatibleCoverage IncompatibleCoverage
-        */
-    onDemand(item: IncompatibleCoverage | null): void {
-
-    }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

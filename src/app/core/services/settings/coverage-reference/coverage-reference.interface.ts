@@ -4,6 +4,7 @@ export class CoverageReference {
     family: string;
     accessCharacteristic: boolean;
     tariffAccess: boolean;
+    toShareOut: boolean;
     managementEntity: string;
   
     constructor(coverageReference: any) {
@@ -12,6 +13,7 @@ export class CoverageReference {
       this.family = coverageReference.family || '';
       this.accessCharacteristic = coverageReference.accessCharacteristic ?? false;
       this.tariffAccess = coverageReference.tariffAccess ?? false;
+      this.toShareOut = coverageReference.toShareOut ?? false;
       this.managementEntity = coverageReference.managementEntity || '';
     }
   }

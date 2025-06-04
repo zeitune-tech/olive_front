@@ -16,6 +16,7 @@ export class PointOfSaleService {
     private _pointOfSale: ReplaySubject<PointOfSale> = new ReplaySubject<PointOfSale>(1);
     private _pointsOfSale: ReplaySubject<PointOfSale[]> = new ReplaySubject<PointOfSale[]>(1);
     private _brokers: ReplaySubject<BrokerPointOfSale[]> = new ReplaySubject<BrokerPointOfSale[]>(1);
+    private _linkedBrokers: ReplaySubject<BrokerPointOfSale[]> = new ReplaySubject<BrokerPointOfSale[]>(1);
 
     set pointOfSale(value: PointOfSale) {
         this._pointOfSale.next(value);
@@ -39,6 +40,14 @@ export class PointOfSaleService {
 
     get brokers$() {
         return this._brokers.asObservable();
+    }
+
+    set linkedBrokers(value: BrokerPointOfSale[]) {
+        this._linkedBrokers.next(value);
+    }
+
+    get linkedBrokers$() {
+        return this._linkedBrokers.asObservable();
     }
 
     get metadata$() {
@@ -107,6 +116,17 @@ export class PointOfSaleService {
                     return broker;
                 });
                 this.brokersMetadata = response;
+                return response;
+            }),
+            catchError(() => of([] as BrokerPointOfSale[]))
+        );
+    }
+
+    getLinkedBrokers(): Observable<BrokerPointOfSale[]> {
+        return this._httpClient.get<BrokerPointOfSale[]>(`${this.baseUrl}/linked-brokers`)
+        .pipe(
+            tap((response: BrokerPointOfSale[]) => {
+                this.linkedBrokers = response;
                 return response;
             }),
             catchError(() => of([] as BrokerPointOfSale[]))

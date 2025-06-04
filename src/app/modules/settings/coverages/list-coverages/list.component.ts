@@ -12,6 +12,7 @@ import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { CoveragesEditDialogComponent } from "../new-coverage/edit.component";
+import { SelectProductComponent } from "../select-product/select-product.component";
 
 @Component({
     selector: "app-coverages-list",
@@ -52,12 +53,9 @@ import { CoveragesEditDialogComponent } from "../new-coverage/edit.component";
     animations: animations
 })
 export class CoveragesListComponent {
-    openSelection() {
-        throw new Error('Method not implemented.');
-    }
-
     searchCtrl: UntypedFormControl = new UntypedFormControl('');
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+
 
     tableOptions: TableOptions<Coverage> = {
         title: '',
@@ -116,6 +114,7 @@ export class CoveragesListComponent {
     selection = new SelectionModel<Coverage>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
     selectedProduct: Product = {} as Product;
+    products: Product[] = [];
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
@@ -127,10 +126,23 @@ export class CoveragesListComponent {
         this._coverageService.coverages$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: Coverage[]) => {
+
+
+                this.products = data
+                    .map(coverage => coverage.product)
+                    .filter((product, index, self) =>
+                        index === self.findIndex((p) => p.id === product.id)
+                    );
+
+                this.selectedProduct = this.products[0] || {} as Product;
                 this.data = data;
-                this.dataSource.data = data;
+                // this.dataSource.data = data;
+                this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
                 this._changeDetectorRef.detectChanges();
             });
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     }
 
     ngAfterViewInit() {
@@ -145,6 +157,24 @@ export class CoveragesListComponent {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+
+    openSelection() {
+        this._dialog.open(SelectProductComponent, {
+            width: '700px',
+            data: {
+                selected : this.selectedProduct,
+                products: this.products
+            }
+        }).afterClosed().subscribe((product: Product) => {
+            if (product) {
+                this.selectedProduct = product;
+                this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                this.dataSource.paginator = this.paginator;
+                this._changeDetectorRef.detectChanges();
+            }
+        })
+    }
+
 
 
     openEditDialog(item: any): void {

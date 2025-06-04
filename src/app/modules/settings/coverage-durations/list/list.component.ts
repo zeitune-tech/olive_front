@@ -25,11 +25,11 @@ export class CoverageDurationsListComponent {
     tableOptions: TableOptions<CoverageDuration> = {
         title: '',
         columns: [
+            { label: 'entities.coverage_duration.fields.designation', property: 'designation', type: 'text', visible: true },
             { label: 'entities.coverage_duration.fields.type', property: 'type', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.fields.unit', property: 'unit', type: 'text', visible: true },
             { label: 'entities.coverage_duration.fields.from', property: 'from', type: 'text', visible: true },
             { label: 'entities.coverage_duration.fields.to', property: 'to', type: 'text', visible: true },
-            { label: 'entities.coverage_duration.fields.prorotaMode', property: 'prorotaMode', type: 'text', visible: true },
+            { label: 'entities.coverage_duration.fields.unit', property: 'unit', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
