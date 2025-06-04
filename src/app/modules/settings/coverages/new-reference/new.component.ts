@@ -18,6 +18,12 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
 
     private destroy$ = new Subject<void>();
 
+    families = [
+        { value: 'RC', label: 'entities.coverage_reference.options.family.RC' },
+        { value: 'DOMMAGES', label: 'entities.coverage_reference.options.family.DOMMAGES' },
+        { value: 'OTHERS', label: 'entities.coverage_reference.options.family.OTHERS' }
+    ]
+
     constructor(
         private _formBuilder: FormBuilder,
         private _coverageReferentialService: CoverageReferenceService,
@@ -35,7 +41,7 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
     private initForm(): void {
         this.formGroup = this._formBuilder.group({
             designation: ['', Validators.required],
-            family: ['', Validators.required],
+            family: [''],
             accessCharacteristic: [null, Validators.required],
             tariffAccess: [null, Validators.required],
         });

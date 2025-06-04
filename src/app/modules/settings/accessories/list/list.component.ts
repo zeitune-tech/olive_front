@@ -1,7 +1,6 @@
 import { SelectionModel } from "@angular/cdk/collections";
 import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -11,6 +10,8 @@ import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { Router } from "@angular/router";
+import { LayoutService } from "../layout.service";
 
 @Component({
     selector: "app-closures-list",
@@ -28,7 +29,7 @@ export class AccessoriesListComponent {
             { label: 'entities.accessory.fields.dateEffective', property: 'dateEffective', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.actType', property: 'actType', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.product', property: 'product', visible: true, type: 'text' },
-
+            { label: 'entities.accessory.fields.accessoryAmount', property: 'accessoryAmount', visible: true, type: 'text' }
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -66,7 +67,8 @@ export class AccessoriesListComponent {
         private _changeDetectorRef: ChangeDetectorRef,
         private _accessoryService: AccessoryService,
         private _translateService: TranslocoService,
-        private _dialog: MatDialog
+        private _router: Router,
+        private _layoutService: LayoutService
     ) { }
 
     ngOnInit(): void {
@@ -96,7 +98,11 @@ export class AccessoriesListComponent {
         * Edit Accessory Accessory
         */
     onDemand(item: Accessory | null): void {
+    }
 
+    onEdit(accessory: Accessory): void {
+        this._layoutService.setSelectedAccessory(accessory);
+        this._router.navigate(['/parameters/accessories/new']); // ou route vers le même formulaire mais dans un mode "édition"
     }
 
     get visibleColumns() {

@@ -36,7 +36,7 @@ export class PointsOfSaleNewComponent {
             email: ['', [Validators.email]],
             phone: ['', Validators.required],
             address: [''],
-            typePointOfSale: ['GENERAL_AGENT', Validators.required],
+            typePointOfSale: ['DIRECT_OFFICE', Validators.required],
         });
     }
 
