@@ -22,7 +22,7 @@
 		<div class="flex flex-col gap-6">
 			<mat-form-field appearance="outline" class="w-full">
 				<mat-label>{{ t('entities.coverage.fields.product') }}</mat-label>
-				<mat-select >
+				<mat-select formControlName="productId">
 					<mat-option *ngFor="let product of products" [value]="product.id">
 						{{ product.name }}
 					</mat-option>

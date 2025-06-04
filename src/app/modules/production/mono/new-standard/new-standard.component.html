@@ -29,10 +29,10 @@
     </mat-step>
 
     <!-- Step 4: Coverages -->
-    <!-- <mat-step [stepControl]="formStepFour">
+    <mat-step [stepControl]="formStepFour">
       <ng-template matStepLabel>{{ t('entities.contract.steps.coverages') }}</ng-template>
-      <coverages (formReady)="onStepFourNext($event)"></coverages>
-    </mat-step> -->
+      <app-coverages-step [product]="product" (formReady)="onStepFourNext($event)"></app-coverages-step>
+    </mat-step>
 
     <!-- Step 5: Premium breakdown -->
     <!-- <mat-step [stepControl]="formStepFive">

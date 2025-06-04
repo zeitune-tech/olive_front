@@ -16,10 +16,10 @@ export class Product {
     hasReduction: boolean;
     sharedWith: string[];
 
-    constructor(response: Partial<Product>) {
+    constructor(response: any) {
         this.id = response?.id ?? '';
         this.name = response?.name ?? '';
-        this.description = response?.description ?? '';
+        this.description = response?.description ?? '--';
         this.branch = response?.branch ?? new Branch(response?.branch ?? {});
         this.category = this.branch?.category ?? new Category(this.branch?.category ?? {});
         this.visibility = response?.visibility ?? 'PRIVATE';

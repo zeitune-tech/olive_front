@@ -17,6 +17,7 @@ import { Subject, takeUntil } from "rxjs";
 import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
 import { ShareProductComponent } from "../share-product/share-product.component";
+import e from "express";
 
 @Component({
     selector: "app-products-list",
@@ -56,6 +57,10 @@ export class ProductsListComponent implements OnInit {
             } else if (property === 'category') {
                 return element.branch.category.name;
             }
+
+            if (element[property] === undefined || element[property] === null) {
+                return '--';
+            }
             return element[property];
         },
     };
@@ -84,7 +89,6 @@ export class ProductsListComponent implements OnInit {
             .subscribe((data: Product[]) => {
                 this.data = data;
                 this.dataSource.data = data;
-                this._changeDetectorRef.detectChanges();
             });
 
         this._managementEntityService.entity$

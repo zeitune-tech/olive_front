@@ -5,7 +5,6 @@ COPY . .
 RUN npm install
 RUN npm run build --prod
 
-# Étape de production
+# Étape de prod (serveur statique)
 FROM nginx:alpine
-COPY --from=builder /app/dist/olive_front /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist/olive_front/browser /usr/share/nginx/html

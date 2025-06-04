@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
+import { Product } from '@core/services/administration/product/product.interface';
 
 @Component({
   selector: 'app-contract-new-standard',
@@ -18,8 +19,11 @@ export class ContractNewComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  product!: string;
+
   onStepOneNext(form: UntypedFormGroup): void {
     this.formStepOne = form;
+    this.product = this.formStepOne.value.product; // Assuming product is selected in step one
   }
 
   onStepTwoNext(form: UntypedFormGroup): void {

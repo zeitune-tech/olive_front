@@ -23,6 +23,7 @@ import { InsuredSelectorComponent } from "./new-standard/insured-selector/insure
 import { VehicleSelectorComponent } from "./new-standard/vehicle-selector/vehicle-selector.component";
 import { InsuredStepComponent } from "./new-standard/insured/insured.component";
 import { MatRadioModule } from "@angular/material/radio";
+import { CoveragesStepComponent } from "./new-standard/coverages/coverages.component";
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { MatRadioModule } from "@angular/material/radio";
         ContractInfoComponent,
         InsuredSelectorComponent,
         VehicleSelectorComponent,
-        InsuredStepComponent
+        InsuredStepComponent,
+        CoveragesStepComponent
     ],
     imports: [
         RouterModule.forChild(routes),

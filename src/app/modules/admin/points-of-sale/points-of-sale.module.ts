@@ -19,13 +19,15 @@ import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
 import { BrokerPointsOfSaleListComponent } from "./broker/broker.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { LinkedBrokerPointsOfSaleListComponent } from "./linked-broker/linked-broker.component";
 
 @NgModule({
     declarations: [
         PointsOfSaleListComponent,
         PointsOfSaleNewComponent,
         BrokerPointsOfSaleListComponent,
-        PointsOfSaleNewComponent
+        PointsOfSaleNewComponent,
+        LinkedBrokerPointsOfSaleListComponent
     ],
     imports: [
         RouterModule.forChild(routes),

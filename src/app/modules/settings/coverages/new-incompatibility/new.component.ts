@@ -15,9 +15,12 @@ export class IncompatibleCoveragesNewComponent implements OnInit {
 	formGroup!: UntypedFormGroup;
 	message: string = '';
 
+	allCoverages: Coverage[] = [];
+
 	products: Product[] = [];
 	coverages: Coverage[] = [];
 	incompatibles: Coverage[] = [];
+
 
 	constructor(
 		private _formBuilder: FormBuilder,
@@ -28,6 +31,7 @@ export class IncompatibleCoveragesNewComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.formGroup = this._formBuilder.group({
+			productId: [null, Validators.required],
 			coverageId: [null, Validators.required],
 			incompatibleId: [null, Validators.required],
 		});
@@ -38,7 +42,19 @@ export class IncompatibleCoveragesNewComponent implements OnInit {
 		this._coverageService.coverages$.subscribe((coverages) => {
 			this.coverages = coverages;
 			this.incompatibles = coverages;
+			this.allCoverages = coverages;
 		});
+
+		this.formGroup.get('productId')?.valueChanges.subscribe((productId: string) => {
+			if (productId) {
+				this.coverages = this.allCoverages.filter((coverage: Coverage) => {
+					return coverage.product.id === productId;
+				});
+				this.incompatibles = this.allCoverages.filter((coverage: Coverage) => {
+					return coverage.product.id === productId;
+				});
+			}
+		})
 	}
 
 	onSubmit(): void {
