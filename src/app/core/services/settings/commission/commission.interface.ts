@@ -1,5 +1,5 @@
 import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 
 export class Commission {
   id: string;

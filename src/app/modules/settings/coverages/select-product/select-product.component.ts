@@ -1,7 +1,7 @@
 import { Component, Inject } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { debounceTime, distinctUntilChanged } from "rxjs";
 
 @Component({

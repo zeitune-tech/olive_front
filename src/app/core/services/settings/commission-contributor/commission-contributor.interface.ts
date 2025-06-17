@@ -1,5 +1,5 @@
 import { Contributor } from "@core/services/administration/contributor/contributor.interface";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 
 export class CommissionContributor {
   id: string;

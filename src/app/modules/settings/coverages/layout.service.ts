@@ -1,7 +1,7 @@
 import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Product } from "@core/services/administration/product/product.interface";
-import { ProductService } from "@core/services/administration/product/product.service";
+import { Product } from "@core/services/settings/product/product.interface";
+import { ProductService } from "@core/services/settings/product/product.service";
 import { RequestMetadata } from "@core/services/common.interface";
 import { Coverage } from "@core/services/settings/coverage/coverage.interface";
 import { CoverageService } from "@core/services/settings/coverage/coverage.service";

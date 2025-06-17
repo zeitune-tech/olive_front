@@ -11,6 +11,7 @@ import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { StepperDataService } from "../form.service";
+import { LayoutService } from "../../layout.service";
 
 @Component({
     selector: "app-profiles-new-step-two",
@@ -59,6 +60,7 @@ export class ProfilesNewStepTwoComponent {
         private _translateService: TranslocoService,
         private formBuilder: FormBuilder,
         private _stepperDataService: StepperDataService,
+        private _layoutService: LayoutService
     ) { 
         this.formGroup = this.formBuilder.group({
             permissions: [[], Validators.required],
@@ -91,6 +93,16 @@ export class ProfilesNewStepTwoComponent {
         this.searchInputControl.valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((searchText) => {
             this.dataSource.filter = searchText.trim().toLowerCase();
         });
+
+        this._layoutService.selectedProfile$.pipe(takeUntil(this._unsubscribeAll)).subscribe((profile) => {
+            if (profile) {
+                this.formGroup.patchValue({
+                    permissions: profile.permissions || []
+                });
+                this.selection.select(...profile.permissions);
+                this._changeDetectorRef.detectChanges();
+            }
+        }); 
     }
 
 

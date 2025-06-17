@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { SelectProductComponent } from "../select-product/select-product.component";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { UntypedFormControl } from "@angular/forms";
 import { LayoutService } from "../layout.service";
 

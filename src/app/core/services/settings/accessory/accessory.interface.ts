@@ -1,4 +1,4 @@
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 
 export const  AccessoryType = {
   NEW_BUSINESS: 'NEW_BUSINESS',

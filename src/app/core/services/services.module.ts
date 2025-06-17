@@ -12,7 +12,7 @@ import { IncompatibleCoverageService } from './settings/incompatible-coverage/in
 import { ProductionRegistryService } from './settings/production-registry/production-registry.service';
 import { InsuredRegistryService } from './settings/insured-registry/insured-registry.service';
 import { ClosureService } from './settings/closure/closure.service';
-import { BranchService } from './administration/branch/branch.service';
+import { BranchService } from './settings/branch/branch.service';
 
 
 @NgModule({

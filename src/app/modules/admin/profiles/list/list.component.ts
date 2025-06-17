@@ -4,12 +4,16 @@ import { UntypedFormControl } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { PERMISSIONS } from "@core/permissions/permissions.data";
+import { PermissionsService } from "@core/permissions/permissions.service";
 import { Profile } from "@core/services/auth/profile/profile.interface";
 import { ProfileService } from "@core/services/auth/profile/profile.service";
 import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { LayoutService } from "../layout.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-profiles-list",
@@ -77,6 +81,9 @@ export class ProfilesListComponent {
         private _changeDetectorRef: ChangeDetectorRef,
         private _profileService: ProfileService,
         private _translateService: TranslocoService,
+        private _permissionService: PermissionsService,
+        private _layoutService: LayoutService,
+        private _router: Router
     ) {}
 
     ngOnInit(): void {
@@ -102,16 +109,29 @@ export class ProfilesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Profile Profile
-        */
-    onDemand(item: Profile | null): void {
-      
+
+    hasPermission(): boolean {
+        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PROFILES);
+        return hasPerm;
     }
+
+    onEditProfile(profile: Profile): void {
+        this._layoutService.setSelectedProfile(profile);
+        this._router.navigate(['/administration/profiles/new']);
+    }
+
+    onDeleteProfile(profile: Profile): void {
+        // this._profileService.deleteProfile(profile.id).subscribe(() => {
+        //     this.data = this.data.filter(p => p.id !== profile.id);
+        //     this.dataSource.data = this.data;
+        //     this._changeDetectorRef.detectChanges();
+        // });
+    }
+
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

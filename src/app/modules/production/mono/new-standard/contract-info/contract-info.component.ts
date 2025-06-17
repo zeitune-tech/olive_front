@@ -4,8 +4,8 @@ import { ManagementEntity } from '@core/services/administration/management-entit
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { PointOfSale } from '@core/services/administration/point-of-sale/point-of-sale.interface';
 import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
-import { Product } from '@core/services/administration/product/product.interface';
-import { ProductService } from '@core/services/administration/product/product.service';
+import { Product } from '@core/services/settings/product/product.interface';
+import { ProductService } from '@core/services/settings/product/product.service';
 import { DurationRate } from '@core/services/settings/duration-rate/duration-rate.interface';
 import { DurationRateService } from '@core/services/settings/duration-rate/duration-rate.service';
 import { ProductionRegistry } from '@core/services/settings/production-registry/production-registry.interface';

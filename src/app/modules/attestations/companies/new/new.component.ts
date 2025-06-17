@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormBuilder, UntypedFormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { MarketLevelOrganizationAttestationsService } from "@core/services/attestations/market-level-organization-attestations/market-level-organization.service";
-import { ProductService } from "@core/services/administration/product/product.service";
-import { Product } from "@core/services/administration/product/product.interface";
+import { ProductService } from "@core/services/settings/product/product.service";
+import { Product } from "@core/services/settings/product/product.interface";
 
 @Component({
     selector:'app-company-attestations-new',

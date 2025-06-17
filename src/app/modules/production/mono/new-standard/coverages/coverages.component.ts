@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, UntypedFormGroup } from "@angular/forms";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { Coverage } from "@core/services/settings/coverage/coverage.interface";
 import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 

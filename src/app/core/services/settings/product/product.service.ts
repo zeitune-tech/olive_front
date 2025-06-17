@@ -10,7 +10,7 @@ import { Product } from "./product.interface";
 })
 export class ProductService {
 
-    baseUrl = environment.administration_url + "/products";
+    baseUrl = environment.settings_url + "/products";
     private _product: ReplaySubject<Product> = new ReplaySubject<Product>(1);
     private _products: ReplaySubject<Product[]> = new ReplaySubject<Product[]>(1);
 
@@ -99,11 +99,8 @@ export class ProductService {
     getAll(): Observable<Product[]> {
         return this._httpClient.get<Product[]>(`${this.baseUrl}`)
             .pipe(
-                tap((response: any) => {
-                    this.products = response.content?.map((product: Product) => {
-                        return product;
-                    });
-                    this.metadata = response;
+                tap((response: Product[]) => {
+                    this.products = response.map((item: any) => new Product(item));
                     return response;
                 }),
                 catchError((error) => {

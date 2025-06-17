@@ -1,7 +1,7 @@
 // layout.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Product } from '@core/services/administration/product/product.interface';
+import { Product } from '@core/services/settings/product/product.interface';
 
 @Injectable()
 export class LayoutService {

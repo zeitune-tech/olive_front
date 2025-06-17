@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { IncompatibleCoverage } from "@core/services/settings/incompatible-coverage/incompatible-coverage.interface";
 import { IncompatibleCoverageService } from "@core/services/settings/incompatible-coverage/incompatible-coverage.service";
 import { animations } from "@lhacksrt/animations";

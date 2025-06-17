@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { Product } from '@core/services/administration/product/product.interface';
+import { Product } from '@core/services/settings/product/product.interface';
 
 @Component({
   selector: 'app-contract-new-standard',

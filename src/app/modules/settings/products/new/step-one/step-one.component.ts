@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { UntypedFormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Branch } from "@core/services/administration/branch/branch.interface";
-import { BranchService } from "@core/services/administration/branch/branch.service";
+import { Branch } from "@core/services/settings/branch/branch.interface";
+import { BranchService } from "@core/services/settings/branch/branch.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 import { Subject } from "rxjs";

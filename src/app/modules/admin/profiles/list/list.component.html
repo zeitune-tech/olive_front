@@ -42,7 +42,26 @@
             </th>
             <td mat-cell *matCellDef="let element" class="border-l">
                 <div class="w-full h-full flex items-center justify-around">
-
+                    @if (hasPermission()) {
+                            <button 
+                                mat-button
+                                class="mat-button-large text-white"
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="onEditProfile(element)"
+                            >
+                                {{t('form.actions.edit')}}
+                            </button>
+                            <button 
+                                mat-button
+                                class="mat-button-large"
+                                mat-flat-button
+                                [color]="'warn'"
+                                (click)="onDeleteProfile(element)"
+                            >
+                                {{t('form.actions.delete')}}
+                            </button>
+                        }
                 </div>
             </td>
         </ng-container>

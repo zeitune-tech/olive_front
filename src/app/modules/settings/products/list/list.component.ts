@@ -9,15 +9,14 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 import { PermissionsService } from "@core/permissions/permissions.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
-import { Product } from "@core/services/administration/product/product.interface";
-import { ProductService } from "@core/services/administration/product/product.service";
+import { Product } from "@core/services/settings/product/product.interface";
+import { ProductService } from "@core/services/settings/product/product.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
 import { ShareProductComponent } from "../share-product/share-product.component";
-import e from "express";
 
 @Component({
     selector: "app-products-list",
@@ -29,47 +28,85 @@ export class ProductsListComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Product> = {
-        title: '',
-        columns: [
-            { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true },
-            { label: 'entities.product.fields.description', property: 'description', type: 'text', visible: true, cssClasses: ["min-w-64"] },
-            { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
-            { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true },
-            { label: 'entities.product.fields.minRisk', property: 'minRisk', type: 'text', visible: true },
-            { label: 'entities.product.fields.maxRisk', property: 'maxRisk', type: 'text', visible: true },
-            { label: 'entities.product.fields.minimumGuaranteeNumber', property: 'minimumGuaranteeNumber', type: 'text', visible: true },
-            { label: 'entities.product.fields.fleet', property: 'fleet', type: 'text', visible: true },
-            { label: 'entities.product.fields.hasReduction', property: 'hasReduction', type: 'text', visible: true },
-        ],
-        pageSize: 8,
-        pageSizeOptions: [5, 6, 8],
-        actions: [
+    tableOptions!: TableOptions<Product>;
 
-        ],
-        renderItem: (element: Product, property: keyof Product) => {
-            if (property === 'branch') {
-                return element.branch.name;
-            } else if (property === 'fleet') {
-                return element.fleet ? 'Yes' : 'No';
-            } else if (property === 'hasReduction') {
-                return element.hasReduction ? 'Yes' : 'No';
-            } else if (property === 'category') {
-                return element.branch.category.name;
-            }
+    // Pour les mat-header-row
+    groupHeader: string[] = [];
+    subHeader: string[] = [];
+    visibleColumns: string[] = [];
 
-            if (element[property] === undefined || element[property] === null) {
-                return '--';
+    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+
+    ngOnInit(): void {
+        // Initialisation de la configuration de la table
+        this.tableOptions = {
+            title: '',
+            columns: [
+                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true },
+                { label: 'entities.product.fields.description', property: 'description', type: 'text', visible: true, cssClasses: ['min-w-64'] },
+                { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
+                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true },
+                {
+                    label: 'entities.product.fields.minRisk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
+                        { label: 'entities.product.fields.minRisk', property: 'minRisk', type: 'text', visible: true },
+                        { label: 'entities.product.fields.maxRisk', property: 'maxRisk', type: 'text', visible: true },
+                    ]
+                },
+                { label: 'entities.product.fields.minimumGuaranteeNumber', property: 'minimumGuaranteeNumber', type: 'text', visible: true },
+                { label: 'entities.product.fields.fleet', property: 'fleet', type: 'text', visible: true },
+                { label: 'entities.product.fields.hasReduction', property: 'hasReduction', type: 'text', visible: true },
+            ],
+            pageSize: 8,
+            pageSizeOptions: [5, 6, 8],
+            actions: [],
+            renderItem: (element: Product, property: keyof Product) => {
+                if (property === 'branch') {
+                    return element.branch?.name ?? '--';
+                } else if (property === 'fleet') {
+                    return element.fleet ? 'Yes' : 'No';
+                } else if (property === 'hasReduction') {
+                    return element.hasReduction ? 'Yes' : 'No';
+                } else if (property === 'category') {
+                    return element.branch?.category?.name ?? '--';
+                }
+                return element[property] ?? '--';
+            },
+        };
+
+        // Construction des lignes d’en-tête
+        this.buildHeaderRows();
+    }
+
+    buildHeaderRows(): void {
+        this.tableOptions.columns.forEach(col => {
+            if (col.type === 'collapse' && col.collapseOptions?.length) {
+                // En-tête parent (ligne 1)
+                const parent = col.property as string + '-parent';
+                this.groupHeader.push(parent);
+
+                // Sous-colonnes (ligne 2)
+                col.collapseOptions.forEach(child => {
+                    this.subHeader.push(child.property as string);
+                    this.visibleColumns.push(child.property as string);
+                });
+            } else {
+                // Colonne simple (même valeur dans les 2 lignes)
+                this.groupHeader.push(col.property as string);
+                
+                this.visibleColumns.push(col.property as string);
             }
-            return element[property];
-        },
-    };
+        });
+
+        // Ajout de la colonne d’actions si nécessaire
+        this.groupHeader.push('actions');
+        this.visibleColumns.push('actions');
+    }
+
     data: Product[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Product> = new MatTableDataSource();
     selection = new SelectionModel<Product>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
@@ -98,7 +135,6 @@ export class ProductsListComponent implements OnInit {
             });
     }
 
-    ngOnInit(): void { }
 
     ngAfterViewInit() {
         if (this.dataSource) {
@@ -129,7 +165,7 @@ export class ProductsListComponent implements OnInit {
             },
         }).afterClosed().subscribe((result) => {
             if (result) {
-                
+
             }
         })
     }
@@ -147,11 +183,6 @@ export class ProductsListComponent implements OnInit {
             return false;
     }
 
-    get visibleColumns() {
-        let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
-        return columns;
-    }
 
     trackByProperty(index: number, column: TableColumn<Product>) {
         return column.property;

@@ -4,6 +4,7 @@ import { ManagementEntity } from "@core/services/administration/management-entit
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 import { Subject } from "rxjs";
 import { StepperDataService } from "../form.service";
+import { LayoutService } from "../../layout.service";
 
 @Component({
     selector: "app-profiles-new-step-one",
@@ -29,6 +30,7 @@ export class ProfilesNewStepOneComponent {
         private formBuilder: FormBuilder,
         private _managementEntityService: ManagementEntityService,
         private _stepperDataService: StepperDataService,
+        private _layoutService:LayoutService
     ) { 
         this.formGroup = this.formBuilder.group({
             name: ['', Validators.required],
@@ -43,6 +45,18 @@ export class ProfilesNewStepOneComponent {
                     level: entity.type,
                 });
 
+            }
+        });
+
+        this._layoutService.selectedProfile$.subscribe({
+            next: (profile) => {
+                if (profile) {
+                    this.formGroup.patchValue({
+                        name: profile.name,
+                        description: profile.description,
+                        level: profile.level,
+                    });
+                }
             }
         });
     }

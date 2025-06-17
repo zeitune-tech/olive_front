@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Contributor } from '@core/services/administration/contributor/contributor.interface';
 import { ContributorService } from '@core/services/administration/contributor/contributor.service';
-import { Product } from '@core/services/administration/product/product.interface';
-import { ProductService } from '@core/services/administration/product/product.service';
+import { Product } from '@core/services/settings/product/product.interface';
+import { ProductService } from '@core/services/settings/product/product.service';
 import { CommissionContributorService } from '@core/services/settings/commission-contributor/commission-contributor.service';
 
 @Component({

@@ -1,4 +1,4 @@
-import { Branch, Category } from "../branch/branch.interface";
+import { Branch, Category } from "@core/services/settings/branch/branch.interface";
 
 export class Product {
     id: string;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ProductService } from '@core/services/administration/product/product.service';
+import { ProductService } from '@core/services/settings/product/product.service';
 import { CoverageDuration } from '@core/services/settings/coverage-duration/coverage-duration.interface';
 import { CoverageDurationService } from '@core/services/settings/coverage-duration/coverage-duration.service';
 import { DurationRateService } from '@core/services/settings/duration-rate/duration-rate.service';

@@ -4,8 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { Company } from "@core/services/administration/company/company.interface";
 import { CompanyService } from "@core/services/administration/company/company.service";
-import { Product } from "@core/services/administration/product/product.interface";
-import { ProductService } from "@core/services/administration/product/product.service";
+import { Product } from "@core/services/settings/product/product.interface";
+import { ProductService } from "@core/services/settings/product/product.service";
 import { animations } from "@lhacksrt/animations";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 

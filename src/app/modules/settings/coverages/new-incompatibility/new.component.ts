@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/forms";
-import { Product } from "@core/services/administration/product/product.interface";
-import { ProductService } from "@core/services/administration/product/product.service";
+import { Product } from "@core/services/settings/product/product.interface";
+import { ProductService } from "@core/services/settings/product/product.service";
 import { Coverage } from "@core/services/settings/coverage/coverage.interface";
 import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 import { IncompatibleCoverageService } from "@core/services/settings/incompatible-coverage/incompatible-coverage.service";

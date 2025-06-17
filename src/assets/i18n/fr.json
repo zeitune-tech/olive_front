@@ -725,6 +725,7 @@
         "phone": "Téléphone",
         "address": "Adresse",
         "managementEntity": "Entité de gestion",
+        "pointOfSale": "Point de vente",
         "actions": "Actions"
       },
       "options": {

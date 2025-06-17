@@ -4,20 +4,45 @@ import { NavigationItem } from "@lhacksrt/components";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
 
 export const defaultSettingsNavigation: NavigationItem[] = [
-    {
-        id: 'coverages',
-        title: 'sidebar.coverages.title',
+        {
+        id: 'products',
+        title: 'sidebar.products.title',
         type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_COVERAGES,
+        link: '/parameters/dashboard',
+        permission: PERMISSIONS.VIEW_PRODUCTS,
         children: [
             {
+                id: 'products.list',
+                title: 'sidebar.products.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/products/list',
+                permission: PERMISSIONS.VIEW_PRODUCTS
+            },
+            {
+                id: 'products-new',
+                title: 'sidebar.products.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/products/new',
+                permission: PERMISSIONS.CREATE_PRODUCTS
+            },
+             {
                 id: 'coverages.list-referiential',
                 title: 'sidebar.coverages.referential',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/parameters/coverages/referentials',
                 permission: PERMISSIONS.VIEW_COVERAGES
+            },
+                        {
+                id: 'coverages-new',
+                title: 'sidebar.coverages.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/coverages/new',
+                permission: PERMISSIONS.CREATE_COVERAGES
             },
             {
                 id: 'coverages.list',
@@ -34,14 +59,6 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 icon: 'fluent:people-team',
                 link: '/parameters/coverages/incompatibilities',
                 permission: PERMISSIONS.VIEW_COVERAGES
-            },
-            {
-                id: 'coverages-new',
-                title: 'sidebar.coverages.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/coverages/new',
-                permission: PERMISSIONS.CREATE_COVERAGES
             },
             {
                 id: 'incompatible-coverages-new',

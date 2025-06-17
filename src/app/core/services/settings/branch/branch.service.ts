@@ -10,7 +10,7 @@ import { Branch } from "./branch.interface";
 })
 export class BranchService {
 
-    baseUrl = environment.administration_url + "/branches";
+    baseUrl = environment.settings_url + "/branches";
     private _branch: ReplaySubject<Branch> = new ReplaySubject<Branch>(1);
     private _branches: ReplaySubject<Branch[]> = new ReplaySubject<Branch[]>(1);
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from "@angular/forms";
-import { Branch } from "@core/services/administration/branch/branch.interface";
-import { BranchService } from "@core/services/administration/branch/branch.service";
+import { Branch } from "@core/services/settings/branch/branch.interface";
+import { BranchService } from "@core/services/settings/branch/branch.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
-import { ProductService } from "@core/services/administration/product/product.service";
+import { ProductService } from "@core/services/settings/product/product.service";
 import { LayoutService } from "../layout.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";

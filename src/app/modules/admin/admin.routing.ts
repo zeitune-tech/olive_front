@@ -4,15 +4,6 @@ import { UsersResolver } from "./users/users.resolver";
 
 export const routes: Routes = [
     {
-        path: 'products',
-        canActivate: [],
-        canActivateChild: [],
-        data: {
-            permission: PERMISSIONS.VIEW_PRODUCTS
-        },
-        loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
-    },
-    {
         path: 'market-level-organizations',
         canActivate: [],
         canActivateChild: [],

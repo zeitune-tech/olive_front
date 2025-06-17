@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Product } from '@core/services/administration/product/product.interface';
-import { ProductService } from '@core/services/administration/product/product.service';
+import { Product } from '@core/services/settings/product/product.interface';
+import { ProductService } from '@core/services/settings/product/product.service';
 import { AccessoryService } from '@core/services/settings/accessory/accessory.service';
 import { LayoutService } from '../layout.service';
 

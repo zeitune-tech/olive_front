@@ -1,4 +1,4 @@
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { CoverageReference } from "../coverage-reference/coverage-reference.interface";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 
