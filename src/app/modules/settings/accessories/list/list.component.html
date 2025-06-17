@@ -35,14 +35,21 @@
         </ng-container>
 
         
+        <!-- Action Column -->
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="uppercase text-center border-l">
                 Actions
             </th>
-            <td mat-cell *matCellDef="let element" class="border-l min-w-32">
+            <td mat-cell *matCellDef="let element" class="border-l">
                 <div class="w-full h-full flex items-center justify-around">
-                    <button  (click)="onEdit(element)" class="bg-primary-500 text-white rounded-lg px-4 py-2">
-                        {{ t('form.actions.edit') }}
+                    <button mat-icon-button color="primary" (click)="onEdit(element)" matTooltip="{{ t('action_button.edit') }}">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="onDelete(element)" matTooltip="{{ t('action_button.delete') }}">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-icon-button color="accent" (click)="onView(element)" matTooltip="{{ t('action_button.view') }}">
+                        <mat-icon>visibility</mat-icon> 
                     </button>
                 </div>
             </td>

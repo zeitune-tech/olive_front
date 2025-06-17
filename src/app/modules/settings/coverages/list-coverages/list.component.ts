@@ -82,9 +82,7 @@ export class CoveragesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: Coverage, property: keyof Coverage) => {
             if (property === 'reference') {
                 return element.reference?.designation || " - ";
@@ -175,8 +173,6 @@ export class CoveragesListComponent {
         })
     }
 
-
-
     openEditDialog(item: any): void {
         const dialogRef = this._dialog.open(CoveragesEditDialogComponent, {
             width: '700px',
@@ -198,8 +194,17 @@ export class CoveragesListComponent {
         });
     }
 
-    openDeleteDialog(item: any): void {}
-
+    onView(element: Coverage): void {
+        this.openEditDialog(element);
+    }
+    
+    onDelete(element: Coverage): void {
+        // this._coverageService.delete(element.id).subscribe(() => {
+        //     this.data = this.data.filter(item => item.id !== element.id);
+        //     this.dataSource.data = this.data;
+        //     this._changeDetectorRef.detectChanges();
+        // });
+    }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

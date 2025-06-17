@@ -41,9 +41,7 @@ export class BaseTaxesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: BaseTax, property: keyof BaseTax) => {
 
             if (property === 'tax') {
@@ -110,7 +108,14 @@ export class BaseTaxesListComponent {
         });
     }
 
-
+    onEdit(element: BaseTax): void {
+        // Implement edit functionality here
+    }
+    onView(element: BaseTax): void {
+        // Implement view functionality here
+    }
+    onDelete(element: BaseTax): void {
+    }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

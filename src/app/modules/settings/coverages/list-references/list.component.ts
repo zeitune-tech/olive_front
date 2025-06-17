@@ -34,9 +34,7 @@ export class CoverageReferenceListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: CoverageReference, property: keyof CoverageReference) => {
             if (property === 'accessCharacteristic') {
                 return element.accessCharacteristic == false ? 'Non' : 'Oui';
@@ -88,9 +86,9 @@ export class CoverageReferenceListComponent {
         this._unsubscribeAll.complete();
     }
 
-    openSelection() {
-        
-    }
+    onEdit(coverageReference: CoverageReference): void {}
+    onDelete(coverageReference: CoverageReference): void {}
+    onView(coverageReference: CoverageReference): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
