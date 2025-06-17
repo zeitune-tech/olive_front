@@ -32,11 +32,7 @@ export class PointsOfSaleListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            { label: 'entities.point_of_sale.fields.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'entities.point_of_sale.fields.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) },
-            { label: 'entities.point_of_sale.fields.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
-        ],
+        actions: [],
         renderItem: (element: PointOfSale, property: keyof PointOfSale) => {
             if (property === 'typePointOfSale') {
                 return this._translateService.translate(`entities.point_of_sale.options.type.${element[property]}`);
@@ -83,27 +79,17 @@ export class PointsOfSaleListComponent {
         this._unsubscribeAll.complete();
     }
 
-    attribute(item: PointOfSale | null): void {
-       
+    onEdit(element: PointOfSale): void {}
+    onDelete(element: PointOfSale): void {
+        // Implement delete logic here
     }
-
-    /**
-        * Edit PointOfSale PointOfSale
-        */
-    editItem(item: PointOfSale | null): void {
-        
-    }
-
-    /**
-        * Delete PointOfSale PointOfSale
-        */
-    deleteItem(item: PointOfSale): void {
-        
+    onView(element: PointOfSale): void {
+        // Implement view logic here
     }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

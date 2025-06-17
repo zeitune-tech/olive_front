@@ -98,25 +98,16 @@ export class LinkedCompaniesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-     * 
-    */
-    onDemand(item: Company | null): void {
-        
-    }
-
-    onAttribute(item: any | null): void {
-       
-    }
-
     checkPermission() {
-    
     }
-
+    
+    onView(item: Company): void {
+        // Implement view functionality
+    }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

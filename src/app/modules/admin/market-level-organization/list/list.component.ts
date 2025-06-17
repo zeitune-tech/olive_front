@@ -32,9 +32,7 @@ export class MarketLevelOrganizationListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            { label: 'entity-superior.actions.demand', icon: 'message', action: this.editItem.bind(this), cssClasses: ['bg-primary-200', 'text-primary'] },
-        ],
+        actions: [],
         imageOptions: {
             label: 'entities.management_entity.fields.logo',
             property: 'logo',
@@ -83,23 +81,12 @@ export class MarketLevelOrganizationListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-    * Edit MarketLevelOrganization MarketLevelOrganization
-    */
-    editItem(item: MarketLevelOrganization | null): void {
-        
-    }
-
-    /**
-    * Delete MarketLevelOrganization MarketLevelOrganization
-    */
-    deleteItem(item: MarketLevelOrganization): void {
-        
+    onView(element: MarketLevelOrganization): void {
     }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

@@ -134,6 +134,10 @@ export class ProductsListComponent implements OnInit {
         })
     }
 
+    onView(product: Product): void {
+        this._layoutService.setSelectedProduct(product);
+        //this._router.navigate(['/administration/products/list']);
+    }
 
     hasPermission(product: Product): boolean {
         let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);

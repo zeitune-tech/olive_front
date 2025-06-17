@@ -30,10 +30,7 @@ export class UsersListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            { label: 'entities.user.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'entities.user.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) }
-        ],
+        actions: [],
         renderItem: (element: User, property: keyof User) => {
             
             if (property === 'managementEntity') {
@@ -80,18 +77,14 @@ export class UsersListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit User User
-        */
-    editItem(item: User | null): void {
-        
+    onView(element: User): void {
+        // Implement view logic here, e.g., open a dialog with user details
     }
-
-    /**
-        * Delete User User
-        */
-    deleteItem(item: User): void {
-        
+    onEdit(element: User): void {
+        // Implement edit logic here, e.g., open a dialog to edit user details
+    }
+    onDelete(element: User): void {
+        // Implement delete logic here, e.g., open a confirmation dialog
     }
     
     get visibleColumns() {

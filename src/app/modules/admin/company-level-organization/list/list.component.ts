@@ -29,9 +29,7 @@ export class CompanyLevelOrganizationListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            
-        ],
+        actions: [],
         renderItem: (element: CompanyLevelOrganization, property: keyof CompanyLevelOrganization) => {
             
             if (property === 'pointsOfSale') {
@@ -78,13 +76,10 @@ export class CompanyLevelOrganizationListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit CompanyLevelOrganization CompanyLevelOrganization
-        */
-    onDemand(item: CompanyLevelOrganization | null): void {
-      
-    }
-
+    onEdit(element: CompanyLevelOrganization): void {}
+    onDelete(element: CompanyLevelOrganization): void {}
+    onView(element: CompanyLevelOrganization): void {}
+    
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
         columns.push('actions');

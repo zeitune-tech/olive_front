@@ -57,7 +57,8 @@
       "actions": {
         "add": "Ajouter une durée de couverture",
         "edit": "Modifier",
-        "delete": "Supprimer"
+        "delete": "Supprimer",
+        "view": "Voir plus"
       },
       "fields": {
         "designation": "Désignation",
@@ -329,8 +330,10 @@
       },
       "table": {
         "title": "Compagnies d'assurance",
+        "title_linked": "Compagnies liées",
         "subtitle": "Aperçu des compagnies",
         "description": "Liste et gestion des compagnies d'assurance.",
+        "description_linked": "Liste des compagnies liées à l'organisation.",
         "empty_state": "Aucune compagnie trouvée",
         "actions": {
           "link": "Lier",
@@ -1391,5 +1394,13 @@
     "error": "Une erreur s'est produite",
     "warning": "Avertissement",
     "info": "Information"
+  },
+  "action_button": {
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir plus",
+    "share": "Partager",
+    "cancel": "Annuler"
   }
 }

@@ -35,9 +35,7 @@ export class ProfilesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            
-        ],
+        actions: [],
         renderItem: (element: Profile, property: keyof Profile) => {
             if (property === 'level') {
                 return this._translateService.translate('entities.management_entity.options.level.' + element[property]);
@@ -102,16 +100,19 @@ export class ProfilesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Profile Profile
-        */
-    onDemand(item: Profile | null): void {
-      
+    onEdit(profile: Profile): void {
+        // Implement edit functionality
+    }
+    onDelete(profile: Profile): void {
+        // Implement delete functionality
+    }
+    onView(profile: Profile): void {
+        // Implement view functionality
     }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

@@ -31,11 +31,7 @@ export class ContributorsListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            { label: 'entities.contributor.fields.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'entities.contributor.fields.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) },
-            { label: 'entities.contributor.fields.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
-        ],
+        actions: [],
         renderItem: (element: Contributor, property: keyof Contributor) => {
             if (property === 'level') {
                 return this._translateService.translate(`entities.contributor.options.level.${element[property]}`);
@@ -82,27 +78,17 @@ export class ContributorsListComponent {
         this._unsubscribeAll.complete();
     }
 
-    attribute(item: Contributor | null): void {
-       
+    onEdit(element: Contributor): void {}
+    onView(element: Contributor): void {
+        // Implement view logic here
     }
-
-    /**
-        * Edit Contributor Contributor
-        */
-    editItem(item: Contributor | null): void {
-        
-    }
-
-    /**
-        * Delete Contributor Contributor
-        */
-    deleteItem(item: Contributor): void {
-        
+    onDelete(element: Contributor): void {
+        // Implement delete logic here
     }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 
