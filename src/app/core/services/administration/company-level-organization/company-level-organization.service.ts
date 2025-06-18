@@ -77,4 +77,28 @@ export class CompanyLevelOrganizationService {
                 })
             );
     }
+
+    update(data: any): Observable<CompanyLevelOrganization> {
+        return this._httpClient.put<CompanyLevelOrganization>(`${this.baseUrl}/${data.id}`, data)
+            .pipe(
+                tap((companyLevelOrganization: CompanyLevelOrganization) => {
+                    this.companyLevelOrganization = companyLevelOrganization;
+                    return companyLevelOrganization;
+                }),
+                catchError((error) => {
+                    return of(error.error);
+                })
+            );
+    }
+
+    delete (id: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this.baseUrl}/${id}`)
+            .pipe(
+                tap(() => {
+                }),
+                catchError((error) => {
+                    return of(error.error);
+                })
+            );
+    }
 }

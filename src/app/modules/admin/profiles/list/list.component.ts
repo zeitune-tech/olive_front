@@ -14,6 +14,8 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
+import { ProfilesEditComponent } from "../edit/edit.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
     selector: "app-profiles-list",
@@ -39,9 +41,7 @@ export class ProfilesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            
-        ],
+        actions: [],
         renderItem: (element: Profile, property: keyof Profile) => {
             if (property === 'level') {
                 return this._translateService.translate('entities.management_entity.options.level.' + element[property]);
@@ -82,8 +82,7 @@ export class ProfilesListComponent {
         private _profileService: ProfileService,
         private _translateService: TranslocoService,
         private _permissionService: PermissionsService,
-        private _layoutService: LayoutService,
-        private _router: Router
+        private _dialog: MatDialog,
     ) {}
 
     ngOnInit(): void {
@@ -114,10 +113,36 @@ export class ProfilesListComponent {
         let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PROFILES);
         return hasPerm;
     }
+    
+    onEdit(profile: Profile): void {
+        // Implement edit functionality
+    }
+    onDelete(profile: Profile): void {
+        this._dialog.open(ProfilesEditComponent, {
+            width: '600px',
+            data: profile
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                // Optionally refresh the list or show a success notification
+                // this._profileService.getAllProfiles().subscribe();
+            }
+        })
+    }
+    onView(profile: Profile): void {
+        // Implement view functionality
+    }
 
     onEditProfile(profile: Profile): void {
-        this._layoutService.setSelectedProfile(profile);
-        this._router.navigate(['/administration/profiles/new']);
+        this._dialog.open(ProfilesEditComponent, {
+            width: '600px',
+            data: profile
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                // Optionally refresh the list or show a success notification
+                // this._profileService.getAllProfiles().subscribe();
+            }
+        })
+
     }
 
     onDeleteProfile(profile: Profile): void {

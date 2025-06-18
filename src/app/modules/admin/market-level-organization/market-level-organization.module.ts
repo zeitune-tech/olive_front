@@ -17,29 +17,33 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
+import { MarketLevelOrganizationDetailsComponent } from "./details/details.component";
+import { DrawerModule } from "../../../../@lhacksrt/components/drawer/drawer.module";
 
 @NgModule({
     declarations: [
         MarketLevelOrganizationListComponent,
+        MarketLevelOrganizationDetailsComponent,
         LinkedMarketLevelOrganizationListComponent
     ],
     imports: [
-        RouterModule.forChild(routes),
-        MatIconModule,
-        SharedModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatMenuModule,
-        MatTooltipModule,
-        TableModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDividerModule,
-        ReactiveFormsModule
-    ],
+    RouterModule.forChild(routes),
+    MatIconModule,
+    SharedModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatTooltipModule,
+    TableModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDividerModule,
+    ReactiveFormsModule,
+    DrawerModule
+],
     providers: [],
     exports: [],
 })

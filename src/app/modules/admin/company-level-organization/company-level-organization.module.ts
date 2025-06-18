@@ -22,13 +22,18 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { CompanyLevelOrganizationNewStepOneComponent } from "./new/step-one/step-one.component";
 import { CompanyLevelOrganizationNewStepTwoComponent } from "./new/step-two/step-two.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { CompanyLevelOrganizationEditComponent } from "./edit/edit.component";
+import { CompanyLevelOrganizationPointsOfSaleComponent } from "./details/details.component";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 @NgModule({
     declarations: [
         CompanyLevelOrganizationListComponent,
         CompanyLevelOrganizationNewComponent,
         CompanyLevelOrganizationNewStepOneComponent,
-        CompanyLevelOrganizationNewStepTwoComponent
+        CompanyLevelOrganizationNewStepTwoComponent,
+        CompanyLevelOrganizationEditComponent,
+        CompanyLevelOrganizationPointsOfSaleComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -48,7 +53,8 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
         ReactiveFormsModule,
         MatStepperModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatProgressBarModule
     ],
     providers: [],
     exports: [],

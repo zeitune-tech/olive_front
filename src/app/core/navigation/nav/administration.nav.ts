@@ -64,14 +64,6 @@ export const defaultAdministrationNavigation: NavigationItem[] = [
                 permission: PERMISSIONS.VIEW_POINTS_OF_SALE
             },
             {
-                id: 'points-of-sale-broker',
-                title: 'sidebar.points_of_sale.broker',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/administration/points-of-sale/broker',
-                permission: PERMISSIONS.VIEW_BROKERS
-            },
-            {
                 id: 'points-of-sale-new',
                 title: 'sidebar.points_of_sale.new',
                 type: 'basic',
@@ -94,7 +86,15 @@ export const defaultAdministrationNavigation: NavigationItem[] = [
                 icon: 'fluent:people-team',
                 link: '/administration/company-level-organizations/new',
                 permission: PERMISSIONS.CREATE_COMPANY_LEVEL_ORGANIZATIONS
-            }
+            },
+            {
+                id: 'points-of-sale-broker',
+                title: 'sidebar.points_of_sale.broker',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/administration/points-of-sale/broker',
+                permission: PERMISSIONS.VIEW_BROKERS
+            },
         ]
     },
     {

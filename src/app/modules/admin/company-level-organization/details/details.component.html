@@ -1,0 +1,47 @@
+<div class="p-4 space-y-4" *transloco="let t;">
+    <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold">
+            {{ t('entities.point_of_sale.section_title') || 'Points de vente associés' }}
+        </h2>
+        <button mat-flat-button color="primary" (click)="onAddPointOfSale()">
+            {{ t('form.actions.add') || 'Ajouter' }}
+        </button>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <div *ngIf="!loading && pointsOfSale.length > 0">
+        <table mat-table [dataSource]="pointsOfSale" class="w-full bg-white rounded-md" matSort>
+
+            <!-- Nom -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> {{ t('entities.point_of_sale.fields.name') }} </th>
+                <td mat-cell *matCellDef="let pos"> {{ pos.name }} </td>
+            </ng-container>
+
+            <!-- Type -->
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef> {{ t('entities.point_of_sale.fields.type') }} </th>
+                <td mat-cell *matCellDef="let pos"> {{ pos.typePointOfSale }} </td>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> {{ t('form.actions.delete') }} </th>
+                <td mat-cell *matCellDef="let pos">
+                    <!-- Placeholders for edit/view -->
+                    <button mat-icon-button color="primary">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['name', 'type', 'actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['name', 'type', 'actions']"></tr>
+        </table>
+    </div>
+
+    <div *ngIf="!loading && pointsOfSale.length === 0" class="text-gray-500">
+        {{ t('entities.point_of_sale.empty_state') || 'Aucun point de vente.' }}
+    </div>
+</div>

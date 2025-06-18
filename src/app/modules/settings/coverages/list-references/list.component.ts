@@ -25,7 +25,6 @@ export class CoverageReferenceListComponent {
     tableOptions: TableOptions<CoverageReference> = {
         title: '',
         columns: [
-            { label: 'entities.coverage_reference.fields.managementEntity', property: 'managementEntity', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.designation', property: 'designation', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.family', property: 'family', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.accessCharacteristic', property: 'accessCharacteristic', type: 'text', visible: true },

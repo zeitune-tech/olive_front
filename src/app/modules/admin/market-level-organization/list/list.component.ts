@@ -32,9 +32,7 @@ export class MarketLevelOrganizationListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            { label: 'entity-superior.actions.demand', icon: 'message', action: this.editItem.bind(this), cssClasses: ['bg-primary-200', 'text-primary'] },
-        ],
+        actions: [],
         imageOptions: {
             label: 'entities.management_entity.fields.logo',
             property: 'logo',
@@ -53,6 +51,7 @@ export class MarketLevelOrganizationListComponent {
     dataSource: MatTableDataSource<MarketLevelOrganization> = new MatTableDataSource();
     selection = new SelectionModel<MarketLevelOrganization>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
+    selectedItem: MarketLevelOrganization | null = null;
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
@@ -83,23 +82,21 @@ export class MarketLevelOrganizationListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-    * Edit MarketLevelOrganization MarketLevelOrganization
-    */
-    editItem(item: MarketLevelOrganization | null): void {
-        
+    drawerOpened = false;
+
+    onView(element: MarketLevelOrganization): void {
+        this.selectedItem = element;
+        this.drawerOpened = true;
     }
 
-    /**
-    * Delete MarketLevelOrganization MarketLevelOrganization
-    */
-    deleteItem(item: MarketLevelOrganization): void {
-        
+    onClose(): void {
+        this.selectedItem = null;
+        this.drawerOpened = false;
     }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

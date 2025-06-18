@@ -57,7 +57,8 @@
       "actions": {
         "add": "Ajouter une durée de couverture",
         "edit": "Modifier",
-        "delete": "Supprimer"
+        "delete": "Supprimer",
+        "view": "Voir plus"
       },
       "fields": {
         "designation": "Désignation",
@@ -236,10 +237,18 @@
         "actions": {
           "share": "Partager",
           "modify": "Modifier"
+        },
+        "custom_fields": {
+          "risk": "Nbr Risque",
+          "min": "Min",
+          "max": "Max",
+          "minCoverage": "Nbr Min. Garantie",
+          "fleet": "Flotte",
+          "hasReduction": "Réduction"
         }
       },
       "fields": {
-        "name": "Nom du produit",
+        "name": "Produit",
         "description": "Description",
         "branch": "Branche",
         "visibility": "Visibilité",
@@ -249,7 +258,8 @@
         "maxRisk": "Risque maximum",
         "minimumGuaranteeNumber": "Nombre minimum de garanties",
         "fleet": "Produit destiné à une flotte ?",
-        "hasReduction": "Produit avec réduction ?"
+        "hasReduction": "Produit avec réduction ?",
+        "productionRegistry": "Registre prod"
       }
     },
     "branch": {
@@ -308,7 +318,7 @@
         "phone": "Téléphone",
         "address": "Adresse",
         "logo": "Logo",
-        "level": "Niveau de l'entité",
+        "level": "Niveau de privilège",
         "actions": "Actions"
       },
       "options": {
@@ -329,8 +339,10 @@
       },
       "table": {
         "title": "Compagnies d'assurance",
+        "title_linked": "Compagnies liées",
         "subtitle": "Aperçu des compagnies",
         "description": "Liste et gestion des compagnies d'assurance.",
+        "description_linked": "Liste des compagnies liées à l'organisation.",
         "empty_state": "Aucune compagnie trouvée",
         "actions": {
           "link": "Lier",
@@ -504,7 +516,7 @@
       "fields": {
         "name": "Nom du profil",
         "description": "Description",
-        "level": "Niveau de l'entité",
+        "level": "Niveau de privilège",
         "permissions": "Permissions",
         "permissions_count": "Nombre de permissions",
         "admin_description": "Possède tous les droits sur cette entité de gestion",
@@ -976,13 +988,13 @@
     "management_entities": {
       "title": "Entités de gestion",
       "list": "Liste des entités",
-      "new": "Ajouter / Modifier une entité"
+      "new": "Ajouter une entité"
     },
     "companies": {
       "title": "Compagnies",
       "linked": "Compagnies liées",
       "list": "Liste des compagnies",
-      "new": "Ajouter / Modifier une compagnie"
+      "new": "Ajouter une compagnie"
     },
     "market_level_organization": {
       "title": "Organisations niveau marché",
@@ -993,62 +1005,62 @@
       "title": "Points de vente",
       "broker": "Liste des courtiers",
       "list": "Liste des points de vente",
-      "new": "Ajouter / Modifier un point de vente"
+      "new": "Ajouter un point de vente"
     },
     "company_level_organization": {
       "title": "Organisation par compagnie",
       "list": "Liste des organisations",
-      "new": "Ajouter / Modifier une organisation"
+      "new": "Ajouter une organisation"
     },
     "users": {
       "title": "Utilisateurs",
       "list": "Liste des utilisateurs",
-      "new": "Ajouter / Modifier un utilisateur"
+      "new": "Ajouter un utilisateur"
     },
     "profiles": {
       "title": "Profils utilisateurs",
       "list": "Liste des profils",
-      "new": "Ajouter / Modifier un profil"
+      "new": "Ajouter un profil"
     },
     "products": {
       "title": "Produits",
       "list": "Liste des produits",
-      "new": "Ajouter / Modifier un produit"
+      "new": "Ajouter un produit"
     },
     "coverages": {
       "title": "Produits",
       "referential": "Référentiel des garanties",
       "list": "Produits/Garanties",
-      "new": "Ajouter / Modifier une garantie dans Référentiel"
+      "new": "Ajouter une garantie dans Référentiel"
     },
     "incompatible_coverages": {
       "list": "Garanties incompatibles",
-      "new": "Ajouter / Modifier une garantie incompatible"
+      "new": "Ajouter une garantie incompatible"
     },
     "coverage_durations": {
       "title": "Durées Couverture",
       "list": "Liste des durées",
-      "new": "Ajouter / Modifier une durée"
+      "new": "Ajouter une durée"
     },
     "production_registries": {
       "title": "Registres de production",
       "list": "Liste des registres",
-      "new": "Ajouter / Modifier un registre"
+      "new": "Ajouter un registre"
     },
     "insured_registries": {
       "title": "Registres assurés",
       "list": "Liste des registres",
-      "new": "Ajouter / Modifier un registre"
+      "new": "Ajouter un registre"
     },
     "closures": {
       "title": "Clôtures",
       "list": "Liste des clôtures",
-      "new": "Ajouter / Modifier une clôture"
+      "new": "Ajouter une clôture"
     },
     "attestations": {
       "title": "Stock d'attestations",
       "list": "Liste attestations",
-      "new": "Ajouter / Modifier une attestation",
+      "new": "Ajouter une attestation",
       "revoked": "Attestations retirées"
     },
     "attestation_demands": {
@@ -1065,12 +1077,12 @@
     "duration_rates": {
       "title": "Taux Durées",
       "list": "Liste des taux",
-      "new": "Ajouter / Modifier un taux"
+      "new": "Ajouter un taux"
     },
     "accessories": {
       "title": "Accessoires",
       "list": "Liste des accessoires",
-      "new": "Ajouter / Modifier un accessoire"
+      "new": "Ajouter un accessoire"
     },
     "taxes": {
       "title": "Taxes",
@@ -1079,48 +1091,48 @@
       "list_prime": "Taxes / Primes",
       "list_accessories": "Taxes / Accessoires",
       "tax_regime": "Régimes Taxes",
-      "tax_regime_new": "Ajouter / Modifier un régime de taxe",
-      "base_taxes_new": "Ajouter / Modifier une base de Calcul",
-      "new": "Ajouter / Modifier une taxe"
+      "tax_regime_new": "Ajouter un régime de taxe",
+      "base_taxes_new": "Ajouter une base de Calcul",
+      "new": "Ajouter une taxe"
     },
     "commissions": {
       "title": "Commissions",
       "list": "Liste des commissions",
       "taxes": "Commissions / Taxes",
-      "taxes_new": "Ajouter / Modifier une Commission / Taxe",
+      "taxes_new": "Ajouter une Commission / Taxe",
       "contributors": "Commissions / Apporteurs",
-      "contributors_new": "Ajouter / Modifier une Commission / Apporteur",
-      "new": "Ajouter / Modifier une commission"
+      "contributors_new": "Ajouter une Commission / Apporteur",
+      "new": "Ajouter une commission"
     },
     "insureds": {
       "title": "Assurés",
       "list": "Liste des assurés",
-      "new": "Ajouter / Modifier un assuré"
+      "new": "Ajouter un assuré"
     },
     "vehicles": {
       "title": "Véhicules",
       "list": "Liste des véhicules",
-      "new": "Ajouter / Modifier un véhicule"
+      "new": "Ajouter un véhicule"
     },
     "contributors": {
       "title": "Apporteurs",
       "list": "Liste des apporteurs",
-      "new": "Ajouter / Modifier un apporteur"
+      "new": "Ajouter un apporteur"
     },
     "production": {
       "title": "Production",
       "list": "Liste des productions",
-      "new": "Ajouter / Modifier une production"
+      "new": "Ajouter une production"
     },
     "production_mono": {
       "title": "Production Mono",
       "list": "Liste des productions mono",
-      "new": "Ajouter / Modifier une production mono"
+      "new": "Ajouter une production mono"
     },
     "production_fleet": {
       "title": "Production Flotte",
       "list": "Liste des productions flotte",
-      "new": "Ajouter / Modifier une production flotte"
+      "new": "Ajouter une production flotte"
     }
   },
   "form": {
@@ -1147,6 +1159,7 @@
       "select": "Sélectionner une option"
     },
     "actions": {
+      "add": "Ajouter",
       "save": "Enregistrer",
       "cancel": "Annuler",
       "edit": "Modifier",
@@ -1156,7 +1169,7 @@
       "next": "Suivant",
       "previous": "Précédent",
       "remove": "Supprimer",
-      "addIncompatible": "Ajouter / Modifier une incompatibilité"
+      "addIncompatible": "Ajouter une incompatibilité"
     }
   },
   "enums": {
@@ -1173,7 +1186,13 @@
     "linkedStatus": {
       "true": "Lié",
       "false": "Non lié"
-    }
+    },
+    "productVisibility": {
+      "PUBLIC": "Public -- {{provider}}",
+      "PRIVATE": "Privé"
+    },
+    "yes" : "Oui",
+    "no" : "Non"
   },
   "common": {
     "search": "Rechercher",
@@ -1380,7 +1399,7 @@
       "no-users": "Aucun utilisateur pour l'instant"
     },
     "actions": {
-      "add": "Ajouter / Modifier une entité",
+      "add": "Ajouter une entité",
       "change": "Changer d'entité"
     }
   },
@@ -1392,5 +1411,13 @@
     "error": "Une erreur s'est produite",
     "warning": "Avertissement",
     "info": "Information"
+  },
+  "action_button": {
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir plus",
+    "share": "Partager",
+    "cancel": "Annuler"
   }
 }

@@ -39,6 +39,7 @@ import { SharedModule } from "@shared/shared.module";
         MatSelectModule,
         MatDividerModule,
         ReactiveFormsModule,
+        MatIconModule
     ],
     providers: [],
     exports: []

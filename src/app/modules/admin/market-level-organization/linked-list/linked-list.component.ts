@@ -31,8 +31,7 @@ export class LinkedMarketLevelOrganizationListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-        ],
+        actions: [],
         imageOptions: {
             label: 'entities.management_entity.fields.logo',
             property: 'logo',
@@ -82,16 +81,14 @@ export class LinkedMarketLevelOrganizationListComponent {
 
     /**
     */
-    onDemand(item: MarketLevelOrganization | null): void {
-        
+    onView(element: MarketLevelOrganization): void {
+        // Implement view logic here, e.g., open a dialog with details  
     }
-
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
         columns.push('actions');
         return columns;
-        // return this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
     }
 
     trackByProperty(index: number, column: TableColumn<MarketLevelOrganization>) {

@@ -20,6 +20,7 @@ import { SharedModule } from "@shared/shared.module";
 import { BrokerPointsOfSaleListComponent } from "./broker/broker.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { LinkedBrokerPointsOfSaleListComponent } from "./linked-broker/linked-broker.component";
+import { PointOfSaleEditComponent } from "./edit/edit.component";
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { LinkedBrokerPointsOfSaleListComponent } from "./linked-broker/linked-br
         PointsOfSaleNewComponent,
         BrokerPointsOfSaleListComponent,
         PointsOfSaleNewComponent,
-        LinkedBrokerPointsOfSaleListComponent
+        LinkedBrokerPointsOfSaleListComponent,
+        PointOfSaleEditComponent
     ],
     imports: [
         RouterModule.forChild(routes),

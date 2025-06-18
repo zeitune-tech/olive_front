@@ -31,11 +31,7 @@ export class CompaniesListComponent implements OnInit, OnDestroy {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            { label: 'entities.company.table.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'entities.company.table.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) },
-            { label: 'entities.company.table.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
-        ],
+        actions: [],
         imageOptions: {
             label: 'entities.company.fields.logo',
             property: 'logo',
@@ -91,27 +87,12 @@ export class CompaniesListComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    attribute(item: Company | null): void {
-       
-    }
-
-    /**
-        * Edit Company Company
-        */
-    editItem(item: Company | null): void {
-        
-    }
-
-    /**
-        * Delete Company Company
-        */
-    deleteItem(item: Company): void {
-        
+    onView(item: Company): void {
     }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

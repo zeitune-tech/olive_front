@@ -17,6 +17,7 @@ import { Subject, takeUntil } from "rxjs";
 import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
 import { ShareProductComponent } from "../share-product/share-product.component";
+import { TranslocoService } from "@jsverse/transloco";
 
 @Component({
     selector: "app-products-list",
@@ -37,24 +38,60 @@ export class ProductsListComponent implements OnInit {
 
     dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
 
+        constructor(
+        private _productService: ProductService,
+        private _permissionService: PermissionsService,
+        private _managementEntityService: ManagementEntityService,
+        private _layoutService: LayoutService,
+        private _tanslateService: TranslocoService,
+        private _router: Router,
+        private _dialog: MatDialog
+    ) {
+        this._productService.products$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: Product[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+            });
+
+        this._managementEntityService.entity$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: ManagementEntity) => {
+                this.managementEntity = data;
+            });
+    }
+
+    
+    data: Product[] = [];
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
+
+    selection = new SelectionModel<Product>(true, []);
+    searchInputControl: UntypedFormControl = new UntypedFormControl();
+
+    managementEntity: ManagementEntity = new ManagementEntity({});
+
+
+
+
     ngOnInit(): void {
         // Initialisation de la configuration de la table
         this.tableOptions = {
             title: '',
             columns: [
-                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true },
-                { label: 'entities.product.fields.description', property: 'description', type: 'text', visible: true, cssClasses: ['min-w-64'] },
+                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
                 { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
-                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true },
+                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true, cssClasses: ['min-w-32']},
                 {
-                    label: 'entities.product.fields.minRisk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
-                        { label: 'entities.product.fields.minRisk', property: 'minRisk', type: 'text', visible: true },
-                        { label: 'entities.product.fields.maxRisk', property: 'maxRisk', type: 'text', visible: true },
+                    label: 'entities.product.table.custom_fields.risk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
+                        { label: 'entities.product.table.custom_fields.min', property: 'minRisk', type: 'text', visible: true },
+                        { label: 'entities.product.table.custom_fields.max', property: 'maxRisk', type: 'text', visible: true },
                     ]
                 },
-                { label: 'entities.product.fields.minimumGuaranteeNumber', property: 'minimumGuaranteeNumber', type: 'text', visible: true },
-                { label: 'entities.product.fields.fleet', property: 'fleet', type: 'text', visible: true },
-                { label: 'entities.product.fields.hasReduction', property: 'hasReduction', type: 'text', visible: true },
+                { label: 'entities.product.table.custom_fields.minCoverage', property: 'minimumGuaranteeNumber', type: 'text', visible: true, cssClasses: ['text-sm'] },
+                { label: 'entities.product.table.custom_fields.fleet', property: 'fleet', type: 'text', visible: true },
+                { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
@@ -63,12 +100,33 @@ export class ProductsListComponent implements OnInit {
                 if (property === 'branch') {
                     return element.branch?.name ?? '--';
                 } else if (property === 'fleet') {
-                    return element.fleet ? 'Yes' : 'No';
+                    return element.fleet ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
                 } else if (property === 'hasReduction') {
-                    return element.hasReduction ? 'Yes' : 'No';
+                    return element.hasReduction ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
                 } else if (property === 'category') {
                     return element.branch?.category?.name ?? '--';
                 }
+
+                if (property === 'name') {
+                    const display = element.name;
+                    if (element.description && element.description.trim() !== '') {
+                        return `${display} - ${element.description}`;
+                    }
+                    return display;
+                }
+
+                if (property === 'visibility') {
+                    let provider = element.owner?.name || '--';
+                    if (provider.length > 20) {
+                        provider = provider.substring(0, 20) + '...';
+                    }
+                    if (element.visibility === 'PRIVATE') {
+                        return this._tanslateService.translate('enums.productVisibility.PRIVATE');
+                    }else  {
+                        return this._tanslateService.translate('enums.productVisibility.PUBLIC', { provider: provider });
+                    }
+                }
+
                 return element[property] ?? '--';
             },
         };
@@ -100,39 +158,6 @@ export class ProductsListComponent implements OnInit {
         // Ajout de la colonne d’actions si nécessaire
         this.groupHeader.push('actions');
         this.visibleColumns.push('actions');
-    }
-
-    data: Product[] = [];
-
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
-
-    selection = new SelectionModel<Product>(true, []);
-    searchInputControl: UntypedFormControl = new UntypedFormControl();
-
-    managementEntity: ManagementEntity = new ManagementEntity({});
-
-    constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _productService: ProductService,
-        private _permissionService: PermissionsService,
-        private _managementEntityService: ManagementEntityService,
-        private _layoutService: LayoutService,
-        private _router: Router,
-        private _dialog: MatDialog
-    ) {
-        this._productService.products$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
-                this.data = data;
-                this.dataSource.data = data;
-            });
-
-        this._managementEntityService.entity$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: ManagementEntity) => {
-                this.managementEntity = data;
-            });
     }
 
 
@@ -170,6 +195,16 @@ export class ProductsListComponent implements OnInit {
         })
     }
 
+    onView(product: Product): void {
+        this._layoutService.setSelectedProduct(product);
+        //this._router.navigate(['/administration/products/list']);
+    }
+
+    onButtonClick(product: Product, column: string): void {
+        if (column === 'productionRegistry') {
+            alert('Production Registry button clicked for product: ' + product.name);
+        }
+    }
 
     hasPermission(product: Product): boolean {
         let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);

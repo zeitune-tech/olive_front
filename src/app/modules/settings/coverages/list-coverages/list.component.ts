@@ -60,15 +60,27 @@ export class CoveragesListComponent {
     tableOptions: TableOptions<Coverage> = {
         title: '',
         columns: [
-            { label: 'entities.coverage.fields.product', property: 'product', type: 'text', visible: true, cssClasses: ["min-w-32"] },
-            { label: 'entities.coverage.fields.managementEntity', property: 'managementEntity', type: 'text', visible: true, cssClasses: ["min-w-44"] },
             { label: 'entities.coverage.fields.reference', property: 'reference', type: 'text', visible: true, cssClasses: ["min-w-52"] },
             { label: 'entities.coverage.fields.nature', property: 'nature', type: 'text', visible: true, },
-   
-            { label: 'entities.coverage.fields.calculationMode', property: 'calculationMode', type: 'text', visible: true,},
+
+            { label: 'entities.coverage.fields.calculationMode', property: 'calculationMode', type: 'text', visible: true, },
             { label: 'entities.coverage.fields.fixedCapital', property: 'fixedCapital', type: 'text', visible: true, },
-            { label: 'entities.coverage.fields.minCapital', property: 'minCapital', type: 'text', visible: true },
-            { label: 'entities.coverage.fields.maxCapital', property: 'maxCapital', type: 'text', visible: true },
+            {
+                label: 'entities.coverage.fields.maxCapital', property: 'maxCapital', type: 'collapse', visible: true, collapseOptions: [
+                    {
+                        label: 'entities.coverage.fields.minCapital',
+                        property: 'minCapital',
+                        type: 'text',
+                        visible: true
+                    },
+                    {
+                        label: 'entities.coverage.fields.maxCapital',
+                        property: 'maxCapital',
+                        type: 'text',
+                        visible: true
+                    }
+                ]
+            },
             { label: 'entities.coverage.fields.order', property: 'order', type: 'text', visible: true },
             { label: 'entities.coverage.fields.prorata', property: 'prorata', type: 'text', visible: true },
             { label: 'entities.coverage.fields.displayPrime', property: 'displayPrime', type: 'text', visible: true, },
@@ -123,6 +135,8 @@ export class CoveragesListComponent {
     ) { }
 
     ngOnInit(): void {
+        this.buildHeaders();
+
         this._coverageService.coverages$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: Coverage[]) => {
@@ -145,6 +159,35 @@ export class CoveragesListComponent {
         this.dataSource.sort = this.sort;
     }
 
+    groupHeader: string[] = [];
+    subHeader: string[] = [];
+    visibleColumns: string[] = [];
+
+    buildHeaders(): void {
+        this.tableOptions.columns.forEach(col => {
+            if (col.type === 'collapse' && col.collapseOptions?.length) {
+                // En-tête parent (ligne 1)
+                const parent = col.property as string + '-parent';
+                this.groupHeader.push(parent);
+
+                // Sous-colonnes (ligne 2)
+                col.collapseOptions.forEach(child => {
+                    this.subHeader.push(child.property as string);
+                    this.visibleColumns.push(child.property as string);
+                });
+            } else {
+                // Colonne simple (même valeur dans les 2 lignes)
+                this.groupHeader.push(col.property as string);
+                
+                this.visibleColumns.push(col.property as string);
+            }
+        });
+
+        // Ajout de la colonne d’actions si nécessaire
+        this.groupHeader.push('actions');
+        this.visibleColumns.push('actions');
+    }
+
     ngAfterViewInit() {
         if (this.dataSource) {
             this.dataSource.paginator = this.paginator;
@@ -162,7 +205,7 @@ export class CoveragesListComponent {
         this._dialog.open(SelectProductComponent, {
             width: '700px',
             data: {
-                selected : this.selectedProduct,
+                selected: this.selectedProduct,
                 products: this.products
             }
         }).afterClosed().subscribe((product: Product) => {
@@ -198,14 +241,8 @@ export class CoveragesListComponent {
         });
     }
 
-    openDeleteDialog(item: any): void {}
+    openDeleteDialog(item: any): void { }
 
-
-    get visibleColumns() {
-        let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
-        return columns;
-    }
 
     trackByProperty(index: number, column: TableColumn<Coverage>) {
         return column.property;

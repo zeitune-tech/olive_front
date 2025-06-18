@@ -90,7 +90,8 @@ export class CoverageDurationsListComponent {
         */
     onEdit(coverageDuration: CoverageDuration): void {}
     onDelete(coverageDuration: CoverageDuration): void {} 
-
+    onView(coverageDuration: CoverageDuration): void {}
+    
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
         columns.push('actions');

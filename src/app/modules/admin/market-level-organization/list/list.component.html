@@ -1,4 +1,4 @@
-<div class="w-full p-4" *transloco="let t;" tabindex="0">
+<div class=" w-full p-4" *transloco="let t;" tabindex="0">
     <div class="flex flex-col mb-6">
         <h1 class="text-2xl md:text-4xl font-bold py-4">
             {{ t('entities.market_level_organization.table.title') }}
@@ -39,21 +39,11 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="uppercase text-center border-l">
                 Actions
             </th>
-            <td *matCellDef="let row" mat-cell class="border-l">
-                <div class="flex items-center justify-center gap-4">
-                    @let actions = tableOptions.actions;
-                    @for (action of actions; track $index) {
-                        @let label = t(action.label);
-                        <button 
-                            mat-button matStepperNext
-                            class="mat-button-large"
-                            mat-flat-button
-                            [color]="'primary'"
-                            (click)="action.action(row)"
-                        >
-                            {{label}}
-                        </button>
-                    }
+            <td mat-cell *matCellDef="let element" class="border-l">
+                <div class="w-full h-full flex items-center justify-around">
+                    <button mat-icon-button color="accent" (click)="onView(element)" matTooltip="{{ t('action_button.view') }}">
+                        <mat-icon>visibility</mat-icon> 
+                    </button>
                 </div>
             </td>
         </ng-container>
@@ -76,5 +66,32 @@
     @let pageSizeOptions = tableOptions.pageSizeOptions;
     @let pageSize = tableOptions.pageSize;
     <mat-paginator class="rounded-b-md border-t" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
+
+
 </div>
 
+
+
+    <drawer 
+        *transloco="let t;"
+        #drawer
+        [opened]="drawerOpened "
+        [position]="'right'"
+        [mode]="'over'"
+        class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
+        (closed)="selectedItem = null"
+    >
+        <ng-template matDrawerHeader>
+            <h2 class="text-lg font-semibold">
+                {{ t('entities.market_level_organization.drawer.title') }}
+            </h2>
+        </ng-template>
+
+        <ng-template matDrawerContent>
+            <app-market-level-organization-details [data]="selectedItem" (close)="onClose()"></app-market-level-organization-details>
+        </ng-template>
+
+        <ng-template matDrawerFooter>
+            <button mat-button (click)="onClose()">{{ t('action_button.close') }}</button>
+        </ng-template>
+    </drawer>
