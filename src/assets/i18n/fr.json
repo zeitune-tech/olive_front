@@ -183,7 +183,7 @@
       "description": "Définition des taux appliqués aux différentes durées de couverture.",
       "form": {
         "title": "Configuration des taux de durée",
-        "subtitle": "Ajouter ou modifier un taux de durée"
+        "subtitle": "Associer un taux à une durée"
       },
       "table": {
         "title": "Taux Durées",
@@ -786,7 +786,7 @@
       "description": "Définition des taux appliqués aux différentes durées de couverture.",
       "form": {
         "title": "Configuration des taux de durée",
-        "subtitle": "Ajouter ou modifier un taux de durée"
+        "subtitle": "Associer un taux à une durée"
       },
       "table": {
         "title": "Taux Durées",
@@ -1438,6 +1438,7 @@
     "delete": "Supprimer",
     "view": "Voir plus",
     "share": "Partager",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "assign": "Associer un taux"
   }
 }

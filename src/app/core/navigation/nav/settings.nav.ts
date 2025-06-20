@@ -93,16 +93,6 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 link: '/parameters/coverage-durations/new',
                 permission: PERMISSIONS.CREATE_COVERAGE_DURATIONS
             },
-
-        ]
-    },
-    {
-        id: 'duration-rates',
-        title: 'sidebar.duration_rates.title',
-        type: 'collapsable',
-        icon: 'fluent:people-team',
-        // permission: PERMISSIONS.VIEW_DURATION_RATES,
-        children: [
             {
                 id: 'duration-rates.list',
                 title: 'sidebar.duration_rates.list',
@@ -110,17 +100,34 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 icon: 'fluent:people-team',
                 link: '/parameters/duration-rates/list',
                 // permission: PERMISSIONS.VIEW_DURATION_RATES
-            },
-            {
-                id: 'duration-rates.new',
-                title: 'sidebar.duration_rates.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/duration-rates/new',
-                // permission: PERMISSIONS.CREATE_DURATION_RATES
             }
         ]
     },
+    // {
+    //     id: 'duration-rates',
+    //     title: 'sidebar.duration_rates.title',
+    //     type: 'collapsable',
+    //     icon: 'fluent:people-team',
+    //     // permission: PERMISSIONS.VIEW_DURATION_RATES,
+    //     children: [
+    //         {
+    //             id: 'duration-rates.list',
+    //             title: 'sidebar.duration_rates.list',
+    //             type: 'basic',
+    //             icon: 'fluent:people-team',
+    //             link: '/parameters/duration-rates/list',
+    //             // permission: PERMISSIONS.VIEW_DURATION_RATES
+    //         },
+    //         {
+    //             id: 'duration-rates.new',
+    //             title: 'sidebar.duration_rates.new',
+    //             type: 'basic',
+    //             icon: 'fluent:people-team',
+    //             link: '/parameters/duration-rates/new',
+    //             // permission: PERMISSIONS.CREATE_DURATION_RATES
+    //         }
+    //     ]
+    // },
     {
         id: 'closures',
         title: 'sidebar.closures.title',
