@@ -27,6 +27,7 @@ export class UsersListComponent {
             { label: 'entities.user.fields.first_name', property: 'firstName', type: 'text', visible: true },
             { label: 'entities.user.fields.last_name', property: 'lastName', type: 'text', visible: true },
             { label: 'entities.user.fields.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.user.fields.profiles', property: 'profiles', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
@@ -35,6 +36,10 @@ export class UsersListComponent {
             
             if (property === 'managementEntity') {
                 return element.managementEntity;
+            }
+
+            if (property === 'profiles') {
+                return element.profiles.map(profile => profile.name).join(', ');
             }
             return element[property];
         },

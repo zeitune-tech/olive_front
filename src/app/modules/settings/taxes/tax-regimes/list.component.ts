@@ -37,9 +37,7 @@ export class TaxRegimesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: TaxRegime, property: keyof TaxRegime) => {
 
             if (property === 'exemptedTaxes') {
@@ -96,12 +94,9 @@ export class TaxRegimesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit TaxRegime TaxRegime
-        */
-    onDemand(item: TaxRegime | null): void {
-
-    }
+    onEdit(element: TaxRegime): void {}
+    onDelete(element: TaxRegime): void {}
+    onView(element: TaxRegime): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

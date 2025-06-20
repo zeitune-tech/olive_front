@@ -114,9 +114,6 @@ export class ProfilesListComponent {
         return hasPerm;
     }
     
-    onEdit(profile: Profile): void {
-        // Implement edit functionality
-    }
     onDelete(profile: Profile): void {
         this._dialog.open(ProfilesEditComponent, {
             width: '600px',
@@ -132,7 +129,7 @@ export class ProfilesListComponent {
         // Implement view functionality
     }
 
-    onEditProfile(profile: Profile): void {
+    onEdit(profile: Profile): void {
         this._dialog.open(ProfilesEditComponent, {
             width: '600px',
             data: profile
@@ -145,13 +142,6 @@ export class ProfilesListComponent {
 
     }
 
-    onDeleteProfile(profile: Profile): void {
-        // this._profileService.deleteProfile(profile.id).subscribe(() => {
-        //     this.data = this.data.filter(p => p.id !== profile.id);
-        //     this.dataSource.data = this.data;
-        //     this._changeDetectorRef.detectChanges();
-        // });
-    }
 
 
     get visibleColumns() {

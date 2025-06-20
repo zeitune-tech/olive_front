@@ -123,12 +123,17 @@
         "description": "Liste des garanties associées aux produits",
         "empty_state": "Aucune garantie n’a été définie."
       },
+      "custom_fields": {
+        "capital": "Capital",
+        "min": "Min",
+        "max": "Max"
+      },
       "fields": {
         "nature": "Nature",
         "isFree": "Gratuite",
-        "isFixed": "Fixe",
-        "calculationMode": "Mode de calcul",
-        "fixedCapital": "Capital fixe",
+        "isFixed": "Automatique",
+        "calculationMode": "Tarification",
+        "fixedCapital": "Si fixe",
         "minCapital": "Capital minimum",
         "maxCapital": "Capital maximum",
         "order": "Ordre",
@@ -142,9 +147,16 @@
       "options": {
         "calculationMode": {
           "FIXED": "Fixe",
-          "VARIABLE": "Variable",
+          "FIXE": "Fixe",
+          "AUTOMATIQUE": "Automatique",
+          "VARIABLE": "Libre",
           "PRORATA": "Prorata",
           "PRORATA_FIXED": "Prorata fixe"
+        },
+        "nature": {
+          "required": "Obligatoire",
+          "optional": "Facultative",
+          "recommended": "Proposée"
         }
       }
     },
@@ -464,6 +476,7 @@
         "password": "Mot de passe",
         "confirm_password": "Confirmer le mot de passe",
         "access_level": "Niveau d'accès",
+        "profiles": "Profils",
         "company": "Compagnie",
         "point_of_sale": "Point de vente",
         "profile": "Profil",
@@ -635,7 +648,9 @@
     },
     "tax_regime": {
       "table": {
-        "title": "Régimes de taxe"
+        "title": "Régimes de taxe",
+        "description": "Liste des régimes de taxe",
+        "empty_state": "Aucun régime de taxe trouvé"
       },
       "form": {
         "title": "Créer un régime de taxe",
@@ -752,6 +767,11 @@
       "form": {
         "title": "Taxe de commission",
         "subtitle": "Veuillez remplir les champs requis"
+      },
+      "table": {
+        "title": "Taxes de commission",
+        "description": "Liste des taxes de commission",
+        "empty_state": "Aucune taxe de commission trouvée"
       },
       "fields": {
         "dateEffective": "Date d'effet",
@@ -1035,7 +1055,7 @@
     },
     "incompatible_coverages": {
       "list": "Garanties incompatibles",
-      "new": "Ajouter une garantie incompatible"
+      "new": "Ajouter garanties incompatibles"
     },
     "coverage_durations": {
       "title": "Durées Couverture",

@@ -36,9 +36,7 @@ export class AccessoriesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: Closure, property: keyof Closure) => {
 
             return element[property];
@@ -82,12 +80,9 @@ export class AccessoriesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Closure Closure
-        */
-    onDemand(item: Closure | null): void {
-
-    }
+    onEdit(element: Closure): void {}
+    onDelete(element: Closure): void {}
+    onView(element: Closure): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

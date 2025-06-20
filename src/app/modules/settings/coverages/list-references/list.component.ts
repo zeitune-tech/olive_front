@@ -11,6 +11,8 @@ import { CoverageReferenceService } from "@core/services/settings/coverage-refer
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { CoverageReferenceEditComponent } from "../edit-reference/edit.component";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-coverage-reference-list",
@@ -28,14 +30,11 @@ export class CoverageReferenceListComponent {
             { label: 'entities.coverage_reference.fields.designation', property: 'designation', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.family', property: 'family', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.accessCharacteristic', property: 'accessCharacteristic', type: 'text', visible: true },
-            { label: 'entities.coverage_reference.fields.tariffAccess', property: 'tariffAccess', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.toShareOut', property: 'toShareOut', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: CoverageReference, property: keyof CoverageReference) => {
             if (property === 'accessCharacteristic') {
                 return element.accessCharacteristic == false ? 'Non' : 'Oui';
@@ -87,9 +86,42 @@ export class CoverageReferenceListComponent {
         this._unsubscribeAll.complete();
     }
 
-    openSelection() {
-        
+    onEdit(coverageReference: CoverageReference): void {
+        this._dialog.open(CoverageReferenceEditComponent, {
+            width: '600px',
+            data: coverageReference,
+            disableClose: true,
+            autoFocus: false
+        }).afterClosed().subscribe((result: boolean) => {
+            if (result) {
+                this._coverageService.getAll();
+            }
+        })
     }
+    onDelete(coverageReference: CoverageReference): void {
+        this._dialog.open(ConfirmDeleteComponent, {
+            width: '400px',
+            data: {
+                title: 'entities.coverage_reference.delete.title',
+                message: 'entities.coverage_reference.delete.message',
+                itemName: coverageReference.designation
+            },
+            disableClose: true,
+            autoFocus: false
+        }).afterClosed().subscribe((result: boolean) => {
+            if (result) {
+                this._coverageService.delete(coverageReference.id).subscribe({
+                    next: () => {
+                        this._coverageService.getAll();
+                    },
+                    error: (error) => {
+                        console.error('Error deleting coverage reference:', error);
+                    }
+                });
+            }
+        })
+    }
+    onView(coverageReference: CoverageReference): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

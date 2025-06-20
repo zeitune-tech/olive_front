@@ -13,6 +13,7 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { CoveragesEditDialogComponent } from "../new-coverage/edit.component";
 import { SelectProductComponent } from "../select-product/select-product.component";
+import { TranslocoService } from "@jsverse/transloco";
 
 @Component({
     selector: "app-coverages-list",
@@ -62,30 +63,28 @@ export class CoveragesListComponent {
         columns: [
             { label: 'entities.coverage.fields.reference', property: 'reference', type: 'text', visible: true, cssClasses: ["min-w-52"] },
             { label: 'entities.coverage.fields.nature', property: 'nature', type: 'text', visible: true, },
+            { label: 'entities.coverage.fields.isFree', property: 'isFree', type: 'text', visible: true, },
 
             { label: 'entities.coverage.fields.calculationMode', property: 'calculationMode', type: 'text', visible: true, },
-            { label: 'entities.coverage.fields.fixedCapital', property: 'fixedCapital', type: 'text', visible: true, },
-            {
-                label: 'entities.coverage.fields.maxCapital', property: 'maxCapital', type: 'collapse', visible: true, collapseOptions: [
+            { label: 'entities.coverage.custom_fields.capital', property: 'maxCapital', type: 'collapse', visible: true, collapseOptions: [
+                    { label: 'entities.coverage.fields.isFixed', property: 'isFixed', type: 'text', visible: true, },
+                    { label: 'entities.coverage.fields.fixedCapital', property: 'fixedCapital', type: 'text', visible: true, },
                     {
-                        label: 'entities.coverage.fields.minCapital',
+                        label: 'entities.coverage.custom_fields.min',
                         property: 'minCapital',
                         type: 'text',
                         visible: true
                     },
                     {
-                        label: 'entities.coverage.fields.maxCapital',
+                        label: 'entities.coverage.custom_fields.max',
                         property: 'maxCapital',
                         type: 'text',
                         visible: true
                     }
                 ]
             },
-            { label: 'entities.coverage.fields.order', property: 'order', type: 'text', visible: true },
             { label: 'entities.coverage.fields.prorata', property: 'prorata', type: 'text', visible: true },
-            { label: 'entities.coverage.fields.displayPrime', property: 'displayPrime', type: 'text', visible: true, },
-            { label: 'entities.coverage.fields.generatesCharacteristic', property: 'generatesCharacteristic', type: 'text', visible: true, },
-            { label: 'entities.coverage.fields.isFree', property: 'isFree', type: 'text', visible: true, },
+            { label: 'entities.coverage.fields.order', property: 'order', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'coverage.columns.logo',
@@ -94,12 +93,35 @@ export class CoveragesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: Coverage, property: keyof Coverage) => {
+
+            if (property === 'nature') {
+                let nature = element.nature;
+                if (!nature || nature === 'null' || nature === 'undefined') {
+                    return "Facultative";
+                }
+                return this._translateService.translate(`entities.coverage.options.nature.${element.nature}`);
+            }
+
+            if (property === 'isFree') {
+                return element.isFree ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
+            }
+
+            if (property === 'isFixed') {
+                return element.isFixed ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
+            }
+
+            if (property === 'calculationMode') {
+                return this._translateService.translate(`entities.coverage.options.calculationMode.${element.calculationMode}`);
+            }
+
             if (property === 'reference') {
                 return element.reference?.designation || " - ";
+            }
+
+            if (property === 'prorata') {
+                return element.prorata ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
             }
 
             if (element[property] === null || element[property] === undefined) {
@@ -113,6 +135,8 @@ export class CoveragesListComponent {
             if (property === 'managementEntity') {
                 return element.managementEntity.name || " - ";
             }
+
+
 
             return element[property];
         },
@@ -131,6 +155,7 @@ export class CoveragesListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _coverageService: CoverageService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) { }
 
@@ -218,8 +243,6 @@ export class CoveragesListComponent {
         })
     }
 
-
-
     openEditDialog(item: any): void {
         const dialogRef = this._dialog.open(CoveragesEditDialogComponent, {
             width: '700px',
@@ -243,6 +266,17 @@ export class CoveragesListComponent {
 
     openDeleteDialog(item: any): void { }
 
+    onView(element: Coverage): void {
+        this.openEditDialog(element);
+    }
+    
+    onDelete(element: Coverage): void {
+        // this._coverageService.delete(element.id).subscribe(() => {
+        //     this.data = this.data.filter(item => item.id !== element.id);
+        //     this.dataSource.data = this.data;
+        //     this._changeDetectorRef.detectChanges();
+        // });
+    }
 
     trackByProperty(index: number, column: TableColumn<Coverage>) {
         return column.property;

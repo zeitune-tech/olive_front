@@ -8,6 +8,7 @@ export class Coverage {
     isFree: boolean;
     isFixed: boolean;
     calculationMode: string;
+    rate: number;
     fixedCapital: number;
     minCapital: number;
     maxCapital: number;
@@ -33,6 +34,7 @@ export class Coverage {
       this.displayPrime = coverage.displayPrime ?? false;
       this.generatesCharacteristic = coverage.generatesCharacteristic ?? false;
       this.reference = new CoverageReference(coverage.reference || {});
+      this.rate = coverage.rate ?? 0;
       this.product = coverage.product || '';
       this.managementEntity = coverage.managementEntity || '';
     }

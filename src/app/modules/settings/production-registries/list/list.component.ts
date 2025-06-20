@@ -36,9 +36,7 @@ export class ProductionRegistriesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: ProductionRegistry, property: keyof ProductionRegistry) => {
             if (property === 'product') {
                 return element.product ? element.product.name : '';
@@ -84,11 +82,14 @@ export class ProductionRegistriesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit ProductionRegistry ProductionRegistry
-        */
-    onDemand(item: ProductionRegistry | null): void {
-
+    onEdit(productionRegistry: ProductionRegistry): void {
+        // Implement edit functionality here
+    }
+    onDelete(productionRegistry: ProductionRegistry): void {
+        // Implement delete functionality here
+    }
+    onView(productionRegistry: ProductionRegistry): void {
+        // Implement view functionality here
     }
 
     get visibleColumns() {

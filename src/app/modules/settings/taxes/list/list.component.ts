@@ -35,9 +35,7 @@ export class TaxesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: Tax, property: keyof Tax) => {
 
 
@@ -82,11 +80,12 @@ export class TaxesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Tax Tax
-        */
-    onDemand(item: Tax | null): void {
-
+    onEdit(element: Tax): void {}
+    onDelete(element: Tax): void {
+        // Implement delete logic here
+    }
+    onView(element: Tax): void {
+        // Implement view logic here
     }
 
     get visibleColumns() {

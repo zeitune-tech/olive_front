@@ -27,6 +27,7 @@ import { CoverageLayoutComponent } from "./layout/layout.component";
 import { LayoutService } from "./layout.service";
 import { AlertModule } from "@lhacksrt/components";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { CoverageReferenceEditComponent } from "./edit-reference/edit.component";
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         IncompatibleCoveragesNewComponent,
         CoverageReferenceNewComponent,
         SelectProductComponent,
-        CoverageLayoutComponent
+        CoverageLayoutComponent,
+        CoverageReferenceEditComponent
     ],
     imports: [
         RouterModule.forChild(routes),

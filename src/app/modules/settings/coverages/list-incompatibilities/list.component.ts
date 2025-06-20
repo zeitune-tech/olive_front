@@ -37,9 +37,7 @@ export class IncompatibleCoveragesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: IncompatibleCoverage, property: keyof IncompatibleCoverage) => {
             if (property === "coverage") {
                 return element[property].designation;
@@ -90,6 +88,9 @@ export class IncompatibleCoveragesListComponent {
         this._unsubscribeAll.complete();
     }
 
+    onEdit(element: IncompatibleCoverage): void {}
+    onDelete(element: IncompatibleCoverage): void {}
+    onView(element: IncompatibleCoverage): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
