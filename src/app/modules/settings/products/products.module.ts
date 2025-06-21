@@ -25,6 +25,7 @@ import { ShareProductComponent } from "./share-product/share-product.component";
 import { ProductNewStepOneComponent } from "./new/step-one/step-one.component";
 import { ProductNewStepTwoComponent } from "./new/step-two/step-two.component";
 import { MatStepperModule } from "@angular/material/stepper";
+import { ProductEditComponent } from "./edit/edit.component";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { MatStepperModule } from "@angular/material/stepper";
         ProductsNewComponent,
         ShareProductComponent,
         ProductNewStepOneComponent,
-        ProductNewStepTwoComponent
+        ProductNewStepTwoComponent,
+        ProductEditComponent
     ],
     imports: [
         RouterModule.forChild(routes),

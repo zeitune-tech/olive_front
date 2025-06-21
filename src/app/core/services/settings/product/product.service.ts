@@ -71,6 +71,32 @@ export class ProductService {
             );
     }
 
+    addCoverages(id: string, coverages: any): Observable<Product> {
+        return this._httpClient.put<Product>(`${this.baseUrl}/${id}/coverages`, coverages)
+            .pipe(
+                tap((product) => {
+                    this.product = product;
+                    return (product);
+                }),
+                catchError((error) => {
+                    throw error;
+                })
+            );
+    }
+
+    removeCoverages(id: string, coverages: any): Observable<Product> {
+        return this._httpClient.put<Product>(`${this.baseUrl}/${id}/coverages/remove`, coverages)
+            .pipe(
+                tap((product) => {
+                    this.product = product;
+                    return (product);
+                }),
+                catchError((error) => {
+                    throw error;
+                })
+            );
+    }
+
     delete(id: number): Observable<any> {
         return this._httpClient.delete(`${this.baseUrl}/${id}`)
             .pipe(

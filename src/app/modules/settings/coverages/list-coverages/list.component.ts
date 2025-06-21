@@ -14,6 +14,7 @@ import { Subject, takeUntil } from "rxjs";
 import { CoveragesEditDialogComponent } from "../new-coverage/edit.component";
 import { SelectProductComponent } from "../select-product/select-product.component";
 import { TranslocoService } from "@jsverse/transloco";
+import { CoveragesFormComponent } from "../coverages-form/coverages-form.component";
 
 @Component({
     selector: "app-coverages-list",
@@ -239,6 +240,20 @@ export class CoveragesListComponent {
                 this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
                 this.dataSource.paginator = this.paginator;
                 this._changeDetectorRef.detectChanges();
+            }
+        })
+    }
+
+    openAddDialog(): void {
+        this._dialog.open(CoveragesFormComponent, {
+            width: '700px',
+            data: {
+                mode: 'add',
+                product: this.selectedProduct,
+            }
+        }).afterClosed().subscribe((result: Coverage) => {
+            if (result) {
+                
             }
         })
     }

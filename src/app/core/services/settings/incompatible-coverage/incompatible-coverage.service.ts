@@ -92,4 +92,15 @@ export class IncompatibleCoverageService {
             catchError(() => of([] as IncompatibleCoverage[]))
         );
     }
+
+    delete(id: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this.baseUrl}/${id}`)
+        .pipe(
+            tap(() => {
+                this.incompatibleCoverages = this.incompatibleCoverages.filter((incompatibleCoverage: IncompatibleCoverage) => incompatibleCoverage.id !== id);
+                return;
+            }),
+            catchError(() => of())
+        );
+    }
 }

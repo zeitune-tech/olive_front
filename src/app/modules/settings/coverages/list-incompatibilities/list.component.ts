@@ -11,7 +11,7 @@ import { IncompatibleCoverageService } from "@core/services/settings/incompatibl
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { SelectProductComponent } from "../select-product/select-product.component";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-incompatible-coverages-list",
@@ -89,7 +89,22 @@ export class IncompatibleCoveragesListComponent {
     }
 
     onEdit(element: IncompatibleCoverage): void {}
-    onDelete(element: IncompatibleCoverage): void {}
+    onDelete(element: IncompatibleCoverage): void {
+        this._dialog.open(ConfirmDeleteComponent, {
+            data: {
+                title: 'entities.incompatible_coverage.delete.title',
+                message: 'entities.incompatible_coverage.delete.message',
+                item: element,
+                service: this._incompatibleCoverageService
+            }
+        }).afterClosed().subscribe((result: boolean) => {
+            if (result) {
+                this._incompatibleCoverageService.delete(element.id).subscribe(() => {
+                    this._changeDetectorRef.markForCheck();
+                });
+            }
+        });
+    }
     onView(element: IncompatibleCoverage): void {}
 
     get visibleColumns() {

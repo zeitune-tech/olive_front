@@ -148,7 +148,7 @@
         "calculationMode": {
           "FIXED": "Fixe",
           "FIXE": "Fixe",
-          "AUTOMATIQUE": "Automatique",
+          "AUTOMATIC": "Automatique",
           "VARIABLE": "Libre",
           "PRORATA": "Prorata",
           "PRORATA_FIXED": "Prorata fixe"

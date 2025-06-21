@@ -18,6 +18,7 @@ import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
 import { ShareProductComponent } from "../share-product/share-product.component";
 import { TranslocoService } from "@jsverse/transloco";
+import { ProductEditComponent } from "../edit/edit.component";
 
 @Component({
     selector: "app-products-list",
@@ -178,8 +179,15 @@ export class ProductsListComponent implements OnInit {
         * Edit Product Product
         */
     onEdit(product: Product): void {
-        this._layoutService.setSelectedProduct(product);
-        this._router.navigate(['/administration/products/new']); // ou route vers le même formulaire mais dans un mode "édition"
+        this._dialog.open(ProductEditComponent, {
+            data: product,
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        })
     }
 
     onShare(product: Product): void {

@@ -8,6 +8,7 @@ import { ProductService } from "@core/services/settings/product/product.service"
 import { LayoutService } from "../layout.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
+import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 
 @Component({
 	selector: "app-products-new",
@@ -52,11 +53,8 @@ export class ProductsNewComponent implements OnInit {
 	};
 
 	constructor(
-		private _formBuilder: FormBuilder,
 		private _productService: ProductService,
-		private _branchService: BranchService,
-		private _layoutService: LayoutService,
-		private _snackBar: MatSnackBar,
+		private _coverageService: CoverageService,
 		private _router: Router,
 	) { }
 
@@ -88,7 +86,8 @@ export class ProductsNewComponent implements OnInit {
         .subscribe({
             next: (_product) => {
                 this._productService.getAll().subscribe();
-                this._router.navigate(['/administration/products/list']);
+				this._coverageService.getAll().subscribe();
+                this._router.navigate(['/parameters/products/list']);
             },
             error: (error) => {
 

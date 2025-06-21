@@ -28,6 +28,8 @@ import { LayoutService } from "./layout.service";
 import { AlertModule } from "@lhacksrt/components";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { CoverageReferenceEditComponent } from "./edit-reference/edit.component";
+import { CoveragesFormComponent } from "./coverages-form/coverages-form.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -39,7 +41,8 @@ import { CoverageReferenceEditComponent } from "./edit-reference/edit.component"
         CoverageReferenceNewComponent,
         SelectProductComponent,
         CoverageLayoutComponent,
-        CoverageReferenceEditComponent
+        CoverageReferenceEditComponent,
+        CoveragesFormComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -59,6 +62,7 @@ import { CoverageReferenceEditComponent } from "./edit-reference/edit.component"
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
+        MatCheckboxModule
     ],
     providers: [
         LayoutService
