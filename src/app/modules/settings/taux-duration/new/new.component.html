@@ -1,25 +1,24 @@
-<div class="w-full pb-10" *transloco="let t">
+<div class="w-full max-w-2xl bg-card p-6 rounded-xl mx-auto overflow-hidden" *transloco="let t">
   <div class="flex flex-col mb-10">
     <h1 class="text-2xl md:text-4xl font-bold py-4">
-      {{ t('entities.duration-rate.table.title') }}
+      {{ t('entities.duration-rate.label') }}
     </h1>
     <p class="text-sm text-gray-600">
-      {{ t('entities.duration-rate.form.subtitle') }}
+      {{ t('entities.duration-rate.description') }}
     </p>
   </div>
 
-  <form [formGroup]="formGroup" class="w-full sm:max-w-3xl bg-card p-4 rounded-xl mx-auto">
+<form [formGroup]="formGroup" class="w-full max-w-2xl bg-card p-6 rounded-xl mx-auto overflow-hidden">
     <div class="flex flex-col mb-6 text-center text-primary">
       <h1 class="text-2xl font-bold">
-        {{ t('entities.duration-rate.form.title') }}
+      {{ t('entities.duration-rate.form.title') }}
       </h1>
       <p class="text-sm text-gray-600">
-        {{ t('entities.duration-rate.form.subtitle') }}
+      {{ t('entities.duration-rate.form.subtitle') }}
       </p>
     </div>
  
     <div class="flex flex-col gap-6">
-      
       <!-- Product -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>{{ t('entities.duration-rate.fields.product') }}</mat-label>
@@ -55,7 +54,7 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Duration -->
+      <!-- Duration
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>{{ t('entities.duration-rate.fields.duration') }}</mat-label>
         <mat-select formControlName="durationId">
@@ -70,7 +69,7 @@
         <mat-error *ngIf="formGroup.get('duration')?.hasError('required')">
           {{ t('form.errors.required') }}
         </mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
       <!-- Submit -->
       <div class="flex items-center justify-end gap-4 mt-6">
