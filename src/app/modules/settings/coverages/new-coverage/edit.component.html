@@ -15,7 +15,11 @@
       <!-- Nature -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>{{ t('entities.coverage.fields.nature') }}</mat-label>
-        <input matInput formControlName="nature" />
+        <mat-select formControlName="nature">
+          <mat-option *ngFor="let nature of natures" [value]="nature.value">
+            {{ nature.label }}
+          </mat-option>
+        </mat-select>
         <mat-error *ngIf="formGroup.get('nature')?.hasError('required')">
           {{ t('form.errors.required') }}
         </mat-error>

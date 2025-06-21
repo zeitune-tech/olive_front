@@ -14,8 +14,15 @@ export class CoveragesEditDialogComponent implements OnInit {
 
     calculationModes = [
         { value: 'FIXE', label: 'Fixe' },
-        { value: 'VARIABLE', label: 'Variable' }
+        { value: 'AUTOMATIC', label: 'Automatique' },
+        { value: 'MANUAL', label: 'Manuelle' }
     ];
+
+    natures = [
+        { value: 'REQUIRED', label: 'Obligatoire' },
+        { value: 'OPTIONAL', label: 'Optionnelle' },
+        { value: 'RECOMMENDED', label: 'Proposée' },
+    ]
 
     constructor(
         private _formBuilder: FormBuilder,
