@@ -930,6 +930,32 @@
         "premiums": "Prime",
         "summary": "Résumé"
       }
+    },
+    "lot_attestations":{
+      "label": "Stock Attestations",
+      "description": "Gérer les attestations de lot pour les contrats.",
+      "form": {
+        "title": "Créer une attestation de lot",
+        "subtitle": "Remplissez les informations de l'attestation"
+      },
+      "table": {
+        "title": "Stock d'attestations",
+        "description": "Liste des lots d'attestations actives",
+        "empty_state": "Aucune attestation trouvée"
+      },
+      "fields": {
+        "prefix": "Préfixe",
+        "quantity": "Quantité",
+        "stock": "Stock",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "status": "Statut",
+        "lotNumber": "Numéro de lot",
+        "issueDate": "Date d'émission",
+        "validityPeriod": "Période de validité",
+        "contractNumber": "Numéro de contrat",
+        "managementEntity": "Entité de gestion"
+      }
     }
   },
   "auth": {
