@@ -30,6 +30,14 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.contributor.fields.gsm') }}</mat-label>
+                <input matInput formControlName="gsm" />
+                <mat-error *ngIf="formGroup.get('gsm')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
                 <mat-label>{{ t('entities.contributor.fields.level') }}</mat-label>
                 <mat-select formControlName="level">
                     <mat-option *ngFor="let l of levels" [value]="l.value">{{ t(l.label) }}</mat-option>

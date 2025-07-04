@@ -101,4 +101,13 @@ export class CompanyLevelOrganizationService {
                 })
             );
     }
+
+    addPointsToOrganization(orgId: string, pointIds: string[]): Observable<any> {
+        return this._httpClient.post(`${this.baseUrl}/${orgId}/points-of-sale`, pointIds);
+    }
+
+    removePointOfSale(orgId: string, pointId: string): Observable<any> {
+        return this._httpClient.delete(`${this.baseUrl}/${orgId}/points-of-sale/${pointId}`);
+    }
+
 }

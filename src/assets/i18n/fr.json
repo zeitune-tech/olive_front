@@ -269,7 +269,7 @@
         "minRisk": "Risque minimum",
         "maxRisk": "Risque maximum",
         "minimumGuaranteeNumber": "Nombre minimum de garanties",
-        "fleet": "Produit destiné à une flotte ?",
+        "fleet": "Flotte ?",
         "hasReduction": "Produit avec réduction ?",
         "productionRegistry": "Registre prod"
       }
@@ -338,6 +338,10 @@
           "ENTITY_SUPERIOR": "Entité Supérieure",
           "COMPANY": "Compagnie",
           "POINT_OF_SALE": "Point de vente"
+        },
+        "name": {
+          "ADMIN_COMPANY": "Compagnie",
+          "ADMIN_POINT_OF_SALE": "Point de vente"
         }
       }
     },
@@ -397,10 +401,14 @@
     "point_of_sale": {
       "label": "Point de vente",
       "description": "Liste et gestion des points de vente.",
+      "select_title": "Ajouter des points de vente à l'organisation",
+      "message": "Voulez-vous vraiment retirer ce point de vente de l’organisation ?",
+      "message_error": "Impossible de retirer le point de vente de l’organisation.",
       "form": {
         "title": "Gestion des points de vente",
         "subtitle": "Définir les détails du point de vente",
-        "description": "Créez ou modifiez les détails des points de vente."
+        "description": "Créez ou modifiez les détails des points de vente.",
+        "editTitle": "Modifier les informations du point de vente"
       },
       "table": {
         "title": "Points de vente",
@@ -505,6 +513,7 @@
         "title": "Création de profil",
         "subtitle": "Définir les rôles et permissions",
         "description": "Créez ou modifiez les profils utilisateur et attribuez des permissions.",
+        "editTitle": "Modifier les informations du profil",
         "steps": {
           "step_one_title": "Informations du profil",
           "step_one_description": "Saisissez les informations de base du profil.",
@@ -550,6 +559,7 @@
         "title": "Création d'organisation niveau compagnie",
         "subtitle": "Organiser les points de vente par groupe",
         "description": "Définissez des groupes organisationnels et associez-y les points de vente.",
+        "editTitle": "Modifier les informations de l'organisation",
         "steps": {
           "step_one_title": "Informations de l'organisation",
           "step_one_description": "Saisissez les détails de base pour l'organisation.",
@@ -564,11 +574,18 @@
           "step_three_create": "Confirmer & créer"
         }
       },
+      "delete": {
+        "title": "Confirmation de suppression",
+        "message": "Êtes-vous sûr de vouloir supprimer cette organisation ?",
+        "confirm": "Supprimer",
+        "cancel": "Annuler"
+      },
       "table": {
         "title": "Organisations niveau compagnie",
         "subtitle": "Gérer les groupes organisationnels",
         "description": "Liste et gestion des organisations niveau compagnie.",
-        "empty_state": "Aucune organisation trouvée"
+        "empty_state": "Aucune organisation trouvée",
+        "list_points_of_sale": "Liste des points de vente de cette organisation"
       },
       "fields": {
         "name": "Nom",
@@ -736,7 +753,8 @@
       "description": "Liste des apporteurs et leurs informations.",
       "form": {
         "title": "Créer ou modifier un apporteur",
-        "subtitle": "Veuillez remplir les informations de l'apporteur"
+        "subtitle": "Veuillez remplir les informations de l'apporteur",
+        "editTitle": "Modifier les informations de l'apporteur"
       },
       "table": {
         "title": "Apporteurs",
@@ -748,6 +766,7 @@
         "lastname": "Nom",
         "name": "Nom de l'apporteur",
         "email": "Email",
+        "gsm": "GSM",
         "level": "Niveau d'accès",
         "phone": "Téléphone",
         "address": "Adresse",
@@ -759,7 +778,8 @@
         "level": {
           "COMPANY": "Compagnie",
           "POINT_OF_SALE": "Point de vente",
-          "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché"
+          "MARKET_LEVEL_ORGANIZATION": "Organisation de niveau marché",
+          "null": "Niveau non renseigné"
         }
       }
     },
@@ -1045,7 +1065,9 @@
     "market_level_organization": {
       "title": "Organisations niveau marché",
       "list": "Liste des organisations niveau marché",
-      "linked": "Organisations liées"
+      "linked": "Organisations liées",
+      "company_title": "Les compagnies de l'organisation",
+      "product_title": "Produits de l'organisation"
     },
     "points_of_sale": {
       "title": "Points de vente",
@@ -1077,11 +1099,11 @@
       "title": "Produits",
       "referential": "Référentiel des garanties",
       "list": "Produits/Garanties",
-      "new": "Ajouter une garantie dans Référentiel"
+      "new": "Ajouter une garantie"
     },
     "incompatible_coverages": {
       "list": "Garanties incompatibles",
-      "new": "Ajouter garanties incompatibles"
+      "new": "Ajouter des garanties incompatibles"
     },
     "coverage_durations": {
       "title": "Durées Couverture",
@@ -1132,23 +1154,59 @@
     },
     "taxes": {
       "title": "Taxes",
-      "list": "Liste des taxes",
-      "base_taxes": "Base de calcul des taxes",
-      "list_prime": "Taxes / Primes",
-      "list_accessories": "Taxes / Accessoires",
-      "tax_regime": "Régimes Taxes",
-      "tax_regime_new": "Ajouter un régime de taxe",
-      "base_taxes_new": "Ajouter une base de Calcul",
-      "new": "Ajouter une taxe"
+      "types": {
+        "title": "Types taxes",
+        "list": "Liste",
+        "new": "Ajout"
+      },
+      "primes": {
+        "title": "Taxes Primes",
+        "list": "Liste",
+        "new": "Ajout"
+      },
+      "accessoires": {
+        "title": "Taxes Accessoires",
+        "list": "Liste",
+        "new": "Ajout"
+      },
+      "exoneration":"Exonération Taxes",
+      "timbreDimension": "Timbre Dimension",
+      "timbreGradue": "Timbre Gradué"
     },
     "commissions": {
       "title": "Commissions",
-      "list": "Liste des commissions",
-      "taxes": "Commissions / Taxes",
-      "taxes_new": "Ajouter une Commission / Taxe",
-      "contributors": "Commissions / Apporteurs",
-      "contributors_new": "Ajouter une Commission / Apporteur",
-      "new": "Ajouter une commission"
+      "primes": {
+        "title": "Commission Prime",
+        "list": "Liste",
+        "new": "Ajout"
+      },
+      "accessoires": {
+        "title": "Commission Accessoire",
+        "list": "Liste",
+        "new": "Ajout"
+      },
+      "taxes": {
+        "title": "Taxes Commission",
+        "list": "Liste",
+        "new": "Ajout"
+      },
+      "apporteurs": {
+        "primes": {
+          "title": "Commission Apporteur Primes",
+          "list": "Liste",
+          "new": "Ajout"
+        },
+        "accessoires": {
+          "title": "Commission Apporteur Accessoires",
+          "list": "Liste",
+          "new": "Ajout"
+        },
+        "taxes": {
+          "title": "Taxes Commissions Apporteurs",
+          "list": "Liste",
+          "new": "Ajout"
+        }
+      }
     },
     "insureds": {
       "title": "Assurés",
@@ -1179,8 +1237,18 @@
       "title": "Production Flotte",
       "list": "Liste des productions flotte",
       "new": "Ajouter une production flotte"
+    },
+    "endorsement": {
+      "title": "Avenants",
+      "types": "Types Avenants",
+      "succession": "Succession Avenants",
+      "modeFonctionnement": "Mode Fonctionnement Avenants",
+      "ristourne": "Ristourne",
+      "motifAvenantsProduit": "Motif Avenants / Produit",
+      "motifAnnulationProduit": "Motif Annulation / Produit"
     }
   },
+
   "form": {
     "fields": {
       "search": "Rechercher",
@@ -1189,6 +1257,9 @@
       "no": "Non"
     },
     "errors": {
+      "title": "Erreur",
+      "message": "Suppression impossible",
+      "profile_error": "Ce profil est lié à un utilisateur. Il ne peut pas être supprimé.",
       "required": "Ce champ est requis",
       "email_invalid": "Format d'adresse e-mail invalide",
       "min_length": "Ce champ doit contenir au moins {min} caractères",
@@ -1196,7 +1267,8 @@
       "min": "La valeur minimale est {{ min }}.",
       "max": "La valeur maximale est {{ max }}.",
       "inferieurToFrom": "Cette valeur doit être supérieure à la précédente.",
-      "inferieurTo0": "Cette valeur doit être positive."
+      "inferieurTo0": "Cette valeur doit être positive.",
+      "invalid_phone": "Invalide"
     },
     "options": {
       "yes": "Oui",
@@ -1210,6 +1282,8 @@
       "cancel": "Annuler",
       "edit": "Modifier",
       "delete": "Supprimer",
+      "deleteTitle": "Supprimer l'élément",
+      "deleteMessage": "Êtes-vous sûr de vouloir supprimer cet élément ?",
       "confirm": "Confirmer",
       "confirm_delete": "Confirmer la suppression",
       "next": "Suivant",
@@ -1465,6 +1539,8 @@
     "view": "Voir plus",
     "share": "Partager",
     "cancel": "Annuler",
-    "assign": "Associer un taux"
+    "assign": "Associer un taux",
+    "block": "Bloquer",
+    "unblock": "Débloquer"
   }
 }

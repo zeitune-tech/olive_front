@@ -142,4 +142,15 @@ export class PointOfSaleService {
             catchError(() => of({} as PointOfSale))
         );
     }
+
+    delete (id: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this.baseUrl}/${id}`)
+            .pipe(
+                tap(() => {
+                }),
+                catchError((error) => {
+                    return of(error.error);
+                })
+            );
+    }
 }

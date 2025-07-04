@@ -25,6 +25,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { CompanyLevelOrganizationEditComponent } from "./edit/edit.component";
 import { CompanyLevelOrganizationPointsOfSaleComponent } from "./details/details.component";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { CompanyLevelOrganizationAddPointsDialogComponent } from "./add-points/add-points-dialog.component";
 
 @NgModule({
     declarations: [
@@ -33,8 +34,10 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
         CompanyLevelOrganizationNewStepOneComponent,
         CompanyLevelOrganizationNewStepTwoComponent,
         CompanyLevelOrganizationEditComponent,
-        CompanyLevelOrganizationPointsOfSaleComponent
-    ],
+        CompanyLevelOrganizationPointsOfSaleComponent,
+        CompanyLevelOrganizationAddPointsDialogComponent   
+     ],
+     
     imports: [
         RouterModule.forChild(routes),
         MatIconModule,

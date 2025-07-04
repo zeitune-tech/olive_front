@@ -12,6 +12,22 @@ export const defaultSettingsNavigation: NavigationItem[] = [
         link: '/parameters/dashboard',
         permission: PERMISSIONS.VIEW_PRODUCTS,
         children: [
+             {
+                id: 'coverages.list-referiential',
+                title: 'sidebar.coverages.referential',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/coverages/referentials',
+                permission: PERMISSIONS.VIEW_COVERAGES
+            },
+            {
+                id: 'coverages-new',
+                title: 'sidebar.coverages.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/coverages/new',
+                permission: PERMISSIONS.CREATE_COVERAGES
+            },
             {
                 id: 'products.list',
                 title: 'sidebar.products.list',
@@ -27,22 +43,6 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 icon: 'fluent:people-team',
                 link: '/parameters/products/new',
                 permission: PERMISSIONS.CREATE_PRODUCTS
-            },
-             {
-                id: 'coverages.list-referiential',
-                title: 'sidebar.coverages.referential',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/coverages/referentials',
-                permission: PERMISSIONS.VIEW_COVERAGES
-            },
-                        {
-                id: 'coverages-new',
-                title: 'sidebar.coverages.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/coverages/new',
-                permission: PERMISSIONS.CREATE_COVERAGES
             },
             {
                 id: 'coverages.list',
@@ -103,56 +103,64 @@ export const defaultSettingsNavigation: NavigationItem[] = [
             }
         ]
     },
-    // {
-    //     id: 'duration-rates',
-    //     title: 'sidebar.duration_rates.title',
-    //     type: 'collapsable',
-    //     icon: 'fluent:people-team',
-    //     // permission: PERMISSIONS.VIEW_DURATION_RATES,
-    //     children: [
-    //         {
-    //             id: 'duration-rates.list',
-    //             title: 'sidebar.duration_rates.list',
-    //             type: 'basic',
-    //             icon: 'fluent:people-team',
-    //             link: '/parameters/duration-rates/list',
-    //             // permission: PERMISSIONS.VIEW_DURATION_RATES
-    //         },
-    //         {
-    //             id: 'duration-rates.new',
-    //             title: 'sidebar.duration_rates.new',
-    //             type: 'basic',
-    //             icon: 'fluent:people-team',
-    //             link: '/parameters/duration-rates/new',
-    //             // permission: PERMISSIONS.CREATE_DURATION_RATES
-    //         }
-    //     ]
-    // },
     {
-        id: 'closures',
-        title: 'sidebar.closures.title',
+        id: 'endorsements',
+        title: 'sidebar.endorsement.title',
         type: 'collapsable',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_CLOSURES,
+        // permission: PERMISSIONS.VIEW_ENDORSEMENTS,
         children: [
             {
-                id: 'closures.list',
-                title: 'sidebar.closures.list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/closures/list',
-                permission: PERMISSIONS.VIEW_CLOSURES
+            id: 'types-avenants',
+            title: 'sidebar.endorsement.types',
+            type: 'basic',
+            icon: 'fluent:document-bullet-list-24-regular',
+            link: '/parameters/types-avenants',
+            // permission: PERMISSIONS.VIEW_TYPES_AVENANTS
             },
             {
-                id: 'closures.new',
-                title: 'sidebar.closures.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/closures/new',
-                permission: PERMISSIONS.CREATE_CLOSURES
+            id: 'succession-avenants',
+            title: 'sidebar.endorsement.succession',
+            type: 'basic',
+            icon: 'fluent:document-sync-24-regular',
+            link: '/parameters/succession-avenants',
+            // permission: PERMISSIONS.VIEW_SUCCESSION_AVENANTS
+            },
+            {
+            id: 'mode-fonctionnement-avenants',
+            title: 'sidebar.endorsement.modeFonctionnement',
+            type: 'basic',
+            icon: 'fluent:settings-24-regular',
+            link: '/parameters/mode-fonctionnement-avenants',
+            // permission: PERMISSIONS.VIEW_MODE_FONCTIONNEMENT_AVENANTS
+            },
+            {
+            id: 'ristourne',
+            title: 'sidebar.endorsement.ristourne',
+            type: 'basic',
+            icon: 'fluent:money-hand-24-regular',
+            link: '/parameters/ristourne',
+            // permission: PERMISSIONS.VIEW_RISTOURNE
+            },
+            {
+            id: 'motif-avenants-produit',
+            title: 'sidebar.endorsement.motifAvenantsProduit',
+            type: 'basic',
+            icon: 'fluent:notepad-24-regular',
+            link: '/parameters/motif-avenants-produit',
+            // permission: PERMISSIONS.VIEW_MOTIF_AVENANTS_PRODUIT
+            },
+            {
+            id: 'motif-annulation-produit',
+            title: 'sidebar.endorsement.motifAnnulationProduit',
+            type: 'basic',
+            icon: 'fluent:delete-24-regular',
+            link: '/parameters/motif-annulation-produit',
+            // permission: PERMISSIONS.VIEW_MOTIF_ANNULATION_PRODUIT
             }
         ]
     },
+
     {
         id: 'accessories',
         title: 'sidebar.accessories.title',
@@ -181,164 +189,261 @@ export const defaultSettingsNavigation: NavigationItem[] = [
         id: 'taxes',
         title: 'sidebar.taxes.title',
         type: 'collapsable',
+        icon: 'fluent:money-hand-24-regular',
         // permission: PERMISSIONS.VIEW_TAXES,
         children: [
             {
-                id: 'taxes.list',
-                title: 'sidebar.taxes.list',
+            id: 'taxes.types',
+            title: 'sidebar.taxes.types.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'taxes.types.list',
+                title: 'sidebar.taxes.types.list',
                 type: 'basic',
-                icon: 'fluent:people-team',
+                icon: 'fluent:list-24-regular',
                 link: '/parameters/taxes/list',
-                // permission: PERMISSIONS.VIEW_TAXES
-            },
-                        {
-                id: 'taxes.new',
-                title: 'sidebar.taxes.new',
+                // permission: PERMISSIONS.VIEW_TAX_TYPES
+                },
+                {
+                id: 'taxes.types.new',
+                title: 'sidebar.taxes.types.new',
                 type: 'basic',
-                icon: 'fluent:people-team',
+                icon: 'fluent:add-24-regular',
                 link: '/parameters/taxes/new',
-                // permission: PERMISSIONS.CREATE_TAXES
+                // permission: PERMISSIONS.CREATE_TAX_TYPES
+                }
+            ]
             },
             {
-                id: 'taxes.regime-taxes.list',
-                title: 'sidebar.taxes.tax_regime',
+            id: 'taxes.primes',
+            title: 'sidebar.taxes.primes.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'taxes.primes.list',
+                title: 'sidebar.taxes.primes.list',
                 type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/taxes/regimes',
-                // permission: PERMISSIONS.VIEW_TAXES
-            },
-            {
-                id: 'taxes.regime-taxes.new',
-                title: 'sidebar.taxes.tax_regime_new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/taxes/regimes-new',
-                // permission: PERMISSIONS.VIEW_TAXES
-            },
-            {
-                id: 'taxes.base-taxes',
-                title: 'sidebar.taxes.base_taxes',
-                type: 'basic',
-                icon: 'fluent:people-team',
+                icon: 'fluent:list-24-regular',
                 link: '/parameters/taxes/base-taxes',
-                // permission: PERMISSIONS.VIEW_TAXES
-            },
-                      {
-                id: 'taxes.base-taxes.new',
-                title: 'sidebar.taxes.base_taxes_new',
+                // permission: PERMISSIONS.VIEW_TAX_PRIMES
+                },
+                {
+                id: 'taxes.primes.new',
+                title: 'sidebar.taxes.primes.new',
                 type: 'basic',
-                icon: 'fluent:people-team',
+                icon: 'fluent:add-24-regular',
                 link: '/parameters/taxes/base-taxes-new',
-                // permission: PERMISSIONS.VIEW_TAXES
+                // permission: PERMISSIONS.CREATE_TAX_PRIMES
+                }
+            ]
             },
-        ],
+            {
+            id: 'taxes.accessoires',
+            title: 'sidebar.taxes.accessoires.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'taxes.accessoires.list',
+                title: 'sidebar.taxes.accessoires.list',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/taxes/base-taxes',
+                // permission: PERMISSIONS.VIEW_TAX_ACCESSOIRES
+                },
+                {
+                id: 'taxes.accessoires.new',
+                title: 'sidebar.taxes.accessoires.new',
+                type: 'basic',
+                icon: 'fluent:add-24-regular',
+                link: '/parameters/taxes/base-taxes-new',
+                // permission: PERMISSIONS.CREATE_TAX_ACCESSOIRES
+                }
+            ]
+            },
+            {
+            id: 'taxes.exoneration',
+            title: 'sidebar.taxes.exoneration',
+            type: 'basic',
+            icon: 'fluent:shield-dismiss-24-regular',
+            link: '/parameters/taxes/exoneration',
+            // permission: PERMISSIONS.VIEW_EXONERATION
+            },
+            {
+            id: 'taxes.timbre-dimension',
+            title: 'sidebar.taxes.timbreDimension',
+            type: 'basic',
+            icon: 'fluent:scale-24-regular',
+            link: '/parameters/taxes/timbre-dimension',
+            // permission: PERMISSIONS.VIEW_TIMBRE_DIMENSION
+            },
+            {
+            id: 'taxes.timbre-gradue',
+            title: 'sidebar.taxes.timbreGradue',
+            type: 'basic',
+            icon: 'fluent:scale-fill-24-regular',
+            link: '/parameters/taxes/timbre-gradue',
+            // permission: PERMISSIONS.VIEW_TIMBRE_GRADUE
+            }
+        ]
     },
     {
         id: 'commissions',
         title: 'sidebar.commissions.title',
         type: 'collapsable',
+        icon: 'fluent:money-calculator-24-regular',
         // permission: PERMISSIONS.VIEW_COMMISSIONS,
         children: [
             {
-                id: 'commissions.list',
-                title: 'sidebar.commissions.list',
+            id: 'commissions.primes',
+            title: 'sidebar.commissions.primes.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'commissions.primes.list',
+                title: 'sidebar.commissions.primes.list',
                 type: 'basic',
-                icon: 'fluent:people-team',
+                icon: 'fluent:list-24-regular',
                 link: '/parameters/commissions/list',
-                // permission: PERMISSIONS.VIEW_COMMISSIONS
-            },
-             {
-                id: 'commissions.new',
-                title: 'sidebar.commissions.new',
+                // permission: PERMISSIONS.VIEW_COMMISSIONS_PRIMES
+                },
+                {
+                id: 'commissions.primes.new',
+                title: 'sidebar.commissions.primes.new',
                 type: 'basic',
-                icon: 'fluent:people-team',
+                icon: 'fluent:add-24-regular',
                 link: '/parameters/commissions/new',
-                // permission: PERMISSIONS.CREATE_COMMISSIONS
+                // permission: PERMISSIONS.CREATE_COMMISSIONS_PRIMES
+                }
+            ]
             },
             {
-                id: 'commissions-taxes.list',
-                title: 'sidebar.commissions.contributors',
+            id: 'commissions.accessoires',
+            title: 'sidebar.commissions.accessoires.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'commissions.accessoires.list',
+                title: 'sidebar.commissions.accessoires.list',
                 type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/commissions/contributors',
-                // permission: PERMISSIONS.VIEW_COMMISSIONS
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/list',
+                // permission: PERMISSIONS.VIEW_COMMISSIONS_ACCESSOIRES
+                },
+                {
+                id: 'commissions.accessoires.new',
+                title: 'sidebar.commissions.accessoires.new',
+                type: 'basic',
+                icon: 'fluent:add-24-regular',
+                link: '/parameters/commissions/new',
+                // permission: PERMISSIONS.CREATE_COMMISSIONS_ACCESSOIRES
+                }
+            ]
             },
             {
-                id: 'commissions-taxes.new',
-                title: 'sidebar.commissions.contributors_new',
+            id: 'commissions.taxes',
+            title: 'sidebar.commissions.taxes.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'commissions.taxes.list',
+                title: 'sidebar.commissions.taxes.list',
                 type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/commissions/contributors-new',
-                // permission: PERMISSIONS.VIEW_COMMISSIONS
-            },
-                       {
-                id: 'commissions-taxes.list',
-                title: 'sidebar.commissions.taxes',
-                type: 'basic',
-                icon: 'fluent:people-team',
+                icon: 'fluent:list-24-regular',
                 link: '/parameters/commissions/taxes',
-                // permission: PERMISSIONS.VIEW_COMMISSIONS
-            },
-            {
-                id: 'commissions-taxes.new',
-                title: 'sidebar.commissions.taxes_new',
+                // permission: PERMISSIONS.VIEW_TAXES_COMMISSIONS
+                },
+                {
+                id: 'commissions.taxes.new',
+                title: 'sidebar.commissions.taxes.new',
                 type: 'basic',
-                icon: 'fluent:people-team',
+                icon: 'fluent:add-24-regular',
                 link: '/parameters/commissions/taxes-new',
-                // permission: PERMISSIONS.VIEW_COMMISSIONS
-            },
-        ],
-    },
-        {
-        id: 'production_registries',
-        title: 'sidebar.production_registries.title',
-        type: 'collapsable',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_PRODUCTION_REGISTRIES,
-        children: [
-            {
-                id: 'production_registries.list',
-                title: 'sidebar.production_registries.list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/production-registries/list',
-                permission: PERMISSIONS.VIEW_PRODUCTION_REGISTRIES
+                // permission: PERMISSIONS.CREATE_TAXES_COMMISSIONS
+                }
+            ]
             },
             {
-                id: 'production_registries.new',
-                title: 'sidebar.production_registries.new',
+            id: 'commissions.apporteurs.primes',
+            title: 'sidebar.commissions.apporteurs.primes.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'commissions.apporteurs.primes.list',
+                title: 'sidebar.commissions.apporteurs.primes.list',
                 type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/production-registries/new',
-                permission: PERMISSIONS.CREATE_PRODUCTION_REGISTRIES
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/contributors',
+                // permission: PERMISSIONS.VIEW_COMMISSIONS_APPORTEUR_PRIMES
+                },
+                {
+                id: 'commissions.apporteurs.primes.new',
+                title: 'sidebar.commissions.apporteurs.primes.new',
+                type: 'basic',
+                icon: 'fluent:add-24-regular',
+                link: '/parameters/commissions/contributors-new',
+                // permission: PERMISSIONS.CREATE_COMMISSIONS_APPORTEUR_PRIMES
+                }
+            ]
+            },
+            {
+            id: 'commissions.apporteurs.accessoires',
+            title: 'sidebar.commissions.apporteurs.accessoires.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'commissions.apporteurs.accessoires.list',
+                title: 'sidebar.commissions.apporteurs.accessoires.list',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/contributors',
+                // permission: PERMISSIONS.VIEW_COMMISSIONS_APPORTEUR_ACCESSOIRES
+                },
+                {
+                id: 'commissions.apporteurs.accessoires.new',
+                title: 'sidebar.commissions.apporteurs.accessoires.new',
+                type: 'basic',
+                icon: 'fluent:add-24-regular',
+                link: '/parameters/commissions/contributors-new',
+                // permission: PERMISSIONS.CREATE_COMMISSIONS_APPORTEUR_ACCESSOIRES
+                }
+            ]
+            },
+            {
+            id: 'commissions.apporteurs.taxes',
+            title: 'sidebar.commissions.apporteurs.taxes.title',
+            type: 'collapsable',
+            icon: 'fluent:list-24-regular',
+            children: [
+                {
+                id: 'commissions.apporteurs.taxes.list',
+                title: 'sidebar.commissions.apporteurs.taxes.list',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/contributors',
+                // permission: PERMISSIONS.VIEW_TAXES_COMMISSIONS_APPORTEUR
+                },
+                {
+                id: 'commissions.apporteurs.taxes.new',
+                title: 'sidebar.commissions.apporteurs.taxes.new',
+                type: 'basic',
+                icon: 'fluent:add-24-regular',
+                link: '/parameters/commissions/contributors-new',
+                // permission: PERMISSIONS.CREATE_TAXES_COMMISSIONS_APPORTEUR
+                }
+            ]
             }
         ]
-    },
-    {
-        id: 'insured_registries',
-        title: 'sidebar.insured_registries.title',
-        type: 'collapsable',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_INSURED_REGISTRIES,
-        children: [
-            {
-                id: 'insured_registries.list',
-                title: 'sidebar.insured_registries.list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/insured-registries/list',
-                permission: PERMISSIONS.VIEW_INSURED_REGISTRIES
-            },
-            {
-                id: 'insured_registries.new',
-                title: 'sidebar.insured_registries.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/insured-registries/new',
-                permission: PERMISSIONS.CREATE_INSURED_REGISTRIES
-            }
-        ]
-    },
+    }
+
 ];
 
 export const compactSettingsNavigation: NavigationItem[] = [
@@ -373,14 +478,6 @@ export const compactSettingsNavigation: NavigationItem[] = [
         type: 'collapsable',
         icon: 'fluent:people-team',
         permission: PERMISSIONS.VIEW_INSURED_REGISTRIES,
-        children: []
-    },
-    {
-        id: 'closures',
-        title: 'sidebar.closures.title',
-        type: 'collapsable',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_CLOSURES,
         children: []
     }
 ];

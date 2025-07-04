@@ -29,7 +29,9 @@ export class ContributorsListComponent {
             { label: 'entities.contributor.fields.firstname', property: 'firstname', type: 'text', visible: true },
             { label: 'entities.contributor.fields.lastname', property: 'lastname', type: 'text', visible: true },
             { label: 'entities.contributor.fields.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.contributor.fields.gsm', property: 'gsm', type: 'text', visible: true },
             { label: 'entities.contributor.fields.level', property: 'level', type: 'text', visible: true },
+            { label: 'entities.contributor.fields.pointOfSale', property: 'managementEntity', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
@@ -38,8 +40,18 @@ export class ContributorsListComponent {
             if (property === 'level') {
                 return this._translateService.translate(`entities.contributor.options.level.${element[property]}`);
             }
+
+            if (property === 'managementEntity') {
+                if (element.level === 'POINT_OF_SALE' && element.managementEntity && typeof element.managementEntity === 'string') {
+                    return element.managementEntity;
+                } else {
+                    return '-';
+                }
+            }
+
             return element[property];
-        },
+        }
+
     };
     data: Contributor[] = [];
 
@@ -95,19 +107,19 @@ export class ContributorsListComponent {
     onView(element: Contributor): void {
         // Implement view logic here
     }
+
     onDelete(element: Contributor): void {
-        // Implement delete logic here
         this._dialog.open(ConfirmDeleteComponent, {
             width: '400px',
             data: {
-                title: 'entities.contributor.delete.title',
-                message: 'entities.contributor.delete.message',
+                title: 'form.actions.deleteTitle',
+                message: 'form.actions.deleteMessage',
                 confirmButtonText: 'actions.delete',
                 cancelButtonText: 'actions.cancel'
             }
         }).afterClosed().subscribe(result => {
             if (result) {
-                // this._contributorService.refreshContributors();
+                this._contributorService.contributors$;
             }
         })
     }

@@ -9,6 +9,7 @@ export class Contributor {
     firstname: string;
     lastname: string;
     email: string;
+    gsm: string;
     level: typeof ContributorLevel[keyof typeof ContributorLevel];
     managementEntity: string;
 
@@ -17,6 +18,7 @@ export class Contributor {
         this.firstname = data.firstname || '';
         this.lastname = data.lastname || '';
         this.email = data.email || '';
+        this.gsm = data.gsm || '';
         this.level = data.level || ContributorLevel.COMPANY; // Valeur par défaut à adapter
         this.managementEntity = data.managementEntity || '';
     }

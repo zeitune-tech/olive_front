@@ -33,12 +33,19 @@
                 <mat-label>{{ t('entities.contributor.fields.email') }}</mat-label>
                 <input matInput formControlName="email">
                 <mat-error *ngIf="formGroup.get('email')?.hasError('required')">{{ t('form.errors.required') }}</mat-error>
-                <mat-error *ngIf="formGroup.get('email')?.hasError('email')">{{ t('form.errors.invalid_email') }}</mat-error>
+                <mat-error *ngIf="formGroup.get('email')?.hasError('email')">{{ t('form.errors.email_invalid') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.contributor.fields.gsm') }}</mat-label>
+                <input matInput formControlName="gsm">
+                <mat-error *ngIf="formGroup.get('gsm')?.hasError('required')">{{ t('form.errors.required') }}</mat-error>
+                <mat-error *ngIf="formGroup.get('gsm')?.hasError('pattern')">{{ t('form.errors.invalid_phone') }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" appearance="outline" >
                 <mat-label>{{ t('entities.contributor.fields.level') }}</mat-label>
-                <mat-select formControlName="level">
+                <mat-select formControlName="level" (valueChange)="onLevelChange($event)">
                     <mat-option *ngFor="let l of levels" [value]="l.value">{{ t(l.label) }}</mat-option>
                 </mat-select>
             </mat-form-field>

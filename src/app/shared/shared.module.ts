@@ -15,7 +15,7 @@ import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-dele
     declarations: [
         NewDemandComponent,
         ConfirmDialogComponent,
-        ConfirmDeleteComponent
+        ConfirmDeleteComponent,
     ],
     imports: [
         CommonModule,

@@ -75,19 +75,6 @@ export class ProfileService {
             );
     }
 
-    update(profile: any): Observable<Profile> {
-        return this._httpClient.put<Profile>(`${this.baseUrl}/${profile.id}`, profile)
-            .pipe(
-                tap((profile) => {
-                    this.profile = profile;
-                    return (profile);
-                }),
-                catchError((error) => {
-                    return of(error);
-                })
-            );
-    }
-
     get(): Observable<Profile> {
         return this._httpClient.get<Profile>(`${this.baseUrl}/me`)
             .pipe(
@@ -123,4 +110,29 @@ export class ProfileService {
                 catchError(() => of([] as Permission[]))
             );
     }
+
+    delete (id: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this.baseUrl}/${id}`)
+            .pipe(
+                tap(() => {
+                }),
+                catchError((error) => {
+                    return of(error.error);
+                })
+            );
+    }
+    
+    update(profile: any): Observable<Profile> {
+        return this._httpClient.put<Profile>(`${this.baseUrl}/${profile.id}`, profile)
+            .pipe(
+                tap((profile) => {
+                    this.profile = profile;
+                    return (profile);
+                }),
+                catchError((error) => {
+                    return of(error);
+                })
+            );
+    }
+
 }
