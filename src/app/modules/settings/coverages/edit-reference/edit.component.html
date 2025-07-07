@@ -1,0 +1,57 @@
+<div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
+    <h2 mat-dialog-title>{{ t('entities.coverage_reference.form.editTitle') || 'Modifier la couverture' }}</h2>
+    <mat-divider></mat-divider>
+
+    <mat-dialog-content class="py-4">
+        <form [formGroup]="formGroup" class="space-y-4">
+
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.coverage_reference.fields.designation') }}</mat-label>
+                <input matInput formControlName="designation" />
+                <mat-error *ngIf="formGroup.get('designation')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.coverage_reference.fields.family') }}</mat-label>
+                <mat-select formControlName="family">
+                    <mat-option *ngFor="let f of families" [value]="f.value">{{ t(f.label) }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.coverage_reference.fields.accessCharacteristic') }}</mat-label>
+                <mat-select formControlName="accessCharacteristic">
+                    <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+                    <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.coverage_reference.fields.tariffAccess') }}</mat-label>
+                <mat-select formControlName="tariffAccess">
+                    <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+                    <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.coverage_reference.fields.toShareOut') }}</mat-label>
+                <mat-select formControlName="toShareOut">
+                    <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+                    <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
+        <button mat-button mat-flat-button color="basic" (click)="onCancel()">
+            {{ t('form.actions.cancel') }}
+        </button>
+        <button mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled" (click)="onSubmit()">
+            {{ t('form.actions.save') }}
+        </button>
+    </mat-dialog-actions>
+</div>

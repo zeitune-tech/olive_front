@@ -5,13 +5,13 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { IncompatibleCoverage } from "@core/services/settings/incompatible-coverage/incompatible-coverage.interface";
 import { IncompatibleCoverageService } from "@core/services/settings/incompatible-coverage/incompatible-coverage.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { SelectProductComponent } from "../select-product/select-product.component";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-incompatible-coverages-list",
@@ -37,9 +37,7 @@ export class IncompatibleCoveragesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: IncompatibleCoverage, property: keyof IncompatibleCoverage) => {
             if (property === "coverage") {
                 return element[property].designation;
@@ -90,6 +88,24 @@ export class IncompatibleCoveragesListComponent {
         this._unsubscribeAll.complete();
     }
 
+    onEdit(element: IncompatibleCoverage): void {}
+    onDelete(element: IncompatibleCoverage): void {
+        this._dialog.open(ConfirmDeleteComponent, {
+            data: {
+                title: 'entities.incompatible_coverage.delete.title',
+                message: 'entities.incompatible_coverage.delete.message',
+                item: element,
+                service: this._incompatibleCoverageService
+            }
+        }).afterClosed().subscribe((result: boolean) => {
+            if (result) {
+                this._incompatibleCoverageService.delete(element.id).subscribe(() => {
+                    this._changeDetectorRef.markForCheck();
+                });
+            }
+        });
+    }
+    onView(element: IncompatibleCoverage): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

@@ -37,9 +37,7 @@ export class ContributorsListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: CommissionContributor, property: keyof CommissionContributor) => {
 
             if (property === 'contributor') {
@@ -90,12 +88,9 @@ export class ContributorsListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit CommissionContributor CommissionContributor
-        */
-    onDemand(item: CommissionContributor | null): void {
-
-    }
+    onView(element: CommissionContributor): void {}
+    onDelete(element: CommissionContributor): void {}
+    onEdit(element: CommissionContributor): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

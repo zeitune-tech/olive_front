@@ -10,9 +10,10 @@ export interface TableColumn<T> {
         cssClasses?: string[];
         onChange?: (element: T) => void;
     }[];
-    type: 'text' | 'image' | 'badge' | 'progress' | 'checkbox' | 'button' | 'calendar' | 'input' | 'select' | 'textarea' | 'date' | 'time' | 'datetime' | 'calendar-daily' | 'calendar-weekly' | 'calendar-monthly-total' | 'calendar-monthly-by-day';
+    type: 'text' | 'image' | 'collapse' | 'badge' | 'progress' | 'checkbox' | 'button' | 'calendar' | 'input' | 'select' | 'textarea' | 'date' | 'time' | 'datetime' | 'calendar-daily' | 'calendar-weekly' | 'calendar-monthly-total' | 'calendar-monthly-by-day';
     visible?: boolean;
     cssClasses?: string[];
+    collapseOptions?: TableColumn<T>[];
 }
 
 
@@ -30,7 +31,7 @@ export interface TableOptions<T> {
     calendarWeeklyOptions?: TablePropertyOptions<T>;
     calendarMonthlyTotalOptions?: TablePropertyOptions<T>;
     calendarMonthlyByDayOptions?: TablePropertyOptions<T>;
-    
+
     renderItem: (element: T, property: keyof T) => void;
     updateItem?: (element: T) => void;
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ProductService } from '@core/services/administration/product/product.service';
+import { ProductService } from '@core/services/settings/product/product.service';
 import { TaxService } from '@core/services/settings/tax/tax.service';
 import { BaseTaxService } from '@core/services/settings/base-tax/base-tax.service';
-import { Product } from '@core/services/administration/product/product.interface';
+import { Product } from '@core/services/settings/product/product.interface';
 import { Tax } from '@core/services/settings/tax/tax.interface';
 import { PointOfSale } from '@core/services/administration/point-of-sale/point-of-sale.interface';
 import { CoverageService } from '@core/services/settings/coverage/coverage.service';

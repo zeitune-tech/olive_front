@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ProductService } from '@core/services/administration/product/product.service';
+import { ProductService } from '@core/services/settings/product/product.service';
 import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
 import { CommissionService } from '@core/services/settings/commission/commission.service';
 

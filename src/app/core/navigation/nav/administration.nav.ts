@@ -4,32 +4,7 @@ import { NavigationItem } from "@lhacksrt/components";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
 
 export const defaultAdministrationNavigation: NavigationItem[] = [
-    {
-        id: 'products',
-        title: 'sidebar.products.title',
-        type: 'collapsable',
-        icon: 'fluent:people-team',
-        link: '/administration/dashboard',
-        permission: PERMISSIONS.VIEW_PRODUCTS,
-        children: [
-            {
-                id: 'products.list',
-                title: 'sidebar.products.list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/administration/products/list',
-                permission: PERMISSIONS.VIEW_PRODUCTS
-            },
-            {
-                id: 'products-new',
-                title: 'sidebar.products.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/administration/products/new',
-                permission: PERMISSIONS.CREATE_PRODUCTS
-            }
-        ]
-    },
+
     {
         id: 'market-level-organization',
         title: 'sidebar.market_level_organization.title',
@@ -44,15 +19,7 @@ export const defaultAdministrationNavigation: NavigationItem[] = [
                 icon: 'fluent:people-team',
                 link: '/administration/market-level-organizations/list',
                 permission: PERMISSIONS.VIEW_MARKET_LEVEL_ORGANIZATIONS
-            },
-            {
-                id: 'market-level-organization.linked',
-                title: 'sidebar.market_level_organization.linked',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/administration/market-level-organizations/linked',
-                permission: PERMISSIONS.VIEW_MARKET_LEVEL_ORGANIZATIONS
-            },
+            }
 
         ]
     },
@@ -97,14 +64,6 @@ export const defaultAdministrationNavigation: NavigationItem[] = [
                 permission: PERMISSIONS.VIEW_POINTS_OF_SALE
             },
             {
-                id: 'points-of-sale-broker',
-                title: 'sidebar.points_of_sale.broker',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/administration/points-of-sale/broker',
-                permission: PERMISSIONS.VIEW_BROKERS
-            },
-            {
                 id: 'points-of-sale-new',
                 title: 'sidebar.points_of_sale.new',
                 type: 'basic',
@@ -127,7 +86,15 @@ export const defaultAdministrationNavigation: NavigationItem[] = [
                 icon: 'fluent:people-team',
                 link: '/administration/company-level-organizations/new',
                 permission: PERMISSIONS.CREATE_COMPANY_LEVEL_ORGANIZATIONS
-            }
+            },
+            {
+                id: 'points-of-sale-broker',
+                title: 'sidebar.points_of_sale.broker',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/administration/points-of-sale/broker',
+                permission: PERMISSIONS.VIEW_BROKERS
+            },
         ]
     },
     {

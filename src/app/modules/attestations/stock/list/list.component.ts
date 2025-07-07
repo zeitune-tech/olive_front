@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { LotAttestation } from "@core/services/attestations/lot-attestation/lot-attestation.interface";
 import { LotAttestationsService } from "@core/services/attestations/lot-attestation/lot-attestation.service";
 import { animations } from "@lhacksrt/animations";
@@ -62,11 +62,13 @@ export class LotAttestationsListComponent {
     tableOptions: TableOptions<LotAttestation> = {
         title: '',
         columns: [
+            { label: 'entities.lot_attestations.fields.managementEntity', property: 'managementEntity', type: 'text', visible: true },
             { label: 'entities.lot_attestations.fields.prefix', property: 'prefix', type: 'text', visible: true },
             { label: 'entities.lot_attestations.fields.quantity', property: 'quantity', type: 'text', visible: true },
             { label: 'entities.lot_attestations.fields.stock', property: 'stock', type: 'text', visible: true },
-            { label: 'entities.lot_attestations.fields.start_date', property: 'startDate', type: 'text', visible: true },
-            { label: 'entities.lot_attestations.fields.end_date', property: 'endDate', type: 'text', visible: true },
+            { label: 'entities.lot_attestations.fields.startDate', property: 'startDate', type: 'text', visible: true },
+            { label: 'entities.lot_attestations.fields.endDate', property: 'endDate', type: 'text', visible: true },
+            { label: 'entities.lot_attestations.fields.status', property: 'status', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'coverage.columns.logo',
@@ -80,10 +82,45 @@ export class LotAttestationsListComponent {
         ],
         renderItem: (element: LotAttestation, property: keyof LotAttestation) => {
           
+            if (property === 'startDate' || property === 'endDate') {
+                return element[property] ? new Date(element[property]).toLocaleDateString() : '';
+            }
             return element[property];
         },
     };
-    data: LotAttestation[] = [];
+    data: LotAttestation[] = [
+        // Example data, replace with actual data from service
+        {
+            id: '1',
+            managementEntity: 'Pool TPV',
+            product: 'TPV',
+            prefix: 'AA4',
+            pileStart: 100,
+            pileEnd: 200,
+            quantity: 1250,
+            stock: 341,
+            status: 'active',
+            startDate: new Date("2023-01-01"),
+            endDate: new Date("2023-12-31"),
+            createdAt: new Date(),
+            updatedAt: new Date()
+        },
+        {
+            id: '2',
+            managementEntity: 'Pool TPV',
+            product: 'TPV',
+            prefix: 'AA5',
+            pileStart: 300,
+            pileEnd: 400,
+            quantity: 1500,
+            stock: 120,
+            status: 'inactive',
+            startDate: new Date("2023-02-01"),
+            endDate: new Date("2023-11-30"),
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+    ];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -100,13 +137,16 @@ export class LotAttestationsListComponent {
     ) { }
 
     ngOnInit(): void {
-        this._lotAttestationService.lotAttestations$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: LotAttestation[]) => {
-                this.data = data;
-                this.dataSource.data = data;
-                this._changeDetectorRef.detectChanges();
-            });
+        // this._lotAttestationService.lotAttestations$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((data: LotAttestation[]) => {
+        //         // this.data = data;
+        //         // this.dataSource.data = data;
+        //         // this._changeDetectorRef.detectChanges();
+        //     });
+
+        this.dataSource = new MatTableDataSource<LotAttestation>(this.data);
+        this.dataSource.paginator = this.paginator;
     }
 
     ngAfterViewInit() {

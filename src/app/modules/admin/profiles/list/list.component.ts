@@ -4,12 +4,18 @@ import { UntypedFormControl } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { PERMISSIONS } from "@core/permissions/permissions.data";
+import { PermissionsService } from "@core/permissions/permissions.service";
 import { Profile } from "@core/services/auth/profile/profile.interface";
 import { ProfileService } from "@core/services/auth/profile/profile.service";
 import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { LayoutService } from "../layout.service";
+import { Router } from "@angular/router";
+import { ProfilesEditComponent } from "../edit/edit.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
     selector: "app-profiles-list",
@@ -35,9 +41,7 @@ export class ProfilesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            
-        ],
+        actions: [],
         renderItem: (element: Profile, property: keyof Profile) => {
             if (property === 'level') {
                 return this._translateService.translate('entities.management_entity.options.level.' + element[property]);
@@ -77,6 +81,8 @@ export class ProfilesListComponent {
         private _changeDetectorRef: ChangeDetectorRef,
         private _profileService: ProfileService,
         private _translateService: TranslocoService,
+        private _permissionService: PermissionsService,
+        private _dialog: MatDialog,
     ) {}
 
     ngOnInit(): void {
@@ -102,16 +108,45 @@ export class ProfilesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Profile Profile
-        */
-    onDemand(item: Profile | null): void {
-      
+
+    hasPermission(): boolean {
+        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PROFILES);
+        return hasPerm;
     }
+    
+    onDelete(profile: Profile): void {
+        this._dialog.open(ProfilesEditComponent, {
+            width: '600px',
+            data: profile
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                // Optionally refresh the list or show a success notification
+                // this._profileService.getAllProfiles().subscribe();
+            }
+        })
+    }
+    onView(profile: Profile): void {
+        // Implement view functionality
+    }
+
+    onEdit(profile: Profile): void {
+        this._dialog.open(ProfilesEditComponent, {
+            width: '600px',
+            data: profile
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                // Optionally refresh the list or show a success notification
+                // this._profileService.getAllProfiles().subscribe();
+            }
+        })
+
+    }
+
+
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

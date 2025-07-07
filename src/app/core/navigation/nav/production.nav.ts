@@ -5,68 +5,60 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 
 export const defaultProductionNavigation: NavigationItem[] = [
     {
-        id: 'production',
-        title: 'sidebar.production.title',
+        id: 'production-mono',
+        title: 'sidebar.production_mono.title',
         type: 'collapsable',
         icon: 'fluent:person-accounts',
         children: [
             {
-                id: 'production-mono',
-                title: 'sidebar.production_mono.title',
-                type: 'collapsable',
-                icon: 'fluent:person-accounts',
-                children: [
-                    {
-                        id: 'affaire-nouvelle',
-                        title: 'sidebar.affaire_nouvelle.title',
-                        type: 'basic',
-                        icon: 'fluent:document-add',
-                        link: '/production/mono/affaire-nouvelle',
-                    },
-                    {
-                        id: 'avenants',
-                        title: 'sidebar.avenants.title',
-                        type: 'basic',
-                        icon: 'fluent:document-sync',
-                        link: '/production/mono/avenants',
-                    },
-                    {
-                        id: 'annulation',
-                        title: 'sidebar.annulation.title',
-                        type: 'basic',
-                        icon: 'fluent:document-error',
-                        link: '/production/mono/annulation',
-                    }
-                ]
+                id: 'affaire-nouvelle',
+                title: 'sidebar.affaire_nouvelle.title',
+                type: 'basic',
+                icon: 'fluent:document-add',
+                link: '/production/mono/affaire-nouvelle',
             },
             {
-                id: 'production-flotte',
-                title: 'sidebar.production_flotte.title',
-                type: 'collapsable',
-                icon: 'fluent:person-accounts',
-                children: [
-                    {
-                        id: 'affaire-nouvelle-flotte',
-                        title: 'sidebar.affaire_nouvelle_flotte.title',
-                        type: 'basic',
-                        icon: 'fluent:document-add',
-                        link: '/production/flotte/affaire-nouvelle',
-                    },
-                    {
-                        id: 'avenants-flotte',
-                        title: 'sidebar.avenants_flotte.title',
-                        type: 'basic',
-                        icon: 'fluent:document-sync',
-                        link: '/production/flotte/avenants',
-                    },
-                    {
-                        id: 'annulation-flotte',
-                        title: 'sidebar.annulation_flotte.title',
-                        type: 'basic',
-                        icon: 'fluent:document-error',
-                        link: '/production/flotte/annulation',
-                    }
-                ]
+                id: 'avenants',
+                title: 'sidebar.avenants.title',
+                type: 'basic',
+                icon: 'fluent:document-sync',
+                link: '/production/mono/avenants',
+            },
+            {
+                id: 'annulation',
+                title: 'sidebar.annulation.title',
+                type: 'basic',
+                icon: 'fluent:document-error',
+                link: '/production/mono/annulation',
+            }
+        ]
+    },
+    {
+        id: 'production-flotte',
+        title: 'sidebar.production_flotte.title',
+        type: 'collapsable',
+        icon: 'fluent:person-accounts',
+        children: [
+            {
+                id: 'affaire-nouvelle-flotte',
+                title: 'sidebar.affaire_nouvelle_flotte.title',
+                type: 'basic',
+                icon: 'fluent:document-add',
+                link: '/production/flotte/affaire-nouvelle',
+            },
+            {
+                id: 'avenants-flotte',
+                title: 'sidebar.avenants_flotte.title',
+                type: 'basic',
+                icon: 'fluent:document-sync',
+                link: '/production/flotte/avenants',
+            },
+            {
+                id: 'annulation-flotte',
+                title: 'sidebar.annulation_flotte.title',
+                type: 'basic',
+                icon: 'fluent:document-error',
+                link: '/production/flotte/annulation',
             }
         ]
     },

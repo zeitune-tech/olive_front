@@ -1,0 +1,24 @@
+<div class="space-y-2 p-2 " #dialogRef *transloco="let t">
+
+  <div class="flex flex-col gap-4 ">
+    <h2 mat-dialog-title>{{ data.title }}</h2>
+
+    <mat-dialog-content class="flex flex-col gap-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Recherche</mat-label>
+        <input matInput [(ngModel)]="search" (input)="filter()" />
+      </mat-form-field>
+
+      <mat-nav-list>
+        <mat-list-item *ngFor="let item of filteredItems" (click)="select(item)" class="cursor-pointer">
+          {{ item[data.displayField] }}
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="cancel()">Annuler</button>
+    </mat-dialog-actions>
+  </div>
+
+</div>

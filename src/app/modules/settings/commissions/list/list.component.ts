@@ -39,9 +39,7 @@ export class CommissionListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: Commission, property: keyof Commission) => {
 
             if (property === "product") {
@@ -98,12 +96,9 @@ export class CommissionListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Commission Commission
-        */
-    onDemand(item: Commission | null): void {
-
-    }
+    onEdit(commission: Commission): void {}
+    onView(commission: Commission): void {}
+    onDelete(commission: Commission): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

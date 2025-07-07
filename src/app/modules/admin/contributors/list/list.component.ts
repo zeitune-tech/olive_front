@@ -11,6 +11,8 @@ import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { ContributorEditComponent } from "../edit/edit.component";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-contributors-list",
@@ -31,11 +33,7 @@ export class ContributorsListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            { label: 'entities.contributor.fields.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'entities.contributor.fields.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) },
-            { label: 'entities.contributor.fields.actions.attribute-attestation', icon: 'delete', action: this.attribute.bind(this) }
-        ],
+        actions: [],
         renderItem: (element: Contributor, property: keyof Contributor) => {
             if (property === 'level') {
                 return this._translateService.translate(`entities.contributor.options.level.${element[property]}`);
@@ -82,27 +80,41 @@ export class ContributorsListComponent {
         this._unsubscribeAll.complete();
     }
 
-    attribute(item: Contributor | null): void {
+    onEdit(element: Contributor): void {
        
+        const dialogRef = this._dialog.open(ContributorEditComponent, {
+            width: '600px',
+            data: element
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // this._contributorService.refreshContributors();
+            }
+        });
     }
-
-    /**
-        * Edit Contributor Contributor
-        */
-    editItem(item: Contributor | null): void {
-        
+    onView(element: Contributor): void {
+        // Implement view logic here
     }
-
-    /**
-        * Delete Contributor Contributor
-        */
-    deleteItem(item: Contributor): void {
-        
+    onDelete(element: Contributor): void {
+        // Implement delete logic here
+        this._dialog.open(ConfirmDeleteComponent, {
+            width: '400px',
+            data: {
+                title: 'entities.contributor.delete.title',
+                message: 'entities.contributor.delete.message',
+                confirmButtonText: 'actions.delete',
+                cancelButtonText: 'actions.cancel'
+            }
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                // this._contributorService.refreshContributors();
+            }
+        })
     }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

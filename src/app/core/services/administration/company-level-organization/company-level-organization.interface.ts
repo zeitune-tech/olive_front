@@ -2,8 +2,9 @@ import { PointOfSale } from "../point-of-sale/point-of-sale.interface";
 
 
 export class CompanyLevelOrganization {
-    id: number = 0;
+    id: string = '';
     name: string = '';
+    description: string = '';
     pointsOfSale: PointOfSale[] = [];
     createdAt: string = '';
     updatedAt: string = '';

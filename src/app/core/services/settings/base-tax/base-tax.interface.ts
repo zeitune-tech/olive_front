@@ -1,4 +1,4 @@
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { Tax } from "../tax/tax.interface";
 import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
 import { CoverageReference } from "../coverage-reference/coverage-reference.interface";

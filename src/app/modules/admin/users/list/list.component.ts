@@ -27,17 +27,19 @@ export class UsersListComponent {
             { label: 'entities.user.fields.first_name', property: 'firstName', type: 'text', visible: true },
             { label: 'entities.user.fields.last_name', property: 'lastName', type: 'text', visible: true },
             { label: 'entities.user.fields.email', property: 'email', type: 'text', visible: true },
+            { label: 'entities.user.fields.profiles', property: 'profiles', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-            { label: 'entities.user.actions.edit', icon: 'edit', action: this.editItem.bind(this) },
-            { label: 'entities.user.actions.delete', icon: 'delete', action: this.deleteItem.bind(this) }
-        ],
+        actions: [],
         renderItem: (element: User, property: keyof User) => {
             
             if (property === 'managementEntity') {
                 return element.managementEntity;
+            }
+
+            if (property === 'profiles') {
+                return element.profiles.map(profile => profile.name).join(', ');
             }
             return element[property];
         },
@@ -80,18 +82,14 @@ export class UsersListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit User User
-        */
-    editItem(item: User | null): void {
-        
+    onView(element: User): void {
+        // Implement view logic here, e.g., open a dialog with user details
     }
-
-    /**
-        * Delete User User
-        */
-    deleteItem(item: User): void {
-        
+    onEdit(element: User): void {
+        // Implement edit logic here, e.g., open a dialog to edit user details
+    }
+    onDelete(element: User): void {
+        // Implement delete logic here, e.g., open a confirmation dialog
     }
     
     get visibleColumns() {

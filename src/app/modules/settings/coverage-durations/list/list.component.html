@@ -48,6 +48,12 @@
                     <button mat-icon-button color="warn" (click)="onDelete(element)" matTooltip="{{ t('entities.coverage_duration.actions.delete') }}">
                         <mat-icon>delete</mat-icon>
                     </button>
+                    <button mat-icon-button color="accent" (click)="onView(element)" matTooltip="{{ t('entities.coverage_duration.actions.view') }}">
+                        <mat-icon>visibility</mat-icon> 
+                    </button>
+                    <button mat-icon-button color="primary" (click)="assignCoverageDuration(element)" matTooltip="{{ t('action_button.assign') }}">
+                        <mat-icon>share</mat-icon>
+                    </button>
                 </div>
             </td>
         </ng-container>

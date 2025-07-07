@@ -1,0 +1,66 @@
+<div class="flex flex-col gap-8 py-4" [formGroup]="form" *transloco="let t">
+
+  <!-- Tariff -->
+  <div formGroupName="tariff" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.policy.fields.tariffType') }}</mat-label>
+      <input matInput formControlName="type" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.policy.fields.tariffLabel') }}</mat-label>
+      <input matInput formControlName="label" />
+    </mat-form-field>
+  </div>
+
+  <!-- Commission -->
+  <div formGroupName="commission" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <mat-form-field appearance="outline"><mat-label>Apport</mat-label><input matInput formControlName="apport" /></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>Gestion</mat-label><input matInput formControlName="gestion" /></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>Principal</mat-label><input matInput formControlName="main" /></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>Comm. Apport</mat-label><input matInput formControlName="sub" /></mat-form-field>
+  </div>
+
+  <!-- Bonus & Malus -->
+  <div formGroupName="bonusMalus" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.policy.fields.bonusMalusRegime') }}</mat-label>
+      <input matInput formControlName="regime" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.policy.fields.bonusMalusCoefficient') }}</mat-label>
+      <input matInput formControlName="coefficient" />
+    </mat-form-field>
+  </div>
+
+  <!-- Réduction -->
+  <div formGroupName="discount" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.discountLabel') }}</mat-label><input matInput formControlName="label" /></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.discountAmount') }}</mat-label><input matInput formControlName="amount" /></mat-form-field>
+  </div>
+
+  <!-- Accessoire -->
+  <div formGroupName="accessory">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ t('entities.policy.fields.accessoryAmount') }}</mat-label>
+      <input matInput formControlName="amount" />
+    </mat-form-field>
+  </div>
+
+  <!-- Timbres -->
+  <div formGroupName="stamp" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.stampType') }}</mat-label><input matInput formControlName="type" /></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.stampQuantity') }}</mat-label><input matInput formControlName="quantity" /></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.stampValue') }}</mat-label><input matInput formControlName="value" /></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.stampCpTg') }}</mat-label><input matInput formControlName="cpTg" /></mat-form-field>
+  </div>
+
+  <!-- Exonération -->
+  <div formGroupName="taxExemption" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.taxExemptionCode') }}</mat-label><input matInput formControlName="code" /></mat-form-field>
+    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.taxExemptionLabel') }}</mat-label><input matInput formControlName="label" /></mat-form-field>
+  </div>
+
+  <div class="flex justify-end pt-4">
+    <button mat-raised-button color="primary" (click)="goNext()">{{ t('form.actions.next') }}</button>
+  </div>
+</div>

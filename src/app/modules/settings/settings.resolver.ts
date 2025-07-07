@@ -17,6 +17,7 @@ import { CommissionService } from '@core/services/settings/commission/commission
 import { CommissionContributorService } from './../../core/services/settings/commission-contributor/commission-contributor.service';
 import { CommissionTaxService } from '@core/services/settings/commission-tax/commission-tax.service';
 import { DurationRateService } from '@core/services/settings/duration-rate/duration-rate.service';
+import { ProductService } from '@core/services/settings/product/product.service';
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +29,7 @@ export class SettingsResolver implements Resolve<any> {
      */
     constructor(
         private _permissionService: PermissionsService,
+        private _productService: ProductService,
         private _coverageService: CoverageService,
         private _coverageReferenceService: CoverageReferenceService,
         private _incompatibleCoverageService: IncompatibleCoverageService,
@@ -63,6 +65,10 @@ export class SettingsResolver implements Resolve<any> {
         // Fork join multiple API endpoint calls to wait all of them to finish
 
         const resolList: Observable<any>[] = [];
+
+        if (this._permissionService.hasPermission(PERMISSIONS.VIEW_PRODUCTS)) {
+            resolList.push(this._productService.getAll());
+        }
 
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COVERAGES)) {
             resolList.push(this._coverageService.getAll());

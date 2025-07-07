@@ -39,9 +39,7 @@ export class DurationRateListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: DurationRate, property: keyof DurationRate) => {
 
             if (property === 'duration') {
@@ -99,11 +97,12 @@ export class DurationRateListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Commission Commission
-        */
-    onDemand(item: DurationRate | null): void {
-
+    onEdit(durationRate: DurationRate): void {}
+    onDelete(durationRate: DurationRate): void {
+        // Implement delete functionality here
+    }
+    onView(durationRate: DurationRate): void {
+        // Implement view functionality here
     }
 
     get visibleColumns() {

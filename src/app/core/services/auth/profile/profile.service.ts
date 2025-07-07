@@ -75,7 +75,7 @@ export class ProfileService {
             );
     }
 
-    update(profile: Profile): Observable<Profile> {
+    update(profile: any): Observable<Profile> {
         return this._httpClient.put<Profile>(`${this.baseUrl}/${profile.id}`, profile)
             .pipe(
                 tap((profile) => {

@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { ContributorLevel } from "@core/services/administration/contributor/contributor.interface";
 import { ContributorService } from "@core/services/administration/contributor/contributor.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
+import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
+import { PointOfSaleService } from "@core/services/administration/point-of-sale/point-of-sale.service";
+
 
 @Component({
     selector: "app-contributor-new",
@@ -20,10 +23,12 @@ export class ContributorNewComponent implements OnInit {
         { value: ContributorLevel.COMPANY, label: 'entities.contributor.options.level.COMPANY' },
         { value: ContributorLevel.POINT_OF_SALE, label: 'entities.contributor.options.level.POINT_OF_SALE' },
     ];
+    pointsOfSale: PointOfSale[] = [];
 
     constructor(
         private fb: FormBuilder,
         private contributorService: ContributorService,
+        private _pointOfSaleService: PointOfSaleService,
         private _managementEntityService: ManagementEntityService
     ) {
         this.formGroup = this.fb.group({
@@ -31,7 +36,10 @@ export class ContributorNewComponent implements OnInit {
             lastname: ['', Validators.required],
             email: ['', [Validators.email]],
             level: [ContributorLevel.COMPANY, Validators.required],
+            pointOfSale: [null, this.validatePointOfSale()],
         });
+        this.formGroup.get('pointOfSale')?.disable();
+
 
         this._managementEntityService.entity$.subscribe((entity: ManagementEntity | null) => {
             if (entity?.type === 'POINT_OF_SALE') {
@@ -40,6 +48,34 @@ export class ContributorNewComponent implements OnInit {
                 ]
             }
         });
+
+        this._pointOfSaleService.pointsOfSale$.subscribe((pointsOfSale: PointOfSale[]) => {
+            this.pointsOfSale = pointsOfSale;
+            if (this.pointsOfSale.length === 1) {
+                this.formGroup.patchValue({ pointOfSale: this.pointsOfSale[0].id });
+            }
+        })
+
+        this.formGroup.get('level')?.valueChanges.subscribe((level: string) => {
+            if (level === ContributorLevel.COMPANY) {
+                this.formGroup.get('pointOfSale')?.disable();
+            } else {
+                this.formGroup.get('pointOfSale')?.enable();
+            }
+        });
+    }
+
+    
+    validatePointOfSale(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const level = this.formGroup?.get('level')?.value;
+            const pointOfSale = control.value;
+
+            if (level === ContributorLevel.POINT_OF_SALE && !pointOfSale) {
+                return { required: true };
+            }
+            return null;
+        };
     }
 
     ngOnInit(): void {}

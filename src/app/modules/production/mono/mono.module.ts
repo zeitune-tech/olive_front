@@ -16,23 +16,27 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
-import { ContractNewComponent } from "./new-standard/new-standard.component";
 import { MatStepperModule } from "@angular/material/stepper";
-import { ContractInfoComponent } from "./new-standard/contract-info/contract-info.component";
-import { InsuredSelectorComponent } from "./new-standard/insured-selector/insured-selector.component";
-import { VehicleSelectorComponent } from "./new-standard/vehicle-selector/vehicle-selector.component";
-import { InsuredStepComponent } from "./new-standard/insured/insured.component";
 import { MatRadioModule } from "@angular/material/radio";
-import { CoveragesStepComponent } from "./new-standard/coverages/coverages.component";
+import { NewBusinessComponent } from "./new-business/form/new-business.component";
+import { ProducerFormComponent } from "./new-business/producer/producer.component";
+import { PolicyFormComponent } from "./new-business/policy/policy.component";
+import { AdvancedOptionsComponent } from "./new-business/advanced/advanced.component";
+import { RiskComponent } from "./new-business/risk/risk.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { VehicleAttributesComponent } from "./new-business/extra/extra.component";
+import { VehicleCoveragesComponent } from "./new-business/coverages/coverage.component";
 
 @NgModule({
     declarations: [
-        ContractNewComponent,
-        ContractInfoComponent,
-        InsuredSelectorComponent,
-        VehicleSelectorComponent,
-        InsuredStepComponent,
-        CoveragesStepComponent
+
+        NewBusinessComponent,
+        ProducerFormComponent,
+        PolicyFormComponent,
+        AdvancedOptionsComponent,
+        RiskComponent,
+        VehicleAttributesComponent,
+        VehicleCoveragesComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -52,7 +56,8 @@ import { CoveragesStepComponent } from "./new-standard/coverages/coverages.compo
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatStepperModule,
-        MatRadioModule
+        MatRadioModule,
+        MatCheckboxModule
     ],
     providers: [],
     exports: [],

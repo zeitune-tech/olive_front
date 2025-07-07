@@ -31,8 +31,7 @@ export class BrokerPointsOfSaleListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-        ],
+        actions: [],
         renderItem: (element: PointOfSale, property: keyof PointOfSale) => {
           
             return element[property];
@@ -76,13 +75,13 @@ export class BrokerPointsOfSaleListComponent {
         this._unsubscribeAll.complete();
     }
 
-    attribute(item: PointOfSale | null): void {
-        
+    onView(element: PointOfSale): void {
+        // Implement view functionality here
     }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        // columns.push('actions');
+        columns.push('actions');
         return columns;
     }
 

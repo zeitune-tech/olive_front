@@ -4,7 +4,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { UserService } from '@core/services/auth/user/user.service';
 import { MarketLevelOrganizationService } from '@core/services/administration/market-level-organization/market-level-organization.service';
 import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
-import { ProductService } from '@core/services/administration/product/product.service';
+import { ProductService } from '@core/services/settings/product/product.service';
 import { CompanyLevelOrganizationService } from '@core/services/administration/company-level-organization/company-level-organization.service';
 import { CompanyService } from '@core/services/administration/company/company.service';
 import { PermissionsService } from '@core/permissions/permissions.service';

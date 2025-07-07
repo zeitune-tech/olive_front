@@ -58,6 +58,31 @@ export class CoverageReferenceService {
         );
     }
 
+    update(coverage: any): Observable<CoverageReference> {
+        return this._httpClient.put<CoverageReference>(`${this.baseUrl}/${coverage.id}`, coverage)
+        .pipe(
+            tap((coverage) => {
+                this.coverage = coverage;
+                return (coverage);
+            }),
+            catchError((error) => {
+                throw new Error("Error updating coverage reference: " + error);
+            })
+        );
+    }
+
+    delete(id: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this.baseUrl}/${id}`)
+        .pipe(
+            tap(() => {
+                this.coverage = {} as CoverageReference; // Reset coverage after deletion
+                return;
+            }),
+            catchError((error) => {
+                throw new Error("Error deleting coverage reference: " + error);
+            })
+        );
+    }
 
     get(id: string): Observable<CoverageReference> {
         return this._httpClient.get<CoverageReference>(`${this.baseUrl}${id}`)

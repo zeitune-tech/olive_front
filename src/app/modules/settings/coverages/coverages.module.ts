@@ -27,6 +27,9 @@ import { CoverageLayoutComponent } from "./layout/layout.component";
 import { LayoutService } from "./layout.service";
 import { AlertModule } from "@lhacksrt/components";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { CoverageReferenceEditComponent } from "./edit-reference/edit.component";
+import { CoveragesFormComponent } from "./coverages-form/coverages-form.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -37,7 +40,9 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         IncompatibleCoveragesNewComponent,
         CoverageReferenceNewComponent,
         SelectProductComponent,
-        CoverageLayoutComponent
+        CoverageLayoutComponent,
+        CoverageReferenceEditComponent,
+        CoveragesFormComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -57,6 +62,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
+        MatCheckboxModule
     ],
     providers: [
         LayoutService

@@ -36,9 +36,7 @@ export class TaxesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: CommissionTax, property: keyof CommissionTax) => {
 
             if (property === 'pointOfSale') {
@@ -91,12 +89,9 @@ export class TaxesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit CommissionTax CommissionTax
-        */
-    onDemand(item: CommissionTax | null): void {
-
-    }
+    onView(element: CommissionTax): void {}
+    onDelete(element: CommissionTax): void {}
+    onEdit(element: CommissionTax): void {}
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

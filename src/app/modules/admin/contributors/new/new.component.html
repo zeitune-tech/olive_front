@@ -42,6 +42,20 @@
                     <mat-option *ngFor="let l of levels" [value]="l.value">{{ t(l.label) }}</mat-option>
                 </mat-select>
             </mat-form-field>
+
+            <!-- Point Of Sale -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.contributor.fields.pointOfSale') }}</mat-label>
+                <mat-select formControlName="pointOfSale">
+                    <mat-option *ngFor="let pos of pointsOfSale" [value]="pos.id">
+                        {{ pos.name }}
+                        <span class="text-xs text-gray-500">
+                            ({{t('entities.point_of_sale.options.type.' + pos.typePointOfSale) }})
+                        </span>
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formGroup.get('pointOfSale')?.hasError('required')">{{ t('form.errors.required') }}</mat-error>
+            </mat-form-field>
         </div>
 
         <div class="flex items-center gap-4 justify-end mt-6">

@@ -1,4 +1,3 @@
-import { Product } from "@core/services/administration/product/product.interface";
 
 export class Tax {
   id: string;

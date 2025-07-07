@@ -10,6 +10,7 @@ export class LotAttestation {
     pileEnd: number;
     quantity: number;
     stock: number;
+    status: string;
 
     startDate: Date;
     endDate: Date;
@@ -27,6 +28,7 @@ export class LotAttestation {
         this.pileEnd = lotAttestation.pileEnd || 0;
         this.quantity = lotAttestation.quantity || 0;
         this.stock = lotAttestation.stock || 0;
+        this.status = lotAttestation.status || 'active';
 
         this.startDate = lotAttestation.startDate || new Date();
         this.endDate = lotAttestation.endDate || new Date();

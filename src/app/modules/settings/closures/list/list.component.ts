@@ -31,9 +31,7 @@ export class ClosuresListComponent {
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: Closure, property: keyof Closure) => {
 
             return element[property];
@@ -77,13 +75,10 @@ export class ClosuresListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Closure Closure
-        */
-    onDemand(item: Closure | null): void {
-
-    }
-
+    onEdit(closure: Closure): void {}
+    onView(closure: Closure): void {}
+    onDelete(closure: Closure): void {}
+    
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
         columns.push('actions');

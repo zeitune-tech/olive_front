@@ -38,9 +38,7 @@ export class AccessoriesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: Accessory, property: keyof Accessory) => {
 
             if (property === 'product') {
@@ -94,11 +92,9 @@ export class AccessoriesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Accessory Accessory
-        */
-    onDemand(item: Accessory | null): void {
-    }
+    onView(item: Accessory): void {}
+
+    onDelete(accessory: Accessory): void {}
 
     onEdit(accessory: Accessory): void {
         this._layoutService.setSelectedAccessory(accessory);

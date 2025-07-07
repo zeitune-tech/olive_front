@@ -1,0 +1,72 @@
+<div class="w-full pb-10" *transloco="let t">
+
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('entities.policy.form.title') }}
+        </h1>
+        <p class="text-sm text-gray-600">
+            {{ t('entities.policy.form.subtitle') }}
+        </p>
+    </div>
+
+    <mat-vertical-stepper [selectedIndex]="selectedIndex">
+        <!-- Step 1: Contract Info -->
+        <mat-step [stepControl]="formStepOne">
+            <ng-template matStepLabel>{{ t('entities.policy.steps.producer') }}</ng-template>
+            <producer-form  (next)="onStepOneNext($event)"></producer-form>
+        </mat-step>
+
+        <!-- Step 2: Insured -->
+        <mat-step [stepControl]="formStepTwo">
+            <ng-template matStepLabel>{{ t('entities.policy.steps.insured') }}</ng-template>
+            <policy-form (next)="onStepTwoNext($event)"></policy-form>
+        </mat-step>
+
+        <!-- Step 3: Advanced Options -->
+        <mat-step [stepControl]="formStepThree">
+            <ng-template matStepLabel>{{ t('entities.policy.steps.advanced') }}</ng-template>
+            <advanced-options-form (next)="onStepThreeNext($event)"></advanced-options-form>
+        </mat-step>
+
+        <!-- Step 4: Vehicle -->
+        <mat-step [stepControl]="formStepThree">
+            <ng-template matStepLabel>{{ t('entities.policy.steps.vehicle') }}</ng-template>
+            <risk-form (next)="onStepFourNext($event)"></risk-form>
+        </mat-step>
+
+         <!-- Step 5: Vehicle -->
+        <mat-step [stepControl]="formStepThree">
+            <ng-template matStepLabel>{{ t('entities.policy.steps.extra') }}</ng-template>
+            <vehicle-attributes-form (next)="onStepFiveNext($event)"></vehicle-attributes-form>
+        </mat-step>
+
+        <!-- Step 6: Coverages -->
+        <mat-step [stepControl]="formStepFour">
+            <ng-template matStepLabel>{{ t('entities.policy.steps.coverages') }}</ng-template>
+            <vehicle-coverages-form (next)="onStepSixNext($event)"></vehicle-coverages-form>
+        </mat-step>
+
+        <!-- Step 5: Premium breakdown -->
+        <!-- <mat-step [stepControl]="formStepFive">
+      <ng-template matStepLabel>{{ t('entities.policy.steps.premiums') }}</ng-template>
+      <premium-breakdown (formReady)="onStepFiveNext($event)"></premium-breakdown>
+    </mat-step> -->
+
+        <!-- Step 6: Summary -->
+        <mat-step>
+            <ng-template matStepLabel>{{ t('entities.policy.steps.summary') }}</ng-template>
+            <!-- <policy-summary [policyData]="{
+        ...formStepOne?.value,
+        insured: formStepTwo?.value,
+        vehicle: formStepThree?.value,
+        coverages: formStepFour?.value.coverages,
+        premiums: formStepFive?.value
+      }"></policy-summary> -->
+
+            <div class="flex justify-end gap-4 mt-4">
+                <button mat-button matStepperPrevious>{{ t('form.actions.back') }}</button>
+                <button mat-flat-button color="primary" (click)="submit()">{{ t('form.actions.save') }}</button>
+            </div>
+        </mat-step>
+    </mat-vertical-stepper>
+</div>

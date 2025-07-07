@@ -1,0 +1,33 @@
+<div class="space-y-2 p-2 min-w-[400px]" #dialogRef *transloco="let t;">
+    <h2 mat-dialog-title>
+        {{ t('form.dialog.deleteTitle') || 'Confirmation de suppression' }}
+    </h2>
+
+    <mat-divider></mat-divider>
+
+    <mat-dialog-content class="py-4">
+        <p class="text-base text-gray-700 font-semibold">
+            {{ data.message }}
+        </p>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="flex justify-end space-x-2">
+        <button
+            mat-button
+            class="mat-button-large"
+            mat-flat-button
+            color="basic"
+            (click)="onCancel()">
+            {{ t('form.actions.cancel') }}
+        </button>
+
+        <button
+            mat-button
+            class="mat-button-large"
+            mat-flat-button
+            color="warn"
+            (click)="onConfirm()">
+            {{ t('form.actions.confirm') || 'Supprimer' }}
+        </button>
+    </mat-dialog-actions>
+</div>

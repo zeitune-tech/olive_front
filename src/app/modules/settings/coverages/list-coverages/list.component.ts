@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Product } from "@core/services/administration/product/product.interface";
+import { Product } from "@core/services/settings/product/product.interface";
 import { Coverage } from "@core/services/settings/coverage/coverage.interface";
 import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 import { animations } from "@lhacksrt/animations";
@@ -13,6 +13,8 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { CoveragesEditDialogComponent } from "../new-coverage/edit.component";
 import { SelectProductComponent } from "../select-product/select-product.component";
+import { TranslocoService } from "@jsverse/transloco";
+import { CoveragesFormComponent } from "../coverages-form/coverages-form.component";
 
 @Component({
     selector: "app-coverages-list",
@@ -60,20 +62,30 @@ export class CoveragesListComponent {
     tableOptions: TableOptions<Coverage> = {
         title: '',
         columns: [
-            { label: 'entities.coverage.fields.product', property: 'product', type: 'text', visible: true, cssClasses: ["min-w-32"] },
-            { label: 'entities.coverage.fields.managementEntity', property: 'managementEntity', type: 'text', visible: true, cssClasses: ["min-w-44"] },
             { label: 'entities.coverage.fields.reference', property: 'reference', type: 'text', visible: true, cssClasses: ["min-w-52"] },
             { label: 'entities.coverage.fields.nature', property: 'nature', type: 'text', visible: true, },
-   
-            { label: 'entities.coverage.fields.calculationMode', property: 'calculationMode', type: 'text', visible: true,},
-            { label: 'entities.coverage.fields.fixedCapital', property: 'fixedCapital', type: 'text', visible: true, },
-            { label: 'entities.coverage.fields.minCapital', property: 'minCapital', type: 'text', visible: true },
-            { label: 'entities.coverage.fields.maxCapital', property: 'maxCapital', type: 'text', visible: true },
-            { label: 'entities.coverage.fields.order', property: 'order', type: 'text', visible: true },
-            { label: 'entities.coverage.fields.prorata', property: 'prorata', type: 'text', visible: true },
-            { label: 'entities.coverage.fields.displayPrime', property: 'displayPrime', type: 'text', visible: true, },
-            { label: 'entities.coverage.fields.generatesCharacteristic', property: 'generatesCharacteristic', type: 'text', visible: true, },
             { label: 'entities.coverage.fields.isFree', property: 'isFree', type: 'text', visible: true, },
+
+            { label: 'entities.coverage.fields.calculationMode', property: 'calculationMode', type: 'text', visible: true, },
+            { label: 'entities.coverage.custom_fields.capital', property: 'maxCapital', type: 'collapse', visible: true, collapseOptions: [
+                    { label: 'entities.coverage.fields.isFixed', property: 'isFixed', type: 'text', visible: true, },
+                    { label: 'entities.coverage.fields.fixedCapital', property: 'fixedCapital', type: 'text', visible: true, },
+                    {
+                        label: 'entities.coverage.custom_fields.min',
+                        property: 'minCapital',
+                        type: 'text',
+                        visible: true
+                    },
+                    {
+                        label: 'entities.coverage.custom_fields.max',
+                        property: 'maxCapital',
+                        type: 'text',
+                        visible: true
+                    }
+                ]
+            },
+            { label: 'entities.coverage.fields.prorata', property: 'prorata', type: 'text', visible: true },
+            { label: 'entities.coverage.fields.order', property: 'order', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'coverage.columns.logo',
@@ -82,12 +94,35 @@ export class CoveragesListComponent {
         },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
-        actions: [
-
-        ],
+        actions: [],
         renderItem: (element: Coverage, property: keyof Coverage) => {
+
+            if (property === 'nature') {
+                let nature = element.nature;
+                if (!nature || nature === 'null' || nature === 'undefined') {
+                    return "Facultative";
+                }
+                return this._translateService.translate(`entities.coverage.options.nature.${element.nature}`);
+            }
+
+            if (property === 'isFree') {
+                return element.isFree ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
+            }
+
+            if (property === 'isFixed') {
+                return element.isFixed ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
+            }
+
+            if (property === 'calculationMode') {
+                return this._translateService.translate(`entities.coverage.options.calculationMode.${element.calculationMode}`);
+            }
+
             if (property === 'reference') {
                 return element.reference?.designation || " - ";
+            }
+
+            if (property === 'prorata') {
+                return element.prorata ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
             }
 
             if (element[property] === null || element[property] === undefined) {
@@ -101,6 +136,8 @@ export class CoveragesListComponent {
             if (property === 'managementEntity') {
                 return element.managementEntity.name || " - ";
             }
+
+
 
             return element[property];
         },
@@ -119,10 +156,13 @@ export class CoveragesListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _coverageService: CoverageService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
+        this.buildHeaders();
+
         this._coverageService.coverages$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: Coverage[]) => {
@@ -145,6 +185,35 @@ export class CoveragesListComponent {
         this.dataSource.sort = this.sort;
     }
 
+    groupHeader: string[] = [];
+    subHeader: string[] = [];
+    visibleColumns: string[] = [];
+
+    buildHeaders(): void {
+        this.tableOptions.columns.forEach(col => {
+            if (col.type === 'collapse' && col.collapseOptions?.length) {
+                // En-tête parent (ligne 1)
+                const parent = col.property as string + '-parent';
+                this.groupHeader.push(parent);
+
+                // Sous-colonnes (ligne 2)
+                col.collapseOptions.forEach(child => {
+                    this.subHeader.push(child.property as string);
+                    this.visibleColumns.push(child.property as string);
+                });
+            } else {
+                // Colonne simple (même valeur dans les 2 lignes)
+                this.groupHeader.push(col.property as string);
+                
+                this.visibleColumns.push(col.property as string);
+            }
+        });
+
+        // Ajout de la colonne d’actions si nécessaire
+        this.groupHeader.push('actions');
+        this.visibleColumns.push('actions');
+    }
+
     ngAfterViewInit() {
         if (this.dataSource) {
             this.dataSource.paginator = this.paginator;
@@ -162,7 +231,7 @@ export class CoveragesListComponent {
         this._dialog.open(SelectProductComponent, {
             width: '700px',
             data: {
-                selected : this.selectedProduct,
+                selected: this.selectedProduct,
                 products: this.products
             }
         }).afterClosed().subscribe((product: Product) => {
@@ -175,7 +244,19 @@ export class CoveragesListComponent {
         })
     }
 
-
+    openAddDialog(): void {
+        this._dialog.open(CoveragesFormComponent, {
+            width: '700px',
+            data: {
+                mode: 'add',
+                product: this.selectedProduct,
+            }
+        }).afterClosed().subscribe((result: Coverage) => {
+            if (result) {
+                
+            }
+        })
+    }
 
     openEditDialog(item: any): void {
         const dialogRef = this._dialog.open(CoveragesEditDialogComponent, {
@@ -198,13 +279,18 @@ export class CoveragesListComponent {
         });
     }
 
-    openDeleteDialog(item: any): void {}
+    openDeleteDialog(item: any): void { }
 
-
-    get visibleColumns() {
-        let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('actions');
-        return columns;
+    onView(element: Coverage): void {
+        this.openEditDialog(element);
+    }
+    
+    onDelete(element: Coverage): void {
+        // this._coverageService.delete(element.id).subscribe(() => {
+        //     this.data = this.data.filter(item => item.id !== element.id);
+        //     this.dataSource.data = this.data;
+        //     this._changeDetectorRef.detectChanges();
+        // });
     }
 
     trackByProperty(index: number, column: TableColumn<Coverage>) {

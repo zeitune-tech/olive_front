@@ -11,6 +11,7 @@ import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { DurationRateNewComponent } from "../../taux-duration/new/new.component";
 
 @Component({
     selector: "app-coverage-durations-list",
@@ -35,16 +36,25 @@ export class CoverageDurationsListComponent {
         pageSizeOptions: [5, 6, 8],
         actions: [],
         renderItem: (element: CoverageDuration, property: keyof CoverageDuration) => {
+            if (property === 'type') {
+                return this._translateService.translate(
+                    'entities.coverage_duration.options.type.' + element.type.toLowerCase()
+                );
+            }
 
-            if(property === 'type') {
-                return this._translateService.translate('entities.coverage_duration.options.type.' + element.type.toLowerCase());
+            if (property === 'unit') {
+                return this._translateService.translate(
+                    'entities.coverage_duration.options.unit.' + element.unit.toLowerCase()
+                );
             }
-            if(property === 'unit') {
-                return  this._translateService.translate('entities.coverage_duration.options.unit.' + element.unit.toLowerCase());
+
+            if (property === 'to') {
+                return element.type === 'FIXED' ? '-' : element.to;
             }
-        
+
             return element[property];
         },
+
     };
     data: CoverageDuration[] = [];
 
@@ -90,6 +100,14 @@ export class CoverageDurationsListComponent {
         */
     onEdit(coverageDuration: CoverageDuration): void {}
     onDelete(coverageDuration: CoverageDuration): void {} 
+    onView(coverageDuration: CoverageDuration): void {}
+    assignCoverageDuration(coverageDuration: CoverageDuration): void {
+        this._dialog.open(DurationRateNewComponent, {
+        width: '600px',
+        maxWidth: '90vw',
+        data: { coverageDuration }
+        });
+    }
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

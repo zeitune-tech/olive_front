@@ -56,45 +56,45 @@ export class ProductionResolver implements Resolve<any> {
         const resolList: Observable<any>[] = [];
 
 
-        // if (this._permissionService.hasPermission('VIEW_INSUREDS')) {
-            resolList.push(this._insuredService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_INSUREDS')) {
+        //     resolList.push(this._insuredService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_VEHICLES')) {
-            resolList.push(this._vehicleService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_VEHICLES')) {
+        //     resolList.push(this._vehicleService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_INSURED_REGISTRY')) {
-            resolList.push(this._insuredRegistryService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_INSURED_REGISTRY')) {
+        //     resolList.push(this._insuredRegistryService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_PRODUCTION_REGISTRIES')) {
-            resolList.push(this._productionRegistryService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_PRODUCTION_REGISTRIES')) {
+        //     resolList.push(this._productionRegistryService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_COVERAGES')) {
-            resolList.push(this._coverageService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_COVERAGES')) {
+        //     resolList.push(this._coverageService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_BASE_TAXES')) {
-            resolList.push(this._baseTaxService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_BASE_TAXES')) {
+        //     resolList.push(this._baseTaxService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_TAX_REGIMES')) {
-            resolList.push(this._regimeService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_TAX_REGIMES')) {
+        //     resolList.push(this._regimeService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_ACCESSORIES')) {
-            resolList.push(this._accessoireService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_ACCESSORIES')) {
+        //     resolList.push(this._accessoireService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_POINTS_OF_SALE')) {
-            resolList.push(this._pointsOfSaleService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_POINTS_OF_SALE')) {
+        //     resolList.push(this._pointsOfSaleService.getAll());
+        // // }
 
-        // if (this._permissionService.hasPermission('VIEW_DURATION_RATES')) {
-            resolList.push(this._durationRateService.getAll());
-        // }
+        // // if (this._permissionService.hasPermission('VIEW_DURATION_RATES')) {
+        //     resolList.push(this._durationRateService.getAll());
+        // // }
 
 
 
