@@ -62,6 +62,7 @@ export class LotAttestationsListComponent {
     tableOptions: TableOptions<LotAttestation> = {
         title: '',
         columns: [
+            { label: 'entities.lot_attestations.fields.managementEntity', property: 'managementEntity', type: 'text', visible: true },
             { label: 'entities.lot_attestations.fields.prefix', property: 'prefix', type: 'text', visible: true },
             { label: 'entities.lot_attestations.fields.quantity', property: 'quantity', type: 'text', visible: true },
             { label: 'entities.lot_attestations.fields.stock', property: 'stock', type: 'text', visible: true },
@@ -91,7 +92,7 @@ export class LotAttestationsListComponent {
         // Example data, replace with actual data from service
         {
             id: '1',
-            managementEntity: 'Entity 1',
+            managementEntity: 'Pool TPV',
             product: 'TPV',
             prefix: 'AA4',
             pileStart: 100,
@@ -106,7 +107,7 @@ export class LotAttestationsListComponent {
         },
         {
             id: '2',
-            managementEntity: 'Entity 2',
+            managementEntity: 'Pool TPV',
             product: 'TPV',
             prefix: 'AA5',
             pileStart: 300,

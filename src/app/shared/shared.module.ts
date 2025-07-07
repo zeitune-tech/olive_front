@@ -10,12 +10,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
+import { SelectDialogComponent } from './components/select-dialog/select-dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
     declarations: [
         NewDemandComponent,
         ConfirmDialogComponent,
-        ConfirmDeleteComponent
+        ConfirmDeleteComponent,
+        SelectDialogComponent
     ],
     imports: [
         CommonModule,
@@ -26,7 +30,10 @@ import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-dele
         MatDialogModule,
         MatButtonModule,
         MatProgressSpinnerModule,
-        MatDividerModule
+        MatDividerModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatListModule
     ],
     exports: [
         CommonModule,

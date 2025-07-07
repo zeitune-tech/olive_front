@@ -1,20 +1,20 @@
 import { Routes } from "@angular/router";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
-import { ContractNewComponent } from "./new-standard/new-standard.component";
+import { NewBusinessComponent } from "./new-business/form/new-business.component";
 
 export const routes: Routes = [
     {
         path: "",
         pathMatch: "full",
-        redirectTo: "new",
+        redirectTo: "new-business",
     },
    {
-    path: "new",
+    path: "new-business",
     canActivate: [],
     canActivateChild: [],
     data: {
         // permission: PERMISSIONS.CREATE_PRODUCTION
     },
-    component: ContractNewComponent
+    component: NewBusinessComponent
    }
 ];

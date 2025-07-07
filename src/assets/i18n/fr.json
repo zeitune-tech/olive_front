@@ -606,7 +606,6 @@
           "MODIFICATION": "Modification",
           "SUSPENSION": "Suspension",
           "REINSTATEMENT": "Remise en vigueur"
-
         }
       }
     },
@@ -931,7 +930,7 @@
         "summary": "Résumé"
       }
     },
-    "lot_attestations":{
+    "lot_attestations": {
       "label": "Stock Attestations",
       "description": "Gérer les attestations de lot pour les contrats.",
       "form": {
@@ -940,7 +939,7 @@
       },
       "table": {
         "title": "Stock d'attestations",
-        "description": "Liste des lots d'attestations actives",
+        "description": "Liste des lots d'attestations",
         "empty_state": "Aucune attestation trouvée"
       },
       "fields": {
@@ -955,6 +954,85 @@
         "validityPeriod": "Période de validité",
         "contractNumber": "Numéro de contrat",
         "managementEntity": "Entité de gestion"
+      }
+    },
+    "policy": {
+      "form": {
+        "title": "Affaire nouvelle",
+        "subtitle": "Remplissez les informations requises."
+      },
+      "steps": {
+        "producer": "Informations générales",
+        "policy_info": "Informations de la police",
+        "insured": "Souscripteur / Assuré",
+        "vehicle": "Véhicule",
+        "coverages": "Garanties",
+        "premiums": "Détail des primes",
+        "summary": "Récapitulatif"
+      },
+      "fields": {
+        "company": "Compagnie",
+        "pointOfSale": "Point de vente",
+        "product": "Produit",
+        "reference": "Référence",
+        "noteNumber": "Numéro de Bordereau",
+        "createdBy": "Créé par",
+        "createdAt": "Date de création",
+        "numberOfVehicles": "Nombre de véhicules",
+        "typeContract": "Type de contrat",
+        "natureContract": "Nature du contrat",
+        "code": "Code",
+        "title": "Qualité",
+        "lastName": "Nom",
+        "firstName": "Prénom",
+        "idType": "Type de pièce",
+        "idNumber": "N° de pièce",
+        "birthDate": "Date de naissance",
+        "address": "Adresse",
+        "city": "Ville",
+        "socioProfessionalGroup": "Groupe socio-professionnel",
+        "profession": "Profession",
+        "activity": "Activité",
+        "email": "Email",
+        "phone": "Téléphone",
+        "mobile": "Téléphone mobile",
+        "tariffType": "Type de tarif",
+        "tariffLabel": "Libellé du tarif",
+        "bonusMalusRegime": "Régime",
+        "bonusMalusCoefficient": "Coefficient",
+        "discountLabel": "Libellé de réduction",
+        "discountAmount": "Montant de réduction",
+        "accessoryAmount": "Montant accessoire",
+        "stampType": "Type de timbre",
+        "stampQuantity": "Nombre",
+        "stampValue": "Valeur",
+        "stampCpTg": "C.P./T.G.",
+        "taxExemptionCode": "Code d'exonération",
+        "taxExemptionLabel": "Libellé exonération",
+        "orderNumber": "N° d'ordre",
+        "brand": "Marque",
+        "modelType": "Type",
+        "category": "Catégorie",
+        "registrationNumber": "Immatriculation",
+        "registrationDate": "Date M.E.C.",
+        "energyType": "Énergie",
+        "chassisNumber": "N° Châssis",
+        "engineNumber": "N° Moteur",
+        "bodyType": "Carrosserie",
+        "turbo": "Turbo",
+        "creditDelivery": "Délivré à crédit",
+        "withTrailer": "Avec remorque",
+        "flammableMaterial": "Mat. inflammables",
+        "power": "Puissance",
+        "payload": "Charge utile",
+        "cylinder": "Cylindrée",
+        "seats": "Nbre de places",
+        "catalogValue": "Valeur catalogue",
+        "declaredValue": "Valeur déclarée",
+        "certificateNumber": "N° Attestation"
+      },
+      "actions": {
+        "next": "Suivant"
       }
     }
   },
@@ -1173,12 +1251,22 @@
     "production_mono": {
       "title": "Production Mono",
       "list": "Liste des productions mono",
-      "new": "Ajouter une production mono"
+      "new_business": "Affaire nouvelle",
+      "amendments": "Avenants",
+      "cancellations": "Annulations",
+      "production_list": "Production [Consultation]",
+      "vehicle": "Véhicules [Consultation]",
+      "insured": "Assurés [Consultation]"
     },
     "production_fleet": {
       "title": "Production Flotte",
       "list": "Liste des productions flotte",
-      "new": "Ajouter une production flotte"
+      "new_business": "Affaire nouvelle",
+      "amendments": "Avenants Flotte",
+      "cancellations": "Annulations d'acte Flotte",
+      "production_list": "Production [Consultation]",
+      "vehicle": "Véhicules [Consultation]",
+      "insured": "Assurés [Consultation]"
     }
   },
   "form": {
@@ -1237,8 +1325,8 @@
       "PUBLIC": "Public -- {{provider}}",
       "PRIVATE": "Privé"
     },
-    "yes" : "Oui",
-    "no" : "Non"
+    "yes": "Oui",
+    "no": "Non"
   },
   "common": {
     "search": "Rechercher",
@@ -1317,10 +1405,10 @@
         "attestations_description": "Consultation et gestion des attestations.",
         "attestations_demands": "Demandes d'attestation",
         "attestations_demands_description": "Suivi des demandes d'attestations.",
-        "market_level_organization": "Demande aux organisations",
-        "market_level_organization_description": "Création de demandes pour les organisations de niveau marché.",
-        "companies": "Demande aux compagnies",
-        "companies_demands_description": "Création de demandes pour les compagnies."
+        "market_level_organization": "Demande d'attestation",
+        "market_level_organization_description": "Faire une demande a une organisation marché.",
+        "companies": "Demande d'attestation",
+        "companies_demands_description": "Faire une demande a une compagnie."
       }
     }
   },

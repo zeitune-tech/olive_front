@@ -82,6 +82,17 @@ export class CompanyService {
         );
     }
 
+    getMyCompany(): Observable<Company> {
+        return this._httpClient.get<Company>(`${this.baseUrl}/mine`)
+        .pipe(
+            tap((company) => {
+                this.myCompany = company;
+                return (company);
+            }),
+            catchError(() => of({} as Company))
+        );
+    }
+
 
     getAll(): Observable<Company[]> {
         return this._httpClient.get<Company[]>(`${this.baseUrl}`)

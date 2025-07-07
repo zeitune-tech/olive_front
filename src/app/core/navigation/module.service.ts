@@ -297,6 +297,58 @@ export class ModuleService {
                     ]
                 }
             ]
+        },
+        {
+            name: "princing",
+            title: "modules.princing.title",
+            description: "modules.princing.description",
+            icon: "assets/images/modules/princing_icon.png",
+            route: "/princing",
+            permissions: [
+                // PERMISSIONS.VIEW_PRINCING,
+            ],
+            features: [
+                {
+                    name: "formula",
+                    title: "modules.princing.features.formula",
+                    description: "modules.princing.features.formula_description",
+                    icon: "calculate",
+                    route: "/princing/formula",
+                    permissions: [
+                        // PERMISSIONS.VIEW_PRINCING,
+                    ]
+                },
+                {
+                    name: "constants",
+                    title: "modules.princing.features.constants",
+                    description: "modules.princing.features.constants_description",
+                    icon: "settings",
+                    route: "/princing/constants",
+                    permissions: [
+                        // PERMISSIONS.VIEW_PRINCING_CONSTANTS,
+                    ]
+                },
+                {
+                    name: "conditions",
+                    title: "modules.princing.features.conditions",
+                    description: "modules.princing.features.conditions_description",
+                    icon: "settings",
+                    route: "/princing/conditions",
+                    permissions: [
+                        // PERMISSIONS.VIEW_PRICING_CONDITIONS,
+                    ]
+                },
+                {
+                    name: "caracteristics",
+                    title: "modules.princing.features.caracteristics",
+                    description: "modules.princing.features.caracteristics_description",
+                    icon: "settings",
+                    route: "/princing/caracteristics",
+                    permissions: [
+                        // PERMISSIONS.VIEW_PRICING_CARACTERISTICS,
+                    ]
+                }
+            ]
         }
     ];
 

@@ -4,5 +4,6 @@ export const environment = {
   settings_url: "http://localhost:8030/api/v1/app",
   attestations_url: "http://localhost:8040/api/v1/app",
   insured_url: "http://localhost:8050/api/v1/app",
-  production: true
+  production: false
 };
+

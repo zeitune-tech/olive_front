@@ -1,0 +1,81 @@
+<div class="" *transloco="let t">
+    <form [formGroup]="form" class="flex flex-col gap-6 py-4">
+
+        <div class="flex gap-4">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.policy.fields.company') }}</mat-label>
+                <input matInput formControlName="company" />
+            </mat-form-field>
+
+            <!-- Point de vente -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.policy.fields.pointOfSale') }}</mat-label>
+                <input matInput [value]="selectedPointOfSale?.name" readonly (click)="openPointOfSaleDialog()" />
+                <button mat-icon-button matSuffix (click)="openPointOfSaleDialog()" aria-label="select point of sale">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
+        <div class="flex gap-4">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.policy.fields.reference') }}</mat-label>
+                <input matInput formControlName="reference" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.policy.fields.noteNumber') }}</mat-label>
+                <input matInput formControlName="noteNumber" />
+            </mat-form-field>
+        </div>
+
+
+
+        <div class="flex gap-4">
+            <!-- Produit -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.policy.fields.product') }}</mat-label>
+                <input matInput [value]="selectedProduct?.name" readonly (click)="openProductDialog()" />
+                <button mat-icon-button matSuffix (click)="openProductDialog()" aria-label="select product">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.policy.fields.numberOfVehicles') }}</mat-label>
+                <input matInput type="number" formControlName="numberOfVehicles" />
+            </mat-form-field>
+        </div>
+
+        <div class="flex gap-4">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.policy.fields.typeContract') }}</mat-label>
+                <input matInput formControlName="typeContract" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.policy.fields.natureContract') }}</mat-label>
+                <input matInput formControlName="natureContract" />
+            </mat-form-field>
+
+        </div>
+
+        <div class="flex justify-end pt-4">
+            <button mat-raised-button color="primary" (click)="goNext()">
+                {{ t('form.actions.next') }}
+            </button>
+        </div>
+
+        <!-- <mat-form-field appearance="outline">
+            <mat-label>{{ t('entities.policy.fields.createdBy') }}</mat-label>
+            <input matInput formControlName="createdBy" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{ t('entities.policy.fields.createdAt') }}</mat-label>
+            <input matInput type="date" formControlName="createdAt" />
+
+        </mat-form-field> -->
+
+    </form>
+</div>

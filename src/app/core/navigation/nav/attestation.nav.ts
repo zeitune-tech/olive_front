@@ -46,14 +46,7 @@ export const defaultAttestationNavigation: NavigationItem[] = [
             },
         ]
     },
-    {
-        id: 'attestation-demands',
-        title: 'sidebar.attestation_demands.title',
-        type: 'basic',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_ATTESTATIONS_DEMANDS,
-        link: '/attestations/demands/companies',
-    },
+    
     {
         id: 'attestation-demands',
         title: 'sidebar.attestation_demands.title',

@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 0) {
                     // Network error or server is down
-                    this._errorDialogQueueService.addErrorToQueue('Network error. Please check your connection.');
+                    this._errorDialogQueueService.addErrorToQueue('Une erreur réseau est survenue. Veuillez vérifier votre connexion Internet.');
                 } 
                 return throwError(() => new Error(error.message));
             })

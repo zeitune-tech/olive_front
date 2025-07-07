@@ -131,6 +131,16 @@ const routes: Routes = [
                 },
                 loadChildren: () => import('./modules/production/production.module').then(m => m.ProductionModule)
             },
+
+            {
+                path: 'pricing',
+                canActivate: [],
+                canActivateChild: [],
+                data: {
+                    // permission: PERMISSIONS.VIEW_PRICING_FORMULA
+                },
+                loadChildren: () => import('./modules/pricing/pricing.module').then(m => m.PricingModule)
+            },
             
             // 404 & Catch all
             {path: '404-not-found', pathMatch: 'full', loadChildren: () => import('./modules/error/error.module').then(m => m.ErrorModule), data: {layout: "empty"}},

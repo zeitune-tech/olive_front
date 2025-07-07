@@ -1,0 +1,159 @@
+<div class="w-full pb-10" *transloco="let t">
+    <div class="flex flex-col mb-10">
+        <h1 class="text-2xl md:text-4xl font-bold py-4">
+            {{ t('entities.formula.table.title') }}
+        </h1>
+        <p class="text-sm text-gray-600">
+            {{ t('entities.formula.form.subtitle') }}
+        </p>
+    </div>
+
+    <form [formGroup]="formGroup" class="w-full  bg-card p-4 rounded-xl mx-auto">
+        <div class="flex flex-col mb-6 text-center text-primary">
+            <h1 class="text-2xl font-bold">
+                {{ t('entities.formula.form.title') }}
+            </h1>
+            <p class="text-sm text-gray-600">
+                {{ t('entities.formula.form.subtitle') }}
+            </p>
+        </div>
+
+        <div class="flex flex-col gap-6">
+            <!-- Nom -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.formula.fields.name') }}</mat-label>
+                <input matInput formControlName="name" />
+            </mat-form-field>
+
+            <!-- Description -->
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.formula.fields.description') }}</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+
+            <!-- Écran + Effacer -->
+            <div class="flex items-start gap-2">
+                <div
+                    class="flex-1 p-4 border border-gray-300 rounded bg-gray-50 min-h-[4rem] text-right font-mono text-xl">
+                    {{ formula || '0' }}
+                </div>
+                <button mat-stroked-button color="warn" (click)="clear()">
+                    {{ t('form.actions.clear') }}
+                </button>
+            </div>
+
+            <!-- Zone symboles / chiffres / opérateurs + Variables -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+
+                <!-- Colonne gauche : symboles + chiffres + opérateurs -->
+                <div class="col-span-2 flex flex-col gap-4">
+
+                    <!-- Symboles -->
+                    <div>
+                        <p class="font-semibold text-gray-700 mb-2">{{ t('entities.formula.sections.symbols') }}</p>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button (click)="append('(')" class="btn-operator">&#40;</button>
+                            <button (click)="append(')')" class="btn-operator">&#41;</button>
+                            <button (click)="append('%')" class="btn-operator">&percnt;</button>
+                            <button (click)="append('.')" class="btn-operator">&period;</button>
+                        </div>
+                    </div>
+
+                    <!-- Chiffres -->
+                    <div>
+                        <p class="font-semibold text-gray-700 mb-2">{{ t('entities.formula.sections.numbers') }}</p>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button (click)="append('1')" class="btn-number">1</button>
+                            <button (click)="append('2')" class="btn-number">2</button>
+                            <button (click)="append('3')" class="btn-number">3</button>
+                            <button (click)="append('4')" class="btn-number">4</button>
+                            <button (click)="append('5')" class="btn-number">5</button>
+                            <button (click)="append('6')" class="btn-number">6</button>
+                            <button (click)="append('7')" class="btn-number">7</button>
+                            <button (click)="append('8')" class="btn-number">8</button>
+                            <button (click)="append('9')" class="btn-number">9</button>
+                            <button (click)="append('0')" class="btn-number col-span-3">0</button>
+                        </div>
+                    </div>
+
+                    <!-- Opérateurs -->
+                    <div>
+                        <p class="font-semibold text-gray-700 mb-2">{{ t('entities.formula.sections.operators') }}</p>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button (click)="append('+')" class="btn-operator">+</button>
+                            <button (click)="append('-')" class="btn-operator">−</button>
+                            <button (click)="append('*')" class="btn-operator">×</button>
+                            <button (click)="append('/')" class="btn-operator">÷</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Colonne droite : recherche + variables -->
+                <div>
+                    <p class="font-semibold text-gray-700 mb-2">{{ t('entities.formula.sections.variables') }}</p>
+
+                    <mat-form-field class="w-full" appearance="outline">
+                        <mat-label>{{ t('form.search') }}</mat-label>
+                        <input matInput [(ngModel)]="searchTerm" />
+                    </mat-form-field>
+
+                    <div class="mt-4 max-h-64 overflow-y-auto space-y-2">
+                        <button *ngFor="let variable of filteredVariables()" (click)="add(variable.name)"
+                            class="w-full text-left py-2 px-3 bg-blue-100 text-blue-800 font-semibold rounded hover:bg-blue-200">
+                            {{ variable.label }} ({{ variable.name }})
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bouton Valider -->
+                      <!-- Submit Button -->
+          <div class="flex items-center justify-end gap-4 mt-6">
+            <!-- <div>{{ t(message) }}</div> -->
+            <button
+              mat-flat-button
+              color="primary"
+              [disabled]="formGroup.invalid || formGroup.disabled"
+              (click)="onSubmit()"
+            >
+              <span *ngIf="!formGroup.disabled">
+                {{ t('form.actions.save') }}
+              </span>
+              <mat-progress-spinner
+                *ngIf="formGroup.disabled"
+                [diameter]="24"
+                mode="indeterminate"
+              ></mat-progress-spinner>
+            </button>
+          </div>
+
+        </div>
+    </form>
+</div>
+<style>
+.btn-operator {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.btn-number {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #e0f7fa;
+    border: 1px solid #b2ebf2;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00796b;
+    transition: background-color 0.3s ease;
+}
+</style>
