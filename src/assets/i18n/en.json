@@ -112,6 +112,69 @@
       "title": "Products",
       "list": "Products List",
       "new": "Add New Product"
+    },
+    "consultation": {
+      "title": "Consultation"
+    },
+    "consultation_production": {
+      "title": "Production"
+    },
+    "consultation_vehicule": {
+      "title": "Vehicle"
+    },
+    "consultation_assure": {
+      "title": "Insured"
+    },
+    "gestion_attestations": {
+      "title": "Attestation Management"
+    },
+    "stock_central": {
+      "title": "Central Stock"
+    },
+    "gestion_commandes": {
+      "title": "Orders Management"
+    },
+    "attribution_attestations": {
+      "title": "Attestation Assignment"
+    },
+    "par_compagnies": {
+      "title": "By Companies"
+    },
+    "par_points_vente": {
+      "title": "By Points of Sale"
+    },
+    "retrait_stocks_points_vente": {
+      "title": "Withdrawal of POS Stocks"
+    },
+    "suivi_attestations": {
+      "title": "Attestation Tracking"
+    },
+    "affaire_nouvelle": {
+      "title": "New Business"
+    },
+    "avenants": {
+      "title": "Endorsements"
+    },
+    "annulation": {
+      "title": "Cancellation"
+    },
+    "affaire_nouvelle_flotte": {
+      "title": "New Fleet Business"
+    },
+    "avenants_flotte": {
+      "title": "Fleet Endorsements"
+    },
+    "annulation_flotte": {
+      "title": "Fleet Act Cancellation"
+    },
+    "production": {
+      "title": "Production"
+    },
+    "production_mono": {
+      "title": "Mono Production"
+    },
+    "production_flotte": {
+      "title": "Fleet Production"
     }
   },
   "form": {

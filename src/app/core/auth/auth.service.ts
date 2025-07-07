@@ -84,7 +84,7 @@ export class AuthService {
             return throwError(() => 'User is already logged in.');
         }
 
-        return this._httpClient.post<AuthResponse>(`${this._baseUrl}/auth/login`, credentials).pipe(
+        return this._httpClient.post<AuthResponse>(`${this._baseUrl}/login`, credentials).pipe(
             tap((response: AuthResponse) => {
                 // Store the access token in the local storage
                 this.accessToken = response.accessToken;

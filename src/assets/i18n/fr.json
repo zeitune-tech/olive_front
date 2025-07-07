@@ -120,7 +120,7 @@
       "table": {
         "title": "Garantie",
         "description": "Liste des garanties associées aux produits",
-        "empty_state": "Aucune garantie n’a été définie."
+        "empty_state": "Aucune garantie n'a été définie."
       },
       "fields": {
         "nature": "Nature",
@@ -581,7 +581,6 @@
           "MODIFICATION": "Modification",
           "SUSPENSION": "Suspension",
           "REINSTATEMENT": "Remise en vigueur"
-
         }
       }
     },
@@ -646,7 +645,7 @@
     },
     "commission": {
       "label": "Commission",
-      "description": "Définition des commissions de gestion et d’apport.",
+      "description": "Définition des commissions de gestion et d'apport.",
       "form": {
         "title": "Configuration des commissions",
         "subtitle": "Ajouter ou modifier une commission"
@@ -666,7 +665,6 @@
         "managementEntity": "Entité de gestion",
         "actions": "Actions"
       },
-
       "options": {
         "calculationBase": {
           "PRIME": "Prime",
@@ -689,7 +687,7 @@
       "fields": {
         "dateEffective": "Date d'effet",
         "commissionBase": "Base de commission",
-        "contributorRate": "Taux de l’apporteur",
+        "contributorRate": "Taux de l'apporteur",
         "upperEntityContributorRate": "Taux de l'entité supérieure",
         "contributor": "Apporteur",
         "product": "Produit",
@@ -799,7 +797,7 @@
         "actions": "Actions"
       },
       "placeholders": {
-        "designation": "Saisir le nom ou l’objet de la taxe"
+        "designation": "Saisir le nom ou l'objet de la taxe"
       },
       "options": {
         "rgr": {
@@ -1120,6 +1118,63 @@
       "title": "Production Flotte",
       "list": "Liste des productions flotte",
       "new": "Ajouter / Modifier une production flotte"
+    },
+    "consultation": {
+      "title": "Consultation"
+    },
+    "consultation_production": {
+      "title": "Production"
+    },
+    "consultation_vehicule": {
+      "title": "Véhicule"
+    },
+    "consultation_assure": {
+      "title": "Assuré"
+    },
+    "gestion_attestations": {
+      "title": "Gestion des Attestations"
+    },
+    "stock_central": {
+      "title": "Stock Central"
+    },
+    "gestion_commandes": {
+      "title": "Gestion des Commandes"
+    },
+    "attribution_attestations": {
+      "title": "Attribution Attestations"
+    },
+    "par_compagnies": {
+      "title": "Par Compagnies"
+    },
+    "par_points_vente": {
+      "title": "Par Points de Vente"
+    },
+    "retrait_stocks_points_vente": {
+      "title": "Retrait Stocks Points de Vente"
+    },
+    "suivi_attestations": {
+      "title": "Suivi Attestations"
+    },
+    "affaire_nouvelle": {
+      "title": "Affaire Nouvelle"
+    },
+    "avenants": {
+      "title": "Avenants"
+    },
+    "annulation": {
+      "title": "Annulation"
+    },
+    "affaire_nouvelle_flotte": {
+      "title": "Affaire Nouvelle Flotte"
+    },
+    "avenants_flotte": {
+      "title": "Avenants Flotte"
+    },
+    "annulation_flotte": {
+      "title": "Annulation d'acte Flotte"
+    },
+    "production_flotte": {
+      "title": "Production Flotte"
     }
   },
   "form": {

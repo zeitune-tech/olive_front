@@ -23,7 +23,7 @@ const routerConfig: ExtraOptions = {
 
 const routes: Routes = [
     {path: '', pathMatch : 'full', redirectTo: 'home'},
-    
+
     {path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'home'},
     {path: 'signed-up-redirect', pathMatch: 'full', redirectTo: 'home'},
 
@@ -131,7 +131,7 @@ const routes: Routes = [
                 },
                 loadChildren: () => import('./modules/production/production.module').then(m => m.ProductionModule)
             },
-            
+
             // 404 & Catch all
             {path: '404-not-found', pathMatch: 'full', loadChildren: () => import('./modules/error/error.module').then(m => m.ErrorModule), data: {layout: "empty"}},
             {path: '**', redirectTo: '404-not-found'},
