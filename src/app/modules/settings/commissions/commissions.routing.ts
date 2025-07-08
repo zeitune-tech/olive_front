@@ -1,39 +1,42 @@
 import { Routes } from "@angular/router";
-import { ContributorsListComponent } from "./list-contributors/list.component";
-import { TaxesListComponent } from "./list-taxes/list.component";
-import { CommissionNewComponent } from "./new/new.component";
-import { CommissionListComponent } from "./list/list.component";
-import { CommissionContributorNewComponent } from "./new-contributor/new-contributor.component";
-import { CommissionTaxNewComponent } from "./new-tax/new-tax.component";
+
+import { CommissionPrimeListComponent } from "./commission-prime/list/list.component";
+import { CommissionPrimeContributorListComponent } from "./commission-prime-contributor/list/list.component";
+import { CommissionAccessoryListComponent } from "./commission-accessory/list/list.component";
+import { CommissionAccessoryContributorListComponent } from "./commission-accessory-contributor/list/list.component";
+import { TaxCommissionListComponent } from "./tax-commission/list/list.component";
+import { TaxCommissionFormComponent } from "./tax-commission/form/form.component";
+import { TaxCommissionContributorListComponent } from "./tax-commission-contributor/list/list.component";
+
 
 export const routes: Routes = [
+
     {
         path: "",
-        pathMatch: "full",
-        redirectTo: "primes",
+        component: CommissionPrimeListComponent,
     },
     {
-        path: "list",
-        component: CommissionListComponent
+        path: "primes",
+        component: CommissionPrimeListComponent,
     },
     {
-        path: "contributors",
-        component: ContributorsListComponent
+        path: "contributors-primes",
+        component: CommissionPrimeContributorListComponent,
+    },
+    {
+        path: "accessories",
+        component: CommissionAccessoryListComponent,
+    },
+    {
+        path: "contributors-accessories",
+        component: CommissionAccessoryContributorListComponent,
     },
     {
         path: "taxes",
-        component: TaxesListComponent
+        component: TaxCommissionListComponent,
     },
     {
-        path: "new",
-        component: CommissionNewComponent
-    },
-    {
-        path: "contributors-new",
-        component: CommissionContributorNewComponent
-    },
-    {
-        path: "taxes-new",
-        component: CommissionTaxNewComponent
+        path: "contributors-taxes",
+        component: TaxCommissionContributorListComponent,
     }
 ];
