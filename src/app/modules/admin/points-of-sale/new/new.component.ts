@@ -34,7 +34,7 @@ export class PointsOfSaleNewComponent {
         this.formGroup = this.formBuilder.group({
             name: ['', Validators.required],
             email: ['', [Validators.email]],
-            phone: ['', Validators.required],
+            phone: [''],
             address: [''],
             typePointOfSale: ['DIRECT_OFFICE', Validators.required],
         });

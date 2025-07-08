@@ -1,0 +1,49 @@
+<div *transloco="let t" class="min-w-[600px] p-4">
+  <h2 class="text-xl font-semibold mb-4">
+    {{ t('entities.point_of_sale.select_title') || 'Sélectionner des points de vente' }}
+  </h2>
+
+  <div *ngIf="loading" class="text-center py-4">
+    {{ t('loading') }}...
+  </div>
+
+  <div *ngIf="!loading && filteredPoints.length === 0" class="text-center text-gray-500">
+    {{ t('entities.point_of_sale.table.empty_state') }}
+  </div>
+
+  <div *ngIf="!loading && filteredPoints.length > 0">
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <td class="px-4 py-2">
+            <mat-checkbox (change)="masterToggle()" [checked]="isAllSelected()"></mat-checkbox>
+          </td>
+          <th class="text-left px-4 py-2">{{t('entities.point_of_sale.fields.name')}}</th>
+          <th class="text-left px-4 py-2">{{t('entities.point_of_sale.fields.type')}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pos of filteredPoints" class="border-t">
+          <td class="px-4 py-2">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="toggleSelection(pos)"
+              [checked]="selection.isSelected(pos)">
+            </mat-checkbox>
+          </td>
+          <td class="px-4 py-2">{{ pos.name }}</td>
+          <td class="px-4 py-2">
+            {{ t('entities.point_of_sale.options.type.' + pos.typePointOfSale) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex justify-end space-x-2 mt-6">
+    <button mat-button (click)="cancel()">
+      {{ t('form.actions.cancel') }}
+    </button>
+    <button mat-raised-button color="primary" (click)="confirmSelection()" [disabled]="selection.selected.length === 0">
+      {{ t('form.actions.confirm') }}
+    </button>
+  </div>
+</div>

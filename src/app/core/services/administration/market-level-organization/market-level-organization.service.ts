@@ -4,6 +4,7 @@ import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { MarketLevelOrganization } from "./market-level-organization.interface";
 import { RequestMetadata } from "../../common.interface";
+import { Company } from "../company/company.interface";
 
 @Injectable()
 export class MarketLevelOrganizationService {
@@ -74,6 +75,16 @@ export class MarketLevelOrganizationService {
                 return (response);
             }),
             catchError(() => of([] as MarketLevelOrganization[]))
+        );
+    }
+
+    getCompanies(id: string): Observable<Company[]> {
+        return this._httpClient.get<Company[]>(`${this.baseUrl}/${id}/companies`)
+        .pipe(
+            tap((response : Company[]) => {
+                return (response);
+            }),
+            catchError(() => of([] as Company[]))
         );
     }
 

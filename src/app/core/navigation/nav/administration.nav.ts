@@ -171,6 +171,31 @@ export const defaultAdministrationNavigation: NavigationItem[] = [
                 permission: PERMISSIONS.CREATE_USERS
             }
         ]
+    },
+    {
+        id: 'closures',
+        title: 'sidebar.closures.title',
+        type: 'collapsable',
+        icon: 'fluent:people-team',
+        permission: PERMISSIONS.VIEW_CLOSURES,
+        children: [
+            {
+                id: 'closures.list',
+                title: 'sidebar.closures.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/closures/list',
+                permission: PERMISSIONS.VIEW_CLOSURES
+            },
+            {
+                id: 'closures.new',
+                title: 'sidebar.closures.new',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/closures/new',
+                permission: PERMISSIONS.CREATE_CLOSURES
+            }
+        ]
     }
 ];
 export const compactAdministrationNavigation: NavigationItem[] = [
@@ -204,6 +229,14 @@ export const compactAdministrationNavigation: NavigationItem[] = [
         type: 'aside',
         icon: 'fluent:people-team',
         permission: PERMISSIONS.VIEW_USERS,
+        children: []
+    },
+    {
+        id: 'closures',
+        title: 'sidebar.closures.title',
+        type: 'collapsable',
+        icon: 'fluent:people-team',
+        permission: PERMISSIONS.VIEW_CLOSURES,
         children: []
     }
 ];

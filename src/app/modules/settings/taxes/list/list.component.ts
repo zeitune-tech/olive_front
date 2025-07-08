@@ -1,7 +1,6 @@
 import { SelectionModel } from "@angular/cdk/collections";
 import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -10,6 +9,8 @@ import { Tax } from "@core/services/settings/tax/tax.interface";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { Router } from "@angular/router";
+import { TranslocoService } from "@jsverse/transloco";
 
 @Component({
     selector: "app-taxs-list",
@@ -26,7 +27,6 @@ export class TaxesListComponent {
         columns: [
             { label: 'entities.tax.fields.designation', property: 'designation', type: 'text', visible: true },
             { label: 'entities.tax.fields.nature', property: 'nature', type: 'text', visible: true },
-            { label: 'entities.tax.fields.rgr', property: 'rgr', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'tax.columns.logo',
@@ -38,8 +38,9 @@ export class TaxesListComponent {
         actions: [],
         renderItem: (element: Tax, property: keyof Tax) => {
 
-
-            return element[property];
+            if (property === 'nature') {
+                return this._translateService.translate(`entities.tax.options.nature.${element.nature}`);
+            }
         },
     };
     data: Tax[] = [];
@@ -54,7 +55,8 @@ export class TaxesListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _taxService: TaxService,
-        private _dialog: MatDialog
+        private _router: Router,
+        private _translateService: TranslocoService
     ) { }
 
     ngOnInit(): void {
@@ -78,6 +80,10 @@ export class TaxesListComponent {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
+    }
+
+    openAddDialog(): void {
+        this._router.navigate(['parameters/taxes/new']);
     }
 
     onEdit(element: Tax): void {}

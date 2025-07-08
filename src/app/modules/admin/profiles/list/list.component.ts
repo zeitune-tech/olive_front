@@ -16,6 +16,7 @@ import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
 import { ProfilesEditComponent } from "../edit/edit.component";
 import { MatDialog } from "@angular/material/dialog";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-profiles-list",
@@ -49,6 +50,12 @@ export class ProfilesListComponent {
 
             if (property === 'permissions') {
                 return element[property].length;
+            }
+            
+            if (property === 'name') {
+                if (element[property] === 'ADMIN_COMPANY' || element[property] === 'ADMIN_POINT_OF_SALE') {
+                    return this._translateService.translate('entities.management_entity.options.name.' + element[property]);
+                }
             }
 
             if (property === 'description') {
@@ -114,17 +121,38 @@ export class ProfilesListComponent {
         return hasPerm;
     }
     
-    onDelete(profile: Profile): void {
-        this._dialog.open(ProfilesEditComponent, {
-            width: '600px',
-            data: profile
+    onDelete(element: Profile): void {
+        this._dialog.open(ConfirmDeleteComponent, {
+            width: '400px',
+            data: {
+            title: 'form.actions.deleteTitle',
+            message: 'form.actions.deleteMessage',
+            itemName: element.name,
+            isErrorOnly: false
+            }
         }).afterClosed().subscribe(result => {
             if (result) {
-                // Optionally refresh the list or show a success notification
-                // this._profileService.getAllProfiles().subscribe();
+            this._profileService.delete(element.id).subscribe({
+                next: () => {
+                this._profileService.getAll().subscribe();
+                },
+                error: () => {
+                    this._dialog.open(ConfirmDeleteComponent, {
+                        width: '400px',
+                        data: {
+                        title: 'form.errors.title',
+                        message: 'form.errors.profile_error', // à traduire dans tes fichiers de traduction
+                        isErrorOnly: true
+                        }
+                    });
+                }
+            });
             }
-        })
+        });
     }
+
+
+
     onView(profile: Profile): void {
         // Implement view functionality
     }
@@ -141,8 +169,6 @@ export class ProfilesListComponent {
         })
 
     }
-
-
 
     get visibleColumns() {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);

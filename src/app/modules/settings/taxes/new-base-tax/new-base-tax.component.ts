@@ -36,7 +36,7 @@ export class BaseTaxNewComponent implements OnInit {
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
       dateEffective: [null, Validators.required],
-      calculationBase: [null, Validators.required],
+      calculationBase: [{ value: 'PRIME', disabled: true }, Validators.required],
       isFlat: [false, Validators.required],
       rate: [0],
       fixedAmount: [0],
@@ -88,7 +88,7 @@ export class BaseTaxNewComponent implements OnInit {
 
   onSubmit(): void {
     if (this.formGroup.valid) {
-      const data = this.formGroup.value;
+      const data = this.formGroup.getRawValue();
       this._baseTaxService.create(data).subscribe(() => {
         console.log('Base de taxe créée');
         this.formGroup.reset();

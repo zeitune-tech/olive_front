@@ -44,10 +44,12 @@
                 <div class="w-full h-full flex items-center justify-around">
                     @if (hasPermission()) {
                         <button mat-icon-button color="primary" (click)="onEdit(element)"
+                            [disabled]="element.name === 'ADMIN_COMPANY' || element.name === 'ADMIN_POINT_OF_SALE'"
                             matTooltip="{{ t('action_button.edit') }}">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <button mat-icon-button color="warn" (click)="onDelete(element)"
+                            [disabled]="element.name === 'ADMIN_COMPANY' || element.name === 'ADMIN_POINT_OF_SALE'"
                             matTooltip="{{ t('action_button.delete') }}">
                             <mat-icon>delete</mat-icon>
                         </button>

@@ -31,14 +31,7 @@ export class ContributorNewComponent implements OnInit {
         private _pointOfSaleService: PointOfSaleService,
         private _managementEntityService: ManagementEntityService
     ) {
-        this.formGroup = this.fb.group({
-            firstname: ['', Validators.required],
-            lastname: ['', Validators.required],
-            email: ['', [Validators.email]],
-            level: [ContributorLevel.COMPANY, Validators.required],
-            pointOfSale: [null, this.validatePointOfSale()],
-        });
-        this.formGroup.get('pointOfSale')?.disable();
+        
 
 
         this._managementEntityService.entity$.subscribe((entity: ManagementEntity | null) => {
@@ -56,13 +49,7 @@ export class ContributorNewComponent implements OnInit {
             }
         })
 
-        this.formGroup.get('level')?.valueChanges.subscribe((level: string) => {
-            if (level === ContributorLevel.COMPANY) {
-                this.formGroup.get('pointOfSale')?.disable();
-            } else {
-                this.formGroup.get('pointOfSale')?.enable();
-            }
-        });
+        
     }
 
     
@@ -78,7 +65,27 @@ export class ContributorNewComponent implements OnInit {
         };
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.formGroup = this.fb.group({
+            firstname: ['', Validators.required],
+            lastname: ['', Validators.required],
+            email: ['', [Validators.email]],
+            gsm: ['', Validators.pattern(/^\+?[0-9\s]+$/)], // GSM validation pattern
+            level: [ContributorLevel.COMPANY, Validators.required],
+            pointOfSale: [null],
+        });
+            this.formGroup.get("pointOfSale")?.disable();
+
+    }
+
+    onLevelChange(level: any) {
+        console.log(level)
+        if (level === ContributorLevel.POINT_OF_SALE) {
+            this.formGroup.get("pointOfSale")?.enable();
+        } else {
+            this.formGroup.get("pointOfSale")?.disable();
+        }
+    }
 
     onSubmit(): void {
         if (this.formGroup.invalid) return;
@@ -86,6 +93,8 @@ export class ContributorNewComponent implements OnInit {
         this.formGroup.disable();
 
         const contributor = this.formGroup.value;
+
+        console.log(contributor);
 
         this.contributorService.create(contributor).subscribe({
             next: () => {

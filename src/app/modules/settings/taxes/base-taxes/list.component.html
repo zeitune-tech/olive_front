@@ -12,6 +12,12 @@
 
     </div>
 
+    <!-- Bouton Ajouter aligné à droite -->
+    <div class="flex justify-end mb-4">
+        <button mat-raised-button color="primary" class="text-white" (click)="openAddDialog()">
+        {{ t('form.actions.add') }}
+        </button>
+    </div>
     <!-- Table -->
     <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
     
