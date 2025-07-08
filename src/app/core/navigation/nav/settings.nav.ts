@@ -181,62 +181,45 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 title: 'sidebar.taxes.types.title',
                 type: 'basic',
                 icon: 'fluent:list-24-regular',
-                link: '/parameters/taxes/list',
+                link: '/parameters/taxes/taxes-type',
             },
             {
                 id: 'taxes.primes',
                 title: 'sidebar.taxes.primes.title',
                 type: 'basic',
                 icon: 'fluent:list-24-regular',
-                link: '/parameters/taxes/base-taxes',
+                link: '/parameters/taxes/taxes-primes',
 
             },
             {
-            id: 'taxes.accessoires',
-            title: 'sidebar.taxes.accessoires.title',
-            type: 'collapsable',
-            icon: 'fluent:list-24-regular',
-            children: [
-                {
-                id: 'taxes.accessoires.list',
-                title: 'sidebar.taxes.accessoires.list',
-                type: 'basic',
-                icon: 'fluent:list-24-regular',
-                link: '/parameters/taxes/base-taxes',
-                // permission: PERMISSIONS.VIEW_TAX_ACCESSOIRES
-                },
-                {
-                id: 'taxes.accessoires.new',
-                title: 'sidebar.taxes.accessoires.new',
-                type: 'basic',
-                icon: 'fluent:add-24-regular',
-                link: '/parameters/taxes/base-taxes-new',
-                // permission: PERMISSIONS.CREATE_TAX_ACCESSOIRES
-                }
-            ]
+              id: 'taxes.accessoires',
+              title: 'sidebar.taxes.accessoires.title',
+              type: 'basic',
+              icon: 'fluent:list-24-regular',
+              link: '/parameters/taxes/taxes-accessories',
             },
             {
-            id: 'taxes.exoneration',
-            title: 'sidebar.taxes.exoneration',
-            type: 'basic',
-            icon: 'fluent:shield-dismiss-24-regular',
-            link: '/parameters/taxes/exoneration',
-            // permission: PERMISSIONS.VIEW_EXONERATION
+              id: 'taxes.exoneration',
+              title: 'sidebar.taxes.exoneration',
+              type: 'basic',
+              icon: 'fluent:shield-dismiss-24-regular',
+              link: '/parameters/taxes/taxes-exemption',
+              // permission: PERMISSIONS.VIEW_EXONERATION
             },
             {
-            id: 'taxes.timbre-dimension',
-            title: 'sidebar.taxes.timbreDimension',
-            type: 'basic',
-            icon: 'fluent:scale-24-regular',
-            link: '/parameters/taxes/timbre-dimension',
-            // permission: PERMISSIONS.VIEW_TIMBRE_DIMENSION
+              id: 'taxes.timbre-dimension',
+              title: 'sidebar.taxes.timbreDimension',
+              type: 'basic',
+              icon: 'fluent:scale-24-regular',
+              link: '/parameters/taxes/dimension-stamp',
+              // permission: PERMISSIONS.VIEW_TIMBRE_DIMENSION
             },
             {
             id: 'taxes.timbre-gradue',
             title: 'sidebar.taxes.timbreGradue',
             type: 'basic',
             icon: 'fluent:scale-fill-24-regular',
-            link: '/parameters/taxes/timbre-gradue',
+            link: '/parameters/taxes/graduated-stamp',
             // permission: PERMISSIONS.VIEW_TIMBRE_GRADUE
             }
         ]

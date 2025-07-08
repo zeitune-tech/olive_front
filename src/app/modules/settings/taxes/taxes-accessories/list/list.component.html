@@ -120,11 +120,7 @@
                   <mat-icon>edit</mat-icon> 
               </button>
 
-              @if (element.visibility === "PUBLIC") {
-                  <button mat-icon-button color="accent" (click)="onShare(element)" matTooltip="{{ t('action_button.share') }}">
-                      <mat-icon>share</mat-icon> 
-                  </button>
-              }
+              
             } @else {
               <button mat-icon-button color="accent" disabled matTooltip="{{ t('action_button.no_permission') }}">
                   <mat-icon>lock</mat-icon> 

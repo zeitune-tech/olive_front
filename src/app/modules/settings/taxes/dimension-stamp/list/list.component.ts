@@ -14,18 +14,14 @@ import { ProductService } from "@core/services/settings/product/product.service"
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
-import { ShareProductComponent } from "../share-product/share-product.component";
 import { TranslocoService } from "@jsverse/transloco";
-import { ProductEditComponent } from "../edit/edit.component";
-
 @Component({
     selector: "app-products-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class ProductsListComponent implements OnInit {
+export class DimensionStampListComponent implements OnInit {
 
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -43,7 +39,6 @@ export class ProductsListComponent implements OnInit {
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
-        private _layoutService: LayoutService,
         private _tanslateService: TranslocoService,
         private _router: Router,
         private _dialog: MatDialog
@@ -62,7 +57,7 @@ export class ProductsListComponent implements OnInit {
             });
     }
 
-    
+
     data: Product[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -98,36 +93,6 @@ export class ProductsListComponent implements OnInit {
             pageSizeOptions: [5, 6, 8],
             actions: [],
             renderItem: (element: Product, property: keyof Product) => {
-                if (property === 'branch') {
-                    return element.branch?.name ?? '--';
-                } else if (property === 'fleet') {
-                    return element.fleet ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
-                } else if (property === 'hasReduction') {
-                    return element.hasReduction ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
-                } else if (property === 'category') {
-                    return element.branch?.category?.name ?? '--';
-                }
-
-                if (property === 'name') {
-                    const display = element.name;
-                    if (element.description && element.description.trim() !== '') {
-                        return `${display} - ${element.description}`;
-                    }
-                    return display;
-                }
-
-                if (property === 'visibility') {
-                    let provider = element.owner?.name || '--';
-                    if (provider.length > 20) {
-                        provider = provider.substring(0, 20) + '...';
-                    }
-                    if (element.visibility === 'PRIVATE') {
-                        return this._tanslateService.translate('enums.productVisibility.PRIVATE');
-                    }else  {
-                        return this._tanslateService.translate('enums.productVisibility.PUBLIC', { provider: provider });
-                    }
-                }
-
                 return element[property] ?? '--';
             },
         };
@@ -151,7 +116,7 @@ export class ProductsListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -179,33 +144,14 @@ export class ProductsListComponent implements OnInit {
         * Edit Product Product
         */
     onEdit(product: Product): void {
-        this._dialog.open(ProductEditComponent, {
-            data: product,
-            width: '600px',
-            disableClose: true,
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._productService.getAll().subscribe();
-            }
-        })
+
     }
 
     onShare(product: Product): void {
-        this._dialog.open(ShareProductComponent, {
-            data: {
-                product: product,
-                companies: product.sharedWith,
-            },
-        }).afterClosed().subscribe((result) => {
-            if (result) {
 
-            }
-        })
     }
 
     onView(product: Product): void {
-        this._layoutService.setSelectedProduct(product);
-        //this._router.navigate(['/administration/products/list']);
     }
 
     onButtonClick(product: Product, column: string): void {

@@ -3,14 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProductService } from '@core/services/settings/product/product.service';
-import { Product } from '@core/services/settings/product/product.interface';
 
 @Component({
     selector: 'app-coverage-reference-edit',
-    templateUrl: './edit.component.html'
+    templateUrl: './form.component.html'
 })
-export class ProductEditComponent implements OnInit {
+export class DimensionStampFormComponent implements OnInit {
 
     formGroup!: FormGroup;
     message = '';
@@ -23,24 +21,13 @@ export class ProductEditComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private dialogRef: MatDialogRef<ProductEditComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: Product,
-        private _productService: ProductService,
+        private dialogRef: MatDialogRef<DimensionStampFormComponent>,
         private translocoService: TranslocoService,
         private snackBar: MatSnackBar
     ) {}
 
     ngOnInit(): void {
-        this.formGroup = this.fb.group({
-            name: [this.data.name, Validators.required],
-			description: [this.data.description, Validators.required],
-			branch: [this.data.branch.id, Validators.required],
-			minRisk: [this.data.minRisk, [Validators.min(1)]],
-			maxRisk: [this.data.maxRisk, [Validators.min(1)]],
-			minimumGuaranteeNumber: [1, [Validators.required, Validators.min(1)]],
-			fleet: [false, Validators.required],
-			hasReduction: [false]
-        });
+
     }
 
     onSubmit(): void {
@@ -52,24 +39,7 @@ export class ProductEditComponent implements OnInit {
             ...this.formGroup.value
         };
 
-        this._productService.update(this.data.id,updated).subscribe({
-            next: () => {
-                this.snackBar.open(
-                    this.translocoService.translate('form.success.update'),
-                    undefined,
-                    { duration: 3000, panelClass: 'snackbar-success' }
-                );
-                this.dialogRef.close(true);
-            },
-            error: () => {
-                this.snackBar.open(
-                    this.translocoService.translate('form.errors.submission'),
-                    undefined,
-                    { duration: 3000, panelClass: 'snackbar-error' }
-                );
-                this.formGroup.enable();
-            }
-        });
+
     }
 
     onCancel(): void {

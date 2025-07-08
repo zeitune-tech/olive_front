@@ -1,39 +1,39 @@
 import { Routes } from "@angular/router";
-import { TaxRegimesListComponent } from "./tax-regimes/list.component";
-import { TaxNewComponent } from "./new/new.component";
-import { BaseTaxesListComponent } from './base-taxes/list.component';
-import { TaxesListComponent } from "./list/list.component";
-import { BaseTaxNewComponent } from "./new-base-tax/new-base-tax.component";
-import { TaxRegimeNewComponent } from "./new-tax-regime/new-tax-regime.component";
+import {TypeListComponent} from "./taxes-type/list/list.component";
+import {PrimesListComponent} from "./taxes-primes/list/list.component";
+import {ExemptionListComponent} from "./taxes-exemption/list/list.component";
+import {DimensionStampListComponent} from "./dimension-stamp/list/list.component";
+import {GraduatedStampListComponent} from "./graduated-stamp/list/list.component";
+import {AccessoriesListComponent} from "./taxes-accessories/list/list.component";
 
 export const routes: Routes = [
     {
         path: "",
         pathMatch: "full",
-        redirectTo: "list",
+        redirectTo: "taxes-type",
     },
     {
-        path: "list",
-        component: TaxesListComponent
+        path: "taxes-type",
+        component: TypeListComponent
     },
     {
-        path: "regimes",
-        component: TaxRegimesListComponent
+        path: "taxes-primes",
+        component: PrimesListComponent
     },
     {
-        path: "regimes-new",
-        component: TaxRegimeNewComponent
+        path: "taxes-accessories",
+        component: AccessoriesListComponent
     },
     {
-        path: "base-taxes",
-        component: BaseTaxesListComponent
+        path: "taxes-exemption",
+        component: ExemptionListComponent
     },
     {
-        path: "base-taxes-new",
-        component: BaseTaxNewComponent
+        path: "dimension-stamp",
+        component: DimensionStampListComponent
     },
     {
-        path: "new",
-        component: TaxNewComponent
+        path: "graduated-stamp",
+        component: GraduatedStampListComponent
     }
 ];

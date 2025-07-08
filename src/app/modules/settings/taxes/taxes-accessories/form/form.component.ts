@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     selector: 'app-coverage-reference-edit',
     templateUrl: './form.component.html'
 })
-export class TypeFormComponent implements OnInit {
+export class AccessoriesFormComponent implements OnInit {
 
     formGroup!: FormGroup;
     message = '';
@@ -21,7 +21,7 @@ export class TypeFormComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private dialogRef: MatDialogRef<TypeFormComponent>,
+        private dialogRef: MatDialogRef<AccessoriesFormComponent>,
         private translocoService: TranslocoService,
         private snackBar: MatSnackBar
     ) {}

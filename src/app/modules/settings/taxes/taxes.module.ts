@@ -16,26 +16,36 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
-import { TaxRegimesListComponent } from "./tax-regimes/list.component";
-import { TaxNewComponent } from "./new/new.component";
-import { BaseTaxesListComponent } from "./base-taxes/list.component";
-import { AccessoriesListComponent } from "./list-accessories/list.component";
-import { PrimesListComponent } from "./list-primes/list.component";
-import { TaxesListComponent } from "./list/list.component";
-import { BaseTaxNewComponent } from "./new-base-tax/new-base-tax.component";
-import { TaxRegimeNewComponent } from "./new-tax-regime/new-tax-regime.component";
+
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import {DimensionStampFormComponent} from "./dimension-stamp/form/form.component";
+import {DimensionStampListComponent} from "./dimension-stamp/list/list.component";
+import {GraduatedStampFormComponent} from "./graduated-stamp/form/form.component";
+import {GraduatedStampListComponent} from "./graduated-stamp/list/list.component";
+// import {AccessoriesFormComponent} from "./taxes-accessories/form/form.component";
+import {ExemptionFormComponent} from "./taxes-exemption/form/form.component";
+import {PrimesFormComponent} from "./taxes-primes/form/form.component";
+import {TypeFormComponent} from "./taxes-type/form/form.component";
+import {ExemptionListComponent} from "./taxes-exemption/list/list.component";
+import {PrimesListComponent} from "./taxes-primes/list/list.component";
+import {TypeListComponent} from "./taxes-type/list/list.component";
+import {AccessoriesFormComponent} from "./taxes-accessories/form/form.component";
+import {AccessoriesListComponent} from "./taxes-accessories/list/list.component";
 
 @NgModule({
     declarations: [
-        TaxesListComponent,
-        TaxRegimesListComponent,
-        BaseTaxesListComponent,
-        AccessoriesListComponent,
-        PrimesListComponent,
-        TaxNewComponent,
-        BaseTaxNewComponent,
-        TaxRegimeNewComponent
+      DimensionStampFormComponent,
+      DimensionStampListComponent,
+      GraduatedStampFormComponent,
+      GraduatedStampListComponent,
+      AccessoriesFormComponent,
+      AccessoriesListComponent,
+      ExemptionFormComponent,
+      ExemptionListComponent,
+      PrimesFormComponent,
+      PrimesListComponent,
+      TypeFormComponent,
+      TypeListComponent
     ],
     imports: [
         RouterModule.forChild(routes),
