@@ -9,7 +9,7 @@ import { AuthResponse, RegisterRequest, UserCredentials } from './auth.model';
 @Injectable()
 export class AuthService {
     private _authenticated: boolean = false;
-    private _baseUrl = environment.auth_url;
+    private _baseUrl = environment.auth_url+"/auth";
 
     /**
      * Constructor
@@ -61,7 +61,7 @@ export class AuthService {
      * @param email
      */
     forgotPassword(email: string): Observable<any> {
-        return this._httpClient.post(`${this._baseUrl}/auth/forgot-password`, email);
+        return this._httpClient.post(`${this._baseUrl}/forgot-password`, email);
     }
 
     /**
@@ -70,7 +70,7 @@ export class AuthService {
      * @param password
      */
     resetPassword(password: string): Observable<any> {
-        return this._httpClient.post(`${this._baseUrl}/auth/reset-password`, password);
+        return this._httpClient.post(`${this._baseUrl}/reset-password`, password);
     }
 
     /**
@@ -108,7 +108,7 @@ export class AuthService {
      * @param user
      */
     signUp(registerRequest: RegisterRequest): Observable<AuthResponse> {
-        return this._httpClient.post<AuthResponse>(`${this._baseUrl}/auth/register`, registerRequest)
+        return this._httpClient.post<AuthResponse>(`${this._baseUrl}/register`, registerRequest)
         .pipe(
             tap((response: AuthResponse) => {
                 // Store the access token in the local storage
@@ -142,7 +142,7 @@ export class AuthService {
     }
 
     unlockSession(credentials: { email: string; password: string }): Observable<any> {
-        return this._httpClient.post(`${this._baseUrl}/auth/unlock-session`, credentials);
+        return this._httpClient.post(`${this._baseUrl}/unlock-session`, credentials);
     }
 
     check(): Observable<boolean> {
@@ -171,8 +171,8 @@ export class AuthService {
     private signInUsingToken(): Observable<boolean> {
         // Sign in using the token
         return this._httpClient.post<AuthResponse>(
-            `${this._baseUrl}/auth/refresh-token`,
-            {}, 
+            `${this._baseUrl}/refresh-token`,
+            {},
             {
                 headers: {
                     'Authorization': `Bearer ${this.refreshToken}`,
