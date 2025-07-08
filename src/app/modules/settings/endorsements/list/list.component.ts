@@ -1,0 +1,112 @@
+import { SelectionModel } from "@angular/cdk/collections";
+import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
+import { UntypedFormControl } from "@angular/forms";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { Accessory } from "@core/services/settings/accessory/accessory.interface";
+import { AccessoryService } from "@core/services/settings/accessory/accessory.service";
+import { TranslocoService } from "@jsverse/transloco";
+import { animations } from "@lhacksrt/animations";
+import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
+import { Subject, takeUntil } from "rxjs";
+import { Router } from "@angular/router";
+import { LayoutService } from "../layout.service";
+import { Endorsment } from "@core/services/settings/endorsement/endorsement.interface";
+import { EndorsementService } from "@core/services/settings/endorsement/endorsement.service";
+
+@Component({
+    selector: "app-closures-list",
+    templateUrl: "./list.component.html",
+    animations: animations
+})
+export class EndorsementListComponent {
+
+
+    private _unsubscribeAll: Subject<any> = new Subject<any>();
+
+    tableOptions: TableOptions<Endorsment> = {
+        title: '',
+        columns: [
+            { label: 'entities.endorsment.fields.designation', property: 'designation', visible: true, type: 'text' },
+            { label: 'entities.endorsment.fields.nature', property: 'nature', visible: true, type: 'text' },
+        ],
+        imageOptions: {
+            label: 'closure.columns.logo',
+            property: 'logo',
+            cssClasses: ['w-16 h-16']
+        },
+        pageSize: 8,
+        pageSizeOptions: [5, 6, 8],
+        actions: [],
+        renderItem: (element: Endorsment, property: keyof Endorsment) => {
+
+            if (property === 'nature') {
+                return this._translateService.translate(`entities.endorsment.options.nature.${element.nature}`);
+            }
+
+            return element[property];
+        },
+    };
+    data: Endorsment[] = [];
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
+
+    dataSource: MatTableDataSource<Endorsment> = new MatTableDataSource();
+    selection = new SelectionModel<Endorsment>(true, []);
+    searchInputControl: UntypedFormControl = new UntypedFormControl();
+
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _translateService: TranslocoService,
+        private _router: Router,
+        private _endorsmentService: EndorsementService,
+        private _layoutService: LayoutService
+    ) { }
+
+    ngOnInit(): void {
+        this._endorsmentService.endorsements$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: Endorsment[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+                this._changeDetectorRef.detectChanges();
+            });
+    }
+
+    ngAfterViewInit() {
+        if (this.dataSource) {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        }
+    }
+
+    ngOnDestroy(): void {
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next(null);
+        this._unsubscribeAll.complete();
+    }
+
+    openAddDialog(): void {
+        this._router.navigate(['/parameters/endorsements/new']); 
+    }
+    onView(item: Endorsment): void {}
+
+    onDelete(endorsement: Endorsment): void {}
+
+    onEdit(endorsement: Endorsment): void {
+        this._layoutService.setSelectedEndorsement(endorsement);
+        this._router.navigate(['/parameters/endorsements/new']); // ou route vers le même formulaire mais dans un mode "édition"
+    }
+
+    get visibleColumns() {
+        let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
+        columns.push('actions');
+        return columns;
+    }
+
+    trackByProperty(index: number, column: TableColumn<Endorsment>) {
+        return column.property;
+    }
+}

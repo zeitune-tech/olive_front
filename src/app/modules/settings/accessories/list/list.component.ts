@@ -29,6 +29,7 @@ export class AccessoriesListComponent {
             { label: 'entities.accessory.fields.dateEffective', property: 'dateEffective', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.actType', property: 'actType', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.product', property: 'product', visible: true, type: 'text' },
+            { label: 'entities.accessory.fields.accessoryType', property: 'accessoryType', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.accessoryAmount', property: 'accessoryAmount', visible: true, type: 'text' }
         ],
         imageOptions: {
@@ -45,8 +46,12 @@ export class AccessoriesListComponent {
                 return element.product?.name;
             }
 
+            if (property === 'accessoryType') {
+                return this._translateService.translate(`entities.accessory.options.accessoryType.${element.accessoryType}`);
+            }
+
             if (property === 'actType') {
-                return this._translateService.translate(`entities.accessory.options.actType.${element.actType}`);
+                return element.actType?.designation;
             }
 
             return element[property];
@@ -92,6 +97,9 @@ export class AccessoriesListComponent {
         this._unsubscribeAll.complete();
     }
 
+    openAddDialog(): void {
+        this._router.navigate(['/parameters/accessories/new']); 
+    }
     onView(item: Accessory): void {}
 
     onDelete(accessory: Accessory): void {}

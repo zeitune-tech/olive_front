@@ -82,16 +82,13 @@ export class UsersListComponent {
         this._unsubscribeAll.complete();
     }
 
-    onView(element: User): void {
-        // Implement view logic here, e.g., open a dialog with user details
+    onBlock(user: User) {
+        // Implement block user logic here
     }
-    onEdit(element: User): void {
-        // Implement edit logic here, e.g., open a dialog to edit user details
+    onUnblock(user: User) {
+        // Implement unblock user logic here
     }
-    onDelete(element: User): void {
-        // Implement delete logic here, e.g., open a confirmation dialog
-    }
-    
+
     get visibleColumns() {
         const columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
         columns.push('actions');

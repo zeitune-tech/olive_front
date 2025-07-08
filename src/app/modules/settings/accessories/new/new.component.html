@@ -28,7 +28,15 @@
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>{{ t('entities.accessory.fields.actType') }}</mat-label>
         <mat-select formControlName="actType">
-          <mat-option *ngFor="let type of actTypes" [value]="type.value">{{ t(type.label) }}</mat-option>
+          <mat-option *ngFor="let endorsement of endorsements" [value]="endorsement.id">{{ endorsement.designation}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Accessory Type -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>{{ t('entities.accessory.fields.accessoryType') }}</mat-label>
+        <mat-select formControlName="accessoryType">
+          <mat-option *ngFor="let type of accessoryTypes" [value]="type.value">{{ t(type.label) }}</mat-option>
         </mat-select>
       </mat-form-field>
 

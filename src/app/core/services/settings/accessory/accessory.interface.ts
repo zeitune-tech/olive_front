@@ -1,16 +1,11 @@
 import { Product } from "@core/services/settings/product/product.interface";
-
-export const  AccessoryType = {
-  NEW_BUSINESS: 'NEW_BUSINESS',
-  MODIFICATION: 'MODIFICATION',
-  SUSPENSION: 'SUSPENSION',
-  REINSTATEMENT: 'REINSTATEMENT'
-}
+import { Endorsment } from "../endorsement/endorsement.interface";
 
 export class Accessory {
   id: string;
   dateEffective: string;
-  actType: string;
+  actType: Endorsment;
+  accessoryType: string;
   accessoryAmount: number;
   product: Product;
   managementEntity: string;
@@ -19,6 +14,7 @@ export class Accessory {
     this.id = data.id || '';
     this.dateEffective = data.dateEffective || '';
     this.actType = data.actType || '';
+    this.accessoryType = data.accessoryType || '';
     this.accessoryAmount = data.accessoryAmount ?? 0;
     this.product = data.product || '';
     this.managementEntity = data.managementEntity || '';

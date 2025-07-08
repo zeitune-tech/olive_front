@@ -64,10 +64,14 @@ export class CompanyLevelOrganizationNewStepTwoComponent {
         this._pointOfSaleService.pointsOfSale$
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((data: PointOfSale[]) => {
-            this.data = data;
-            this.dataSource.data = data;
+            // Filtrer uniquement les points de vente non encore associés à une organisation
+            const filteredPointsOfSale = data.filter(p => !p.superiorEntity || p.superiorEntity === null);
+
+            this.data = filteredPointsOfSale;
+            this.dataSource.data = filteredPointsOfSale;
             this._changeDetectorRef.detectChanges();
         });
+
     }
 
     ngAfterViewInit() {

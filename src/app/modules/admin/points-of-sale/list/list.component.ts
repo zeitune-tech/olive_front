@@ -92,19 +92,39 @@ export class PointsOfSaleListComponent {
         });
 
     }
+    
     onDelete(element: PointOfSale): void {
-        this._dialog.open(ConfirmDeleteComponent, {
+        const dialogRef = this._dialog.open(ConfirmDeleteComponent, {
             width: '400px',
             data: {
-                message: 'Voulez-vous vraiment supprimer ce point de vente ?'
-            }
-        }).afterClosed().subscribe(result => {
-            if (result) {
-                // L'utilisateur a confirmé la suppression
+                title: 'form.actions.deleteTitle',
+                message: 'form.actions.deleteMessage',
+                itemName: element.name
             }
         });
 
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this._pointOfSaleService.delete(element.id).subscribe({
+                    next: () => {
+                        this._pointOfSaleService.getAll().subscribe();
+                    },
+                    error: () => {
+                        this._dialog.open(ConfirmDeleteComponent, {
+                            width: '400px',
+                            data: {
+                                title: 'form.errors.title',
+                                message: 'form.errors.message',
+                                itemName: element.name,
+                                isErrorOnly: true
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
+
     onView(element: PointOfSale): void {
         // Implement view logic here
     }

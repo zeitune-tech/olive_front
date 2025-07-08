@@ -71,27 +71,25 @@
 </div>
 
 
+<!-- <drawer 
+    *transloco="let t;"
+    #drawer
+    [opened]="drawerOpened "
+    [position]="'right'"
+    [mode]="'over'"
+    class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
+    (closed)="selectedItem = null">
+    <ng-template matDrawerHeader>
+        <h2 class="text-lg font-semibold">
+            {{ t('entities.market_level_organization.drawer.title') }}
+        </h2>
+    </ng-template>
 
-    <drawer 
-        *transloco="let t;"
-        #drawer
-        [opened]="drawerOpened "
-        [position]="'right'"
-        [mode]="'over'"
-        class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
-        (closed)="selectedItem = null"
-    >
-        <ng-template matDrawerHeader>
-            <h2 class="text-lg font-semibold">
-                {{ t('entities.market_level_organization.drawer.title') }}
-            </h2>
-        </ng-template>
+    <ng-template matDrawerContent>
+        <app-market-level-organization-details [data]="selectedItem" (close)="onClose()"></app-market-level-organization-details>
+    </ng-template>
 
-        <ng-template matDrawerContent>
-            <app-market-level-organization-details [data]="selectedItem" (close)="onClose()"></app-market-level-organization-details>
-        </ng-template>
-
-        <ng-template matDrawerFooter>
-            <button mat-button (click)="onClose()">{{ t('action_button.close') }}</button>
-        </ng-template>
-    </drawer>
+    <ng-template matDrawerFooter>
+        <button mat-button (click)="onClose()">{{ t('action_button.close') }}</button>
+    </ng-template>
+</drawer> -->

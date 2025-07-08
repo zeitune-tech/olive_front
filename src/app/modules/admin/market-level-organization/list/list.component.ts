@@ -10,6 +10,7 @@ import { MarketLevelOrganizationService } from "@core/services/administration/ma
 import { animations } from "@lhacksrt/animations";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
+import { MarketLevelOrganizationDetailsComponent } from "../details/details.component";
 
 @Component({
     selector: "app-entity-superior-list",
@@ -82,16 +83,20 @@ export class MarketLevelOrganizationListComponent {
         this._unsubscribeAll.complete();
     }
 
-    drawerOpened = false;
 
     onView(element: MarketLevelOrganization): void {
-        this.selectedItem = element;
-        this.drawerOpened = true;
+        this._dialog.open(MarketLevelOrganizationDetailsComponent, {
+            width: '800px',
+            data: element,
+            autoFocus: false,
+            disableClose: false,
+        }).afterClosed().subscribe(() => {
+            this.onClose();
+        })
     }
 
     onClose(): void {
         this.selectedItem = null;
-        this.drawerOpened = false;
     }
 
     get visibleColumns() {

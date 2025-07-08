@@ -97,8 +97,8 @@ export class CompanyLevelOrganizationListComponent {
         const dialogRef = this._dialog.open(ConfirmDeleteComponent, {
             width: '400px',
             data: {
-                title: 'entities.company_level_organization.delete.title',
-                message: 'entities.company_level_organization.delete.message',
+                title: 'form.actions.deleteTitle',
+                message: 'form.actions.deleteMessage',
                 itemName: element.name
             }
         });

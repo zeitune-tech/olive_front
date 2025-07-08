@@ -31,6 +31,7 @@ export class ContributorEditComponent implements OnInit {
             firstname: [data.firstname || '', Validators.required],
             lastname: [data.lastname || '', Validators.required],
             email: [data.email || '', [Validators.email]],
+            gsm: [data.gsm || ''],
             level: [data.level || ContributorLevel.COMPANY, Validators.required],
             pointOfSale: [data.managementEntity || null, this.validatePointOfSale()]
         });
