@@ -613,6 +613,7 @@
         "dateEffective": "Date d'effet",
         "actType": "Type d'acte",
         "accessoryAmount": "Montant de l'accessoire",
+        "accessoryType": "Type d'accessoire",
         "product": "Produit",
         "managementEntity": "Entité de gestion",
         "actions": "Actions"
@@ -624,27 +625,60 @@
           "SUSPENSION": "Suspension",
           "REINSTATEMENT": "Remise en vigueur"
 
+        },
+        "accessoryType": {
+          "RISQUES": "Risques",
+          "POLICE": "Police",
+          "undefined": "Non défini"
         }
       }
     },
-    "base_tax": {
-      "label": "Base de taxe",
-      "description": "Définition des bases de calcul des taxes appliquées aux produits ou garanties.",
+    "endorsment":{
+      "label": "Avenant",
+      "description": "Les diffénts avenants et leur fonctionnement.",
       "form": {
-        "title": "Base de calcul de taxe",
-        "subtitle": "Ajouter ou modifier une base de taxe"
+        "title": "Types d'avenants",
+        "subtitle": "Ajouter de nouveaux types d'avenants"
       },
       "table": {
-        "title": "Bases de taxe",
-        "description": "Liste des bases de calcul de taxe",
-        "empty_state": "Aucune base de taxe trouvée"
+        "title": "Types Avenants",
+        "description": "Liste des différents types d'avenants",
+        "empty_state": "Aucun type d'avenant trouvé"
+      },
+      "fields": {
+        "designation":"Désignation",
+        "nature": "Nature",
+        "actions": "Actions"
+      },
+      "options": {
+        "nature": {
+          "NEW_BUSINESS": "Affaire nouvelle",
+          "MODIFICATION": "Modification",
+          "SUSPENSION": "Suspension",
+          "REINSTATEMENT": "Remise en vigueur"
+
+        }
+      }
+    },
+    
+    "base_tax": {
+      "label": "Taxes sur primes",
+      "description": "Définition des taxes sur primes.",
+      "form": {
+        "title": "Taxes sur primes",
+        "subtitle": "Ajouter ou modifier une taxe sur primes"
+      },
+      "table": {
+        "title": "Taxes sur primes",
+        "description": "Liste des taxes sur primes",
+        "empty_state": "Aucune taxe sur prime trouvée"
       },
       "fields": {
         "dateEffective": "Date d'effet",
         "calculationBase": "Base de calcul",
         "isFlat": "Montant fixe",
         "rate": "Taux",
-        "fixedAmount": "Montant fixe",
+        "fixedAmount": "Montant",
         "tax": "Taxe",
         "coverage": "Garantie",
         "product": "Produit",
@@ -834,7 +868,7 @@
       "label": "Taxe",
       "description": "Définition des taxes applicables aux produits ou points de vente.",
       "form": {
-        "title": "Configuration des taxes",
+        "title": "Taxes",
         "subtitle": "Ajouter ou modifier une taxe"
       },
       "table": {
@@ -855,17 +889,12 @@
         "designation": "Saisir le nom ou l’objet de la taxe"
       },
       "options": {
-        "rgr": {
-          "RGR1": "1",
-          "RGR2": "2",
-          "RGR3": "3",
-          "RGR4": "4",
-          "RGR5": "5"
-        },
         "nature": {
-          "TAX": "Taxe",
+          "TAX_PRIME": "TVA/prime",
+          "TAX_ACCESSOIRE": "TVA/accessoire",
           "FGA": "FGA",
-          "OTHERS": "Autres"
+          "OTHER": "Autres",
+          "CARTE_BRUNE": "Carte Brune"
         }
       }
     },

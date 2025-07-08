@@ -24,19 +24,11 @@
         <input matInput formControlName="designation" />
       </mat-form-field>
 
-      <!-- RGR -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>{{ t('entities.tax.fields.rgr') }}</mat-label>
-        <mat-select formControlName="rgr">
-          <mat-option *ngFor="let option of rgrOptions" [value]="option.value">{{ option.label }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
       <!-- Nature -->
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>{{ t('entities.tax.fields.nature') }}</mat-label>
         <mat-select formControlName="nature">
-          <mat-option *ngFor="let option of natureOptions" [value]="option.value">{{ option.label }}</mat-option>
+          <mat-option *ngFor="let option of natureOptions" [value]="option.value">{{ t(option.label) }}</mat-option>
         </mat-select>
       </mat-form-field>
 

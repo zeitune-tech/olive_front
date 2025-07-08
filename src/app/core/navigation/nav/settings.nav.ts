@@ -115,7 +115,7 @@ export const defaultSettingsNavigation: NavigationItem[] = [
             title: 'sidebar.endorsement.types',
             type: 'basic',
             icon: 'fluent:document-bullet-list-24-regular',
-            link: '/parameters/types-avenants',
+            link: '/parameters/endorsements/list',
             // permission: PERMISSIONS.VIEW_TYPES_AVENANTS
             },
             {
@@ -164,26 +164,10 @@ export const defaultSettingsNavigation: NavigationItem[] = [
     {
         id: 'accessories',
         title: 'sidebar.accessories.title',
-        type: 'collapsable',
-        // permission: PERMISSIONS.VIEW_ACCESSORIES,
-        children: [
-            {
-                id: 'accessories.list',
-                title: 'sidebar.accessories.list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/accessories/list',
-                // permission: PERMISSIONS.VIEW_ACCESSORIES
-            },
-            {
-                id: 'accessories.new',
-                title: 'sidebar.accessories.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/accessories/new',
-                // permission: PERMISSIONS.CREATE_ACCESSORIES
-            }
-        ],
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/parameters/accessories/list',
+        // permission: PERMISSIONS.VIEW_ACCESSORIES
     },
     {
         id: 'taxes',
@@ -193,52 +177,19 @@ export const defaultSettingsNavigation: NavigationItem[] = [
         // permission: PERMISSIONS.VIEW_TAXES,
         children: [
             {
-            id: 'taxes.types',
-            title: 'sidebar.taxes.types.title',
-            type: 'collapsable',
-            icon: 'fluent:list-24-regular',
-            children: [
-                {
-                id: 'taxes.types.list',
-                title: 'sidebar.taxes.types.list',
+                id: 'taxes.types',
+                title: 'sidebar.taxes.types.title',
                 type: 'basic',
                 icon: 'fluent:list-24-regular',
                 link: '/parameters/taxes/list',
-                // permission: PERMISSIONS.VIEW_TAX_TYPES
-                },
-                {
-                id: 'taxes.types.new',
-                title: 'sidebar.taxes.types.new',
-                type: 'basic',
-                icon: 'fluent:add-24-regular',
-                link: '/parameters/taxes/new',
-                // permission: PERMISSIONS.CREATE_TAX_TYPES
-                }
-            ]
             },
             {
-            id: 'taxes.primes',
-            title: 'sidebar.taxes.primes.title',
-            type: 'collapsable',
-            icon: 'fluent:list-24-regular',
-            children: [
-                {
-                id: 'taxes.primes.list',
-                title: 'sidebar.taxes.primes.list',
+                id: 'taxes.primes',
+                title: 'sidebar.taxes.primes.title',
                 type: 'basic',
                 icon: 'fluent:list-24-regular',
                 link: '/parameters/taxes/base-taxes',
-                // permission: PERMISSIONS.VIEW_TAX_PRIMES
-                },
-                {
-                id: 'taxes.primes.new',
-                title: 'sidebar.taxes.primes.new',
-                type: 'basic',
-                icon: 'fluent:add-24-regular',
-                link: '/parameters/taxes/base-taxes-new',
-                // permission: PERMISSIONS.CREATE_TAX_PRIMES
-                }
-            ]
+
             },
             {
             id: 'taxes.accessoires',

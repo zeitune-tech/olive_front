@@ -4,6 +4,8 @@ import { Product } from '@core/services/settings/product/product.interface';
 import { ProductService } from '@core/services/settings/product/product.service';
 import { AccessoryService } from '@core/services/settings/accessory/accessory.service';
 import { LayoutService } from '../layout.service';
+import { Endorsment } from '@core/services/settings/endorsement/endorsement.interface';
+import { EndorsementService } from '@core/services/settings/endorsement/endorsement.service';
 
 @Component({
   selector: 'app-accessory-new',
@@ -19,14 +21,12 @@ export class AccessoryNewComponent implements OnInit {
    * 
    */
 
-
-  actTypes = [
-    { value: 'NEW_BUSINESS', label: 'entities.accessory.options.actType.NEW_BUSINESS' },
-    { value: 'MODIFICATION', label: 'entities.accessory.options.actType.MODIFICATION' },
-    { value: 'SUSPENSION', label: 'entities.accessory.options.actType.SUSPENSION' },
-    { value: 'REINSTATEMENT', label: 'entities.accessory.options.actType.REINSTATEMENT' }
+  accessoryTypes = [
+    { value: 'RISQUES', label: 'entities.accessory.options.accessoryType.RISQUES' },
+    { value: 'POLICE', label: 'entities.accessory.options.accessoryType.POLICE' },
   ];
 
+  endorsements: Endorsment[] = [];
   products: Product[] = [];
   editMode: boolean = false;
   accessoryId: string | null = null;
@@ -35,13 +35,15 @@ export class AccessoryNewComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _accessoryService: AccessoryService,
     private _productService: ProductService,
-    private _layoutService: LayoutService
+    private _layoutService: LayoutService,
+    private _endorsementService: EndorsementService
   ) {}
 
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
       dateEffective: [null, Validators.required],
       actType: [null, Validators.required],
+      accessoryType: [null, Validators.required],
       accessoryAmount: [null, Validators.required],
       productId: [null, Validators.required],
     });
@@ -51,13 +53,18 @@ export class AccessoryNewComponent implements OnInit {
       this.products = products;
     });
 
+    this._endorsementService.endorsements$.subscribe((endorsements: Endorsment[]) => {
+      this.endorsements = endorsements;
+    });
+
     this._layoutService.selectedAccessory$.subscribe((accessoire: any) => {
       if (accessoire) {
         this.editMode = true;
         this.accessoryId = accessoire.id;
         this.formGroup.patchValue({
           dateEffective: accessoire.dateEffective,
-          actType: accessoire.actType,
+          actType: accessoire.endorsement ? accessoire.endorsement.id : null,
+          accessoryType: accessoire.accessoryType,
           accessoryAmount: accessoire.accessoryAmount,
           productId: accessoire.product ? accessoire.product.id : null
         });

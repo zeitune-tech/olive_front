@@ -12,25 +12,24 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { LayoutService } from "../layout.service";
+import { Endorsment } from "@core/services/settings/endorsement/endorsement.interface";
+import { EndorsementService } from "@core/services/settings/endorsement/endorsement.service";
 
 @Component({
     selector: "app-closures-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class AccessoriesListComponent {
+export class EndorsementListComponent {
 
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions: TableOptions<Accessory> = {
+    tableOptions: TableOptions<Endorsment> = {
         title: '',
         columns: [
-            { label: 'entities.accessory.fields.dateEffective', property: 'dateEffective', visible: true, type: 'text' },
-            { label: 'entities.accessory.fields.actType', property: 'actType', visible: true, type: 'text' },
-            { label: 'entities.accessory.fields.product', property: 'product', visible: true, type: 'text' },
-            { label: 'entities.accessory.fields.accessoryType', property: 'accessoryType', visible: true, type: 'text' },
-            { label: 'entities.accessory.fields.accessoryAmount', property: 'accessoryAmount', visible: true, type: 'text' }
+            { label: 'entities.endorsment.fields.designation', property: 'designation', visible: true, type: 'text' },
+            { label: 'entities.endorsment.fields.nature', property: 'nature', visible: true, type: 'text' },
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -40,44 +39,36 @@ export class AccessoriesListComponent {
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [],
-        renderItem: (element: Accessory, property: keyof Accessory) => {
+        renderItem: (element: Endorsment, property: keyof Endorsment) => {
 
-            if (property === 'product') {
-                return element.product?.name;
-            }
-
-            if (property === 'accessoryType') {
-                return this._translateService.translate(`entities.accessory.options.accessoryType.${element.accessoryType}`);
-            }
-
-            if (property === 'actType') {
-                return element.actType?.designation;
+            if (property === 'nature') {
+                return this._translateService.translate(`entities.endorsment.options.nature.${element.nature}`);
             }
 
             return element[property];
         },
     };
-    data: Accessory[] = [];
+    data: Endorsment[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Accessory> = new MatTableDataSource();
-    selection = new SelectionModel<Accessory>(true, []);
+    dataSource: MatTableDataSource<Endorsment> = new MatTableDataSource();
+    selection = new SelectionModel<Endorsment>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _accessoryService: AccessoryService,
         private _translateService: TranslocoService,
         private _router: Router,
+        private _endorsmentService: EndorsementService,
         private _layoutService: LayoutService
     ) { }
 
     ngOnInit(): void {
-        this._accessoryService.accessories$
+        this._endorsmentService.endorsements$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Accessory[]) => {
+            .subscribe((data: Endorsment[]) => {
                 this.data = data;
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
@@ -98,15 +89,15 @@ export class AccessoriesListComponent {
     }
 
     openAddDialog(): void {
-        this._router.navigate(['/parameters/accessories/new']); 
+        this._router.navigate(['/parameters/endorsements/new']); 
     }
-    onView(item: Accessory): void {}
+    onView(item: Endorsment): void {}
 
-    onDelete(accessory: Accessory): void {}
+    onDelete(endorsement: Endorsment): void {}
 
-    onEdit(accessory: Accessory): void {
-        this._layoutService.setSelectedAccessory(accessory);
-        this._router.navigate(['/parameters/accessories/new']); // ou route vers le même formulaire mais dans un mode "édition"
+    onEdit(endorsement: Endorsment): void {
+        this._layoutService.setSelectedEndorsement(endorsement);
+        this._router.navigate(['/parameters/endorsements/new']); // ou route vers le même formulaire mais dans un mode "édition"
     }
 
     get visibleColumns() {
@@ -115,7 +106,7 @@ export class AccessoriesListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Accessory>) {
+    trackByProperty(index: number, column: TableColumn<Endorsment>) {
         return column.property;
     }
 }

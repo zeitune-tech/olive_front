@@ -6,6 +6,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { Router } from "@angular/router";
 import { BaseTax } from "@core/services/settings/base-tax/base-tax.interface";
 import { BaseTaxService } from "@core/services/settings/base-tax/base-tax.service";
 import { animations } from "@lhacksrt/animations";
@@ -26,13 +27,13 @@ export class BaseTaxesListComponent {
         title: '',
         columns: [
             { label: 'entities.base_tax.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
-            { label: 'entities.base_tax.fields.calculationBase', property: 'calculationBase', type: 'text', visible: true },
-            { label: 'entities.base_tax.fields.rate', property: 'rate', type: 'text', visible: true },
-            { label: 'entities.base_tax.fields.fixedAmount', property: 'fixedAmount', type: 'text', visible: true },
-            { label: 'entities.base_tax.fields.tax', property: 'tax', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.product', property: 'product', type: 'text', visible: true },
             { label: 'entities.base_tax.fields.coverage', property: 'coverage', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.calculationBase', property: 'calculationBase', type: 'text', visible: false },
+            { label: 'entities.base_tax.fields.tax', property: 'tax', type: 'text', visible: true },
             { label: 'entities.base_tax.fields.isFlat', property: 'isFlat', type: 'text', visible: true },
-            { label: 'entities.base_tax.fields.product', property: 'product', type: 'text', visible: true }
+            { label: 'entities.base_tax.fields.fixedAmount', property: 'fixedAmount', type: 'text', visible: true },
+            { label: 'entities.base_tax.fields.rate', property: 'rate', type: 'text', visible: true }
         ],
         imageOptions: {
             label: 'base_taxes.columns.logo',
@@ -56,6 +57,13 @@ export class BaseTaxesListComponent {
                 return element.product?.name
             }
 
+            if (property === 'rate') {
+                return element.isFlat ? '-' : element.rate;
+            }
+
+            if (property === 'fixedAmount') {
+                return element.isFlat ? element.fixedAmount : '-';
+            }
           
             return element[property];
         },
@@ -73,7 +81,8 @@ export class BaseTaxesListComponent {
         private _changeDetectorRef: ChangeDetectorRef,
         private _baseTaxService: BaseTaxService,
         private _dialog: MatDialog,
-        private _snackBar: MatSnackBar
+        private _snackBar: MatSnackBar,
+        private _router: Router
     ) { }
 
     ngOnInit(): void {
@@ -108,6 +117,9 @@ export class BaseTaxesListComponent {
         });
     }
 
+    openAddDialog(): void {
+        this._router.navigate(['parameters/taxes/base-taxes-new']);
+    }
     onEdit(element: BaseTax): void {
         // Implement edit functionality here
     }
