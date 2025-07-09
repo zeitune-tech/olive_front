@@ -9,17 +9,17 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 import { PermissionsService } from "@core/permissions/permissions.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
-import { Product } from "@core/services/settings/product/product.interface";
-import { ProductService } from "@core/services/settings/product/product.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
 import {AccessoriesFormComponent} from "../form/form.component";
+import { TaxAccessory } from "@core/services/settings/tax-accessory/tax-accessory.interface";
+import { TaxAccessoryService } from "@core/services/settings/tax-accessory/tax-accessory.service";
 
 @Component({
-    selector: "app-products-list",
+    selector: "app-tax-accessories-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
@@ -28,26 +28,26 @@ export class AccessoriesListComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<TaxAccessory>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<TaxAccessory>([]); // Ajoute les données réelles ici
 
         constructor(
-        private _productService: ProductService,
+        private _taxAccessoryService: TaxAccessoryService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _tanslateService: TranslocoService,
         private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._productService.products$
+        this._taxAccessoryService.taxAccessories$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
+            .subscribe((data: TaxAccessory[]) => {
                 this.data = data;
                 this.dataSource.data = data;
             });
@@ -60,12 +60,12 @@ export class AccessoriesListComponent implements OnInit {
     }
 
 
-    data: Product[] = [];
+    data: TaxAccessory[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<TaxAccessory>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
@@ -75,16 +75,70 @@ export class AccessoriesListComponent implements OnInit {
 
     ngOnInit(): void {
         // Initialisation de la configuration de la table
+    
         this.tableOptions = {
             title: '',
             columns: [
-                       ],
+                {
+                    property: 'name',
+                    type: 'text',
+                    label: 'Nom',
+                    visible: true,
+                },
+                {
+                    property: 'dateEffective',
+                    type: 'text',
+                    label: 'Date d’effet',
+                    visible: true,
+                },
+                {
+                    property: 'calculationBase',
+                    type: 'text',
+                    label: 'Base de calcul',
+                    visible: true,
+                },
+                {
+                    property: 'isFlatRate',
+                    type: 'text',
+                    label: 'Taux forfaitaire',
+                    visible: true,
+                },
+                {
+                    property: 'flatRateAmount',
+                    type: 'text',
+                    label: 'Montant forfaitaire',
+                    visible: true,
+                },
+                {
+                    property: 'rate',
+                    type: 'text',
+                    label: 'Taux (%)',
+                    visible: true,
+                },
+                {
+                    property: 'taxType',
+                    type: 'text',
+                    label: 'Type de taxe',
+                    visible: true,
+                },
+                {
+                    property: 'product',
+                    type: 'text',
+                    label: 'Produit associé',
+                    visible: true,
+                },
+            ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [],
-            renderItem: () => {
-
-            },
+            renderItem: (element: TaxAccessory, property: keyof TaxAccessory) => {
+                if (property === 'taxType') {
+                    return element.taxType.name; // Affiche le nom du type de taxe
+                } else if (property === 'product') {
+                    return element.product.name; // Affiche le nom du produit associé
+                }
+                return element[property]; // Pour les autres propriétés, retourne la valeur par défaut
+            }
         };
 
         // Construction des lignes d’en-tête
@@ -131,37 +185,37 @@ export class AccessoriesListComponent implements OnInit {
     }
 
     /**
-        * Edit Product Product
+        * Edit TaxAccessory TaxAccessory
         */
-    onEdit(product: Product): void {
+    onEdit(TaxAccessory: TaxAccessory): void {
 
     }
 
 
 
-    onView(product: Product): void {
+    onView(TaxAccessory: TaxAccessory): void {
     }
 
-    onButtonClick(product: Product, column: string): void {
-        if (column === 'productionRegistry') {
-            alert('Production Registry button clicked for product: ' + product.name);
+    onButtonClick(TaxAccessory: TaxAccessory, column: string): void {
+        if (column === 'TaxAccessoryionRegistry') {
+            alert('TaxAccessoryion Registry button clicked for TaxAccessory: ' + TaxAccessory.name);
         }
     }
 
-    hasPermission(product: Product): boolean {
-        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm) {
-            return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-            return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-            return true;
-        } else
-            return false;
-    }
+    // hasPermission(TaxAccessory: TaxAccessory): boolean {
+    //     let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_TAX_ACCESSORIES);
+    //     if (!hasPerm) {
+    //         return false;
+    //     } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
+    //         return true;
+    //     } else if (this.managementEntity.type === "COMPANY" && TaxAccessory.visibility === "PRIVATE") {
+    //         return true;
+    //     } else
+    //         return false;
+    // }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<TaxAccessory>) {
         return column.property;
     }
 }

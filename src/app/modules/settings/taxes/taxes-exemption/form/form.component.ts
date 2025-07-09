@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TaxExemption } from '@core/services/settings/tax-exemption/tax-exemption.interface';
+import { TaxExemptionService } from '@core/services/settings/tax-exemption/tax-exemption.service';
 
 @Component({
     selector: 'app-coverage-reference-edit',
@@ -21,9 +23,11 @@ export class ExemptionFormComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
+        @Inject(MAT_DIALOG_DATA) public data: TaxExemption,
         private dialogRef: MatDialogRef<ExemptionFormComponent>,
         private translocoService: TranslocoService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private _taxExemptionService: TaxExemptionService,
     ) {}
 
     ngOnInit(): void {
@@ -38,7 +42,6 @@ export class ExemptionFormComponent implements OnInit {
         const updated = {
             ...this.formGroup.value
         };
-
 
     }
 

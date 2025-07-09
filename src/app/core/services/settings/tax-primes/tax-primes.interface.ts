@@ -1,7 +1,8 @@
+import { Coverage } from "../coverage/coverage.interface";
 import { Product } from "../product/product.interface";
 import { TaxType } from "../tax-type/tax-type.interface";
 
-export interface TaxAccessory {
+export interface TaxPrime {
   id: string;
   name: string;
   dateEffective: string; 
@@ -10,5 +11,6 @@ export interface TaxAccessory {
   flatRateAmount: number | null;
   rate: number | null;
   taxType: TaxType;
+  coverage: Coverage;
   product: Product;
 }

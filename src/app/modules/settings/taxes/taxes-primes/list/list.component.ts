@@ -9,16 +9,16 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 import { PermissionsService } from "@core/permissions/permissions.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
-import { Product } from "@core/services/settings/product/product.interface";
-import { ProductService } from "@core/services/settings/product/product.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
+import { TaxPrime } from "@core/services/settings/tax-primes/tax-primes.interface";
+import { TaxPrimeService } from "@core/services/settings/tax-primes/tax-primes.service";
 
 @Component({
-    selector: "app-products-list",
+    selector: "app-TaxPrimes-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
@@ -27,26 +27,26 @@ export class PrimesListComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<TaxPrime>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<TaxPrime>([]); // Ajoute les données réelles ici
 
         constructor(
-        private _productService: ProductService,
+        private _taxPrimeService: TaxPrimeService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _tanslateService: TranslocoService,
         private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._productService.products$
+        this._taxPrimeService.taxPrimes$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
+            .subscribe((data: TaxPrime[]) => {
                 this.data = data;
                 this.dataSource.data = data;
             });
@@ -59,12 +59,12 @@ export class PrimesListComponent implements OnInit {
     }
 
 
-    data: Product[] = [];
+    data: TaxPrime[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<TaxPrime>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
@@ -74,28 +74,88 @@ export class PrimesListComponent implements OnInit {
 
     ngOnInit(): void {
         // Initialisation de la configuration de la table
+        // id: string;
+        //   name: string;
+        //   dateEffective: string; 
+        //   calculationBase: string;
+        //   isFlatRate: boolean;
+        //   flatRateAmount: number | null;
+        //   rate: number | null;
+        //   taxType: TaxType;
+        //   coverage: Coverage;
+        //   product: Product;
         this.tableOptions = {
             title: '',
             columns: [
-                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
-                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true, cssClasses: ['min-w-32']},
                 {
-                    label: 'entities.product.table.custom_fields.risk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
-                        { label: 'entities.product.table.custom_fields.min', property: 'minRisk', type: 'text', visible: true },
-                        { label: 'entities.product.table.custom_fields.max', property: 'maxRisk', type: 'text', visible: true },
-                    ]
+                    property: 'name',
+                    type: 'text',
+                    label: 'Nom',
+                    visible: true,
                 },
-                { label: 'entities.product.table.custom_fields.minCoverage', property: 'minimumGuaranteeNumber', type: 'text', visible: true, cssClasses: ['text-sm'] },
-                { label: 'entities.product.table.custom_fields.fleet', property: 'fleet', type: 'text', visible: true },
-                { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
+                {
+                    property: 'dateEffective',
+                    type: 'text',
+                    label: 'Date d’effet',
+                    visible: true,
+                },
+                {
+                    property: 'calculationBase',
+                    type: 'text',
+                    label: 'Base de calcul',
+                    visible: true,
+                },
+                {
+                    property: 'isFlatRate',
+                    type: 'text',
+                    label: 'Forfaitaire',
+                    visible: true,
+                },
+                {
+                    property: 'flatRateAmount',
+                    type: 'text',
+                    label: 'Montant forfaitaire',
+                    visible: true,
+                },
+                {
+                    property: 'rate',
+                    type: 'text',
+                    label: 'Taux (%)',
+                    visible: true,
+                },
+                {
+                    property: 'taxType',
+                    type: 'text',
+                    label: 'Type de taxe',
+                    visible: true,
+                },
+                {
+                    property: 'coverage',
+                    type: 'text',
+                    label: 'Couverture',
+                    visible: true,
+                },
+                {
+                    property: 'product',
+                    type: 'text',
+                    label: 'Produit associé',
+                    visible: true,
+                },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [],
-            renderItem: () => {
-
-            },
+            renderItem: (element: TaxPrime, property: keyof TaxPrime) => {
+                if (property === 'taxType') {
+                    return element.taxType.name; // Affiche le nom du type de taxe
+                } else if (property === 'coverage') {
+                    return element.coverage.nature; // Affiche le nom de la couverture
+                } else if (property === 'product') {
+                    return element.product.name; // Affiche le nom du produit associé
+                    // // Ajoutez d'autres propriétés si nécessaire
+                }
+                return element[property]; // Pour les autres propriétés, retourne la valeur par défaut
+            }
         };
 
         // Construction des lignes d’en-tête
@@ -142,37 +202,40 @@ export class PrimesListComponent implements OnInit {
     }
 
     /**
-        * Edit Product Product
+        * Edit TaxPrime TaxPrime
         */
-    onEdit(product: Product): void {
+    onEdit(TaxPrime: TaxPrime): void {
 
     }
 
 
-
-    onView(product: Product): void {
+    onView(TaxPrime: TaxPrime): void {
     }
 
-    onButtonClick(product: Product, column: string): void {
-        if (column === 'productionRegistry') {
-            alert('Production Registry button clicked for product: ' + product.name);
+    onButtonClick(TaxPrime: TaxPrime, column: string): void {
+        if (column === 'TaxPrimeionRegistry') {
+            alert('TaxPrimeion Registry button clicked for TaxPrime: ' + TaxPrime.name);
         }
     }
 
-    hasPermission(product: Product): boolean {
-        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm) {
-            return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-            return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-            return true;
-        } else
-            return false;
-    }
+    // hasPermission(TaxPrime: TaxPrime): boolean {
+    //     let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_TaxPrimeS);
+    //     if (!hasPerm) {
+    //         return false;
+    //     } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
+    //         return true;
+    //     } else if (this.managementEntity.type === "COMPANY" && TaxPrime.visibility === "PRIVATE") {
+    //         return true;
+    //     } else
+    //         return false;
+    // }
+
+    // hasPermission(TaxPrime: TaxPrime): boolean {
+    //     return this._permissionService.hasPermission(PERMISSIONS.UPDATE_TAX_PRIMES);
+    // }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<TaxPrime>) {
         return column.property;
     }
 }

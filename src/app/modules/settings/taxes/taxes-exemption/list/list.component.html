@@ -4,10 +4,12 @@
   <!-- ----------------------------------------------------- -->
   <div class="flex flex-col mb-6">
     <h1 class="text-2xl md:text-4xl font-bold py-4">
-      {{ t('entities.product.table.title') }}
+      <!-- {{ t('entities.product.table.title') }} -->
+      {{ "Liste des exonérations de taxes"  }}
     </h1>
     <p class="text-sm md:text-base text-gray-600">
-      {{ t('entities.product.table.description') }}
+      <!-- {{ t('entities.product.table.description') }} -->
+        Liste des exonérations de taxes appliquées aux produits.
     </p>
   </div>
 
@@ -53,13 +55,13 @@
           </th>
 
           <!-- Cellule de données -->
-          <td mat-cell *matCellDef="let row" class="text-center">
+          <!-- <td mat-cell *matCellDef="let row" class="text-center">
             <button mat-button color="primary" (click)="onButtonClick(row, column.property)"
                     [disabled]="!hasPermission(row)"
                     class="w-full h-full">
               {{ tableOptions.renderItem(row, column.property) }}
             </button>
-          </td>
+          </td> -->
         </ng-container>
 
         <!-- ---------- Colonnes « collapse » (colspan) ------------ -->
@@ -111,25 +113,25 @@
         <!-- Cellule de données -->
         <td mat-cell *matCellDef="let element" class="border-l">
           <div class="w-full h-full flex items-center justify-around gap-4">
-            @if (hasPermission(element)) {
+            <!-- @if (hasPermission(element)) { -->
               <!-- <button mat-icon-button color="accent" (click)="onView(element)" matTooltip="{{ t('action_button.view') }}">
                   <mat-icon>visibility</mat-icon> 
               </button> -->
 
-              <button mat-icon-button color="accent" (click)="onEdit(element)" matTooltip="{{ t('action_button.edit') }}">
+              <!-- <button mat-icon-button color="accent" (click)="onEdit(element)" matTooltip="{{ t('action_button.edit') }}">
                   <mat-icon>edit</mat-icon> 
-              </button>
+              </button> -->
 
-              @if (element.visibility === "PUBLIC") {
+              <!-- @if (element.visibility === "PUBLIC") {
                   <button mat-icon-button color="accent" (click)="onShare(element)" matTooltip="{{ t('action_button.share') }}">
                       <mat-icon>share</mat-icon> 
                   </button>
-              }
-            } @else {
+              } -->
+            <!-- } @else {
               <button mat-icon-button color="accent" disabled matTooltip="{{ t('action_button.no_permission') }}">
                   <mat-icon>lock</mat-icon> 
               </button>
-            }
+            } -->
           </div>
         </td>
       </ng-container>

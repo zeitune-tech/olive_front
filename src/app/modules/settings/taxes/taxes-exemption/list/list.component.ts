@@ -9,16 +9,16 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 import { PermissionsService } from "@core/permissions/permissions.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
-import { Product } from "@core/services/settings/product/product.interface";
-import { ProductService } from "@core/services/settings/product/product.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
+import { TaxExemption } from "@core/services/settings/tax-exemption/tax-exemption.interface";
+import { TaxExemptionService } from "@core/services/settings/tax-exemption/tax-exemption.service";
 
 @Component({
-    selector: "app-products-list",
+    selector: "app-TaxExemptions-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
@@ -27,26 +27,26 @@ export class ExemptionListComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<TaxExemption>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<TaxExemption>([]); // Ajoute les données réelles ici
 
         constructor(
-        private _productService: ProductService,
+        private _taxExemptionService: TaxExemptionService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _tanslateService: TranslocoService,
         private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._productService.products$
+        this._taxExemptionService.taxExemptions$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
+            .subscribe((data: TaxExemption[]) => {
                 this.data = data;
                 this.dataSource.data = data;
             });
@@ -59,12 +59,12 @@ export class ExemptionListComponent implements OnInit {
     }
 
 
-    data: Product[] = [];
+    data: TaxExemption[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<TaxExemption>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
@@ -77,25 +77,18 @@ export class ExemptionListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
-                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                {
-                    label: 'entities.product.table.custom_fields.risk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
-                        { label: 'entities.product.table.custom_fields.min', property: 'minRisk', type: 'text', visible: true },
-                        { label: 'entities.product.table.custom_fields.max', property: 'maxRisk', type: 'text', visible: true },
-                    ]
-                },
-                { label: 'entities.product.table.custom_fields.minCoverage', property: 'minimumGuaranteeNumber', type: 'text', visible: true, cssClasses: ['text-sm'] },
-                { label: 'entities.product.table.custom_fields.fleet', property: 'fleet', type: 'text', visible: true },
-                { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
+                { label: 'entities.tax_exemption.fields.name', property: 'name', visible: true, type: 'text' },
+               { label: 'entities.tax_exemption.fields.taxes', property: 'taxes', visible: true, type: 'text' },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [],
-            renderItem: () => {
-
-            },
+            renderItem: (element: TaxExemption, property: keyof TaxExemption) => {
+                if (property === 'taxes') {
+                    return element.taxes.map(t => t.designation + t.nature).join(', ');
+                }
+                return element[property];
+            }
         };
 
         // Construction des lignes d’en-tête
@@ -142,40 +135,40 @@ export class ExemptionListComponent implements OnInit {
     }
 
     /**
-        * Edit Product Product
+        * Edit TaxExemption TaxExemption
         */
-    onEdit(product: Product): void {
+    onEdit(TaxExemption: TaxExemption): void {
 
     }
 
-    onShare(product: Product): void {
+    onShare(TaxExemption: TaxExemption): void {
 
     }
 
-    onView(product: Product): void {
-        //this._router.navigate(['/administration/products/list']);
+    onView(TaxExemption: TaxExemption): void {
+        //this._router.navigate(['/administration/TaxExemptions/list']);
     }
 
-    onButtonClick(product: Product, column: string): void {
-        if (column === 'productionRegistry') {
-            alert('Production Registry button clicked for product: ' + product.name);
+    onButtonClick(TaxExemption: TaxExemption, column: string): void {
+        if (column === 'TaxExemptionionRegistry') {
+            alert('TaxExemptionion Registry button clicked for TaxExemption: ' + TaxExemption.name);
         }
     }
 
-    hasPermission(product: Product): boolean {
-        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm) {
-            return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-            return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-            return true;
-        } else
-            return false;
-    }
+    // hasPermission(TaxExemption: TaxExemption): boolean {
+    //     let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDA);
+    //     if (!hasPerm) {
+    //         return false;
+    //     } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
+    //         return true;
+    //     } else if (this.managementEntity.type === "COMPANY" && TaxExemption.visibility === "PRIVATE") {
+    //         return true;
+    //     } else
+    //         return false;
+    // }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<TaxExemption>) {
         return column.property;
     }
 }
