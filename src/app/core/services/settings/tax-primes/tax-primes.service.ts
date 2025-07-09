@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Observable, ReplaySubject, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { TaxAccessory } from './tax-accessory.interface';
+import { TaxAccessory } from './tax-primes.interface';
 import { RequestMetadata } from '../../common.interface';
 
 @Injectable({ providedIn: 'root' })
