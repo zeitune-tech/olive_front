@@ -16,6 +16,10 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
+import { CommissionAccessoryFormComponent } from "../form/form.component";
+import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import { CommissionPointOfSale } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.interface";
+import { CommissionPointOfSaleService } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.service";
 
 @Component({
     selector: "app-products-list",
@@ -27,26 +31,25 @@ export class CommissionAccessoryListComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<CommissionPointOfSale>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<CommissionPointOfSale>([]); // Ajoute les données réelles ici
 
-        constructor(
+    constructor(
+        private _commissionPointOfSale: CommissionPointOfSaleService,
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
-        private _tanslateService: TranslocoService,
-        private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._productService.products$
+        this._commissionPointOfSale.commissionsPointOfSale$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
+            .subscribe((data: CommissionPointOfSale[]) => {
                 this.data = data;
                 this.dataSource.data = data;
             });
@@ -58,13 +61,13 @@ export class CommissionAccessoryListComponent implements OnInit {
             });
     }
 
-    
-    data: Product[] = [];
+
+    data: CommissionPointOfSale[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<CommissionPointOfSale>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
@@ -77,13 +80,17 @@ export class CommissionAccessoryListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                
+                { property: "typePointOfSale", type: 'text', label: 'entities.commissionPointOfSale.typePointOfSale', visible: true },
+                { property: "pointOfSale", type: 'text', label: 'entities.commissionPointOfSale.pointOfSale', visible: true },
+                { property: "contributionRate", type: 'text', label: 'entities.commissionPointOfSale.commissionRate', visible: true },
+                { property: "managementRate", type: 'text', label: 'entities.commissionPointOfSale.managementRate', visible: true },
+                { property: "dateEffective", type: 'text', label: 'entities.commissionPointOfSale.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [],
-            renderItem: (element: Product, property: keyof Product) => {
-            
+            renderItem: (element: CommissionPointOfSale, property: keyof CommissionPointOfSale) => {
+
 
                 return element[property] ?? '--';
             },
@@ -108,7 +115,7 @@ export class CommissionAccessoryListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -132,14 +139,58 @@ export class CommissionAccessoryListComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
+
+    products: Product[] = []
+    searchCtrl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = new Product({});
+
+    openSelection() {
+        this._dialog.open(SelectDialogComponent, {
+            width: '700px',
+            data: {
+                items: this.products,
+            }
+        }).afterClosed().subscribe((product: Product) => {
+            if (product) {
+                this.selectedProduct = product;
+                // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                this.dataSource.paginator = this.paginator;
+                // this._changeDetectorRef.detectChanges();
+            }
+        })
+    }
+
+    onAdd(): void {
+        this._dialog.open(CommissionAccessoryFormComponent, {
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        });
+    }
+
+    onDelete(product: Product): void {
+        this._dialog.open(CommissionAccessoryFormComponent, {
+            data: product,
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        });
+    }
+
     /**
         * Edit Product Product
         */
     onEdit(product: Product): void {
-        
+
     }
 
-    
+
 
     onView(product: Product): void {
         //this._router.navigate(['/administration/products/list']);
@@ -164,7 +215,7 @@ export class CommissionAccessoryListComponent implements OnInit {
     }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<CommissionPointOfSale>) {
         return column.property;
     }
 }

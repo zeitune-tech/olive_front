@@ -17,7 +17,6 @@ import { TaxService } from '@core/services/settings/tax/tax.service';
 import { TaxRegimeService } from '@core/services/settings/tax-regime/tax-regime.service';
 import { CommissionService } from '@core/services/settings/commission/commission.service';
 import { CommissionContributorService } from './../../core/services/settings/commission-contributor/commission-contributor.service';
-import { CommissionTaxService } from '@core/services/settings/commission-tax/commission-tax.service';
 import { InsuredService } from '@core/services/insured/insured/insured.service';
 import { VehicleService } from '@core/services/insured/vehicle/vehicle.service';
 

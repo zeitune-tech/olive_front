@@ -1,17 +1,15 @@
-import { Contributor } from "@core/services/administration/contributor/contributor.interface";
+import { PointOfSale } from "@core/services/administration/point-of-sale/point-of-sale.interface";
 import { Coverage } from "../coverage/coverage.interface";
 import { Product } from "../product/product.interface";
 
-export interface CommissionContributor {
+export interface CommissionPointOfSale {
   id: string; // UUID sous forme de string
   dateEffective: string;
-  commissionBase: string;
   calculationBase: string;
   managementRate: number | null;
   contributionRate: number | null;
-  contributorId: string;
+  typePointOfSale: string;
   product: Product;
   coverage: Coverage;
-  contributor: Contributor;
-  contributorType: string;
+  pointOfSale: PointOfSale;
 }
