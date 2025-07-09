@@ -23,14 +23,14 @@ import {DimensionStampListComponent} from "./dimension-stamp/list/list.component
 import {GraduatedStampFormComponent} from "./graduated-stamp/form/form.component";
 import {GraduatedStampListComponent} from "./graduated-stamp/list/list.component";
 // import {AccessoriesFormComponent} from "./taxes-accessories/form/form.component";
-import {ExemptionFormComponent} from "./taxes-exemption/form/form.component";
-import {PrimesFormComponent} from "./taxes-primes/form/form.component";
-import {TypeFormComponent} from "./taxes-type/form/form.component";
 import {ExemptionListComponent} from "./taxes-exemption/list/list.component";
 import {PrimesListComponent} from "./taxes-primes/list/list.component";
 import {TypeListComponent} from "./taxes-type/list/list.component";
 import {AccessoriesFormComponent} from "./taxes-accessories/form/form.component";
 import {AccessoriesListComponent} from "./taxes-accessories/list/list.component";
+import { TypeFormComponent } from "./taxes-type/form/form.component";
+import { PrimesFormComponent } from "./taxes-primes/form/form.component";
+import { ExemptionFormComponent } from "./taxes-exemption/form/form.component";
 
 @NgModule({
     declarations: [
@@ -40,12 +40,12 @@ import {AccessoriesListComponent} from "./taxes-accessories/list/list.component"
       GraduatedStampListComponent,
       AccessoriesFormComponent,
       AccessoriesListComponent,
-      ExemptionFormComponent,
       ExemptionListComponent,
-      PrimesFormComponent,
+      ExemptionFormComponent,
       PrimesListComponent,
-      TypeFormComponent,
-      TypeListComponent
+      PrimesFormComponent,
+      TypeListComponent,
+      TypeFormComponent
     ],
     imports: [
         RouterModule.forChild(routes),

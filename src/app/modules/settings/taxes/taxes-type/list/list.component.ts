@@ -68,15 +68,16 @@ export class TypeListComponent {
                 {
                     property: 'name',
                     type: 'text',
-                    label: 'Nom',
+                    label:  'entities.TaxType.columns.name',
                     visible: true,
                 },
                 {
                     property: 'nature',
                     type: 'text',
-                    label: 'Nature',
+                    label: 'entities.TaxType.columns.nature',
                     visible: true,
-                }
+                },
+               
         ],
         imageOptions: {
             label: 'TaxType.columns.logo',
@@ -88,7 +89,7 @@ export class TypeListComponent {
         actions: [],
         renderItem: (element: TaxType, property: keyof TaxType) => {
             if (property === 'nature') {
-                return this._translateService.translate('entities.tax_type.nature.' + element.nature);
+                return 'entities.tax_type.nature' + element.nature;
             }
             return element[property];
         },

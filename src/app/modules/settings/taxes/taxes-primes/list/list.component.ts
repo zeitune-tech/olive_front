@@ -1,168 +1,156 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, ViewChild } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { PERMISSIONS } from "@core/permissions/permissions.data";
-import { PermissionsService } from "@core/permissions/permissions.service";
-import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
-import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
+import { Product } from "@core/services/settings/product/product.interface";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
+import { SelectProductComponent } from "../../../coverages/select-product/select-product.component";
 import { TaxPrime } from "@core/services/settings/tax-primes/tax-primes.interface";
 import { TaxPrimeService } from "@core/services/settings/tax-primes/tax-primes.service";
+import { PrimesFormComponent } from "../form/form.component";
 
 @Component({
     selector: "app-TaxPrimes-list",
     templateUrl: "./list.component.html",
+    styles: `
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+            @apply bg-default;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            @apply bg-primary-500; 
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            @apply bg-primary;
+        }
+    `,
     animations: animations
 })
-export class PrimesListComponent implements OnInit {
-
-
+export class PrimesListComponent {
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<TaxPrime>;
+   
 
-    // Pour les mat-header-row
-    groupHeader: string[] = [];
-    subHeader: string[] = [];
-    visibleColumns: string[] = [];
+    tableOptions: TableOptions<TaxPrime> = {
+        title: '',
+        columns: [
+        //    { property: 'name', type: 'text', label: 'Nom', visible: true },
+        //    { property: 'dateEffective', type: 'text', label: 'Date d’effet', visible: true },
+        //    { property: 'calculationBase', type: 'text', label: 'Base de calcul', visible: true },
+        //    { property: 'isFlatRate', type: 'text', label: 'Taux forfaitaire', visible: true },
+        //    { property: 'flatRateAmount', type: 'text', label: 'Montant forfaitaire', visible: true },
+        //    { property: 'rate', type: 'text', label: 'Taux (%)', visible: true },    
+           
+        //    { property: 'taxType', type: 'text', label: 'Type de taxe', visible: true },
+        //    { property: 'product', type: 'text', label: 'Produit associé', visible: true },
 
-    dataSource = new MatTableDataSource<TaxPrime>([]); // Ajoute les données réelles ici
-
-        constructor(
-        private _taxPrimeService: TaxPrimeService,
-        private _permissionService: PermissionsService,
-        private _managementEntityService: ManagementEntityService,
-        private _tanslateService: TranslocoService,
-        private _router: Router,
-        private _dialog: MatDialog
-    ) {
-        this._taxPrimeService.taxPrimes$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: TaxPrime[]) => {
-                this.data = data;
-                this.dataSource.data = data;
-            });
-
-        this._managementEntityService.entity$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: ManagementEntity) => {
-                this.managementEntity = data;
-            });
-    }
-
-
+            { property: 'name', type: 'text', label: 'entities.TaxPrime.columns.name', visible: true },
+            { property: 'dateEffective', type: 'text', label: 'entities.TaxPrime.columns.date_effective', visible: true },
+            { property: 'calculationBase', type: 'text', label: 'entities.TaxPrime.columns.calculation_base', visible: true },
+            { property: 'isFlatRate', type: 'text', label: 'entities.TaxPrime.columns.is_flat_rate', visible: true },
+            { property: 'flatRateAmount', type: 'text', label: 'entities.TaxPrime.columns.flat_rate_amount', visible: true },
+            { property: 'rate', type: 'text', label: 'entities.TaxPrime.columns.rate', visible: true },
+            { property: 'taxType', type: 'text', label: 'entities.TaxPrime.columns.tax_type', visible: true },
+            { property: 'product', type: 'text', label: 'entities.TaxPrime.columns.product', visible: true },
+        //    { property: 'logo', type: 'image', label: 'Logo', visible: true },
+        //    { property: 'actions', type: 'actions', label: 'Actions', visible: true },
+        //    { property: 'actions', type: 'collapse', label: 'Actions', visible: true, collapseOptions: [
+        ],
+        imageOptions: {
+            label: 'TaxPrime.columns.logo',
+            property: 'logo',
+            cssClasses: ['w-16 h-16']
+        },
+        pageSize: 8,
+        pageSizeOptions: [5, 6, 8],
+        actions: [],
+        renderItem: (element: TaxPrime, property: keyof TaxPrime) => {
+            if (property === 'product') {
+                return element.product.name; // Affiche le nom du produit associé
+            } else if (property === 'taxType') {
+                return element.taxType.name; // Affiche le nom du type de taxe
+            } else if (property === 'calculationBase') {
+                return 'entities.tax_prime.calculation_base. + element.calculationBase';
+            }
+            return element[property];
+        }
+    };
     data: TaxPrime[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
+    dataSource: MatTableDataSource<TaxPrime> = new MatTableDataSource();
     selection = new SelectionModel<TaxPrime>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = {} as Product;
+    products: Product[] = [];
 
-    managementEntity: ManagementEntity = new ManagementEntity({});
-
-
-
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _taxPrimeService: TaxPrimeService,
+        private _translateService: TranslocoService,
+        private _dialog: MatDialog
+    ) { }
 
     ngOnInit(): void {
-        // Initialisation de la configuration de la table
-        // id: string;
-        //   name: string;
-        //   dateEffective: string; 
-        //   calculationBase: string;
-        //   isFlatRate: boolean;
-        //   flatRateAmount: number | null;
-        //   rate: number | null;
-        //   taxType: TaxType;
-        //   coverage: Coverage;
-        //   product: Product;
-        this.tableOptions = {
-            title: '',
-            columns: [
-                {
-                    property: 'name',
-                    type: 'text',
-                    label: 'Nom',
-                    visible: true,
-                },
-                {
-                    property: 'dateEffective',
-                    type: 'text',
-                    label: 'Date d’effet',
-                    visible: true,
-                },
-                {
-                    property: 'calculationBase',
-                    type: 'text',
-                    label: 'Base de calcul',
-                    visible: true,
-                },
-                {
-                    property: 'isFlatRate',
-                    type: 'text',
-                    label: 'Forfaitaire',
-                    visible: true,
-                },
-                {
-                    property: 'flatRateAmount',
-                    type: 'text',
-                    label: 'Montant forfaitaire',
-                    visible: true,
-                },
-                {
-                    property: 'rate',
-                    type: 'text',
-                    label: 'Taux (%)',
-                    visible: true,
-                },
-                {
-                    property: 'taxType',
-                    type: 'text',
-                    label: 'Type de taxe',
-                    visible: true,
-                },
-                {
-                    property: 'coverage',
-                    type: 'text',
-                    label: 'Couverture',
-                    visible: true,
-                },
-                {
-                    property: 'product',
-                    type: 'text',
-                    label: 'Produit associé',
-                    visible: true,
-                },
-            ],
-            pageSize: 8,
-            pageSizeOptions: [5, 6, 8],
-            actions: [],
-            renderItem: (element: TaxPrime, property: keyof TaxPrime) => {
-                if (property === 'taxType') {
-                    return element.taxType.name; // Affiche le nom du type de taxe
-                } else if (property === 'coverage') {
-                    return element.coverage.nature; // Affiche le nom de la couverture
-                } else if (property === 'product') {
-                    return element.product.name; // Affiche le nom du produit associé
-                    // // Ajoutez d'autres propriétés si nécessaire
-                }
-                return element[property]; // Pour les autres propriétés, retourne la valeur par défaut
-            }
-        };
+        this.buildHeaders();
 
-        // Construction des lignes d’en-tête
-        this.buildHeaderRows();
+        this._taxPrimeService.taxPrimes$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: TaxPrime[]) => {
+
+
+                this.products = data
+                    .map(TaxPrime => TaxPrime.product)
+                    .filter((product, index, self) =>
+                        index === self.findIndex((p) => p.id === product.id)
+                    );
+
+                this.selectedProduct = this.products[0] || {} as Product;
+                this.data = data;
+                this.dataSource.data = data;
+                this.dataSource.data = this.data.filter(taxPrime => taxPrime.product.id === this.selectedProduct.id);
+                this._changeDetectorRef.detectChanges();
+            });
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     }
 
-    buildHeaderRows(): void {
+    groupHeader: string[] = [];
+    subHeader: string[] = [];
+    visibleColumns: string[] = [];
+
+    buildHeaders(): void {
         this.tableOptions.columns.forEach(col => {
             if (col.type === 'collapse' && col.collapseOptions?.length) {
                 // En-tête parent (ligne 1)
@@ -177,7 +165,7 @@ export class PrimesListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-
+                
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -186,7 +174,6 @@ export class PrimesListComponent implements OnInit {
         this.groupHeader.push('actions');
         this.visibleColumns.push('actions');
     }
-
 
     ngAfterViewInit() {
         if (this.dataSource) {
@@ -201,39 +188,71 @@ export class PrimesListComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit TaxPrime TaxPrime
-        */
-    onEdit(TaxPrime: TaxPrime): void {
-
+    openSelection() {
+        this._dialog.open(SelectProductComponent, {
+            width: '700px',
+            data: {
+                selected: this.selectedProduct,
+                products: this.products
+            }
+        }).afterClosed().subscribe((product: Product) => {
+            if (product) {
+                this.selectedProduct = product;
+                // this.dataSource.data = this.data.filter(TaxPrime => TaxPrime.product.id === this.selectedProduct.id);
+                this.dataSource.paginator = this.paginator;
+                this._changeDetectorRef.detectChanges();
+            }
+        })
     }
 
-
-    onView(TaxPrime: TaxPrime): void {
+    openAddDialog(): void {
+        this._dialog.open(PrimesFormComponent, {
+            width: '700px',
+            data: {
+                mode: 'add',
+                product: this.selectedProduct,
+            }
+        }).afterClosed().subscribe((result: TaxPrime) => {
+            if (result) {
+                
+            }
+        })
     }
 
-    onButtonClick(TaxPrime: TaxPrime, column: string): void {
-        if (column === 'TaxPrimeionRegistry') {
-            alert('TaxPrimeion Registry button clicked for TaxPrime: ' + TaxPrime.name);
-        }
-    }
+    // openEditDialog(item: any): void {
+    //     const dialogRef = this._dialog.open(TaxPrimesEditDialogComponent, {
+    //         width: '700px',
+    //         data: item
+    //     });
 
-    // hasPermission(TaxPrime: TaxPrime): boolean {
-    //     let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_TaxPrimeS);
-    //     if (!hasPerm) {
-    //         return false;
-    //     } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-    //         return true;
-    //     } else if (this.managementEntity.type === "COMPANY" && TaxPrime.visibility === "PRIVATE") {
-    //         return true;
-    //     } else
-    //         return false;
+    //     dialogRef.afterClosed().subscribe(result => {
+    //         if (result) {
+    //             // Appeler ici le service pour mettre à jour les données
+    //             this._TaxPrimeService.update(item.id, result).subscribe(() => {
+    //                 // rechargement, toast, etc.
+    //                 this._TaxPrimeService.getAll().subscribe((data: TaxPrime[]) => {
+    //                     this.data = data;
+    //                     this.dataSource.data = data;
+    //                     this._changeDetectorRef.detectChanges();
+    //                 });
+    //             });
+    //         }
+    //     });
     // }
 
-    // hasPermission(TaxPrime: TaxPrime): boolean {
-    //     return this._permissionService.hasPermission(PERMISSIONS.UPDATE_TAX_PRIMES);
-    // }
+    openDeleteDialog(item: any): void { }
 
+    // onView(element: TaxPrime): void {
+    //     this.openEditDialog(element);
+    // }
+    
+    onDelete(element: TaxPrime): void {
+        // this._TaxPrimeService.delete(element.id).subscribe(() => {
+        //     this.data = this.data.filter(item => item.id !== element.id);
+        //     this.dataSource.data = this.data;
+        //     this._changeDetectorRef.detectChanges();
+        // });
+    }
 
     trackByProperty(index: number, column: TableColumn<TaxPrime>) {
         return column.property;
