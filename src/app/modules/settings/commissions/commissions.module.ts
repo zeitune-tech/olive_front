@@ -16,24 +16,36 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
-import { ContributorsListComponent } from "./list-contributors/list.component";
-import { TaxesListComponent } from "./list-taxes/list.component";
-import { CommissionNewComponent } from "./new/new.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatRadioModule } from "@angular/material/radio";
-import { CommissionListComponent } from "./list/list.component";
-import { CommissionTaxNewComponent } from "./new-tax/new-tax.component";
-import { CommissionContributorNewComponent } from "./new-contributor/new-contributor.component";
+import { CommissionPrimeFormComponent } from "./commission-prime/form/form.component";
+import { CommissionPrimeListComponent } from "./commission-prime/list/list.component";
+import { CommissionPrimeContributorFormComponent } from "./commission-prime-contributor/form/form.component";
+import { CommissionPrimeContributorListComponent } from "./commission-prime-contributor/list/list.component";
+import { CommissionAccessoryFormComponent } from "./commission-accessory/form/form.component";
+import { CommissionAccessoryListComponent } from "./commission-accessory/list/list.component";
+import { CommissionAccessoryContributorFormComponent } from "./commission-accessory-contributor/form/form.component";
+import { CommissionAccessoryContributorListComponent } from "./commission-accessory-contributor/list/list.component";
+import { TaxCommissionListComponent } from "./tax-commission/list/list.component";
+import { TaxCommissionFormComponent } from "./tax-commission/form/form.component";
+import { TaxCommissionContributorFormComponent } from "./tax-commission-contributor/form/form.component";
+import { TaxCommissionContributorListComponent } from "./tax-commission-contributor/list/list.component";
 
 @NgModule({
     declarations: [
-        CommissionListComponent,
-        ContributorsListComponent,
-        TaxesListComponent,
-        CommissionNewComponent,
-        CommissionTaxNewComponent,
-        CommissionContributorNewComponent
+        CommissionPrimeFormComponent,
+        CommissionPrimeListComponent,
+        CommissionPrimeContributorFormComponent,
+        CommissionPrimeContributorListComponent,
+        CommissionAccessoryFormComponent,
+        CommissionAccessoryListComponent,
+        CommissionAccessoryContributorFormComponent,
+        CommissionAccessoryContributorListComponent,
+        TaxCommissionListComponent,
+        TaxCommissionFormComponent,
+        TaxCommissionContributorFormComponent,
+        TaxCommissionContributorListComponent
     ],
     imports: [
         RouterModule.forChild(routes),
