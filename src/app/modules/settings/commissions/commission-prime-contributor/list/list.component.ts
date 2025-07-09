@@ -17,6 +17,10 @@ import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
 import { CommissionPrimeContributorFormComponent } from "../form/form.component";
+import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import { CommissionAccessoryContributorFormComponent } from "../../commission-accessory-contributor/form/form.component";
+import { CommissionContributor } from "@core/services/settings/commission-contributor/commission-contributor.interface";
+import { CommissionContributorService } from "@core/services/settings/commission-contributor/commission-contributor.service";
 
 @Component({
     selector: "app-products-list",
@@ -28,28 +32,35 @@ export class CommissionPrimeContributorListComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<CommissionContributor>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<CommissionContributor>([]); // Ajoute les données réelles ici
 
-        constructor(
+    constructor(
         private _productService: ProductService,
+        private _commissionContributorService: CommissionContributorService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _tanslateService: TranslocoService,
         private _router: Router,
         private _dialog: MatDialog
     ) {
+        this._commissionContributorService.commissionContributors$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: CommissionContributor[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+            });
         this._productService.products$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: Product[]) => {
-                this.data = data;
-                this.dataSource.data = data;
+                // this.data = data;
+                // this.dataSource.data = data;
             });
 
         this._managementEntityService.entity$
@@ -59,8 +70,8 @@ export class CommissionPrimeContributorListComponent implements OnInit {
             });
     }
 
-    
-    data: Product[] = [];
+
+    data: CommissionContributor[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -78,13 +89,18 @@ export class CommissionPrimeContributorListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                
+                { property: 'coverage', type: 'text', label: 'entities.commission-prime-point-of-sale.table.coverage', visible: true },
+                { property: 'contributorType', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributorType', visible: true },
+                { property: 'contributor', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributor', visible: true },
+                { property: 'managementRate', type: 'text', label: 'entities.commission-prime-point-of-sale.table.managementRate', visible: true },
+                { property: 'contributionRate', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributionRate', visible: true },
+                { property: 'dateEffective', type: 'text', label: 'entities.commission-prime-point-of-sale.table.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [],
-            renderItem: (element: Product, property: keyof Product) => {
-            
+            renderItem: (element: CommissionContributor, property: keyof CommissionContributor) => {
+
 
                 return element[property] ?? '--';
             },
@@ -109,7 +125,7 @@ export class CommissionPrimeContributorListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -133,6 +149,49 @@ export class CommissionPrimeContributorListComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
+    products: Product[] = []
+    searchCtrl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = new Product({});
+
+    openSelection() {
+        this._dialog.open(SelectDialogComponent, {
+            width: '700px',
+            data: {
+                items: this.products,
+            }
+        }).afterClosed().subscribe((product: Product) => {
+            if (product) {
+                this.selectedProduct = product;
+                // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                this.dataSource.paginator = this.paginator;
+                // this._changeDetectorRef.detectChanges();
+            }
+        })
+    }
+
+    onAdd(): void {
+        this._dialog.open(CommissionAccessoryContributorFormComponent, {
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        });
+    }
+
+    onDelete(product: Product): void {
+        this._dialog.open(CommissionAccessoryContributorFormComponent, {
+            data: product,
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        });
+    }
+
     /**
         * Edit Product Product
         */
@@ -148,7 +207,7 @@ export class CommissionPrimeContributorListComponent implements OnInit {
         })
     }
 
-    
+
 
     onView(product: Product): void {
         //this._router.navigate(['/administration/products/list']);
@@ -173,7 +232,7 @@ export class CommissionPrimeContributorListComponent implements OnInit {
     }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<CommissionContributor>) {
         return column.property;
     }
 }

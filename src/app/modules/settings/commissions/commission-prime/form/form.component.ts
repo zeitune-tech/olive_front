@@ -3,8 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProductService } from '@core/services/settings/product/product.service';
+import { CommissionPointOfSale } from '@core/services/settings/commission-point-of-sale/commission-point-of-sale.interface';
+import { CommissionPointOfSaleService } from '@core/services/settings/commission-point-of-sale/commission-point-of-sale.service';
 import { Product } from '@core/services/settings/product/product.interface';
+import { Coverage } from '@core/services/settings/coverage/coverage.interface';
+import { PointOfSale } from '@core/services/administration/point-of-sale/point-of-sale.interface';
+import { ProductService } from '@core/services/settings/product/product.service';
+import { CoverageService } from '@core/services/settings/coverage/coverage.service';
+import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
 
 @Component({
     selector: 'app-coverage-reference-edit',
@@ -15,31 +21,62 @@ export class CommissionPrimeFormComponent implements OnInit {
     formGroup!: FormGroup;
     message = '';
 
-    families = [
-        { value: 'RC', label: 'entities.coverage_reference.options.family.RC' },
-        { value: 'DOMMAGES', label: 'entities.coverage_reference.options.family.DOMMAGES' },
-        { value: 'OTHERS', label: 'entities.coverage_reference.options.family.OTHERS' }
+    products: Product[] = [];
+    coverages: Coverage[] = [];
+    typesPointOfSale: { label: string, value: string } [] = [
+        { label: 'Courtier', value: 'BROKER' },
+        { label: 'Agent Général', value: 'GENERAL_AGENT' },
+        { label: 'Bureau Direct', value: 'DIRECT_OFFICE' }
     ];
+    pointsOfSale: PointOfSale[] = [];
+
+    mode: 'create' | 'edit' = 'create';
 
     constructor(
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CommissionPrimeFormComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: Product,
+        @Inject(MAT_DIALOG_DATA) public data: CommissionPointOfSale,
+        private _commissionPointOfSaleService: CommissionPointOfSaleService,
         private _productService: ProductService,
+        private _coverageService: CoverageService,
+        private _pointOfSaleService: PointOfSaleService,
         private translocoService: TranslocoService,
         private snackBar: MatSnackBar
     ) {}
 
     ngOnInit(): void {
+
+        if (this.data) {
+            this.mode = 'edit';
+            this.dialogRef.updateSize('600px', 'auto');
+        } else {
+            this.data = {} as CommissionPointOfSale;
+            this.mode = 'create';
+            this.dialogRef.updateSize('600px', 'auto');
+        }
+
+
         this.formGroup = this.fb.group({
-            name: [this.data.name, Validators.required],
-			description: [this.data.description, Validators.required],
-			branch: [this.data.branch.id, Validators.required],
-			minRisk: [this.data.minRisk, [Validators.min(1)]],
-			maxRisk: [this.data.maxRisk, [Validators.min(1)]],
-			minimumGuaranteeNumber: [1, [Validators.required, Validators.min(1)]],
-			fleet: [false, Validators.required],
-			hasReduction: [false]
+            dateEffective: [this.data.dateEffective, Validators.required],
+            calculationBase: ["PRIME", Validators.required],
+            managementRate: [this.data.managementRate, [Validators.required, Validators.min(0), Validators.max(100)]],
+            contributionRate: [this.data.contributionRate, [Validators.required, Validators.min(0), Validators.max(100)]],
+            typePointOfSale: [this.data.typePointOfSale, Validators.required],
+            pointOfSale: [this.data.pointOfSale, Validators.required],
+            product: [this.data.product, Validators.required],
+            coverage: [this.data.coverage, Validators.required],
+        });
+
+        this._productService.products$.subscribe(products => {
+            this.products = products;
+        });
+
+        this._coverageService.coverages$.subscribe(coverages => {
+            this.coverages = coverages;
+        });
+
+        this._pointOfSaleService.pointsOfSale$.subscribe(pointsOfSale => {
+            this.pointsOfSale = pointsOfSale;
         });
     }
 
@@ -52,7 +89,7 @@ export class CommissionPrimeFormComponent implements OnInit {
             ...this.formGroup.value
         };
 
-        this._productService.update(this.data.id,updated).subscribe({
+        this._commissionPointOfSaleService.update(this.data.id,updated).subscribe({
             next: () => {
                 this.snackBar.open(
                     this.translocoService.translate('form.success.update'),

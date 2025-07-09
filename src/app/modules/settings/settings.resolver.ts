@@ -15,7 +15,6 @@ import { TaxService } from '@core/services/settings/tax/tax.service';
 import { TaxRegimeService } from '@core/services/settings/tax-regime/tax-regime.service';
 import { CommissionService } from '@core/services/settings/commission/commission.service';
 import { CommissionContributorService } from './../../core/services/settings/commission-contributor/commission-contributor.service';
-import { CommissionTaxService } from '@core/services/settings/commission-tax/commission-tax.service';
 import { DurationRateService } from '@core/services/settings/duration-rate/duration-rate.service';
 import { ProductService } from '@core/services/settings/product/product.service';
 
@@ -42,7 +41,6 @@ export class SettingsResolver implements Resolve<any> {
         private _taxRegimeService: TaxRegimeService,
         private _commissionService: CommissionService,
         private _commissionContributorService: CommissionContributorService,
-        private _commissionTaxService: CommissionTaxService,
         private _durationRateService: DurationRateService,
     ) {
      
@@ -113,7 +111,6 @@ export class SettingsResolver implements Resolve<any> {
         // }
 
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_USERS)) {
-            resolList.push(this._commissionTaxService.getAll());
         //}
 
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_DURATION_RATES)) {

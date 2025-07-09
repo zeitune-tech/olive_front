@@ -6,7 +6,7 @@ import { CommissionAccessoryListComponent } from "./commission-accessory/list/li
 import { CommissionAccessoryContributorListComponent } from "./commission-accessory-contributor/list/list.component";
 import { TaxCommissionListComponent } from "./tax-commission/list/list.component";
 import { TaxCommissionFormComponent } from "./tax-commission/form/form.component";
-import { TaxCommissionContributorListComponent } from "./tax-commission-contributor/list/list.component";
+import { TaxCommissionsContributorListComponent } from "./tax-commission-contributor/list/list.component";
 
 
 export const routes: Routes = [
@@ -37,6 +37,6 @@ export const routes: Routes = [
     },
     {
         path: "contributors-taxes",
-        component: TaxCommissionContributorListComponent,
+        component: TaxCommissionsContributorListComponent,
     }
 ];
