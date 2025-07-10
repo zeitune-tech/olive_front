@@ -16,7 +16,7 @@ import { TaxPrimeService } from "@core/services/settings/tax-primes/tax-primes.s
 import { PrimesFormComponent } from "../form/form.component";
 
 @Component({
-    selector: "app-TaxPrimes-list",
+    selector: "app-taxes-prime-list",
     templateUrl: "./list.component.html",
     styles: `
         /* Chrome, Safari, Edge, Opera */
@@ -62,27 +62,42 @@ export class PrimesListComponent {
     tableOptions: TableOptions<TaxPrime> = {
         title: '',
         columns: [
-        //    { property: 'name', type: 'text', label: 'Nom', visible: true },
-        //    { property: 'dateEffective', type: 'text', label: 'Date d’effet', visible: true },
-        //    { property: 'calculationBase', type: 'text', label: 'Base de calcul', visible: true },
-        //    { property: 'isFlatRate', type: 'text', label: 'Taux forfaitaire', visible: true },
-        //    { property: 'flatRateAmount', type: 'text', label: 'Montant forfaitaire', visible: true },
-        //    { property: 'rate', type: 'text', label: 'Taux (%)', visible: true },    
-           
-        //    { property: 'taxType', type: 'text', label: 'Type de taxe', visible: true },
-        //    { property: 'product', type: 'text', label: 'Produit associé', visible: true },
-
-            { property: 'name', type: 'text', label: 'entities.TaxPrime.columns.name', visible: true },
-            { property: 'dateEffective', type: 'text', label: 'entities.TaxPrime.columns.date_effective', visible: true },
-            { property: 'calculationBase', type: 'text', label: 'entities.TaxPrime.columns.calculation_base', visible: true },
-            { property: 'isFlatRate', type: 'text', label: 'entities.TaxPrime.columns.is_flat_rate', visible: true },
-            { property: 'flatRateAmount', type: 'text', label: 'entities.TaxPrime.columns.flat_rate_amount', visible: true },
-            { property: 'rate', type: 'text', label: 'entities.TaxPrime.columns.rate', visible: true },
-            { property: 'taxType', type: 'text', label: 'entities.TaxPrime.columns.tax_type', visible: true },
-            { property: 'product', type: 'text', label: 'entities.TaxPrime.columns.product', visible: true },
-        //    { property: 'logo', type: 'image', label: 'Logo', visible: true },
-        //    { property: 'actions', type: 'actions', label: 'Actions', visible: true },
-        //    { property: 'actions', type: 'collapse', label: 'Actions', visible: true, collapseOptions: [
+            {
+                property: 'name',
+                visible: true,
+                label: ('entities.taxes-prime.table.column.name'),
+                type: 'text',
+            },
+            {
+                property: 'dateEffective',
+                visible: true,
+                label: ('entities.taxes-prime.table.column.date-effective'),
+                type: 'text',
+            },
+            {
+                property: 'calculationBase',
+                visible: true,
+                label: ('entities.taxes-prime.table.column.calculation-base'),
+                type: 'text',
+            },
+            {
+                property: 'isFlatRate',
+                visible: true,
+                label: ('entities.taxes-prime.table.column.is-flat-rate'),
+                type: 'text',
+            },
+            {
+                property: 'flatRateAmount',
+                visible: true,
+                label: ('entities.taxes-prime.table.column.flat-rate-amount'),
+                type: 'text',
+            },
+            {
+                property: 'rate',
+                visible: true,
+                label: ('entities.taxes-prime.table.column.rate'),
+                type: 'text',
+            },
         ],
         imageOptions: {
             label: 'TaxPrime.columns.logo',
@@ -98,7 +113,7 @@ export class PrimesListComponent {
             } else if (property === 'taxType') {
                 return element.taxType.name; // Affiche le nom du type de taxe
             } else if (property === 'calculationBase') {
-                return 'entities.tax_prime.calculation_base. + element.calculationBase';
+                return 'entities.taxes-prime.calculation-base. + element.calculation-base';
             }
             return element[property];
         }

@@ -14,9 +14,10 @@ import { SelectProductComponent } from "../../../coverages/select-product/select
 import { TaxAccessory } from "@core/services/settings/tax-accessory/tax-accessory.interface";
 import { TaxAccessoryService } from "@core/services/settings/tax-accessory/tax-accessory.service";
 import { PrimesFormComponent } from "../../taxes-primes/form/form.component";
+import { AccessoriesFormComponent } from "../form/form.component";
 
 @Component({
-    selector: "app-TaxAccessorys-list",
+    selector: "app-tax-accessories-list",
     templateUrl: "./list.component.html",
     styles: `
         /* Chrome, Safari, Edge, Opera */
@@ -61,35 +62,18 @@ export class AccessoriesListComponent {
 
     tableOptions: TableOptions<TaxAccessory> = {
         title: '',
-        // id: string;
-        //   name: string;
-        //   dateEffective: string; 
-        //   calculationBase: string;
-        //   isFlatRate: boolean;
-        //   flatRateAmount: number | null;
-        //   rate: number | null;
-        //   taxType: TaxType;
-        //   product: Product;
         columns: [
-        //    { property: 'name', type: 'text', label: 'Nom', visible: true },
-        //    { property: 'dateEffective', type: 'text', label: 'Date d’effet', visible: true },
-        //    { property: 'calculationBase', type: 'text', label: 'Base de calcul', visible: true },
-        //    { property: 'isFlatRate', type: 'text', label: 'Taux forfaitaire', visible: true },
-        //    { property: 'flatRateAmount', type: 'text', label: 'Montant forfaitaire', visible: true },
-        //    { property: 'rate', type: 'text', label: 'Taux (%)', visible: true },
-        //    { property: 'taxType', type: 'text', label: 'Type de taxe', visible: true },
-        //    { property: 'product', type: 'text', label: 'Produit associé', visible: true },
-            { property: 'name', type: 'text', label: 'TaxPrime.columns.name', visible: true },
-            { property: 'dateEffective', type: 'text', label: 'TaxPrime.columns.date_effective', visible: true },
-            { property: 'calculationBase', type: 'text', label: 'TaxPrime.columns.calculation_base', visible: true },
-            { property: 'isFlatRate', type: 'text', label: 'TaxPrime.columns.is_flat_rate', visible: true },
-            { property: 'flatRateAmount', type: 'text', label: 'TaxPrime.columns.flat_rate_amount', visible: true },
-            { property: 'rate', type: 'text', label: 'TaxPrime.columns.rate', visible: true },
-            { property: 'taxType', type: 'text', label: 'TaxPrime.columns.tax_type', visible: true },
-            { property: 'product', type: 'text', label: 'TaxPrime.columns.product', visible: true }
+            { property: 'name', type: 'text', label: 'entities.tax-accessories.table.name', visible: true },
+            { property: 'dateEffective', type: 'text', label: 'entities.tax-accessories.table.date-effective', visible: true },
+            { property: 'calculationBase', type: 'text', label: 'entities.tax-accessories.table.calculation-base', visible: true },
+            { property: 'isFlatRate', type: 'text', label: 'entities.tax-accessories.table.is-flat-rate', visible: true },
+            { property: 'flatRateAmount', type: 'text', label: 'entities.tax-accessories.table.flat-rate-amount', visible: true },
+            { property: 'rate', type: 'text', label: 'entities.tax-accessories.table.rate', visible: true },
+            { property: 'taxType', type: 'text', label: 'entities.tax-accessories.table.tax-type', visible: true },
+            { property: 'product', type: 'text', label: 'entities.tax-accessories.table.product', visible: true }
         ],
         imageOptions: {
-            label: 'TaxAccessory.columns.logo',
+            label: 'entities-tax-accessory.columns.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },
@@ -102,7 +86,7 @@ export class AccessoriesListComponent {
             } else if (property === 'taxType') {
                 return element.taxType.name; // Affiche le nom du type de taxe
             } else if (property === 'calculationBase') {
-                return this._translateService.translate('entities.tax_accessory.calculation_base.' + element.calculationBase);
+                return this._translateService.translate('entities.tax-accessory.calculation-base.' + element.calculationBase);
             }
             return element[property];
         }
@@ -210,7 +194,7 @@ export class AccessoriesListComponent {
     }
 
     openAddDialog(): void {
-        this._dialog.open(PrimesFormComponent, {
+        this._dialog.open(AccessoriesFormComponent, {
             width: '700px',
             data: {
                 mode: 'add',

@@ -1,98 +1,94 @@
 <div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
-    <h2 mat-dialog-title>{{ t('entities.coverage_reference.form.editTitle') || 'Modifier la couverture' }}</h2>
+    <h2 mat-dialog-title>{{ t('entities.taxes-accessory.form.add.form-title') || 'Modifier la couverture' }}</h2>
     <mat-divider></mat-divider>
 
     <mat-dialog-content class="py-4">
         <form [formGroup]="formGroup" class="space-y-4">
 
             <div class="flex flex-col gap-6">
-                <!-- Name -->
+
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.product.fields.name') }}</mat-label>
-                    <input matInput formControlName="name" />
+                    <mat-label>{{ t('entities.taxes-accessory.form.add.name') }}</mat-label>
+                    <input matInput formControlName="name" required />
                     <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                     <mat-error *ngIf="formGroup.get('name')?.hasError('minlength')">
-                        {{ t('form.errors.minLength') }}
+                        {{ t('form.errors.minLength', { value: 3 }) }}
                     </mat-error>
+
                 </mat-form-field>
 
-                <!-- Description -->
-                <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.product.fields.description') }}</mat-label>
-                    <input matInput formControlName="description" />
-                    <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
-                        {{ t('form.errors.required') }}
-                    </mat-error>
-                    <!-- <mat-error *ngIf="formGroup.get('description')?.hasError('minlength')">
-                {{ t('form.errors.minLength', {}) }}
-            </mat-error> -->
-                </mat-form-field>
-
-                <!-- Branch UUID -->
-                <mat-form-field class="w-full hidden" appearance="outline">
-                    <mat-label>{{ t('entities.product.fields.branch') }}</mat-label>
-                    <input matInput formControlName="branchUuid" />
-                </mat-form-field>
-
-                <!-- Fleet -->
-                <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.product.fields.fleet') }}</mat-label>
-                    <mat-select formControlName="fleet">
-                        <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
-                        <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+                                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-accessory.form.add.tax-type') }}</mat-label>
+                    <mat-select formControlName="taxType" required>
+                        <mat-option *ngFor="let tax of taxesType" [value]="tax.id">
+                            {{ tax.name }}
+                        </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formGroup.get('fleet')?.hasError('required')">
+                    <mat-error *ngIf="formGroup.get('taxType')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>
 
-
-                <!-- Min Risk -->
-                <mat-form-field class="w-full" appearance="outline"
-                    [ngClass]="{ 'hidden': !formGroup.get('fleet')?.value }">
-                    <mat-label>{{ t('entities.product.fields.minRisk') }}</mat-label>
-                    <input type="number" matInput formControlName="minRisk" />
-                    <mat-error *ngIf="formGroup.get('minRisk')?.hasError('min')">
-                        {{ t('form.errors.min', { value: 1 }) }}
-                    </mat-error>
-                    <mat-error *ngIf="formGroup.get('minRisk')?.hasError('required')">
-                        {{ t('form.errors.required') }}
-                    </mat-error>
-                </mat-form-field>
-
-                <!-- Max Risk -->
-                <mat-form-field class="w-full" appearance="outline"
-                    [ngClass]="{ 'hidden': !formGroup.get('fleet')?.value }">
-                    <mat-label>{{ t('entities.product.fields.maxRisk') }}</mat-label>
-                    <input type="number" matInput formControlName="maxRisk" />
-                    <mat-error *ngIf="formGroup.get('maxRisk')?.hasError('min')">
-                        {{ t('form.errors.min', { min: 1 }) }}
-                    </mat-error>
-                    <mat-error *ngIf="formGroup.get('maxRisk')?.hasError('required')">
-                        {{ t('form.errors.required') }}
-                    </mat-error>
-                </mat-form-field>
-
-                <!-- Minimum Guarantee Number -->
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.product.fields.minimumGuaranteeNumber') }}</mat-label>
-                    <input type="number" matInput formControlName="minimumGuaranteeNumber" />
-                    <mat-error *ngIf="formGroup.get('minimumGuaranteeNumber')?.hasError('min')">
-                        {{ t('form.errors.min', { min: 1 }) }}
-                    </mat-error>
-                    <mat-error *ngIf="formGroup.get('minimumGuaranteeNumber')?.hasError('required')">
+                    <mat-label>{{ t('entities.taxes-accessory.form.add.product') }}</mat-label>
+                    <mat-select formControlName="product" required>
+                        <mat-option *ngFor="let product of products" [value]="product.id">
+                            {{ product.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('product')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>
 
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-accessory.form.add.date-effective') }}</mat-label>
+                    <input matInput formControlName="dateEffective" type="date" required />
+                    <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>    
+                </mat-form-field>
 
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-accessory.form.add.calculation-base') }}</mat-label>
+                    <input matInput formControlName="calculationBase" required />
+                    <mat-error *ngIf="formGroup.get('calculationBase')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                    <mat-error *ngIf="formGroup.get('calculationBase')?.hasError('minlength')">
+                        {{ t('form.errors.minLength', { value: 3 }) }}
+                    </mat-error>
+                </mat-form-field>
 
-                <!-- Has Reduction -->
-                <mat-checkbox formControlName="hasReduction">
-                    {{ t('entities.product.fields.hasReduction') }}
-                </mat-checkbox>
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-accessory.form.add.is-flat-rate') }}</mat-label>
+                    <mat-select formControlName="isFlatRate" required>
+                        <mat-option [value]="true">{{ t('form.fields.yes') }}</mat-option>
+                        <mat-option [value]="false">{{ t('form.fields.no') }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('isFlatRate')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-accessory.form.add.flat-rate-amount') }}</mat-label>
+                    <input matInput formControlName="flatRateAmount" type="number" />
+                    <mat-error *ngIf="formGroup.get('flatRateAmount')?.hasError('min')">
+                        {{ t('form.errors.min', { value: 0 }) }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-accessory.form.add.rate') }}</mat-label>
+                    <input matInput formControlName="rate" type="number" />
+                    <mat-error *ngIf="formGroup.get('rate')?.hasError('min')">
+                        {{ t('form.errors.min', { value: 0 }) }}
+                    </mat-error>
+                </mat-form-field>
+
 
             </div>
         </form>

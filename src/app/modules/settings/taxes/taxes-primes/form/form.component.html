@@ -1,62 +1,109 @@
 <div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
-    <h2 mat-dialog-title>{{ t('entities.coverage_reference.form.editTitle') || 'Modifier la couverture' }}</h2>
+    <h2 mat-dialog-title>{{ t('entities.taxes-prime.form.add.form-title') || 'Modifier la couverture' }}</h2>
     <mat-divider></mat-divider>
 
     <mat-dialog-content class="py-4">
+        <form [formGroup]="formGroup" class="space-y-4">
 
-                <!-- Table -->
-        <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
-        
-            <!-- Checkbox Column -->
-            <ng-container matColumnDef="checkbox">
-                <th mat-header-cell *matHeaderCellDef mat-header-cell class="uppercase text-center">
-                    <mat-checkbox
-                        (change)="masterToggle()"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                    ></mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let row" class="text-center">
-                    <mat-checkbox
-                        (change)="toggleSelection(row)"
-                        [checked]="selection.isSelected(row)"
-                        [aria-label]="t('coverages.table.select-row')"
-                    ></mat-checkbox>
-                </td>
-            </ng-container>
+            <div class="flex flex-col gap-6">
 
-            <!-- Text Columns -->
-            @let columns = tableOptions.columns;
-            <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-                <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-                    <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>{{ t(column.label) }}</th>
-                    <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
-                        {{ tableOptions.renderItem(row, column.property) }}
-                    </td>
-                </ng-container>
-            </ng-container>
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.name') }}</mat-label>
+                    <input matInput formControlName="name" required />
+                    <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                    <mat-error *ngIf="formGroup.get('name')?.hasError('minlength')">
+                        {{ t('form.errors.minLength', { value: 3 }) }}
+                    </mat-error>
+
+                </mat-form-field>
+
+                                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.tax-type') }}</mat-label>
+                    <mat-select formControlName="taxType" required>
+                        <mat-option *ngFor="let tax of taxesType" [value]="tax.id">
+                            {{ tax.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('taxType')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.coverage') }}</mat-label>
+                    <mat-select formControlName="coverage" required>
+                        <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
+                            {{ coverage.nature }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.product') }}</mat-label>
+                    <mat-select formControlName="product" required>
+                        <mat-option *ngFor="let product of products" [value]="product.id">
+                            {{ product.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('product')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.date-effective') }}</mat-label>
+                    <input matInput formControlName="dateEffective" type="date" required />
+                    <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>    
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.calculation-base') }}</mat-label>
+                    <input matInput formControlName="calculationBase" required />
+                    <mat-error *ngIf="formGroup.get('calculationBase')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                    <mat-error *ngIf="formGroup.get('calculationBase')?.hasError('minlength')">
+                        {{ t('form.errors.minLength', { value: 3 }) }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.is-flat-rate') }}</mat-label>
+                    <mat-select formControlName="isFlatRate" required>
+                        <mat-option [value]="true">{{ t('form.fields.yes') }}</mat-option>
+                        <mat-option [value]="false">{{ t('form.fields.no') }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('isFlatRate')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.flat-rate-amount') }}</mat-label>
+                    <input matInput formControlName="flatRateAmount" type="number" />
+                    <mat-error *ngIf="formGroup.get('flatRateAmount')?.hasError('min')">
+                        {{ t('form.errors.min', { value: 0 }) }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.taxes-prime.form.add.rate') }}</mat-label>
+                    <input matInput formControlName="rate" type="number" />
+                    <mat-error *ngIf="formGroup.get('rate')?.hasError('min')">
+                        {{ t('form.errors.min', { value: 0 }) }}
+                    </mat-error>
+                </mat-form-field>
 
 
-            <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: visibleColumns;"
-                @fadeInBottom
-                class="trans-ease-out cursor-pointer"
-                mat-row>
-            </tr>
-
-            <!-- No Data Row -->
-            <tr *matNoDataRow>
-                <td [attr.colspan]="visibleColumns.length" class="text-center py-4">
-                    {{ t('coverages.table.no-data') }}
-                </td>
-            </tr>
-        </table>
-
-        @let pageSizeOptions = tableOptions.pageSizeOptions;
-        @let pageSize = tableOptions.pageSize;
-        <mat-paginator class="rounded-b-md border-t" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
-
-        
+            </div>
+        </form>
     </mat-dialog-content>
 
     <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
@@ -68,6 +115,4 @@
             {{ t('form.actions.save') }}
         </button>
     </mat-dialog-actions>
-
-
 </div>

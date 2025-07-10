@@ -80,12 +80,12 @@ export class ExemptionListComponent {
         this.tableOptions = {
             title: '',
             columns: [
-               { property: 'name', type: 'text', label: 'TaxExemption.columns.name', visible: true },
-               { property: 'taxes', type: 'text', label: 'TaxExemption.columns.taxes', visible: true },
-               { property: 'product', type: 'text', label: 'TaxExemption.columns.product', visible: true },
+               { property: 'name', type: 'text', label: 'entities.taxes-exemption.table.column.name', visible: true },
+               { property: 'taxes', type: 'text', label: 'entities.taxes-exemption.table.column.taxes', visible: true },
+               { property: 'product', type: 'text', label: 'entities.taxes-exemption.table.column.product', visible: true },
             ],
             imageOptions: {
-                label: 'TaxExemption.columns.logo',
+                label: 'entities.taxes-exemption.table.column.logo',
                 property: 'logo',
                 cssClasses: ['w-16 h-16']
             },

@@ -1,253 +1,113 @@
-import { SelectionModel } from "@angular/cdk/collections";
-import { ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output, ViewChild } from "@angular/core";
-import { UntypedFormControl, FormBuilder, Validators, UntypedFormGroup } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { Product } from "@core/services/settings/product/product.interface";
-import { ProductService } from "@core/services/settings/product/product.service";
-import { TaxPrime } from "@core/services/settings/tax-primes/tax-primes.interface";
-import { TaxPrimeService } from "@core/services/settings/tax-primes/tax-primes.service";
-import { TranslocoService } from "@jsverse/transloco";
-import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
-import { Subject, takeUntil } from "rxjs";
+import { Component, Inject, OnInit, Type } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslocoService } from '@jsverse/transloco';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Product } from '@core/services/settings/product/product.interface';
+import { Coverage } from '@core/services/settings/coverage/coverage.interface';
+import { PointOfSale } from '@core/services/administration/point-of-sale/point-of-sale.interface';
+import { ProductService } from '@core/services/settings/product/product.service';
+import { CoverageService } from '@core/services/settings/coverage/coverage.service';
+import { TaxPrime } from '@core/services/settings/tax-primes/tax-primes.interface';
+import { TaxPrimeService } from '@core/services/settings/tax-primes/tax-primes.service';
+import { TaxType } from '@core/services/settings/tax-type/tax-type.interface';
+import { TaxTypeService } from '@core/services/settings/tax-type/tax-type.service';
 
 @Component({
-    selector: "app-taxPrime-form",
-    templateUrl: "./form.component.html",
+    selector: 'app-taxes-prime-add',
+    templateUrl: './form.component.html'
 })
 export class PrimesFormComponent implements OnInit {
 
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    formGroup!: FormGroup;
+    message = '';
 
-    tableOptions: TableOptions<TaxPrime> = {
-        title: '',
-        // id: string;
-        //   name: string;
-        //   dateEffective: string; 
-        //   calculationBase: string;
-        //   isFlatRate: boolean;
-        //   flatRateAmount: number | null;
-        //   rate: number | null;
-        //   taxType: TaxType;
-        //   coverage: Coverage;
-        //   product: Product;
-        columns: [
-            {
-                property: 'name',
-                visible: true,
-                label: ('entities.TaxPrime.table.columns.name'),
-                type: 'text',
-            },
-            {
-                property: 'dateEffective',
-                visible: true,
-                label: ('entities.TaxPrime.table.columns.dateEffective'),
-                type: 'text',
-            },
-            {
-                property: 'calculationBase',
-                visible: true,
-                label: ('entities.TaxPrime.table.columns.calculationBase'),
-                type: 'text',
-            },
-            {
-                property: 'isFlatRate',
-                visible: true,
-                label: ('entities.TaxPrime.table.columns.isFlatRate'),
-                type: 'text',
-            },
-            {
-                property: 'flatRateAmount',
-                visible: true,
-                label: ('entities.TaxPrime.table.columns.flatRateAmount'),
-                type: 'text',
-            },
-            {
-                property: 'rate',
-                visible: true,
-                label: ('entities.TaxPrime.table.columns.rate'),
-                type: 'text',
-            },
-        ],
-        pageSize: 8,
-        pageSizeOptions: [5, 6, 8],
-        actions: [],
-        renderItem: (element: TaxPrime, property: keyof TaxPrime) => {
-            if (property === 'isFlatRate') {
-                return element.isFlatRate ? this.translocoService.translate('entities.TaxPrime.isFlatRate.yes') : this.translocoService.translate('entities.TaxPrime.isFlatRate.no');
-            }
-            if (property === 'dateEffective') {
-                return new Date(element.dateEffective).toLocaleDateString();
-            }
-            if (property === 'taxType') {
-                return this.translocoService.translate(`entities.TaxType.nature.${element.taxType.nature}`);
-            }
-            if (property === 'coverage') {
-                return this.translocoService.translate(`entities.Coverage.nature.${element.coverage.nature}`);
-            }
-            if (property === 'product') {
-                return element.product.name;
-            }
-            
-            return element[property];
-        }
-    };
+    taxesType: TaxType[] = [];
+    products: Product[] = [];
+    coverages: Coverage[] = [];
 
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
-
-    dataSource: MatTableDataSource<TaxPrime> = new MatTableDataSource();
-    selection = new SelectionModel<TaxPrime>(true, []);
-    searchInputControl: UntypedFormControl = new UntypedFormControl();
+    mode: 'create' | 'edit' = 'create';
 
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _taxPrimeService: TaxPrimeService,
-        private formBuilder: FormBuilder,
+        private fb: FormBuilder,
         private dialogRef: MatDialogRef<PrimesFormComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: {
-            taxPrime: TaxPrime[];
-            product: Product;
-            mode: 'add' | 'remove';
-        },
+        @Inject(MAT_DIALOG_DATA) public data: TaxPrime,
+        private _TaxPrimeService: TaxPrimeService,
         private _productService: ProductService,
+        private _coverageService: CoverageService,
+        private _taxTypeService: TaxTypeService,
+        // private _pointOfSaleService: PointOfSaleService,
         private translocoService: TranslocoService,
         private snackBar: MatSnackBar
-    ) {
-        this.formGroup = this.formBuilder.group({
-            taxPrime: [[], Validators.required],
+    ) {}
+
+    ngOnInit(): void {
+
+        if (this.data) {
+            this.mode = 'edit';
+            this.dialogRef.updateSize('600px', 'auto');
+        } else {
+            this.data = {} as TaxPrime;
+            this.mode = 'create';
+            this.dialogRef.updateSize('600px', 'auto');
+        }
+
+
+        this.formGroup = this.fb.group({
+            name: [this.data.name, Validators.required],
+            dateEffective: [this.data.dateEffective, Validators.required],
+            calculationBase: ["PRIME", Validators.required],
+            isFlatRate: [this.data.isFlatRate, Validators.required],
+            flatRateAmount: [this.data.flatRateAmount, [Validators.min(0), Validators.max(10000)]],
+            rate: [this.data.rate, [Validators.required, Validators.min(0), Validators.max(100)]],
+            taxType: [this.data.taxType, Validators.required],
+            coverage: [this.data.coverage, Validators.required],
+            product: [this.data.product, Validators.required],
+        });
+
+        this._productService.products$.subscribe(products => {
+            this.products = products;
+        });
+
+        this._coverageService.coverages$.subscribe(coverages => {
+            this.coverages = coverages;
+        });
+
+        this._taxTypeService.taxTypes$.subscribe(taxesType => {
+            this.taxesType = taxesType;
         });
     }
 
-    @Output() formReady = new EventEmitter<UntypedFormGroup>();
-    formGroup!: UntypedFormGroup;
+    onSubmit(): void {
+        if (this.formGroup.invalid) return;
 
+        this.formGroup.disable();
 
-    ngOnInit(): void {
-        this._taxPrimeService.taxPrime$
-            // .pipe(takeUntil(this._unsubscribeAll))
-            // .subscribe((data: TaxPrime[]) => {
-            //     this.dataSource.data = data;
+        const updated = {
+            ...this.formGroup.value
+        };
 
-            //     this.selection.clear();
-
-            //     // If the data is not empty, set the selected taxPrime from the data
-            //     if (this.data.taxPrime && this.data.taxPrime.length > 0) {
-            //         this.selection.select(...this.data.taxPrime);
-            //     }
-
-            //     this._changeDetectorRef.detectChanges();
-            // });
+        this._TaxPrimeService.update(this.data.id,updated).subscribe({
+            next: () => {
+                this.snackBar.open(
+                    this.translocoService.translate('form.success.update'),
+                    undefined,
+                    { duration: 3000, panelClass: 'snackbar-success' }
+                );
+                this.dialogRef.close(true);
+            },
+            error: () => {
+                this.snackBar.open(
+                    this.translocoService.translate('form.errors.submission'),
+                    undefined,
+                    { duration: 3000, panelClass: 'snackbar-error' }
+                );
+                this.formGroup.enable();
+            }
+        });
     }
 
-    ngAfterViewInit() {
-        if (this.dataSource) {
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-        }
+    onCancel(): void {
+        this.dialogRef.close(false);
     }
-
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
-    }
-
-    preview() {
-        console.log('preview');
-    }
-
-    get visibleColumns() {
-        let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
-        columns.push('checkbox');
-        return columns;
-    }
-
-    isAllSelected() {
-        const numSelected = this.selection.selected.length;
-        const numRows = this.dataSource.data.length;
-        return numSelected === numRows;
-    }
-
-    masterToggle() {
-        this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.forEach(row => this.selection.select(row));
-        // add or remove all elements from the selection
-        this.formGroup.get('taxPrime')?.setValue(this.selection.selected);
-    }
-
-    toggleSelection(row: TaxPrime) {
-        this.selection.toggle(row);
-        // add or remove the element from the selection
-        this.formGroup.get('taxPrime')?.setValue(this.selection.selected);
-    }
-
-
-    trackByProperty(index: number, column: TableColumn<TaxPrime>) {
-        return column.property;
-    }
-
-    onSubmit() {
-
-        const taxPrime = this.selection.selected.map((coverage: TaxPrime) => coverage.id);
-
-        if (this.data.mode === 'add') {
-            // Add taxPrime to the product
-            this.formGroup.disable();
-            const updated = {
-                taxPrime: taxPrime,
-            };
-
-            // this._productService.addtaxPrime(this.data.product.id, updated).subscribe({
-            //     next: () => {
-            //         this.snackBar.open(
-            //             this.translocoService.translate('form.success.update'),
-            //             undefined,
-            //             { duration: 3000, panelClass: 'snackbar-success' }
-            //         );
-            //         this.dialogRef.close(true);
-            //     },
-            //     error: () => {
-            //         this.snackBar.open(
-            //             this.translocoService.translate('form.errors.submission'),
-            //             undefined,
-            //             { duration: 3000, panelClass: 'snackbar-error' }
-            //         );
-            //         this.formGroup.enable();
-            //     }
-            // });
-        } else if (this.data.mode === 'remove') {
-            // Remove taxPrime from the product
-            // this.formGroup.disable();
-            // const updated = {
-            //     taxPrime: taxPrime,
-            // };
-
-            // this._productService.removetaxPrime(this.data.product.id, updated).subscribe({
-            //     next: () => {
-            //         this.snackBar.open(
-            //             this.translocoService.translate('form.success.update'),
-            //             undefined,
-            //             { duration: 3000, panelClass: 'snackbar-success' }
-            //         );
-            //         this.dialogRef.close(true);
-            //     },
-            //     error: () => {
-            //         this.snackBar.open(
-            //             this.translocoService.translate('form.errors.submission'),
-            //             undefined,
-            //             { duration: 3000, panelClass: 'snackbar-error' }
-            //         );
-            //         this.formGroup.enable();
-            //     }
-            // });
-        }
-      
-    }
-
-    onCancel() {}
 }

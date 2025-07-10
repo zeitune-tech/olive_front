@@ -16,7 +16,7 @@ import { TaxTypeService } from "@core/services/settings/tax-type/tax-type.servic
 import { TypeFormComponent } from "../form/form.component";
 
 @Component({
-    selector: "app-TaxTypes-list",
+    selector: "app-taxes-type-list",
     templateUrl: "./list.component.html",
     styles: `
         /* Chrome, Safari, Edge, Opera */
@@ -61,26 +61,23 @@ export class TypeListComponent {
 
     tableOptions: TableOptions<TaxType> = {
         title: '',
-         //   id: string;
-    //   name: string;
-    //   nature: TaxNature;
         columns: [
                 {
                     property: 'name',
                     type: 'text',
-                    label:  'entities.TaxType.columns.name',
+                    label:  'entities.taxes-type.table.column.name',
                     visible: true,
                 },
                 {
                     property: 'nature',
                     type: 'text',
-                    label: 'entities.TaxType.columns.nature',
+                    label: 'entities.taxes-type.table.column.nature',
                     visible: true,
                 },
                
         ],
         imageOptions: {
-            label: 'TaxType.columns.logo',
+            label: 'tax-type.table.column.logo',
             property: 'logo',
             cssClasses: ['w-16 h-16']
         },
@@ -89,7 +86,7 @@ export class TypeListComponent {
         actions: [],
         renderItem: (element: TaxType, property: keyof TaxType) => {
             if (property === 'nature') {
-                return 'entities.tax_type.nature' + element.nature;
+                return 'entities.tax-type.nature' + element.nature;
             }
             return element[property];
         },
