@@ -10,7 +10,7 @@ import { CommissionPointOfSale } from './commission-point-of-sale.interface';
 export class CommissionPointOfSaleService {
   
 
-  baseUrl = environment.settings_url + '/commission-accessories';
+  baseUrl = environment.settings_url + '/commissions/contributors';
   private _commissionPointOfSale = new ReplaySubject<CommissionPointOfSale>(1);
   private _commissionsPointOfSale = new ReplaySubject<CommissionPointOfSale[]>(1);
   private _metadata = new ReplaySubject<RequestMetadata>(1);

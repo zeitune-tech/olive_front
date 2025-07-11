@@ -5,10 +5,10 @@
   <div class="flex justify-between items-end">
     <div class="flex flex-col">
       <h1 class="text-2xl md:text-4xl font-bold py-4">
-        {{ t('entities.commission-accessory-point-of-sale.table.title') }}
+        {{ t('entities.commission.table.accessory-point-of-sale') }}
       </h1>
       <p class="text-sm md:text-base text-gray-600">
-        {{ t('entities.commission-accessory-point-of-sale.table.description') }}
+        {{ t('entities.commission.table.accessory-description') }}
       </p>
     </div>
 
@@ -114,11 +114,11 @@
         <td mat-cell *matCellDef="let element" class="border-l min-w-32">
           <div class="w-full h-full flex items-center justify-around">
             <button mat-icon-button color="primary" (click)="onEdit(element)"
-              matTooltip="{{ t('entities.commission-accessory-point-of-sale_duration.actions.edit') }}">
+              matTooltip="{{ t('form.actions.edit') }}">
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button color="warn" (click)="onDelete(element)"
-              matTooltip="{{ t('entities.commission-accessory-point-of-sale_duration.actions.delete') }}">
+              matTooltip="{{ t('form.actions.delete') }}">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
@@ -137,7 +137,7 @@
       @let count = visibleColumns.length;
       <tr *matNoDataRow>
         <td [attr.colspan]="count" class="text-center py-4">
-          {{ t('entities.commission-accessory-point-of-sale.table.empty_state') }}
+          {{ t('entities.commission.table.accessory-empty_state') }}
         </td>
       </tr>
     </table>

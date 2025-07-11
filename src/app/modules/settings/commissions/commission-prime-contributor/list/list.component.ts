@@ -89,12 +89,12 @@ export class CommissionPrimeContributorListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { property: 'coverage', type: 'text', label: 'entities.commission-prime-point-of-sale.table.coverage', visible: true },
-                { property: 'contributorType', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributorType', visible: true },
-                { property: 'contributor', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributor', visible: true },
-                { property: 'managementRate', type: 'text', label: 'entities.commission-prime-point-of-sale.table.managementRate', visible: true },
-                { property: 'contributionRate', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributionRate', visible: true },
-                { property: 'dateEffective', type: 'text', label: 'entities.commission-prime-point-of-sale.table.dateEffective', visible: true },
+                { property: 'coverage', type: 'text', label: 'entities.commission.fields.coverage', visible: true },
+                { property: 'contributorType', type: 'text', label: 'entities.commission.fields.contributorType', visible: true },
+                { property: 'contributor', type: 'text', label: 'entities.commission.fields.contributor', visible: true },
+                { property: 'managementRate', type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
+                { property: 'contributionRate', type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
+                { property: 'dateEffective', type: 'text', label: 'entities.commission.fields.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
@@ -170,7 +170,7 @@ export class CommissionPrimeContributorListComponent implements OnInit {
     }
 
     onAdd(): void {
-        this._dialog.open(CommissionAccessoryContributorFormComponent, {
+        this._dialog.open(CommissionPrimeContributorFormComponent, {
             width: '600px',
             disableClose: true,
         }).afterClosed().subscribe((result) => {

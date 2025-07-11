@@ -84,11 +84,11 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { property: 'contributor', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributor', visible: true },
-                { property: 'contributorType', type: 'text', label: 'entities.commission-prime-point-of-sale.table.pointOfSale', visible: true },
-                { property: 'managementRate', type: 'text', label: 'entities.commission-prime-point-of-sale.table.managementRate', visible: true },
-                { property: 'contributionRate', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributionRate', visible: true },
-                { property: 'dateEffective', type: 'text', label: 'entities.commission-prime-point-of-sale.table.dateEffective', visible: true },
+                { property: 'contributor', type: 'text', label: 'entities.commission.fields.contributor', visible: true },
+                { property: 'contributorType', type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
+                { property: 'managementRate', type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
+                { property: 'contributionRate', type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
+                { property: 'dateEffective', type: 'text', label: 'entities.commission.fields.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],

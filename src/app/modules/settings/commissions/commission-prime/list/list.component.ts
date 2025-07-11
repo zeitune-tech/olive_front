@@ -79,12 +79,12 @@ export class CommissionPrimeListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { property: 'coverage', type: 'text', label: 'entities.commission-prime-point-of-sale.table.coverage', visible: true },
-                { property: 'typePointOfSale', type: 'text', label: 'entities.commission-prime-point-of-sale.table.typePointOfSale', visible: true },
-                { property: 'pointOfSale', type: 'text', label: 'entities.commission-prime-point-of-sale.table.pointOfSale', visible: true },
-                { property: 'managementRate', type: 'text', label: 'entities.commission-prime-point-of-sale.table.managementRate', visible: true },
-                { property: 'contributionRate', type: 'text', label: 'entities.commission-prime-point-of-sale.table.contributionRate', visible: true },
-                { property: 'dateEffective', type: 'text', label: 'entities.commission-prime-point-of-sale.table.dateEffective', visible: true },
+                { property: 'coverage', type: 'text', label: 'entities.commission.fields.coverage', visible: true },
+                { property: 'typePointOfSale', type: 'text', label: 'entities.commission.fields.typePointOfSale', visible: true },
+                { property: 'pointOfSale', type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
+                { property: 'managementRate', type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
+                { property: 'contributionRate', type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
+                { property: 'dateEffective', type: 'text', label: 'entities.commission.fields.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],

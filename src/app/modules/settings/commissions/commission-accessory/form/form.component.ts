@@ -66,7 +66,6 @@ export class CommissionAccessoryFormComponent implements OnInit {
               typePointOfSale: [this.data.typePointOfSale, Validators.required],
               pointOfSale: [this.data.pointOfSale, Validators.required],
               product: [this.data.product, Validators.required],
-              coverage: [this.data.coverage, Validators.required],
           });
   
           this._productService.products$.subscribe(products => {

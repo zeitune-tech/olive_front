@@ -80,11 +80,11 @@ export class CommissionAccessoryListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { property: "typePointOfSale", type: 'text', label: 'entities.commissionPointOfSale.typePointOfSale', visible: true },
-                { property: "pointOfSale", type: 'text', label: 'entities.commissionPointOfSale.pointOfSale', visible: true },
-                { property: "contributionRate", type: 'text', label: 'entities.commissionPointOfSale.commissionRate', visible: true },
-                { property: "managementRate", type: 'text', label: 'entities.commissionPointOfSale.managementRate', visible: true },
-                { property: "dateEffective", type: 'text', label: 'entities.commissionPointOfSale.dateEffective', visible: true },
+                { property: "typePointOfSale", type: 'text', label: 'entities.commission.fields.typePointOfSale', visible: true },
+                { property: "pointOfSale", type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
+                { property: "contributionRate", type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
+                { property: "managementRate", type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
+                { property: "dateEffective", type: 'text', label: 'entities.commission.fields.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
@@ -95,6 +95,16 @@ export class CommissionAccessoryListComponent implements OnInit {
                 return element[property] ?? '--';
             },
         };
+
+        this._commissionPointOfSale.getAll().subscribe({
+            next: (data: CommissionPointOfSale[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+            },
+            error: (error) => {
+                console.error('Error fetching commission point of sale data:', error);
+            }
+        });
 
         // Construction des lignes d’en-tête
         this.buildHeaderRows();

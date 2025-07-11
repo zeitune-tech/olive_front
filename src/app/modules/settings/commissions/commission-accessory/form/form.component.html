@@ -1,5 +1,15 @@
 <div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
-    <h2 mat-dialog-title>{{ t('entities.commission-point-of-sale.form.editTitle') || 'Modifier la couverture' }}</h2>
+    <div>
+        <h2 mat-dialog-title>
+            @if (mode === 'create') {
+                {{ t('entities.commission.form.accessory-create.title') }}
+            } @else if (mode === 'edit') {
+                {{ t('entities.commission.form.accessory-edit.title') }}
+            } @else {
+                {{ t('entities.commission.form.accessory-view.title') }}
+            }
+        </h2>
+    </div>
     <mat-divider></mat-divider>
 
     <mat-dialog-content class="py-4">
@@ -8,7 +18,7 @@
             <div class="flex flex-col gap-6">
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.commission-point-of-sale.form.product') }}</mat-label>
+                    <mat-label>{{ t('entities.commission.fields.product') }}</mat-label>
                     <mat-select formControlName="product" required>
                         <mat-option *ngFor="let product of products" [value]="product.id">
                             {{ product.name }}
@@ -20,19 +30,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.commission-point-of-sale.form.coverage') }}</mat-label>
-                    <mat-select formControlName="coverage" required>
-                        <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
-                            {{ coverage.reference.designation }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
-                        {{ t('form.errors.required') }}
-                    </mat-error>
-                </mat-form-field>
-
-                <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.commission-point-of-sale.form.typePointOfSale') }}</mat-label>
+                    <mat-label>{{ t('entities.commission.fields.typePointOfSale') }}</mat-label>
                     <mat-select formControlName="typePointOfSale" required>
                         <mat-option *ngFor="let type of typesPointOfSale" [value]="type.value">
                             {{ type.label }}
@@ -44,7 +42,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.commission-point-of-sale.form.pointOfSale') }}</mat-label>
+                    <mat-label>{{ t('entities.commission.fields.pointOfSale') }}</mat-label>
                     <mat-select formControlName="pointOfSale" required>
                         <mat-option *ngFor="let pointOfSale of pointsOfSale" [value]="pointOfSale.id">
                             {{ pointOfSale.name }}
@@ -56,7 +54,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.commission-point-of-sale.form.dateEffective') }}</mat-label>
+                    <mat-label>{{ t('entities.commission.fields.dateEffective') }}</mat-label>
                     <input matInput type="date" formControlName="dateEffective" required>
                     <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
                         {{ t('form.errors.required') }}
@@ -64,7 +62,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.commission-point-of-sale.form.managementRate') }}</mat-label>
+                    <mat-label>{{ t('entities.commission.fields.managementRate') }}</mat-label>
                     <input matInput type="number" formControlName="managementRate" required>
                     <mat-error *ngIf="formGroup.get('managementRate')?.hasError('required')">
                         {{ t('form.errors.required') }}
@@ -75,7 +73,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.commission-point-of-sale.form.contributionRate') }}</mat-label>
+                    <mat-label>{{ t('entities.commission.fields.contributionRate') }}</mat-label>
                     <input matInput type="number" formControlName="contributionRate" required>
                     <mat-error *ngIf="formGroup.get('contributionRate')?.hasError('required')">
                         {{ t('form.errors.required') }}

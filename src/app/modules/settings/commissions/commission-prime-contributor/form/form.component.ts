@@ -5,13 +5,13 @@ import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from '@core/services/settings/product/product.service';
 import { Product } from '@core/services/settings/product/product.interface';
-import { PointOfSale } from '@core/services/administration/point-of-sale/point-of-sale.interface';
-import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
-import { CommissionPointOfSale } from '@core/services/settings/commission-point-of-sale/commission-point-of-sale.interface';
-import { CommissionPointOfSaleService } from '@core/services/settings/commission-point-of-sale/commission-point-of-sale.service';
 import { Coverage } from '@core/services/settings/coverage/coverage.interface';
 import { CoverageService } from '@core/services/settings/coverage/coverage.service';
 import { CommissionPrimeFormComponent } from '../../commission-prime/form/form.component';
+import { CommissionContributor } from '@core/services/settings/commission-contributor/commission-contributor.interface';
+import { Contributor, ContributorType } from '@core/services/administration/contributor/contributor.interface';
+import { CommissionContributorService } from '@core/services/settings/commission-contributor/commission-contributor.service';
+import { ContributorService } from '@core/services/administration/contributor/contributor.service';
 
 @Component({
     selector: 'app-coverage-reference-edit',
@@ -24,23 +24,19 @@ export class CommissionPrimeContributorFormComponent implements OnInit {
  
      products: Product[] = [];
      coverages: Coverage[] = [];
-     typesPointOfSale: { label: string, value: string } [] = [
-         { label: 'Courtier', value: 'BROKER' },
-         { label: 'Agent Général', value: 'GENERAL_AGENT' },
-         { label: 'Bureau Direct', value: 'DIRECT_OFFICE' }
-     ];
-     pointsOfSale: PointOfSale[] = [];
+     contributors: Contributor[] = [];
+     contributorTypes: ContributorType[] = []
  
      mode: 'create' | 'edit' = 'create';
  
      constructor(
          private fb: FormBuilder,
          private dialogRef: MatDialogRef<CommissionPrimeFormComponent>,
-         @Inject(MAT_DIALOG_DATA) public data: CommissionPointOfSale,
-         private _commissionPointOfSaleService: CommissionPointOfSaleService,
+         @Inject(MAT_DIALOG_DATA) public data: CommissionContributor,
+         private _commissionContributorService: CommissionContributorService,
          private _productService: ProductService,
          private _coverageService: CoverageService,
-         private _pointOfSaleService: PointOfSaleService,
+         private _contributorService: ContributorService,
          private translocoService: TranslocoService,
          private snackBar: MatSnackBar
      ) {}
@@ -51,7 +47,7 @@ export class CommissionPrimeContributorFormComponent implements OnInit {
              this.mode = 'edit';
              this.dialogRef.updateSize('600px', 'auto');
          } else {
-             this.data = {} as CommissionPointOfSale;
+             this.data = {} as CommissionContributor;
              this.mode = 'create';
              this.dialogRef.updateSize('600px', 'auto');
          }
@@ -62,8 +58,8 @@ export class CommissionPrimeContributorFormComponent implements OnInit {
              calculationBase: ["PRIME", Validators.required],
              managementRate: [this.data.managementRate, [Validators.required, Validators.min(0), Validators.max(100)]],
              contributionRate: [this.data.contributionRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-             typePointOfSale: [this.data.typePointOfSale, Validators.required],
-             pointOfSale: [this.data.pointOfSale, Validators.required],
+             contributorType: [this.data.contributorType, Validators.required],
+             contributor: [this.data.contributor, Validators.required],
              product: [this.data.product, Validators.required],
              coverage: [this.data.coverage, Validators.required],
          });
@@ -76,9 +72,7 @@ export class CommissionPrimeContributorFormComponent implements OnInit {
              this.coverages = coverages;
          });
  
-         this._pointOfSaleService.pointsOfSale$.subscribe(pointsOfSale => {
-             this.pointsOfSale = pointsOfSale;
-         });
+    
      }
  
      onSubmit(): void {
@@ -90,7 +84,7 @@ export class CommissionPrimeContributorFormComponent implements OnInit {
              ...this.formGroup.value
          };
  
-         this._commissionPointOfSaleService.update(this.data.id,updated).subscribe({
+         this._commissionContributorService.update(this.data.id,updated).subscribe({
              next: () => {
                  this.snackBar.open(
                      this.translocoService.translate('form.success.update'),
