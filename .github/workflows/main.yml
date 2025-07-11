@@ -1,7 +1,7 @@
 name: Angular CI/CD
 on:
   push:
-    branches: main
+    branches: _
 jobs:
   build:
     runs-on: ubuntu-latest
