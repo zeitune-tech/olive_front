@@ -25,7 +25,7 @@ jobs:
   deploy:
     needs:
       - build
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/laminef-deploy-dev-11/07/2025' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
