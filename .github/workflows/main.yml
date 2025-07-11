@@ -50,3 +50,6 @@ jobs:
       - name: Deploy to server
         run: >
           scp -P ${{ secrets.SERVER_PORT }} -r olive_front/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/olive_dev/webapps/
+      - name: Rename browser directory to olive_frontend
+        run: >
+          ssh -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /var/www/olive_dev/webapps/ && if [ -d browser ]; then mv browser olive_frontend; fi"
