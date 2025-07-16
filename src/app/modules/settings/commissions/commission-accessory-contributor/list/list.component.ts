@@ -17,6 +17,10 @@ import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
 import { CommissionAccessoryContributorFormComponent } from "../form/form.component";
+import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import { CommissionContributorService } from "@core/services/settings/commission-contributor/commission-contributor.service";
+import { CommissionContributor } from "@core/services/settings/commission-contributor/commission-contributor.interface";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-products-list",
@@ -28,26 +32,28 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<CommissionContributor>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<CommissionContributor>([]); // Ajoute les données réelles ici
 
-        constructor(
+    constructor(
         private _productService: ProductService,
+        private _commissionContributorService: CommissionContributorService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _tanslateService: TranslocoService,
         private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._productService.products$
+
+        this._commissionContributorService.commissionContributors$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
+            .subscribe((data: CommissionContributor[]) => {
                 this.data = data;
                 this.dataSource.data = data;
             });
@@ -59,13 +65,13 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
             });
     }
 
-    
-    data: Product[] = [];
+
+    data: CommissionContributor[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<CommissionContributor>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
@@ -78,13 +84,17 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                
+                { property: 'contributor', type: 'text', label: 'entities.commission.fields.contributor', visible: true },
+                { property: 'contributorType', type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
+                { property: 'managementRate', type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
+                { property: 'contributionRate', type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
+                { property: 'dateEffective', type: 'text', label: 'entities.commission.fields.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [],
-            renderItem: (element: Product, property: keyof Product) => {
-            
+            renderItem: (element: CommissionContributor, property: keyof CommissionContributor) => {
+
 
                 return element[property] ?? '--';
             },
@@ -109,7 +119,7 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -133,6 +143,50 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
+    products: Product[] = []
+    searchCtrl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = new Product({});
+
+
+    openSelection() {
+        this._dialog.open(SelectDialogComponent, {
+            width: '700px',
+            data: {
+                items: this.products,
+            }
+        }).afterClosed().subscribe((product: Product) => {
+            if (product) {
+                this.selectedProduct = product;
+                // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                this.dataSource.paginator = this.paginator;
+                // this._changeDetectorRef.detectChanges();
+            }
+        })
+    }
+
+    onAdd(): void {
+        this._dialog.open(CommissionAccessoryContributorFormComponent, {
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        });
+    }
+
+    onDelete(product: Product): void {
+        this._dialog.open(ConfirmDeleteComponent, {
+            data: product,
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        });
+    }
+
     /**
         * Edit Product Product
         */
@@ -148,7 +202,7 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
         })
     }
 
-    
+
 
     onView(product: Product): void {
         //this._router.navigate(['/administration/products/list']);
@@ -160,20 +214,13 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
         }
     }
 
-    hasPermission(product: Product): boolean {
-        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm) {
-            return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-            return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-            return true;
-        } else
+    hasPermission(product: CommissionContributor): boolean {
+
             return false;
     }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<CommissionContributor>) {
         return column.property;
     }
 }

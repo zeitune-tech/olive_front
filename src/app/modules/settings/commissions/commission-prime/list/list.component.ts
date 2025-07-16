@@ -9,14 +9,16 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 import { PermissionsService } from "@core/permissions/permissions.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
-import { Product } from "@core/services/settings/product/product.interface";
-import { ProductService } from "@core/services/settings/product/product.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
 import { CommissionPrimeFormComponent } from "../form/form.component";
+import { CommissionPointOfSale } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.interface";
+import { CommissionPointOfSaleService } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.service";
+import { Product } from "@core/services/settings/product/product.interface";
+import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
 
 @Component({
     selector: "app-products-list",
@@ -28,26 +30,26 @@ export class CommissionPrimeListComponent implements OnInit {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<CommissionPointOfSale>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<CommissionPointOfSale>([]); // Ajoute les données réelles ici
 
-        constructor(
-        private _productService: ProductService,
+    constructor(
+        private _productService: CommissionPointOfSaleService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _tanslateService: TranslocoService,
         private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._productService.products$
+        this._productService.commissionsPointOfSale$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
+            .subscribe((data: CommissionPointOfSale[]) => {
                 this.data = data;
                 this.dataSource.data = data;
             });
@@ -59,32 +61,36 @@ export class CommissionPrimeListComponent implements OnInit {
             });
     }
 
-    
-    data: Product[] = [];
+
+    data: CommissionPointOfSale[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<CommissionPointOfSale>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
 
-
-
+    selectedProduct: Product = new Product({});
 
     ngOnInit(): void {
         // Initialisation de la configuration de la table
         this.tableOptions = {
             title: '',
             columns: [
-                
+                { property: 'coverage', type: 'text', label: 'entities.commission.fields.coverage', visible: true },
+                { property: 'typePointOfSale', type: 'text', label: 'entities.commission.fields.typePointOfSale', visible: true },
+                { property: 'pointOfSale', type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
+                { property: 'managementRate', type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
+                { property: 'contributionRate', type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
+                { property: 'dateEffective', type: 'text', label: 'entities.commission.fields.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [],
-            renderItem: (element: Product, property: keyof Product) => {
-            
+            renderItem: (element: CommissionPointOfSale, property: keyof CommissionPointOfSale) => {
+
 
                 return element[property] ?? '--';
             },
@@ -109,7 +115,7 @@ export class CommissionPrimeListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -133,10 +139,39 @@ export class CommissionPrimeListComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
+    products: Product[] = []
+    searchCtrl: UntypedFormControl = new UntypedFormControl();
+
+    openSelection() {
+        this._dialog.open(SelectDialogComponent, {
+            width: '700px',
+            data: {
+                items: this.products,
+            }
+        }).afterClosed().subscribe((product: Product) => {
+            if (product) {
+                this.selectedProduct = product;
+                this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                this.dataSource.paginator = this.paginator;
+                // this._changeDetectorRef.detectChanges();
+            }
+        })
+    }
+    onAdd() {
+        this._dialog.open(CommissionPrimeFormComponent, {
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        });
+    }
+
     /**
-        * Edit Product Product
+        * Edit CommissionPointOfSale CommissionPointOfSale
         */
-    onEdit(product: Product): void {
+    onEdit(product: CommissionPointOfSale): void {
         this._dialog.open(CommissionPrimeFormComponent, {
             data: product,
             width: '600px',
@@ -148,32 +183,33 @@ export class CommissionPrimeListComponent implements OnInit {
         })
     }
 
-    
+    onDelete(product: CommissionPointOfSale): void {
+        this._productService.delete(product.id).subscribe({
+            next: () => {
+                this._tanslateService.translate('form.success.delete');
+                this._productService.getAll().subscribe();
+            },
+            error: () => {
+                this._tanslateService.translate('form.errors.submission');
+            }
+        });
+    }
 
-    onView(product: Product): void {
+
+    onView(product: CommissionPointOfSale): void {
         //this._router.navigate(['/administration/products/list']);
     }
 
-    onButtonClick(product: Product, column: string): void {
-        if (column === 'productionRegistry') {
-            alert('Production Registry button clicked for product: ' + product.name);
-        }
+    onButtonClick(product: CommissionPointOfSale, column: string): void {
+
     }
 
-    hasPermission(product: Product): boolean {
-        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm) {
-            return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-            return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-            return true;
-        } else
-            return false;
+    hasPermission(product: CommissionPointOfSale): boolean {
+        return false;
     }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<CommissionPointOfSale>) {
         return column.property;
     }
 }

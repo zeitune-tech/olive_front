@@ -1,90 +1,69 @@
-<div class="w-full p-4" *transloco="let t;" tabindex="0">
-  <!-- ----------------------------------------------------- -->
-  <!-- En-tête de la page                                     -->
-  <!-- ----------------------------------------------------- -->
-  <div class="flex flex-col mb-6">
-    <h1 class="text-2xl md:text-4xl font-bold py-4">
-      {{ t('entities.product.table.title') }}
-    </h1>
-    <p class="text-sm md:text-base text-gray-600">
-      {{ t('entities.product.table.description') }}
-    </p>
+<div class="w-full p-4 flex flex-col gap-4" *transloco="let t;" tabindex="0">
+  <!-- --------------------------------------------- -->
+  <!-- En-tête de la page                            -->
+  <!-- --------------------------------------------- -->
+  <div class="flex justify-between items-end">
+    <div class="flex flex-col">
+      <h1 class="text-2xl md:text-4xl font-bold py-4">
+        {{ t('entities.commission.table.prime-point-of-sale') }}
+      </h1>
+      <p class="text-sm md:text-base text-gray-600">
+        {{ t('entities.commission.table.prime-description') }}
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
+      <span>{{ selectedProduct.name || t('product-selection.title') }}</span>
+      <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openSelection()">
+        {{ t('product-selection.change') }}
+      </button>
+    </div>
   </div>
 
-  <!-- ----------------------------------------------------- -->
-  <!-- Tableau                                               -->
-  <!-- ----------------------------------------------------- -->
-  <div class="overflow-y-hidden overflow-x-auto pb-4">
+  <!-- --------------------------------------------- -->
+  <!-- Barre de recherche                            -->
+  <!-- --------------------------------------------- -->
+  <div class="flex flex-col md:flex-row items-center gap-4 justify-between mt-6">
+    <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
+      <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
+      <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [formControl]="searchCtrl">
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button mat-raised-button color="primary" class="text-white" (click)="onAdd()">
+        {{ t('form.actions.add') }}
+      </button>
+    </div>
+      
+  </div>
+
+  <!-- --------------------------------------------- -->
+  <!-- Tableau                                       -->
+  <!-- --------------------------------------------- -->
+  <div class="overflow-auto">
     <table mat-table [dataSource]="dataSource" matSort class="w-full rounded-md bg-card">
 
-      <!-- ================================================= -->
-      <!-- Colonnes dynamiques                               -->
-      <!-- ================================================= -->
       @let columns = tableOptions.columns;
 
-      <!-- Boucle générale -->
-      <ng-container *ngFor="let column of columns; trackBy: trackByProperty"
-                    [ngSwitch]="column.type">
+      <!-- ============= Colonnes dynamiques ============= -->
+      <ng-container *ngFor="let column of columns; trackBy: trackByProperty" [ngSwitch]="column.type">
 
-        <!-- ---------- Colonnes « simples » (texte, image…) -------- -->
-        <ng-container *ngSwitchCase="'text'" [matColumnDef]="column.property">
-          <!-- En-tête : 2 lignes fusionnées verticalement -->
-          <th mat-header-cell *matHeaderCellDef
-              [attr.rowspan]="2"
-              mat-sort-header
-              class="uppercase">
-            {{ t(column.label) }}
-          </th>
-
-          <!-- Cellule de données -->
-          <td mat-cell *matCellDef="let row" [ngClass]="column.cssClasses">
-            {{ tableOptions.renderItem(row, column.property) }}
-          </td>
-        </ng-container>
-
-        <!-- ---------- Colonnes « button » (boutons d’action) -------- -->
-        <ng-container *ngSwitchCase="'button'" [matColumnDef]="column.property">
-          <!-- En-tête : 2 lignes fusionnées verticalement -->
-          <th mat-header-cell *matHeaderCellDef
-              [attr.rowspan]="2"
-              mat-sort-header
-              class="uppercase text-center">
-            {{ t(column.label) }}
-          </th>
-
-          <!-- Cellule de données -->
-          <td mat-cell *matCellDef="let row" class="text-center">
-            <button mat-button color="primary" (click)="onButtonClick(row, column.property)"
-                    [disabled]="!hasPermission(row)"
-                    class="w-full h-full">
-              {{ tableOptions.renderItem(row, column.property) }}
-            </button>
-          </td>
-        </ng-container>
-
-        <!-- ---------- Colonnes « collapse » (colspan) ------------ -->
+        <!-- ----------- COLONNES COLLAPSE --------------- -->
         <ng-container *ngSwitchCase="'collapse'">
-
-          <!-- Cellule PARENTE (ligne 1) -->
+          <!-- Cellule parente (ligne 1) -->
           <ng-container [matColumnDef]="column.property + '-parent'">
-            <th mat-header-cell *matHeaderCellDef
-                [attr.colspan]="column.collapseOptions?.length || 1"
-                class="uppercase text-center">
+            <th mat-header-cell *matHeaderCellDef [attr.colspan]="column.collapseOptions?.length"
+              class="uppercase text-center">
               {{ t(column.label) }}
             </th>
           </ng-container>
 
           <!-- Sous-colonnes (ligne 2 + données) -->
-          <ng-container *ngFor="let child of column.collapseOptions"
-                        [matColumnDef]="child.property">
-
-            <!-- En-tête (ligne 2) -->
-            <th mat-header-cell *matHeaderCellDef
-                mat-sort-header
-                class="uppercase">
+          <ng-container *ngFor="let child of column.collapseOptions" [matColumnDef]="child.property">
+            <!-- En-tête ligne 2 -->
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="uppercase">
               {{ t(child.label) }}
             </th>
-
             <!-- Cellule de données -->
             <td mat-cell *matCellDef="let row">
               {{ tableOptions.renderItem(row, child.property) }}
@@ -92,74 +71,83 @@
           </ng-container>
         </ng-container>
 
-        <!-- (Ajoute ici d’autres *ngSwitchCase* pour badge, image, etc.) -->
+        <!-- ----------- COLONNES TEXTE ------------------- -->
+        <ng-container *ngSwitchCase="'text'" [matColumnDef]="column.property">
+          <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" mat-sort-header class="uppercase">
+            {{ t(column.label) }}
+          </th>
+          <td mat-cell *matCellDef="let row" [ngClass]="column.cssClasses">
+            {{ tableOptions.renderItem(row, column.property) }}
+          </td>
+        </ng-container>
 
+        <!-- ----------- COLONNES INPUT ------------------- -->
+        <ng-container *ngSwitchCase="'input'" [matColumnDef]="column.property">
+          <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" mat-sort-header class="uppercase">
+            {{ t(column.label) }}
+          </th>
+          <td mat-cell *matCellDef="let row" [ngClass]="column.cssClasses">
+            <input type="text" class="border p-2 rounded w-28" [value]="row[column.property]">
+          </td>
+        </ng-container>
+
+        <!-- ----------- COLONNES SELECT ------------------ -->
+        <ng-container *ngSwitchCase="'select'" [matColumnDef]="column.property">
+          <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" mat-sort-header class="uppercase">
+            {{ t(column.label) }}
+          </th>
+          <td mat-cell *matCellDef="let row" [ngClass]="column.cssClasses">
+            <mat-select class="w-full border p-1 min-w-28" [value]="row[column.property]">
+              <mat-option *ngFor="let opt of column.options" [value]="opt.value">
+                {{ t(opt.label) }}
+              </mat-option>
+            </mat-select>
+          </td>
+        </ng-container>
       </ng-container>
 
-      <!-- ================================================= -->
-      <!-- Colonne ACTIONS                                   -->
-      <!-- ================================================= -->
+      <!-- ============= COLONNE ACTIONS ================= -->
       <ng-container matColumnDef="actions">
-        <!-- En-tête fusionné verticalement -->
-        <th mat-header-cell *matHeaderCellDef
-            [attr.rowspan]="2"
-            mat-sort-header
-            class="uppercase text-center border-l">
+        <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2" class="uppercase text-center border-l">
           {{ 'Actions' }}
         </th>
-
-        <!-- Cellule de données -->
-        <td mat-cell *matCellDef="let element" class="border-l">
-          <div class="w-full h-full flex items-center justify-around gap-4">
-            @if (hasPermission(element)) {
-              <!-- <button mat-icon-button color="accent" (click)="onView(element)" matTooltip="{{ t('action_button.view') }}">
-                  <mat-icon>visibility</mat-icon> 
-              </button> -->
-
-              <button mat-icon-button color="accent" (click)="onEdit(element)" matTooltip="{{ t('action_button.edit') }}">
-                  <mat-icon>edit</mat-icon> 
-              </button>
-
-            } @else {
-              <button mat-icon-button color="accent" disabled matTooltip="{{ t('action_button.no_permission') }}">
-                  <mat-icon>lock</mat-icon> 
-              </button>
-            }
+        <td mat-cell *matCellDef="let element" class="border-l min-w-32">
+          <div class="w-full h-full flex items-center justify-around">
+            <button mat-icon-button color="primary" (click)="onEdit(element)"
+              matTooltip="{{ t('form.actions.edit') }}">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(element)"
+              matTooltip="{{ t('form.actions.delete') }}">
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
         </td>
       </ng-container>
 
-      <!-- ================================================= -->
-      <!-- LIGNES D’EN-TÊTE                                  -->
-      <!-- ================================================= -->
-      <tr mat-header-row *matHeaderRowDef="groupHeader"></tr> <!-- ligne 1 -->
-      <tr mat-header-row *matHeaderRowDef="subHeader"></tr>   <!-- ligne 2 -->
+      <!-- ============= LIGNES D’EN-TÊTE ================ -->
+      <tr mat-header-row *matHeaderRowDef="groupHeader"></tr>
+      <tr mat-header-row *matHeaderRowDef="subHeader"></tr>
 
-      <!-- ================================================= -->
-      <!-- LIGNES DE DONNÉES                                 -->
-      <!-- ================================================= -->
-      <tr mat-row *matRowDef="let row; columns: visibleColumns;"
-          @fadeInBottom
-          class="trans-ease-out cursor-pointer">
+      <!-- ============= LIGNES DE DONNÉES =============== -->
+      <tr mat-row *matRowDef="let row; columns: visibleColumns;" @fadeInBottom class="trans-ease-out cursor-pointer">
       </tr>
 
-      <!-- Ligne « Aucune donnée » -->
+      <!-- ============= Aucune donnée =================== -->
       @let count = visibleColumns.length;
       <tr *matNoDataRow>
         <td [attr.colspan]="count" class="text-center py-4">
-          {{ t('entities.product.table.empty_state') }}
+          {{ t('entities.commission.table.prime-empty_state') }}
         </td>
       </tr>
     </table>
   </div>
 
-  <!-- ----------------------------------------------------- -->
-  <!-- Paginator                                             -->
-  <!-- ----------------------------------------------------- -->
+  <!-- --------------------------------------------- -->
+  <!-- Paginator                                     -->
+  <!-- --------------------------------------------- -->
   @let pageSizeOptions = tableOptions.pageSizeOptions;
   @let pageSize = tableOptions.pageSize;
-  <mat-paginator class="rounded-b-md border-t"
-                 [pageSizeOptions]="pageSizeOptions"
-                 [pageSize]="pageSize">
+  <mat-paginator class="rounded-b-md border-t" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize">
   </mat-paginator>
 </div>

@@ -30,7 +30,7 @@ import { CommissionAccessoryContributorListComponent } from "./commission-access
 import { TaxCommissionListComponent } from "./tax-commission/list/list.component";
 import { TaxCommissionFormComponent } from "./tax-commission/form/form.component";
 import { TaxCommissionContributorFormComponent } from "./tax-commission-contributor/form/form.component";
-import { TaxCommissionContributorListComponent } from "./tax-commission-contributor/list/list.component";
+import { TaxCommissionsContributorListComponent } from "./tax-commission-contributor/list/list.component";
 
 @NgModule({
     declarations: [
@@ -45,7 +45,7 @@ import { TaxCommissionContributorListComponent } from "./tax-commission-contribu
         TaxCommissionListComponent,
         TaxCommissionFormComponent,
         TaxCommissionContributorFormComponent,
-        TaxCommissionContributorListComponent
+        TaxCommissionsContributorListComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -66,7 +66,8 @@ import { TaxCommissionContributorListComponent } from "./tax-commission-contribu
         MatProgressSpinnerModule,
         MatStepperModule,
         MatCheckboxModule,
-        MatRadioModule
+        MatRadioModule,
+        SharedModule
     ],
     providers: [],
     exports: [],

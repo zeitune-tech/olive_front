@@ -636,7 +636,48 @@
         }
       }
     },
-    
+    "commission": {
+      "table": {
+        "prime-point-of-sale": "Commission / Prime Points de vente",
+        "prime-contributor": "Commission / Prime Apporteurs",
+        "accessory-point-of-sale": "Commission / Accessoires Points de vente",
+        "accessory-contributor": "Commission / Accessoires Apporteurs",
+        "prime-description": "Liste des commissions sur primes",
+        "accessory-description": "Liste des commissions sur accessoires",
+        "prime-empty_state": "Aucune commission sur prime trouvée",
+        "accessory-empty_state": "Aucune commission sur accessoire trouvée"
+      },
+      "fields": {
+        "product": "Produit",
+        "managementEntity": "Entité de gestion",
+        "coverage": "Couverture",
+        "typePointOfSale": "Type de point de vente",
+        "pointOfSale": "Point de vente",
+        "contributor": "Apporteur",
+        "contributorType": "Type d'apporteur",
+        "managementRate": "Taux de gestion",
+        "contributionRate": "Taux de contribution",
+        "dateEffective": "Date d'effet"
+      },
+      "form": {
+        "prime-edit": {
+          "title": "Modifier la commission sur prime",
+          "subtitle": "Veuillez remplir les champs requis pour modifier la commission sur prime"
+        },
+        "accessory-edit": {
+          "title": "Modifier la commission sur accessoire",
+          "subtitle": "Veuillez remplir les champs requis pour modifier la commission sur accessoire"
+        },
+        "prime-create": {
+          "title": "Créer une commission sur prime",
+          "subtitle": "Veuillez remplir les champs requis pour créer une commission sur prime"
+        },
+        "accessory-create": {
+          "title": "Créer une commission sur accessoire",
+          "subtitle": "Veuillez remplir les champs requis pour créer une commission sur accessoire"
+        }
+      }
+    },
     "base_tax": {
       "label": "Taxes sur primes",
       "description": "Définition des taxes sur primes.",
@@ -693,65 +734,6 @@
         "nature": {
           "NORMAL": "Régime Normal",
           "EXCEPTIONAL": "Régime Exceptionnel"
-        }
-      }
-    },
-    "commission": {
-      "label": "Commission",
-      "description": "Définition des commissions de gestion et d'apport.",
-      "form": {
-        "title": "Configuration des commissions",
-        "subtitle": "Ajouter ou modifier une commission"
-      },
-      "table": {
-        "title": "Commissions",
-        "description": "Liste des commissions configurées",
-        "empty_state": "Aucune commission trouvée"
-      },
-      "fields": {
-        "dateEffective": "Date d'effet",
-        "calculationBase": "Base de calcul",
-        "managementRate": "Taux de gestion",
-        "contributionRate": "Taux d'apport",
-        "pointOfSale": "Point de vente",
-        "product": "Produit",
-        "managementEntity": "Entité de gestion",
-        "actions": "Actions"
-      },
-      "options": {
-        "calculationBase": {
-          "PRIME": "Prime",
-          "ACCESSORY": "Accessoire"
-        }
-      }
-    },
-    "commission_contributor": {
-      "label": "Commission apporteur",
-      "description": "Définir les taux de commission attribués aux contributeurs et à leurs entités supérieures.",
-      "form": {
-        "title": "Configuration des commissions apporteurs",
-        "subtitle": "Ajouter ou modifier une commission apporteur"
-      },
-      "table": {
-        "title": "Commissions / Apporteurs",
-        "description": "Liste des commissions par contributeur",
-        "empty_state": "Aucune commission apporteur trouvée"
-      },
-      "fields": {
-        "dateEffective": "Date d'effet",
-        "commissionBase": "Base de commission",
-        "contributorRate": "Taux de l'apporteur",
-        "upperEntityContributorRate": "Taux de l'entité supérieure",
-        "contributor": "Apporteur",
-        "product": "Produit",
-        "managementEntity": "Entité de gestion",
-        "actions": "Actions"
-      },
-      "options": {
-        "commissionBase": {
-          "PRIME": "Sur la prime",
-          "ACCESSORY": "Sur les accessoires",
-          "GARANTIE": "Sur la garantie"
         }
       }
     },
@@ -1247,6 +1229,7 @@
       "select": "Sélectionner une option"
     },
     "actions": {
+      "add": "Ajouter",
       "save": "Enregistrer",
       "cancel": "Annuler",
       "edit": "Modifier",

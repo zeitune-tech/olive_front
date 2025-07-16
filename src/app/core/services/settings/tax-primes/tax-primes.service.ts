@@ -3,31 +3,31 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Observable, ReplaySubject, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { TaxAccessory } from './tax-primes.interface';
 import { RequestMetadata } from '../../common.interface';
+import { TaxPrime } from './tax-primes.interface';
 
 @Injectable({ providedIn: 'root' })
-export class TaxAccessoryService {
+export class TaxPrimeService {
 
-  baseUrl = environment.settings_url + '/app/tax-accessories';
-  private _taxAccessory = new ReplaySubject<TaxAccessory>(1);
-  private _taxAccessories = new ReplaySubject<TaxAccessory[]>(1);
+  baseUrl = environment.settings_url + '/tax-accessories';
+  private _taxPrime = new ReplaySubject<TaxPrime>(1);
+  private _taxPrimes = new ReplaySubject<TaxPrime[]>(1);
   private _metadata = new ReplaySubject<RequestMetadata>(1);
 
-  set taxAccessory(value: TaxAccessory) {
-    this._taxAccessory.next(value);
+  set taxPrime(value: TaxPrime) {
+    this._taxPrime.next(value);
   }
 
-  get taxAccessory$() {
-    return this._taxAccessory.asObservable();
+  get taxPrime$() {
+    return this._taxPrime.asObservable();
   }
 
-  set taxAccessories(value: TaxAccessory[]) {
-    this._taxAccessories.next(value);
+  set taxPrimes(value: TaxPrime[]) {
+    this._taxPrimes.next(value);
   }
 
-  get taxAccessories$() {
-    return this._taxAccessories.asObservable();
+  get taxPrimes$() {
+    return this._taxPrimes.asObservable();
   }
 
   set metadata(value: RequestMetadata) {
@@ -40,43 +40,43 @@ export class TaxAccessoryService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  create(taxAccessory: TaxAccessory): Observable<TaxAccessory> {
-    return this._httpClient.post<TaxAccessory>(`${this.baseUrl}`, taxAccessory).pipe(
-      tap((res) => this.taxAccessory = res),
-      catchError(() => of({} as TaxAccessory))
+  create(taxPrime: TaxPrime): Observable<TaxPrime> {
+    return this._httpClient.post<TaxPrime>(`${this.baseUrl}`, taxPrime).pipe(
+      tap((res) => this.taxPrime = res),
+      catchError(() => of({} as TaxPrime))
     );
   }
 
-  get(id: string): Observable<TaxAccessory> {
-    return this._httpClient.get<TaxAccessory>(`${this.baseUrl}/${id}`).pipe(
-      tap((res) => this.taxAccessory = res),
-      catchError(() => of({} as TaxAccessory))
+  get(id: string): Observable<TaxPrime> {
+    return this._httpClient.get<TaxPrime>(`${this.baseUrl}/${id}`).pipe(
+      tap((res) => this.taxPrime = res),
+      catchError(() => of({} as TaxPrime))
     );
   }
 
-  getAll(): Observable<TaxAccessory[]> {
-    return this._httpClient.get<TaxAccessory[]>(this.baseUrl).pipe(
-      tap((response: TaxAccessory[]) => {
-        this.taxAccessories = response;
+  getAll(): Observable<TaxPrime[]> {
+    return this._httpClient.get<TaxPrime[]>(this.baseUrl).pipe(
+      tap((response: TaxPrime[]) => {
+        this.taxPrimes = response;
         return response;
       }),
-      catchError(() => of([] as TaxAccessory[]))
+      catchError(() => of([] as TaxPrime[]))
     );
   }
 
-  getWithFilters(filters: HttpParams): Observable<TaxAccessory[]> {
-    return this._httpClient.get<TaxAccessory[]>(this.baseUrl, { params: filters }).pipe(
-      catchError(() => of([] as TaxAccessory[]))
+  getWithFilters(filters: HttpParams): Observable<TaxPrime[]> {
+    return this._httpClient.get<TaxPrime[]>(this.baseUrl, { params: filters }).pipe(
+      catchError(() => of([] as TaxPrime[]))
     );
   }
 
-  update(id: string, taxAccessory: Partial<TaxAccessory>): Observable<TaxAccessory> {
-    return this._httpClient.put<TaxAccessory>(`${this.baseUrl}/${id}`, taxAccessory).pipe(
+  update(id: string, taxPrime: Partial<TaxPrime>): Observable<TaxPrime> {
+    return this._httpClient.put<TaxPrime>(`${this.baseUrl}/${id}`, taxPrime).pipe(
       tap((res) => {
-        this.taxAccessory = res;
+        this.taxPrime = res;
         return res;
       }),
-      catchError(() => of({} as TaxAccessory))
+      catchError(() => of({} as TaxPrime))
     );
   }
 }

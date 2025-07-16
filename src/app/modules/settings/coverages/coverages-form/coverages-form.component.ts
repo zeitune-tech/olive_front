@@ -14,10 +14,12 @@ import { TranslocoService } from "@jsverse/transloco";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { ProductEditComponent } from "../../products/edit/edit.component";
+import {animations} from "@lhacksrt/animations";
 
 @Component({
     selector: "app-coverages-form",
     templateUrl: "./coverages-form.component.html",
+    animations: animations
 })
 export class CoveragesFormComponent implements OnInit {
 
@@ -188,7 +190,7 @@ export class CoveragesFormComponent implements OnInit {
                 }
             });
         }
-      
+
     }
 
     onCancel() {}
