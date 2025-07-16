@@ -10,11 +10,11 @@ import { CoverageDuration } from "./coverage-duration.interface";
 })
 export class CoverageDurationService {
 
-    baseUrl = environment.settings_url + '/coverage-durations';
+    baseUrl = environment.settings_url + '/app/coverage-durations';
     private _coverageDuration: ReplaySubject<CoverageDuration> = new ReplaySubject<CoverageDuration>(1);
     private _coverageDurations: ReplaySubject<CoverageDuration[]> = new ReplaySubject<CoverageDuration[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
-        
+
 
     set coverageDuration(value: CoverageDuration) {
         this._coverageDuration.next(value);

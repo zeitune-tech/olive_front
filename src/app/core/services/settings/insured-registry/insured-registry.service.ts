@@ -10,11 +10,11 @@ import { InsuredRegistry } from "./insured-registry.interface";
 })
 export class InsuredRegistryService {
 
-    baseUrl = environment.settings_url + '/insured-registries';
+    baseUrl = environment.settings_url + '/app/insured-registries';
     private _insuredRegistry: ReplaySubject<InsuredRegistry> = new ReplaySubject<InsuredRegistry>(1);
     private _insuredRegistries: ReplaySubject<InsuredRegistry[]> = new ReplaySubject<InsuredRegistry[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
-        
+
 
     set insuredRegistry(value: InsuredRegistry) {
         this._insuredRegistry.next(value);

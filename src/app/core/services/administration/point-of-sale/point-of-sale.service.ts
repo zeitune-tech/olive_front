@@ -9,10 +9,10 @@ import { RequestMetadata } from "../../common.interface";
 @Injectable()
 export class PointOfSaleService {
 
-    private baseUrl = environment.administration_url + '/points-of-sale';
+    private baseUrl = environment.administration_url + '/app/points-of-sale';
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
     private _brokersMetadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
-    
+
     private _pointOfSale: ReplaySubject<PointOfSale> = new ReplaySubject<PointOfSale>(1);
     private _pointsOfSale: ReplaySubject<PointOfSale[]> = new ReplaySubject<PointOfSale[]>(1);
     private _brokers: ReplaySubject<BrokerPointOfSale[]> = new ReplaySubject<BrokerPointOfSale[]>(1);

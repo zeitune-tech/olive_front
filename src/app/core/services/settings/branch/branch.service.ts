@@ -10,7 +10,7 @@ import { Branch } from "./branch.interface";
 })
 export class BranchService {
 
-    baseUrl = environment.settings_url + "/branches";
+    baseUrl = environment.settings_url + "/app/branches";
     private _branch: ReplaySubject<Branch> = new ReplaySubject<Branch>(1);
     private _branches: ReplaySubject<Branch[]> = new ReplaySubject<Branch[]>(1);
 
@@ -39,7 +39,7 @@ export class BranchService {
     get metadata$() {
         return this._metadata.asObservable();
     }
-            
+
     constructor(
         private _httpClient: HttpClient
     ) {

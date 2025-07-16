@@ -10,7 +10,7 @@ import { Product } from "./product.interface";
 })
 export class ProductService {
 
-    baseUrl = environment.settings_url + "/products";
+    baseUrl = environment.settings_url + "/app/products";
     private _product: ReplaySubject<Product> = new ReplaySubject<Product>(1);
     private _products: ReplaySubject<Product[]> = new ReplaySubject<Product[]>(1);
 
@@ -39,7 +39,7 @@ export class ProductService {
     get metadata$() {
         return this._metadata.asObservable();
     }
-            
+
     constructor(
         private _httpClient: HttpClient
     ) {

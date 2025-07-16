@@ -9,7 +9,7 @@ import { RequestMetadata } from '../../common.interface';
 @Injectable({ providedIn: 'root' })
 export class CommissionTaxService {
 
-  baseUrl = environment.settings_url + '/commission-taxes';
+  baseUrl = environment.settings_url + '/app/commission-taxes';
 
   private _commissionTax = new ReplaySubject<CommissionTax>(1);
   private _commissionTaxes = new ReplaySubject<CommissionTax[]>(1);

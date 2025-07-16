@@ -9,7 +9,7 @@ import { RequestMetadata } from '../../common.interface';
 @Injectable({ providedIn: 'root' })
 export class CommissionContributorService {
 
-  baseUrl = environment.settings_url + '/commission-contributors';
+  baseUrl = environment.settings_url + '/app/commission-contributors';
   private _commissionContributor = new ReplaySubject<CommissionContributor>(1);
   private _commissionContributors = new ReplaySubject<CommissionContributor[]>(1);
   private _metadata = new ReplaySubject<RequestMetadata>(1);

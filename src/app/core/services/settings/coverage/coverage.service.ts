@@ -10,11 +10,11 @@ import { Coverage } from "./coverage.interface";
 })
 export class CoverageService {
 
-    baseUrl = environment.settings_url + '/coverages';
+    baseUrl = environment.settings_url + '/app/coverages';
     private _coverage: ReplaySubject<Coverage> = new ReplaySubject<Coverage>(1);
     private _coverages: ReplaySubject<Coverage[]> = new ReplaySubject<Coverage[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
-        
+
 
     set coverage(value: Coverage) {
         this._coverage.next(value);
