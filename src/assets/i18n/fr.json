@@ -627,18 +627,10 @@
       },
       "options": {
         "nature": {
-<<<<<<< HEAD
           "NEW_BUSINESS": "Nouvelle Affaire",
           "MODIFICATION": "Modification Standard",
           "SUSPENSION": "Arrêt de couverture",
           "REINSTATEMENT": "Reconduction"
-
-=======
-          "NEW_BUSINESS": "Affaire nouvelle",
-          "MODIFICATION": "Modification",
-          "SUSPENSION": "Suspension",
-          "REINSTATEMENT": "Remise en vigueur"
->>>>>>> lhacksrt-commission-refactoring-11/07/2025
         }
       }
     },
@@ -729,6 +721,42 @@
         "pointOfSale": "Point de vente",
         "managementEntity": "Entité de gestion",
         "actions": "Actions"
+      },
+      "options": {
+        "calculationBase": {
+          "PRIME": "Prime",
+          "ACCESSORY": "Accessoire"
+        },
+        "isFlat": {
+          "true": "Oui (montant fixe)",
+          "false": "Non (en pourcentage)"
+        }
+      }
+    },
+    "tax-commission": {
+      "table": {
+        "point-of-sale": "Taxes sur commissions / Points de vente",
+        "contributor": "Taxes sur commissions / Apporteurs",
+        "title": "Taxes sur commissions",
+        "description": "Liste des taxes sur commissions appliquées aux produits",
+        "empty_state": "Aucune taxe sur commission trouvée"
+      },
+      "fields": {
+        "name": "Nom de la commission",
+        "taxes": "Taxes concernées",
+        "dateEffective": "Date d'effet",
+        "product": "Produit",
+        "pointOfSale": "Point de vente",
+        "contributor": "Apporteur",
+        "managementEntity": "Entité de gestion",
+        "pointOfSaleType": "Type de point de vente",
+        "contributorType": "Type d'apporteur",
+        "rate": "Taux (%)",
+        "toWithhold": "À retenir"
+      },
+      "form": {
+        "title": "Taxe sur commission",
+        "subtitle": "Veuillez remplir les champs requis pour la taxe sur commission"
       },
       "options": {
         "calculationBase": {

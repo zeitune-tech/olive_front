@@ -10,7 +10,7 @@ import { ProductionRegistry } from "./production-registry.interface";
 })
 export class ProductionRegistryService {
 
-    baseUrl = environment.settings_url + '/app/production-registries';
+    baseUrl = environment.settings_url + '/production-registries';
     private _productionRegistry: ReplaySubject<ProductionRegistry> = new ReplaySubject<ProductionRegistry>(1);
     private _productionRegistries: ReplaySubject<ProductionRegistry[]> = new ReplaySubject<ProductionRegistry[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);

@@ -10,7 +10,7 @@ import { CoverageReference } from "./coverage-reference.interface";
 })
 export class CoverageReferenceService {
 
-    baseUrl = environment.settings_url + '/app/coverage-references';
+    baseUrl = environment.settings_url + '/coverage-references';
     private _coverageReferential: ReplaySubject<CoverageReference> = new ReplaySubject<CoverageReference>(1);
     private _coverageReferences: ReplaySubject<CoverageReference[]> = new ReplaySubject<CoverageReference[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);

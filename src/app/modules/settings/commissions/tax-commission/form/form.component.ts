@@ -7,11 +7,11 @@ import { ProductService } from '@core/services/settings/product/product.service'
 import { Product } from '@core/services/settings/product/product.interface';
 import { PointOfSale } from '@core/services/administration/point-of-sale/point-of-sale.interface';
 import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
-import { CommissionPointOfSale } from '@core/services/settings/commission-point-of-sale/commission-point-of-sale.interface';
-import { CommissionPointOfSaleService } from '@core/services/settings/commission-point-of-sale/commission-point-of-sale.service';
 import { Coverage } from '@core/services/settings/coverage/coverage.interface';
 import { CoverageService } from '@core/services/settings/coverage/coverage.service';
 import { CommissionPrimeFormComponent } from '../../commission-prime/form/form.component';
+import { TaxCommissionsPointOfSale } from '@core/services/settings/commission-tax-point-ofsale/commission-tax-point-of-sale.interface';
+import { TaxCommissionsPointOfSaleService } from '@core/services/settings/commission-tax-point-ofsale/commission-tax-point-of-sale.service';
 
 @Component({
     selector: 'app-coverage-reference-edit',
@@ -37,8 +37,8 @@ export class TaxCommissionFormComponent implements OnInit {
      constructor(
          private fb: FormBuilder,
          private dialogRef: MatDialogRef<CommissionPrimeFormComponent>,
-         @Inject(MAT_DIALOG_DATA) public data: CommissionPointOfSale,
-         private _commissionPointOfSaleService: CommissionPointOfSaleService,
+         @Inject(MAT_DIALOG_DATA) public data: TaxCommissionsPointOfSale,
+         private _taxCommissionsPointOfSaleService: TaxCommissionsPointOfSaleService,
          private _productService: ProductService,
          private _coverageService: CoverageService,
          private _pointOfSaleService: PointOfSaleService,
@@ -52,7 +52,7 @@ export class TaxCommissionFormComponent implements OnInit {
              this.mode = 'edit';
              this.dialogRef.updateSize('600px', 'auto');
          } else {
-             this.data = {} as CommissionPointOfSale;
+             this.data = {} as TaxCommissionsPointOfSale;
              this.mode = 'create';
              this.dialogRef.updateSize('600px', 'auto');
          }
@@ -60,13 +60,10 @@ export class TaxCommissionFormComponent implements OnInit {
  
          this.formGroup = this.fb.group({
              dateEffective: [this.data.dateEffective, Validators.required],
-             calculationBase: ["PRIME", Validators.required],
-             managementRate: [this.data.managementRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-             contributionRate: [this.data.contributionRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-             typePointOfSale: [this.data.typePointOfSale, Validators.required],
+             rate: [this.data.rate, [Validators.required, Validators.min(0), Validators.max(100)]],
+             pointOfSaleType: [this.data.pointOfSaleType, Validators.required],
              pointOfSale: [this.data.pointOfSale, Validators.required],
              product: [this.data.product, Validators.required],
-             coverage: [this.data.coverage, Validators.required],
          });
  
          this._productService.products$.subscribe(products => {
@@ -91,7 +88,7 @@ export class TaxCommissionFormComponent implements OnInit {
              ...this.formGroup.value
          };
  
-         this._commissionPointOfSaleService.update(this.data.id,updated).subscribe({
+         this._taxCommissionsPointOfSaleService.update(this.data.id,updated).subscribe({
              next: () => {
                  this.snackBar.open(
                      this.translocoService.translate('form.success.update'),

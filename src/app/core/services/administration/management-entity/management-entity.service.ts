@@ -7,7 +7,7 @@ import { HttpClient } from "@angular/common/http";
 @Injectable()
 export class ManagementEntityService {
 
-    baseUrl = environment.administration_url + '/app/management-entities';
+    baseUrl = environment.administration_url + '/management-entities';
     private _entity: ReplaySubject<ManagementEntity> = new ReplaySubject<ManagementEntity>(1);
 
     constructor(
