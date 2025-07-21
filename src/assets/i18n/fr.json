@@ -596,10 +596,10 @@
       },
       "options": {
         "actType": {
-          "NEW_BUSINESS": "Affaire nouvelle",
-          "MODIFICATION": "Modification",
-          "SUSPENSION": "Suspension",
-          "REINSTATEMENT": "Remise en vigueur"
+          "NEW_BUSINESS": "Nouvelle affaire",
+          "MODIFICATION": "Modification standard",
+          "SUSPENSION": "Arrêt de couverture",
+          "REINSTATEMENT": "Reconduction"
 
         },
         "accessoryType": {
@@ -628,10 +628,10 @@
       },
       "options": {
         "nature": {
-          "NEW_BUSINESS": "Nouvelle Affaire",
-          "MODIFICATION": "Modification Standard",
-          "SUSPENSION": "Arrêt de couverture",
-          "REINSTATEMENT": "Reconduction"
+          "NEW_BUSINESS": "Affaire nouvelle",
+          "MODIFICATION": "Modification",
+          "SUSPENSION": "Suspension",
+          "REINSTATEMENT": "Remise en vigueur"
 
         }
       }
