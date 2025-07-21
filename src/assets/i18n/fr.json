@@ -600,7 +600,6 @@
           "MODIFICATION": "Modification",
           "SUSPENSION": "Suspension",
           "REINSTATEMENT": "Remise en vigueur"
-
         },
         "accessoryType": {
           "RISQUES": "Risques",
@@ -609,7 +608,7 @@
         }
       }
     },
-    "endorsment":{
+    "endorsment": {
       "label": "Avenant",
       "description": "Les diffénts avenants et leur fonctionnement.",
       "form": {
@@ -622,7 +621,7 @@
         "empty_state": "Aucun type d'avenant trouvé"
       },
       "fields": {
-        "designation":"Désignation",
+        "designation": "Désignation",
         "nature": "Nature",
         "actions": "Actions"
       },
@@ -632,7 +631,6 @@
           "MODIFICATION": "Modification",
           "SUSPENSION": "Suspension",
           "REINSTATEMENT": "Remise en vigueur"
-
         }
       }
     },
@@ -678,25 +676,46 @@
         }
       }
     },
-    "base_tax": {
+    "tax": {
       "label": "Taxes sur primes",
       "description": "Définition des taxes sur primes.",
       "form": {
+        "prime": {
+          "title": "Taxes sur primes",
+          "subtitle": "Ajouter ou modifier une taxe sur prime"
+        },
+        "accessory": {
+          "title": "Taxes sur accessoires",
+          "subtitle": "Ajouter ou modifier une taxe sur accessoire"
+        },
         "title": "Taxes sur primes",
         "subtitle": "Ajouter ou modifier une taxe sur primes"
       },
       "table": {
+        "prime": {
+          "title": "Taxes sur primes",
+          "description": "Liste des taxes appliquées aux primes",
+          "empty_state": "Aucune taxe sur prime trouvée"
+        },
+        "accessory": {
+          "title": "Taxes sur accessoires",
+          "description": "Liste des taxes appliquées aux accessoires",
+          "empty_state": "Aucune taxe sur accessoire trouvée"
+        },
         "title": "Taxes sur primes",
         "description": "Liste des taxes sur primes",
-        "empty_state": "Aucune taxe sur prime trouvée"
+        "empty_state_prime": "Aucune taxe sur prime trouvée",
+        "empty_state_accessory": "Aucune taxe sur accessoire trouvée"
       },
       "fields": {
+        "taxType": "Type de taxe",
         "dateEffective": "Date d'effet",
         "calculationBase": "Base de calcul",
-        "isFlat": "Montant fixe",
+        "isFlatRate": "Forfaitaire ?",
+        "flatRateAmount": "Montant forfaitaire",
         "rate": "Taux",
         "fixedAmount": "Montant",
-        "tax": "Taxe",
+        "name": "Taxe",
         "coverage": "Garantie",
         "product": "Produit",
         "pointOfSale": "Point de vente",
@@ -714,27 +733,30 @@
         }
       }
     },
-    "tax_regime": {
+    "tax-exemption": {
       "table": {
-        "title": "Régimes de taxe"
+        "title": "Exonérations de Taxes",
+        "description": "Liste des exonérations de taxes appliquées aux produits",
+        "empty-state": "Aucune exonération de taxe trouvée"
       },
-      "form": {
-        "title": "Créer un régime de taxe",
-        "subtitle": "Veuillez renseigner les informations du régime.",
-        "description": "Créez ou modifiez les informations de base du régime de taxe."
-      },
+     
       "fields": {
-        "designation": "Désignation",
-        "nature": "Nature",
-        "stampExemption": "Exonération de timbre",
-        "exemptedTaxes": "Taxes exonérées",
-        "managementEntity": "Entité de gestion"
+       "name": "Nom de l'exonération",
+       "taxes": "Taxes exonérées",
+       "dateEffective": "Date d'effet",
+        "product": "Produit"
       },
       "options": {
         "nature": {
           "NORMAL": "Régime Normal",
           "EXCEPTIONAL": "Régime Exceptionnel"
         }
+      },
+      "form": {
+        "title": "Exonération de Taxes",
+        "subtitle": "Ajouter ou modifier une exonération de taxe",
+        "description": "Définissez les exonérations de taxes applicables aux produits.",
+        "editTitle": "Modifier l'exonération de taxe"
       }
     },
     "contributor": {
@@ -813,20 +835,21 @@
         }
       }
     },
-    "tax": {
-      "label": "Taxe",
+    "tax-type": {
+      "label": "Type de taxe",
       "description": "Définition des taxes applicables aux produits ou points de vente.",
       "form": {
-        "title": "Taxes",
+        "title": "Type de taxe",
         "subtitle": "Ajouter ou modifier une taxe"
       },
       "table": {
-        "title": "Taxes",
-        "description": "Liste des taxes",
+        "title": "Types de taxe",
+        "description": "Liste des taxes appliquées aux primes / accessoires",
         "empty_state": "Aucune taxe trouvée"
       },
       "fields": {
         "designation": "Désignation",
+        "name": "Taxe",
         "rgr": "Regroupement",
         "nature": "Nature de la taxe",
         "pointOfSale": "Point de vente",
@@ -839,12 +862,26 @@
       },
       "options": {
         "nature": {
-          "TAX_PRIME": "TVA/prime",
-          "TAX_ACCESSOIRE": "TVA/accessoire",
+          "VAT_PREMIUMS": "TVA sur prime",
+          "VAT_ACCESSORIES": "TVA sur accessoire",
           "FGA": "FGA",
-          "OTHER": "Autres",
-          "CARTE_BRUNE": "Carte Brune"
+          "BROWN_CARD": "Carte brune",
+          "OTHERS": "Autres"
         }
+      }
+    },
+    "dimension-stamp": {
+      "table": {
+        "title": "Timbres dimensionnels",
+        "description": "Liste des timbres dimensionnels appliqués aux produits",
+        "empty_state": "Aucun timbre dimensionnel trouvé"
+      }
+    },
+    "graduated-stamp": {
+      "table": {
+        "title": "Timbres gradués",
+        "description": "Liste des timbres gradués appliqués aux produits",
+        "empty_state": "Aucun timbre gradué trouvé"
       }
     },
     "insured": {
@@ -1121,7 +1158,7 @@
         "list": "Liste",
         "new": "Ajout"
       },
-      "exoneration":"Exonération Taxes",
+      "exoneration": "Exonération Taxes",
       "timbreDimension": "Timbre Dimension",
       "timbreGradue": "Timbre Gradué"
     },

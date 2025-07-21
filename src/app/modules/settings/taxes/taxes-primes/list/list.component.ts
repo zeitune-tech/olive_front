@@ -63,47 +63,43 @@ export class PrimesListComponent {
         title: '',
         columns: [
             {
-                property: 'name',
+                property: 'taxType',
                 visible: true,
-                label: ('entities.taxes-prime.table.column.name'),
+                label: ('entities.tax.fields.taxType'),
                 type: 'text',
             },
             {
-                property: 'dateEffective',
+                property: 'coverage',
                 visible: true,
-                label: ('entities.taxes-prime.table.column.date-effective'),
+                label: ('entities.tax.fields.coverage'),
                 type: 'text',
             },
-            {
-                property: 'calculationBase',
-                visible: true,
-                label: ('entities.taxes-prime.table.column.calculation-base'),
-                type: 'text',
-            },
+          
             {
                 property: 'isFlatRate',
                 visible: true,
-                label: ('entities.taxes-prime.table.column.is-flat-rate'),
+                label: ('entities.tax.fields.isFlatRate'),
                 type: 'text',
             },
             {
                 property: 'flatRateAmount',
                 visible: true,
-                label: ('entities.taxes-prime.table.column.flat-rate-amount'),
+                label: ('entities.tax.fields.flatRateAmount'),
                 type: 'text',
             },
             {
                 property: 'rate',
                 visible: true,
-                label: ('entities.taxes-prime.table.column.rate'),
+                label: ('entities.tax.fields.rate'),
+                type: 'text',
+            },
+              {
+                property: 'dateEffective',
+                visible: true,
+                label: ('entities.tax.fields.dateEffective'),
                 type: 'text',
             },
         ],
-        imageOptions: {
-            label: 'TaxPrime.columns.logo',
-            property: 'logo',
-            cssClasses: ['w-16 h-16']
-        },
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [],
