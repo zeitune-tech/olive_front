@@ -1,7 +1,7 @@
 name: Angular CI/CD
 on:
   push:
-    branches: dev
+    branches: recipe
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
   deploy:
     needs:
       - build
-    if: ${{ github.ref == 'refs/heads/dev' }}
+    if: ${{ github.ref == 'refs/heads/recipe' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -49,7 +49,7 @@ jobs:
           ssh-keyscan -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
       - name: Deploy to server
         run: >
-          scp -P ${{ secrets.SERVER_PORT }} -r olive_front/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/dev_olive_webapps/dev_olive_frontend
+          scp -P ${{ secrets.SERVER_PORT }} -r olive_front/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/recipe_olive_webapps/recipe_olive_frontend
       - name: Execute deployment script
         run: >
-          ssh -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "~/bin/olive_frontend-deploy-script.sh"
+          ssh -p ${{ secrets.SERVER_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "~/bin/recipe_olive_frontend-deploy-script.sh"
