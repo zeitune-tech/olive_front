@@ -209,6 +209,36 @@ export class CoveragesListComponent {
             }
         });
 
+        this.tableOptions.renderItem = (element: Coverage, property: keyof Coverage) => {
+            if (property === 'product') {
+                return element.product?.name || '--';
+            }
+
+            if (property === 'managementEntity') {
+                return element.managementEntity?.name || '--';
+            }
+
+            if (property === 'nature') {
+                return this._translateService.translate(`entities.coverage.options.nature.${element.nature}`);
+            }
+
+            if (property === 'calculationMode') {
+                return this._translateService.translate(`entities.coverage.options.calculationMode.${element.calculationMode}`);
+            }
+
+            if (property === 'isFree') {
+                return element.isFree ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
+            }
+            if (property === 'isFixed') {
+                return element.isFixed ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
+            }
+            if (element[property] === null || element[property] === undefined) {
+                return '--';
+            }
+
+            return element[property];
+        }
+
         // Ajout de la colonne d’actions si nécessaire
         this.groupHeader.push('actions');
         this.visibleColumns.push('actions');

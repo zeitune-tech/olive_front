@@ -122,6 +122,11 @@
         "description": "Liste des garanties associées aux produits",
         "empty_state": "Aucune garantie n'a été définie."
       },
+      "custom_fields": {
+        "capital": "Capital",
+        "min": "Min.",
+        "max": "Max."
+      },
       "fields": {
         "nature": "Nature",
         "isFree": "Gratuite",
@@ -233,6 +238,13 @@
         "subtitle": "Aperçu des produits",
         "description": "Liste complète des produits proposés par la compagnie.",
         "empty_state": "Aucun produit trouvé",
+        "custom_fields": {
+          "risk": "Risque",
+          "min":"min",
+          "max": "max",
+          "minCoverage": "Min. garanties",
+          "fleet": "Flotte ?"
+        },
         "actions": {
           "share": "Partager",
           "modify": "Modifier"
@@ -1315,6 +1327,11 @@
       "previous": "Précédent",
       "remove": "Supprimer",
       "addIncompatible": "Ajouter / Modifier une incompatibilité"
+    },
+    "success": {
+      "title": "Succès",
+      "message": "L'opération a été effectuée avec succès.",
+      "creation": "Création réussie"
     }
   },
   "enums": {

@@ -92,7 +92,7 @@ export class ProductsListComponent implements OnInit {
                 },
                 { label: 'entities.product.table.custom_fields.minCoverage', property: 'minimumGuaranteeNumber', type: 'text', visible: true, cssClasses: ['text-sm'] },
                 { label: 'entities.product.table.custom_fields.fleet', property: 'fleet', type: 'text', visible: true },
-                { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
+                // { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
@@ -101,9 +101,9 @@ export class ProductsListComponent implements OnInit {
                 if (property === 'branch') {
                     return element.branch?.name ?? '--';
                 } else if (property === 'fleet') {
-                    return element.fleet ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
+                    return element.fleet ? this._tanslateService.translate('form.options.yes') : this._tanslateService.translate('form.options.no');
                 } else if (property === 'hasReduction') {
-                    return element.hasReduction ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
+                    return element.hasReduction ? this._tanslateService.translate('form.options.yes') : this._tanslateService.translate('form.options.no');
                 } else if (property === 'category') {
                     return element.branch?.category?.name ?? '--';
                 }
