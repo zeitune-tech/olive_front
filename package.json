@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration recipe",
     "dev": "ng serve --configuration development",
     "local": "ng serve --configuration local",
     "start:prod": "ng serve",
-    "build": "ng build --configuration development",
-    "watch": "ng build --watch --configuration development",
+    "build": "ng build --configuration recipe",
+    "watch": "ng build --watch --configuration recipe",
     "test": "ng test"
   },
   "private": true,

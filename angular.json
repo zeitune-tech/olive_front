@@ -110,9 +110,20 @@
                 "with": "src/environments/environment.local.ts"
               }
             ]
+          },
+          "recipe": {
+            "optimization": false,
+            "extractLicenses": false,
+            "sourceMap": true,
+            "fileReplacements": [
+              {
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.recipe.ts"
+              }
+            ]
           }
 				},
-				"defaultConfiguration": "production"
+				"defaultConfiguration": "recipe"
 			},
 			"serve": {
 			"builder": "@angular-devkit/build-angular:dev-server",
@@ -125,6 +136,9 @@
 				},
         "local": {
           "buildTarget": "olive_front:build:local"
+        },
+        "recipe": {
+          "buildTarget": "olive_front:build:recipe"
         }
 			},
 			"defaultConfiguration": "development"
