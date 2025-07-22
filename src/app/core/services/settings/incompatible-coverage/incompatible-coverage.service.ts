@@ -10,7 +10,7 @@ import { IncompatibleCoverage } from "./incompatible-coverage.interface";
 })
 export class IncompatibleCoverageService {
 
-    baseUrl = environment.settings_url + '/app/incompatible-coverages';
+    baseUrl = environment.settings_url + '/incompatible-coverages';
     private _incompatibleCoverage: ReplaySubject<IncompatibleCoverage> = new ReplaySubject<IncompatibleCoverage>(1);
     private _incompatibleCoverages: ReplaySubject<IncompatibleCoverage[]> = new ReplaySubject<IncompatibleCoverage[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);

@@ -11,7 +11,7 @@ import { RequestMetadata } from "../../common.interface";
 })
 export class ContributorService {
 
-    private baseUrl = environment.administration_url + '/app/contributors';
+    private baseUrl = environment.administration_url + '/contributors';
 
     private _contributor: ReplaySubject<Contributor> = new ReplaySubject<Contributor>(1);
     private _contributors: ReplaySubject<Contributor[]> = new ReplaySubject<Contributor[]>(1);

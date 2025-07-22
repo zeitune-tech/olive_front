@@ -73,11 +73,11 @@ export class TaxCommissionsContributorListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { property: "dateEffective", type: 'text', label: 'entities.tax-commission.table.dateEffective', visible: true },
-                { property: "contributor", type: 'text', label: 'entities.tax-commission.table.contributor', visible: true },
-                { property: "contributorType", type: 'text', label: 'entities.tax-commission.table.contributorType', visible: true },
-                { property: "rate", type: 'text', label: 'entities.tax-commission.table.rate', visible: true },
-                { property: "toWithhold", type: 'text', label: 'entities.tax-commission.table.toWithhold', visible: true },
+                { property: "dateEffective", type: 'text', label: 'entities.tax-commission.fields.dateEffective', visible: true },
+                { property: "contributorType", type: 'text', label: 'entities.tax-commission.fields.contributorType', visible: true },
+                { property: "contributor", type: 'text', label: 'entities.tax-commission.fields.contributor', visible: true },
+                { property: "rate", type: 'text', label: 'entities.tax-commission.fields.rate', visible: true },
+                { property: "toWithhold", type: 'text', label: 'entities.tax-commission.fields.toWithhold', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],

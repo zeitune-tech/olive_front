@@ -122,6 +122,11 @@
         "description": "Liste des garanties associées aux produits",
         "empty_state": "Aucune garantie n'a été définie."
       },
+      "custom_fields": {
+        "capital": "Capital",
+        "min": "Min.",
+        "max": "Max."
+      },
       "fields": {
         "nature": "Nature",
         "isFree": "Gratuite",
@@ -233,6 +238,13 @@
         "subtitle": "Aperçu des produits",
         "description": "Liste complète des produits proposés par la compagnie.",
         "empty_state": "Aucun produit trouvé",
+        "custom_fields": {
+          "risk": "Risque",
+          "min":"min",
+          "max": "max",
+          "minCoverage": "Min. garanties",
+          "fleet": "Flotte ?"
+        },
         "actions": {
           "share": "Partager",
           "modify": "Modifier"
@@ -600,7 +612,6 @@
           "MODIFICATION": "Modification",
           "SUSPENSION": "Suspension",
           "REINSTATEMENT": "Remise en vigueur"
-
         },
         "accessoryType": {
           "RISQUES": "Risques",
@@ -609,7 +620,7 @@
         }
       }
     },
-    "endorsment":{
+    "endorsment": {
       "label": "Avenant",
       "description": "Les diffénts avenants et leur fonctionnement.",
       "form": {
@@ -622,7 +633,7 @@
         "empty_state": "Aucun type d'avenant trouvé"
       },
       "fields": {
-        "designation":"Désignation",
+        "designation": "Désignation",
         "nature": "Nature",
         "actions": "Actions"
       },
@@ -632,7 +643,6 @@
           "MODIFICATION": "Modification Standard",
           "SUSPENSION": "Arrêt de couverture",
           "REINSTATEMENT": "Reconduction"
-
         }
       }
     },
@@ -678,25 +688,46 @@
         }
       }
     },
-    "base_tax": {
+    "tax": {
       "label": "Taxes sur primes",
       "description": "Définition des taxes sur primes.",
       "form": {
+        "prime": {
+          "title": "Taxes sur primes",
+          "subtitle": "Ajouter ou modifier une taxe sur prime"
+        },
+        "accessory": {
+          "title": "Taxes sur accessoires",
+          "subtitle": "Ajouter ou modifier une taxe sur accessoire"
+        },
         "title": "Taxes sur primes",
         "subtitle": "Ajouter ou modifier une taxe sur primes"
       },
       "table": {
+        "prime": {
+          "title": "Taxes sur primes",
+          "description": "Liste des taxes appliquées aux primes",
+          "empty_state": "Aucune taxe sur prime trouvée"
+        },
+        "accessory": {
+          "title": "Taxes sur accessoires",
+          "description": "Liste des taxes appliquées aux accessoires",
+          "empty_state": "Aucune taxe sur accessoire trouvée"
+        },
         "title": "Taxes sur primes",
         "description": "Liste des taxes sur primes",
-        "empty_state": "Aucune taxe sur prime trouvée"
+        "empty_state_prime": "Aucune taxe sur prime trouvée",
+        "empty_state_accessory": "Aucune taxe sur accessoire trouvée"
       },
       "fields": {
+        "taxType": "Type de taxe",
         "dateEffective": "Date d'effet",
         "calculationBase": "Base de calcul",
-        "isFlat": "Montant fixe",
+        "isFlatRate": "Forfaitaire ?",
+        "flatRateAmount": "Montant forfaitaire",
         "rate": "Taux",
         "fixedAmount": "Montant",
-        "tax": "Taxe",
+        "name": "Taxe",
         "coverage": "Garantie",
         "product": "Produit",
         "pointOfSale": "Point de vente",
@@ -714,27 +745,66 @@
         }
       }
     },
-    "tax_regime": {
+    "tax-commission": {
       "table": {
-        "title": "Régimes de taxe"
-      },
-      "form": {
-        "title": "Créer un régime de taxe",
-        "subtitle": "Veuillez renseigner les informations du régime.",
-        "description": "Créez ou modifiez les informations de base du régime de taxe."
+        "point-of-sale": "Taxes sur commissions / Points de vente",
+        "contributor": "Taxes sur commissions / Apporteurs",
+        "title": "Taxes sur commissions",
+        "description": "Liste des taxes sur commissions appliquées aux produits",
+        "empty_state": "Aucune taxe sur commission trouvée"
       },
       "fields": {
-        "designation": "Désignation",
-        "nature": "Nature",
-        "stampExemption": "Exonération de timbre",
-        "exemptedTaxes": "Taxes exonérées",
-        "managementEntity": "Entité de gestion"
+        "name": "Nom de la commission",
+        "taxes": "Taxes concernées",
+        "dateEffective": "Date d'effet",
+        "product": "Produit",
+        "pointOfSale": "Point de vente",
+        "contributor": "Apporteur",
+        "managementEntity": "Entité de gestion",
+        "pointOfSaleType": "Type de point de vente",
+        "contributorType": "Type d'apporteur",
+        "rate": "Taux (%)",
+        "toWithhold": "À retenir"
+      },
+      "form": {
+        "title": "Taxe sur commission",
+        "subtitle": "Veuillez remplir les champs requis pour la taxe sur commission"
+      },
+      "options": {
+        "calculationBase": {
+          "PRIME": "Prime",
+          "ACCESSORY": "Accessoire"
+        },
+        "isFlat": {
+          "true": "Oui (montant fixe)",
+          "false": "Non (en pourcentage)"
+        }
+      }
+    },
+    "tax-exemption": {
+      "table": {
+        "title": "Exonérations de Taxes",
+        "description": "Liste des exonérations de taxes appliquées aux produits",
+        "empty-state": "Aucune exonération de taxe trouvée"
+      },
+     
+      "fields": {
+       "name": "Nom de l'exonération",
+       "taxes": "Taxes exonérées",
+       "dateEffective": "Date d'effet",
+        "product": "Produit"
       },
       "options": {
         "nature": {
           "NORMAL": "Régime Normal",
           "EXCEPTIONAL": "Régime Exceptionnel"
         }
+      },
+      "form": {
+        "title": "Exonération de Taxes",
+        "subtitle": "Ajouter ou modifier une exonération de taxe",
+        "description": "Définissez les exonérations de taxes applicables aux produits.",
+        "editTitle": "Modifier l'exonération de taxe"
       }
     },
     "contributor": {
@@ -813,20 +883,21 @@
         }
       }
     },
-    "tax": {
-      "label": "Taxe",
+    "tax-type": {
+      "label": "Type de taxe",
       "description": "Définition des taxes applicables aux produits ou points de vente.",
       "form": {
-        "title": "Taxes",
+        "title": "Type de taxe",
         "subtitle": "Ajouter ou modifier une taxe"
       },
       "table": {
-        "title": "Taxes",
-        "description": "Liste des taxes",
+        "title": "Types de taxe",
+        "description": "Liste des taxes appliquées aux primes / accessoires",
         "empty_state": "Aucune taxe trouvée"
       },
       "fields": {
         "designation": "Désignation",
+        "name": "Taxe",
         "rgr": "Regroupement",
         "nature": "Nature de la taxe",
         "pointOfSale": "Point de vente",
@@ -839,12 +910,26 @@
       },
       "options": {
         "nature": {
-          "TAX_PRIME": "TVA/prime",
-          "TAX_ACCESSOIRE": "TVA/accessoire",
+          "VAT_PREMIUMS": "TVA sur prime",
+          "VAT_ACCESSORIES": "TVA sur accessoire",
           "FGA": "FGA",
-          "OTHER": "Autres",
-          "CARTE_BRUNE": "Carte Brune"
+          "BROWN_CARD": "Carte brune",
+          "OTHERS": "Autres"
         }
+      }
+    },
+    "dimension-stamp": {
+      "table": {
+        "title": "Timbres dimensionnels",
+        "description": "Liste des timbres dimensionnels appliqués aux produits",
+        "empty_state": "Aucun timbre dimensionnel trouvé"
+      }
+    },
+    "graduated-stamp": {
+      "table": {
+        "title": "Timbres gradués",
+        "description": "Liste des timbres gradués appliqués aux produits",
+        "empty_state": "Aucun timbre gradué trouvé"
       }
     },
     "insured": {
@@ -1121,7 +1206,7 @@
         "list": "Liste",
         "new": "Ajout"
       },
-      "exoneration":"Exonération Taxes",
+      "exoneration": "Exonération Taxes",
       "timbreDimension": "Timbre Dimension",
       "timbreGradue": "Timbre Gradué"
     },
@@ -1242,6 +1327,11 @@
       "previous": "Précédent",
       "remove": "Supprimer",
       "addIncompatible": "Ajouter / Modifier une incompatibilité"
+    },
+    "success": {
+      "title": "Succès",
+      "message": "L'opération a été effectuée avec succès.",
+      "creation": "Création réussie"
     }
   },
   "enums": {

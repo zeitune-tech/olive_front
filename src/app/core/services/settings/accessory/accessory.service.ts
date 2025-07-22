@@ -9,7 +9,7 @@ import { RequestMetadata } from '../../common.interface';
 @Injectable({ providedIn: 'root' })
 export class AccessoryService {
 
-  baseUrl = environment.settings_url + '/app/accessories';
+  baseUrl = environment.settings_url + '/accessories';
   private _accessory = new ReplaySubject<Accessory>(1);
   private _accessories = new ReplaySubject<Accessory[]>(1);
   private _metadata = new ReplaySubject<RequestMetadata>(1);

@@ -21,6 +21,7 @@ import { TaxCommissionsPointOfSale } from "@core/services/settings/commission-ta
 import { TaxCommissionsPointOfSaleService } from "@core/services/settings/commission-tax-point-ofsale/commission-tax-point-of-sale.service";
 import { ProductService } from "@core/services/settings/product/product.service";
 import { Product } from "@core/services/settings/product/product.interface";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-products-list",
@@ -81,11 +82,11 @@ export class TaxCommissionListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { property: "dateEffective", type: 'text', label: 'entities.tax-commission.table.dateEffective', visible: true },
-                { property: "pointOfSale", type: 'text', label: 'entities.tax-commission.table.pointOfSale', visible: true },
-                { property: "pointOfSaleType", type: 'text', label: 'entities.tax-commission.table.pointOfSaleType', visible: true },
-                { property: "rate", type: 'text', label: 'entities.tax-commission.table.rate', visible: true },
-                { property: "toWithhold", type: 'text', label: 'entities.tax-commission.table.toWithhold', visible: true },
+                { property: "dateEffective", type: 'text', label: 'entities.tax-commission.fields.dateEffective', visible: true },
+                { property: "pointOfSaleType", type: 'text', label: 'entities.tax-commission.fields.pointOfSaleType', visible: true },
+                { property: "pointOfSale", type: 'text', label: 'entities.tax-commission.fields.pointOfSale', visible: true },
+                { property: "rate", type: 'text', label: 'entities.tax-commission.fields.rate', visible: true },
+                { property: "toWithhold", type: 'text', label: 'entities.tax-commission.fields.toWithhold', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
@@ -161,7 +162,7 @@ export class TaxCommissionListComponent implements OnInit {
     }
 
     onAdd(): void {
-        this._dialog.open(CommissionAccessoryContributorFormComponent, {
+        this._dialog.open(TaxCommissionFormComponent, {
             width: '600px',
             disableClose: true,
         }).afterClosed().subscribe((result) => {
@@ -172,7 +173,7 @@ export class TaxCommissionListComponent implements OnInit {
     }
 
     onDelete(product: TaxCommissionsPointOfSale): void {
-        this._dialog.open(CommissionAccessoryContributorFormComponent, {
+        this._dialog.open(ConfirmDeleteComponent, {
             data: product,
             width: '600px',
             disableClose: true,

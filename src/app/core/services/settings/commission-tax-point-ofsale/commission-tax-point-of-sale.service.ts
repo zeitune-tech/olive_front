@@ -9,65 +9,73 @@ import { RequestMetadata } from '../../common.interface';
 @Injectable({ providedIn: 'root' })
 export class TaxCommissionsPointOfSaleService {
 
-  baseUrl = environment.settings_url + '/commission-taxes';
+	baseUrl = environment.settings_url + '/commission-taxes';
 
-  private _commissionTax = new ReplaySubject<TaxCommissionsPointOfSale>(1);
-  private _commissionTaxes = new ReplaySubject<TaxCommissionsPointOfSale[]>(1);
-  private _metadata = new ReplaySubject<RequestMetadata>(1);
+	private _commissionTax = new ReplaySubject<TaxCommissionsPointOfSale>(1);
+	private _commissionTaxes = new ReplaySubject<TaxCommissionsPointOfSale[]>(1);
+	private _metadata = new ReplaySubject<RequestMetadata>(1);
 
-  set commissionTax(value: TaxCommissionsPointOfSale) {
-    this._commissionTax.next(value);
-  }
+	set commissionTax(value: TaxCommissionsPointOfSale) {
+		this._commissionTax.next(value);
+	}
 
-  get commissionTax$() {
-    return this._commissionTax.asObservable();
-  }
+	get commissionTax$() {
+		return this._commissionTax.asObservable();
+	}
 
-  set commissionTaxes(value: TaxCommissionsPointOfSale[]) {
-    this._commissionTaxes.next(value);
-  }
+	set commissionTaxes(value: TaxCommissionsPointOfSale[]) {
+		this._commissionTaxes.next(value);
+	}
 
-  get commissionTaxes$() {
-    return this._commissionTaxes.asObservable();
-  }
+	get commissionTaxes$() {
+		return this._commissionTaxes.asObservable();
+	}
 
-  set metadata(value: RequestMetadata) {
-    this._metadata.next(value);
-  }
+	set metadata(value: RequestMetadata) {
+		this._metadata.next(value);
+	}
 
-  get metadata$() {
-    return this._metadata.asObservable();
-  }
+	get metadata$() {
+		return this._metadata.asObservable();
+	}
 
-  constructor(private _httpClient: HttpClient) {}
+	constructor(private _httpClient: HttpClient) { }
 
-  create(tax: TaxCommissionsPointOfSale): Observable<TaxCommissionsPointOfSale> {
-    return this._httpClient.post<TaxCommissionsPointOfSale>(`${this.baseUrl}`, tax).pipe(
-      tap((res) => this.commissionTax = res),
-      catchError(() => of({} as TaxCommissionsPointOfSale))
-    );
-  }
+	create(tax: TaxCommissionsPointOfSale): Observable<TaxCommissionsPointOfSale> {
+		return this._httpClient.post<TaxCommissionsPointOfSale>(`${this.baseUrl}`, tax).pipe(
+			tap((res) => this.commissionTax = res),
+			catchError(() => of({} as TaxCommissionsPointOfSale))
+		);
+	}
 
-  get(id: string): Observable<TaxCommissionsPointOfSale> {
-    return this._httpClient.get<TaxCommissionsPointOfSale>(`${this.baseUrl}/${id}`).pipe(
-      tap((res) => this.commissionTax = res),
-      catchError(() => of({} as TaxCommissionsPointOfSale))
-    );
-  }
+	get(id: string): Observable<TaxCommissionsPointOfSale> {
+		return this._httpClient.get<TaxCommissionsPointOfSale>(`${this.baseUrl}/${id}`).pipe(
+			tap((res) => this.commissionTax = res),
+			catchError(() => of({} as TaxCommissionsPointOfSale))
+		);
+	}
 
-  getAll(): Observable<TaxCommissionsPointOfSale[]> {
-    return this._httpClient.get<TaxCommissionsPointOfSale[]>(this.baseUrl).pipe(
-      tap((response: TaxCommissionsPointOfSale[]) => {
-        this.commissionTaxes = response;
-        return response;
-      }),
-      catchError(() => of([] as TaxCommissionsPointOfSale[]))
-    );
-  }
+	getAll(): Observable<TaxCommissionsPointOfSale[]> {
+		return this._httpClient.get<TaxCommissionsPointOfSale[]>(this.baseUrl).pipe(
+			tap((response: TaxCommissionsPointOfSale[]) => {
+				this.commissionTaxes = response;
+				return response;
+			}),
+			catchError(() => of([] as TaxCommissionsPointOfSale[]))
+		);
+	}
 
-  getWithFilters(filters: HttpParams): Observable<TaxCommissionsPointOfSale[]> {
-    return this._httpClient.get<TaxCommissionsPointOfSale[]>(this.baseUrl, { params: filters }).pipe(
-      catchError(() => of([] as TaxCommissionsPointOfSale[]))
-    );
-  }
+	getWithFilters(filters: HttpParams): Observable<TaxCommissionsPointOfSale[]> {
+		return this._httpClient.get<TaxCommissionsPointOfSale[]>(this.baseUrl, { params: filters }).pipe(
+			catchError(() => of([] as TaxCommissionsPointOfSale[]))
+		);
+	}
+
+	update(id: string, updated: any) {
+		return this._httpClient.put<TaxCommissionsPointOfSale>(`${this.baseUrl}/${id}`, updated).pipe(
+			tap((res) => this.commissionTax = res),
+			catchError(() => of({} as TaxCommissionsPointOfSale))
+		);
+	}
+
 }

@@ -63,14 +63,11 @@ export class AccessoriesListComponent {
     tableOptions: TableOptions<TaxAccessory> = {
         title: '',
         columns: [
-            { property: 'name', type: 'text', label: 'entities.tax-accessories.table.name', visible: true },
-            { property: 'dateEffective', type: 'text', label: 'entities.tax-accessories.table.date-effective', visible: true },
-            { property: 'calculationBase', type: 'text', label: 'entities.tax-accessories.table.calculation-base', visible: true },
-            { property: 'isFlatRate', type: 'text', label: 'entities.tax-accessories.table.is-flat-rate', visible: true },
-            { property: 'flatRateAmount', type: 'text', label: 'entities.tax-accessories.table.flat-rate-amount', visible: true },
-            { property: 'rate', type: 'text', label: 'entities.tax-accessories.table.rate', visible: true },
-            { property: 'taxType', type: 'text', label: 'entities.tax-accessories.table.tax-type', visible: true },
-            { property: 'product', type: 'text', label: 'entities.tax-accessories.table.product', visible: true }
+            { property: 'taxType', type: 'text', label: 'entities.tax.fields.taxType', visible: true },
+            { property: 'isFlatRate', type: 'text', label: 'entities.tax.fields.isFlatRate', visible: true },
+            { property: 'flatRateAmount', type: 'text', label: 'entities.tax.fields.flatRateAmount', visible: true },
+            { property: 'rate', type: 'text', label: 'entities.tax.fields.rate', visible: true },
+            { property: 'dateEffective', type: 'text', label: 'entities.tax.fields.dateEffective', visible: true },
         ],
         imageOptions: {
             label: 'entities-tax-accessory.columns.logo',

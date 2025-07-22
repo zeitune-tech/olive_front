@@ -1,5 +1,5 @@
 <div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
-    <h2 mat-dialog-title>{{ t('entities.taxes-type.form.add.form-title') }}</h2>
+    <h2 mat-dialog-title>{{ t('entities.tax-type.form.title') }}</h2>
     <mat-divider></mat-divider>
 
     <mat-dialog-content class="py-4">
@@ -8,7 +8,7 @@
             <div class="flex flex-col gap-6">
             
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.taxes-type.form.add.name') }}</mat-label>
+                    <mat-label>{{ t('entities.tax-type.fields.name') }}</mat-label>
                     <input matInput formControlName="name" required />
                     <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
                         {{ t('form.errors.required') }}
@@ -19,10 +19,10 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.taxes-type.form.add.nature') }}</mat-label>
+                    <mat-label>{{ t('entities.tax-type.fields.nature') }}</mat-label>
                     <mat-select formControlName="nature" required>
                         <mat-option *ngFor="let type of typeNature" [value]="type.value">
-                            {{ type.label }}
+                            {{ t(type.label) }}
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="formGroup.get('type')?.hasError('required')">

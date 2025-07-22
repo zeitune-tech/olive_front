@@ -80,18 +80,6 @@ export class GraduatedStampListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
-                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                {
-                    label: 'entities.product.table.custom_fields.risk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
-                        { label: 'entities.product.table.custom_fields.min', property: 'minRisk', type: 'text', visible: true },
-                        { label: 'entities.product.table.custom_fields.max', property: 'maxRisk', type: 'text', visible: true },
-                    ]
-                },
-                { label: 'entities.product.table.custom_fields.minCoverage', property: 'minimumGuaranteeNumber', type: 'text', visible: true, cssClasses: ['text-sm'] },
-                { label: 'entities.product.table.custom_fields.fleet', property: 'fleet', type: 'text', visible: true },
-                { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],

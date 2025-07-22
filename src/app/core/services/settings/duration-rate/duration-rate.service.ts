@@ -9,7 +9,7 @@ import { RequestMetadata } from '../../common.interface';
 @Injectable({ providedIn: 'root' })
 export class DurationRateService {
 
-  baseUrl = environment.settings_url + '/app/duration-rates';
+  baseUrl = environment.settings_url + '/duration-rates';
   private _durationRate = new ReplaySubject<DurationRate>(1);
   private _durationRates = new ReplaySubject<DurationRate[]>(1);
   private _metadata = new ReplaySubject<RequestMetadata>(1);
