@@ -30,11 +30,11 @@ export class TypeFormComponent implements OnInit {
     taxType: TaxType[] = [];
 
     typeNature: { label: string, value: string } [] =  [
-        { label: 'entities.taxes-type.form.nature.vatPremiums', value: TaxNature.VAT_PREMIUMS },
-        { label: 'entities.taxes-type.form.nature.vatAccessories', value: TaxNature.VAT_ACCESSORIES },
-        { label: 'entities.taxes-type.form.nature.fga', value: TaxNature.FGA },
-        { label: 'entities.taxes-type.form.nature.brownCard', value: TaxNature.BROWN_CARD },
-        { label: 'entities.taxes-type.form.nature.other', value: TaxNature.OTHER }           
+        { label: 'entities.tax-type.options.nature.VAT_PREMIUMS', value: TaxNature.VAT_PREMIUMS },
+        { label: 'entities.tax-type.options.nature.VAT_ACCESSORIES', value: TaxNature.VAT_ACCESSORIES },
+        { label: 'entities.tax-type.options.nature.FGA', value: TaxNature.FGA },
+        { label: 'entities.tax-type.options.nature.BROWN_CARD', value: TaxNature.BROWN_CARD },
+        { label: 'entities.tax-type.options.nature.OTHERS', value: TaxNature.OTHER }           
       ];
 
 

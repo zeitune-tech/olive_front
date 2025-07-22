@@ -65,13 +65,13 @@ export class TypeListComponent {
                 {
                     property: 'name',
                     type: 'text',
-                    label:  'entities.taxes-type.table.column.name',
+                    label:  'entities.tax-type.fields.name',
                     visible: true,
                 },
                 {
                     property: 'nature',
                     type: 'text',
-                    label: 'entities.taxes-type.table.column.nature',
+                    label: 'entities.tax-type.fields.nature',
                     visible: true,
                 },
                

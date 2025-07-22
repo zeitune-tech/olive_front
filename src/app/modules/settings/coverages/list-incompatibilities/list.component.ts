@@ -12,6 +12,8 @@ import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
+import { Router } from "@angular/router";
+import { IncompatibleCoveragesNewComponent } from "../new-incompatibility/new.component";
 
 @Component({
     selector: "app-incompatible-coverages-list",
@@ -62,7 +64,8 @@ export class IncompatibleCoveragesListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _incompatibleCoverageService: IncompatibleCoverageService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _router: Router
     ) { }
 
     ngOnInit(): void {
@@ -115,5 +118,13 @@ export class IncompatibleCoveragesListComponent {
 
     trackByProperty(index: number, column: TableColumn<IncompatibleCoverage>) {
         return column.property;
+    }
+
+    openAddDialog() {
+        this._dialog.open(IncompatibleCoveragesNewComponent, {
+            width: '600px',
+            maxWidth: '90vw',
+            data: { coverageDuration: this.searchCtrl.value }
+        });
     }
 }

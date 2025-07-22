@@ -12,14 +12,21 @@
         </div>
     </div>
 
-    <!-- Search -->
-    <div class="flex flex-col md:flex-row items-center gap-4">
+    <!-- --------------------------------------------- -->
+  <!-- Barre de recherche                            -->
+  <!-- --------------------------------------------- -->
+    <div class="flex flex-col md:flex-row items-center gap-4 justify-between">
         <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
-            <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
-            <input class="form-input" type="text" [placeholder]="t('form.fields.search')"
-                [formControl]="searchCtrl">
+        <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
+        <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [formControl]="searchCtrl">
         </div>
-    </div>
+
+        <div class="flex items-center gap-2">
+        <button mat-raised-button color="primary" class="text-white" (click)="openAddDialog()">
+            {{ t('form.actions.add') }}
+        </button>
+        </div>
+  </div>
 
     <div class="overflow-auto">
         <!-- Table -->

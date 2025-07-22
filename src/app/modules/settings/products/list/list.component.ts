@@ -19,6 +19,7 @@ import { Router } from "@angular/router";
 import { ShareProductComponent } from "../share-product/share-product.component";
 import { TranslocoService } from "@jsverse/transloco";
 import { ProductEditComponent } from "../edit/edit.component";
+import { ProductsNewComponent } from "../new/new.component";
 
 @Component({
     selector: "app-products-list",
@@ -68,6 +69,7 @@ export class ProductsListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
     selection = new SelectionModel<Product>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
@@ -229,5 +231,9 @@ export class ProductsListComponent implements OnInit {
 
     trackByProperty(index: number, column: TableColumn<Product>) {
         return column.property;
+    }
+
+    openAddDialog(): void {
+        this._router.navigate(['/parameters/products/new']);
     }
 }

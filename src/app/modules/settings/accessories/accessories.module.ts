@@ -19,6 +19,8 @@ import { AccessoryNewComponent } from "./new/new.component";
 import { LayoutService } from "./layout.service";
 import { SharedModule } from "@shared/shared.module";
 import { TableModule } from "@lhacksrt/components/table/table.module";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core'; 
 
 @NgModule({
     declarations: [
@@ -43,6 +45,8 @@ import { TableModule } from "@lhacksrt/components/table/table.module";
         SharedModule,
         TableModule,
         MatProgressSpinnerModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     providers: [
         LayoutService

@@ -5,18 +5,20 @@ export class Accessory {
   id: string;
   dateEffective: string;
   actType: Endorsment;
-  accessoryType: string;
-  accessoryAmount: number;
+  accessoryRisk: number;
+  accessoryPolice: number;
   product: Product;
+  effectiveDate: Date;
   managementEntity: string;
 
   constructor(data: any) {
     this.id = data.id || '';
     this.dateEffective = data.dateEffective || '';
     this.actType = data.actType || '';
-    this.accessoryType = data.accessoryType || '';
-    this.accessoryAmount = data.accessoryAmount ?? 0;
+    this.accessoryRisk = data.accessoryRisk || 0;
+    this.accessoryPolice = data.accessoryPolice || 0;
     this.product = data.product || '';
+    this.effectiveDate = data.effectiveDate ? new Date(data.effectiveDate) : new Date();
     this.managementEntity = data.managementEntity || '';
   }
 }
