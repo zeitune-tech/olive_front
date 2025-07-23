@@ -145,10 +145,16 @@
       },
       "options": {
         "calculationMode": {
+          "AUTOMATIC": "Automatique",
           "FIXED": "Fixe",
-          "VARIABLE": "Variable",
-          "PRORATA": "Prorata",
-          "PRORATA_FIXED": "Prorata fixe"
+          "FIXE": "Fixe",
+          "VARIABLE": "Variable"
+        },
+        "nature": {
+          "OPTIONAL": "Facultative",
+          "MANDATORY": "Obligatoire",
+          "RECOMMANDED": "Recommandée"
+
         }
       }
     },
@@ -263,6 +269,16 @@
         "fleet": "Flotte ?",
         "hasReduction": "Produit avec réduction ?",
         "productionRegistry": "Registre prod"
+      },
+      "options": {
+        "visibility": {
+          "PUBLIC": "Public - {{ provider }}",
+          "PRIVATE": "Privé"
+        },
+        "fleet": {
+          "YES": "Oui",
+          "NO": "Non"
+        }
       }
     },
     "branch": {

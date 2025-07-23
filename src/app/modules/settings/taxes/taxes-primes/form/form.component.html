@@ -8,8 +8,16 @@
             <div class="flex flex-col gap-6">
 
                 <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.tax.fields.name') }}</mat-label>
+                    <input matInput formControlName="name" required />
+                    <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.taxType') }}</mat-label>
-                    <mat-select formControlName="taxType" required>
+                    <mat-select formControlName="taxTypeId" required>
                         <mat-option *ngFor="let tax of taxesType" [value]="tax.id">
                             {{ tax.name }}
                         </mat-option>
@@ -21,7 +29,7 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.product') }}</mat-label>
-                    <mat-select formControlName="product" required>
+                    <mat-select formControlName="productId" required>
                         <mat-option *ngFor="let product of products" [value]="product.id">
                             {{ product.name }}
                         </mat-option>
@@ -33,9 +41,9 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.coverage') }}</mat-label>
-                    <mat-select formControlName="coverage" required>
+                    <mat-select formControlName="coverageId" required>
                         <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
-                            {{ coverage.nature }}
+                            {{ coverage.reference.designation }}
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">

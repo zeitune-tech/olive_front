@@ -40,7 +40,7 @@ export class EndorsementNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
-      designation: [null, Validators.required],
+      name: [null, Validators.required],
       nature: [null, Validators.required],
     });
 
@@ -50,7 +50,7 @@ export class EndorsementNewComponent implements OnInit {
         this.editMode = true;
         this.endorsmentId = endorsement.id;
         this.formGroup.patchValue({
-          designation: endorsement.designation,
+          name: endorsement.name,
           nature: endorsement.nature,
         });
       }

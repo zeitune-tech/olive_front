@@ -122,9 +122,9 @@ export class ProductsListComponent implements OnInit {
                         provider = provider.substring(0, 20) + '...';
                     }
                     if (element.visibility === 'PRIVATE') {
-                        return this._tanslateService.translate('enums.productVisibility.PRIVATE');
+                        return this._tanslateService.translate('entities.product.options.visibility.PRIVATE');
                     }else  {
-                        return this._tanslateService.translate('enums.productVisibility.PUBLIC', { provider: provider });
+                        return this._tanslateService.translate('entities.product.options.visibility.PUBLIC', { provider: provider });
                     }
                 }
 

@@ -17,6 +17,10 @@ import { CommissionService } from '@core/services/settings/commission/commission
 import { CommissionContributorService } from './../../core/services/settings/commission-contributor/commission-contributor.service';
 import { DurationRateService } from '@core/services/settings/duration-rate/duration-rate.service';
 import { ProductService } from '@core/services/settings/product/product.service';
+import { CommissionPointOfSaleService } from '@core/services/settings/commission-point-of-sale/commission-point-of-sale.service';
+import { TaxTypeService } from '@core/services/settings/tax-type/tax-type.service';
+import { TaxPrimeService } from '@core/services/settings/tax-primes/tax-primes.service';
+import { TaxAccessoryService } from '@core/services/settings/tax-accessory/tax-accessory.service';
 
 @Injectable({
     providedIn: 'root'
@@ -36,10 +40,10 @@ export class SettingsResolver implements Resolve<any> {
         private _insuredRegistryService: InsuredRegistryService,
         private _coverageDurationService: CoverageDurationService,
         private _accessoryService: AccessoryService,
-        private _baseTaxService: BaseTaxService,
-        private _taxService: TaxService,
-        private _taxRegimeService: TaxRegimeService,
-        private _commissionService: CommissionService,
+        private _taxService: TaxTypeService,
+        private _taxPrimeService: TaxPrimeService,
+        private _taxAccessoryService: TaxAccessoryService,
+        private _commissionService: CommissionPointOfSaleService,
         private _commissionContributorService: CommissionContributorService,
         private _durationRateService: DurationRateService,
     ) {
@@ -90,24 +94,30 @@ export class SettingsResolver implements Resolve<any> {
             resolList.push(this._accessoryService.getAll());
         // }
 
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_TAXES)) {
+            resolList.push(this._taxPrimeService.getAll());
+            resolList.push(this._taxAccessoryService.getAll());
+        // }
+
+
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_BASE_TAXES)) {
-            resolList.push(this._baseTaxService.getAll());
+            // resolList.push(this._baseTaxService.getAll());
         // }
 
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_TAXES)) {
             resolList.push(this._taxService.getAll());
         // }
 
-        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_TAX_REGIMES)) {
-            resolList.push(this._taxRegimeService.getAll());
-        // }
+            
 
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COMMISSION)) {
-            resolList.push(this._commissionService.getAll());
+            resolList.push(this._commissionService.getAllPrimes());
+            resolList.push(this._commissionService.getAllAccessories());
         // }
 
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COMMISSION_CONTRIBUTORS)) {
-            resolList.push(this._commissionContributorService.getAll());
+            resolList.push(this._commissionContributorService.getAllPrimes());
+            resolList.push(this._commissionContributorService.getAllAccessories());
         // }
 
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_USERS)) {

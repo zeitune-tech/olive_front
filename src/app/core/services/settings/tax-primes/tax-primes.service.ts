@@ -9,7 +9,7 @@ import { TaxPrime } from './tax-primes.interface';
 @Injectable({ providedIn: 'root' })
 export class TaxPrimeService {
 
-  baseUrl = environment.settings_url + '/tax-accessories';
+  baseUrl = environment.settings_url + '/taxes-primes';
   private _taxPrime = new ReplaySubject<TaxPrime>(1);
   private _taxPrimes = new ReplaySubject<TaxPrime[]>(1);
   private _metadata = new ReplaySubject<RequestMetadata>(1);
