@@ -96,7 +96,7 @@ export class CommissionAccessoryListComponent implements OnInit {
             },
         };
 
-        this._commissionPointOfSale.getAll().subscribe({
+        this._commissionPointOfSale.commissionsPointsOfSaleAccessories$.subscribe({
             next: (data: CommissionPointOfSale[]) => {
                 this.data = data;
                 this.dataSource.data = data;

@@ -220,36 +220,38 @@ export class PrimesListComponent {
         this._dialog.open(PrimesFormComponent, {
             width: '700px',
             data: {
-                mode: 'add',
-                product: this.selectedProduct,
+                mode: 'create',
+                data: {} as TaxPrime
             }
         }).afterClosed().subscribe((result: TaxPrime) => {
             if (result) {
-                
+                this.data.push(result);
+                this.dataSource.data = this.data;
+                this._changeDetectorRef.detectChanges();
             }
         })
     }
 
-    // openEditDialog(item: any): void {
-    //     const dialogRef = this._dialog.open(TaxPrimesEditDialogComponent, {
-    //         width: '700px',
-    //         data: item
-    //     });
+    openEditDialog(item: any): void {
+        const dialogRef = this._dialog.open(PrimesFormComponent, {
+            width: '700px',
+            data: {
+                mode: 'edit',
+                data: item
+            }
+        });
 
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         if (result) {
-    //             // Appeler ici le service pour mettre à jour les données
-    //             this._TaxPrimeService.update(item.id, result).subscribe(() => {
-    //                 // rechargement, toast, etc.
-    //                 this._TaxPrimeService.getAll().subscribe((data: TaxPrime[]) => {
-    //                     this.data = data;
-    //                     this.dataSource.data = data;
-    //                     this._changeDetectorRef.detectChanges();
-    //                 });
-    //             });
-    //         }
-    //     });
-    // }
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                const index = this.data.findIndex(t => t.id === result.id);
+                if (index !== -1) {
+                    this.data[index] = result;
+                    this.dataSource.data = this.data;
+                    this._changeDetectorRef.detectChanges();
+                }                
+            }
+        });
+    }
 
     openDeleteDialog(item: any): void { }
 

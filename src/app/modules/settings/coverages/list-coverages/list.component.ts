@@ -97,47 +97,38 @@ export class CoveragesListComponent {
         actions: [],
         renderItem: (element: Coverage, property: keyof Coverage) => {
 
+            if (property === 'product') {
+                return element.product?.name || '--';
+            }
+
+            if (property === 'managementEntity') {
+                return element.managementEntity?.name || '--';
+            }
+
+            if (property === 'reference') {
+                return element.reference?.designation || '--';
+            }
+
             if (property === 'nature') {
-                let nature = element.nature;
-                if (!nature || nature === 'null' || nature === 'undefined') {
-                    return "Facultative";
+                if (!element.nature || element.nature === 'null' || element.nature === 'undefined') {
+                    return this._translateService.translate('entities.coverage.options.nature.OPTIONAL');
                 }
                 return this._translateService.translate(`entities.coverage.options.nature.${element.nature}`);
-            }
-
-            if (property === 'isFree') {
-                return element.isFree ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
-            }
-
-            if (property === 'isFixed') {
-                return element.isFixed ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
             }
 
             if (property === 'calculationMode') {
                 return this._translateService.translate(`entities.coverage.options.calculationMode.${element.calculationMode}`);
             }
 
-            if (property === 'reference') {
-                return element.reference?.designation || " - ";
+            if (property === 'isFree') {
+                return element.isFree ? this._translateService.translate('form.options.yes') : this._translateService.translate('form.options.no');
             }
-
-            if (property === 'prorata') {
-                return element.prorata ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
+            if (property === 'isFixed') {
+                return element.isFixed ? this._translateService.translate('form.options.yes') : this._translateService.translate('form.options.no');
             }
-
             if (element[property] === null || element[property] === undefined) {
-                return " - ";
+                return '--';
             }
-
-            if (property === 'product') {
-                return element.product?.name || " - ";
-            }
-
-            if (property === 'managementEntity') {
-                return element.managementEntity.name || " - ";
-            }
-
-
 
             return element[property];
         },
@@ -208,36 +199,6 @@ export class CoveragesListComponent {
                 this.visibleColumns.push(col.property as string);
             }
         });
-
-        this.tableOptions.renderItem = (element: Coverage, property: keyof Coverage) => {
-            if (property === 'product') {
-                return element.product?.name || '--';
-            }
-
-            if (property === 'managementEntity') {
-                return element.managementEntity?.name || '--';
-            }
-
-            if (property === 'nature') {
-                return this._translateService.translate(`entities.coverage.options.nature.${element.nature}`);
-            }
-
-            if (property === 'calculationMode') {
-                return this._translateService.translate(`entities.coverage.options.calculationMode.${element.calculationMode}`);
-            }
-
-            if (property === 'isFree') {
-                return element.isFree ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
-            }
-            if (property === 'isFixed') {
-                return element.isFixed ? this._translateService.translate('enums.yes') : this._translateService.translate('enums.no');
-            }
-            if (element[property] === null || element[property] === undefined) {
-                return '--';
-            }
-
-            return element[property];
-        }
 
         // Ajout de la colonne d’actions si nécessaire
         this.groupHeader.push('actions');

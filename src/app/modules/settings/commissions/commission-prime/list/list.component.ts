@@ -19,6 +19,7 @@ import { CommissionPointOfSale } from "@core/services/settings/commission-point-
 import { CommissionPointOfSaleService } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.service";
 import { Product } from "@core/services/settings/product/product.interface";
 import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import { ProductService } from "@core/services/settings/product/product.service";
 
 @Component({
     selector: "app-products-list",
@@ -39,15 +40,19 @@ export class CommissionPrimeListComponent implements OnInit {
 
     dataSource = new MatTableDataSource<CommissionPointOfSale>([]); // Ajoute les données réelles ici
 
+    products: Product[] = [];
+    selectedProduct: Product = new Product({});
+
     constructor(
-        private _productService: CommissionPointOfSaleService,
+        private _commissionService: CommissionPointOfSaleService,
+        private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _tanslateService: TranslocoService,
         private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._productService.commissionsPointOfSale$
+        this._commissionService.commissionsPointsOfSalePrimes$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: CommissionPointOfSale[]) => {
                 this.data = data;
@@ -72,7 +77,6 @@ export class CommissionPrimeListComponent implements OnInit {
 
     managementEntity: ManagementEntity = new ManagementEntity({});
 
-    selectedProduct: Product = new Product({});
 
     ngOnInit(): void {
         // Initialisation de la configuration de la table
@@ -139,7 +143,6 @@ export class CommissionPrimeListComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
-    products: Product[] = []
     searchCtrl: UntypedFormControl = new UntypedFormControl();
 
     openSelection() {
@@ -161,9 +164,13 @@ export class CommissionPrimeListComponent implements OnInit {
         this._dialog.open(CommissionPrimeFormComponent, {
             width: '600px',
             disableClose: true,
+            data: {
+                mode: 'create',
+                commissionPointOfSale: {} as CommissionPointOfSale
+            }
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                this._commissionService.getAll().subscribe();
             }
         });
     }
@@ -178,16 +185,16 @@ export class CommissionPrimeListComponent implements OnInit {
             disableClose: true,
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                this._commissionService.getAll().subscribe();
             }
         })
     }
 
     onDelete(product: CommissionPointOfSale): void {
-        this._productService.delete(product.id).subscribe({
+        this._commissionService.delete(product.id).subscribe({
             next: () => {
                 this._tanslateService.translate('form.success.delete');
-                this._productService.getAll().subscribe();
+                this._commissionService.getAll().subscribe();
             },
             error: () => {
                 this._tanslateService.translate('form.errors.submission');
