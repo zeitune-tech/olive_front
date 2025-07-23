@@ -654,7 +654,7 @@
         "empty_state": "Aucun type d'avenant trouvé"
       },
       "fields": {
-        "designation": "Désignation",
+        "name": "Désignation",
         "nature": "Nature",
         "actions": "Actions"
       },
@@ -1035,6 +1035,7 @@
         "summary": "Résumé"
       }
     }
+
   },
   "auth": {
     "sign_in": {

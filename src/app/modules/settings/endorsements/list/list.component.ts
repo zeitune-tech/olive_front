@@ -30,7 +30,7 @@ export class EndorsementListComponent {
     tableOptions: TableOptions<Endorsment> = {
         title: '',
         columns: [
-            { label: 'entities.endorsment.fields.designation', property: 'designation', visible: true, type: 'text' },
+            { label: 'entities.endorsment.fields.name', property: 'name', visible: true, type: 'text' },
             { label: 'entities.endorsment.fields.nature', property: 'nature', visible: true, type: 'text' },
         ],
         imageOptions: {
@@ -74,6 +74,7 @@ export class EndorsementListComponent {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: Endorsment[]) => {
                 this.data = data;
+                console.log('Endorsements data:', this.data);
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
             });
@@ -115,7 +116,10 @@ export class EndorsementListComponent {
         this._dialog.open(EndorsementNewComponent, {
             width: '600px',
             maxWidth: '90vw',
-            data: { coverageDuration: this.searchCtrl.value }
+            data: {
+                mode: 'create',
+                endorsement: null
+            }
         });
     }
 }

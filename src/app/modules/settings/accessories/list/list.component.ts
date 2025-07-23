@@ -54,7 +54,7 @@ export class AccessoriesListComponent {
             }
 
             if (property === 'actType') {
-                return element.actType?.designation;
+                return element.actType?.name;
             }
 
             return element[property];

@@ -21,6 +21,7 @@ import { CommissionPointOfSaleService } from '@core/services/settings/commission
 import { TaxTypeService } from '@core/services/settings/tax-type/tax-type.service';
 import { TaxPrimeService } from '@core/services/settings/tax-primes/tax-primes.service';
 import { TaxAccessoryService } from '@core/services/settings/tax-accessory/tax-accessory.service';
+import { EndorsementService } from '@core/services/settings/endorsement/endorsement.service';
 
 @Injectable({
     providedIn: 'root'
@@ -45,6 +46,7 @@ export class SettingsResolver implements Resolve<any> {
         private _taxAccessoryService: TaxAccessoryService,
         private _commissionService: CommissionPointOfSaleService,
         private _commissionContributorService: CommissionContributorService,
+        private _endorsementService: EndorsementService,
         private _durationRateService: DurationRateService,
     ) {
      
@@ -89,6 +91,9 @@ export class SettingsResolver implements Resolve<any> {
         if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COVERAGE_DURATIONS)) {
             resolList.push(this._coverageDurationService.getAll());
         }
+
+        // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_COMMISSION_POINT_OF_SALES)) {
+            resolList.push(this._endorsementService.getAll());
 
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_ACCESSORIES)) {
             resolList.push(this._accessoryService.getAll());
