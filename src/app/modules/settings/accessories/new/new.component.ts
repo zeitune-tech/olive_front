@@ -19,8 +19,11 @@ export class AccessoryNewComponent implements OnInit {
 
   endorsements: Endorsment[] = [];
   products: Product[] = [];
+  selectedProductId: string | null = null;
+  filteredEndorsements: Endorsment[] = [];
   editMode: boolean = false;
   accessoryId: string | null = null;
+  isFormReady: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -42,6 +45,7 @@ export class AccessoryNewComponent implements OnInit {
       minute: [0, [Validators.required, Validators.min(0), Validators.max(59)]],
     });
 
+    this.isFormReady = true;
 
     this._productService.products$.subscribe((products: Product[]) => {
       this.products = products;
@@ -49,7 +53,9 @@ export class AccessoryNewComponent implements OnInit {
 
     this._endorsementService.endorsements$.subscribe((endorsements: Endorsment[]) => {
       this.endorsements = endorsements;
+      this.filterEndorsements();
     });
+
 
     this._layoutService.selectedAccessory$.subscribe((accessoire: any) => {
       if (accessoire) {
@@ -75,6 +81,25 @@ export class AccessoryNewComponent implements OnInit {
       }
     });
 
+  }
+
+  filterEndorsements(): void {
+    if (this.selectedProductId != null) {
+      this.filteredEndorsements = this.endorsements.filter(e =>
+        e.product.some(p => p.id === this.selectedProductId)
+      );
+    } else {
+      this.filteredEndorsements = [];
+    }
+  }
+
+  onProductSelected(productId: string): void {
+    this.selectedProductId = productId;
+    this.filterEndorsements();
+  }
+
+  trackById(index: number, item: { id: string }) {
+    return item.id;
   }
 
   onSubmit(): void {

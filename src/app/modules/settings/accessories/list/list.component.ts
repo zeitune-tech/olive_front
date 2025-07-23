@@ -49,14 +49,18 @@ export class AccessoriesListComponent {
                 return element.product?.name;
             }
 
-            if (property === 'effectiveDate') {
-                return this._translateService.translate(`entities.accessory.options.effectiveDate.${element.effectiveDate}`);
-            }
-
             if (property === 'actType') {
                 return element.actType?.designation;
             }
 
+            if (property === 'effectiveDate') {
+                const day = element.day || '';
+                const hour = element.hour?.toString().padStart(2, '0') || '00';
+                const minute = element.minute?.toString().padStart(2, '0') || '00';
+
+                return day ? `${day} ${hour}:${minute}` : '';
+            }
+            
             return element[property];
         },
     };

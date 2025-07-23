@@ -1,83 +1,90 @@
 <div class="w-full pb-10" *transloco="let t">
+  <ng-container *ngIf="isFormReady">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="w-full max-w-[500px] bg-card p-4 rounded-xl mx-auto">
+      <!-- Titre -->
+      <div class="flex flex-col mb-6 text-center text-primary">
+        <h1 class="text-2xl font-bold">
+          {{ t('entities.accessory.table.title') }}
+        </h1>
+        <p class="text-sm text-gray-600">
+          {{ t('entities.accessory.form.subtitle') }}
+        </p>
+      </div>
 
-  <form [formGroup]="formGroup" class="w-full max-w-[500px] bg-card p-4 rounded-xl mx-auto">
-    <div class="flex flex-col mb-6 text-center text-primary">
-          <h1 class="text-2xl font-bold">
-            {{ t('entities.accessory.table.title') }}
-          </h1>
-          <p class="text-sm text-gray-600">
-            {{ t('entities.accessory.form.subtitle') }}
-          </p>
-        </div>
-    <div class="flex flex-col gap-4">
-      <!-- Product -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>{{ t('entities.accessory.fields.product') }}</mat-label>
-        <mat-select formControlName="productId">
-          <mat-option *ngFor="let product of products" [value]="product.id">{{ product.name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div class="flex flex-col gap-4">
+        <!-- Produit -->
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.accessory.fields.product') }}</mat-label>
+          <mat-select formControlName="productId" (selectionChange)="onProductSelected($event.value)">
+            <mat-option *ngFor="let product of products; trackBy: trackById" [value]="product.id">
+              {{ product.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <!-- Act Type -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>{{ t('entities.accessory.fields.actType') }}</mat-label>
-        <mat-select formControlName="actType">
-          <mat-option *ngFor="let endorsement of endorsements" [value]="endorsement.id">{{ endorsement.designation}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      
-      <!-- Accessory Risk -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>{{ t('entities.accessory.fields.accessoryRisk') }}</mat-label>
-        <input matInput type="number" formControlName="accessoryRisk" />
-      </mat-form-field>
+        <!-- Type d'acte -->
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.accessory.fields.actType') }}</mat-label>
+          <mat-select formControlName="actType">
+            <mat-option *ngFor="let endorsement of filteredEndorsements" [value]="endorsement.id">
+              {{ endorsement.designation }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <!-- Accessory Police -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>{{ t('entities.accessory.fields.accessoryPolice') }}</mat-label>
-        <input matInput type="number" formControlName="accessoryPolice" />
-      </mat-form-field>
+        <!-- Accessory Risk -->
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.accessory.fields.accessoryRisk') }}</mat-label>
+          <input matInput type="number" formControlName="accessoryRisk" />
+        </mat-form-field>
 
-      <!-- Date Effective -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>{{ t('entities.accessory.fields.dateEffective') }}</mat-label>
-        <input matInput type="date" formControlName="dateEffective" />
-      </mat-form-field>
+        <!-- Accessory Police -->
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.accessory.fields.accessoryPolice') }}</mat-label>
+          <input matInput type="number" formControlName="accessoryPolice" />
+        </mat-form-field>
 
-      <!--  Effective Date -->
-      <div class="flex flex-col gap-2 w-full">
-        <!-- Jour -->
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label>{{ t('entities.accessory.fields.day') }}</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="day" />
+        <!-- Date Effective -->
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.accessory.fields.dateEffective') }}</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dateEffective" />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <!-- Heure et Minute -->
-        <div class="flex gap-4">
+        <!-- Jour / Heure / Minute -->
+        <div class="flex gap-4 w-full">
+          <!-- Jour -->
+          <mat-form-field appearance="outline" class="w-1/3">
+            <mat-label>{{ t('entities.accessory.fields.day') }}</mat-label>
+            <input matInput [matDatepicker]="picker1" formControlName="day" />
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
           <!-- Heure -->
-          <mat-form-field appearance="outline" class="w-full">
+          <mat-form-field appearance="outline" class="w-1/3">
             <mat-label>{{ t('entities.accessory.fields.hour') }}</mat-label>
             <input matInput type="number" min="0" max="23" formControlName="hour" />
           </mat-form-field>
 
           <!-- Minute -->
-          <mat-form-field appearance="outline" class="w-full">
+          <mat-form-field appearance="outline" class="w-1/3">
             <mat-label>{{ t('entities.accessory.fields.minute') }}</mat-label>
             <input matInput type="number" min="0" max="59" formControlName="minute" />
           </mat-form-field>
         </div>
-      </div>
 
-
-      <!-- Submit -->
-      <div class="flex items-center justify-end gap-4 mt-6">
-        <div>{{ t(message) }}</div>
-        <button mat-flat-button color="primary" [disabled]="formGroup.invalid" (click)="onSubmit()">
-          {{ t('form.actions.save') }}
-        </button>
+        <!-- Message et Bouton -->
+        <div class="flex items-center justify-between gap-4 mt-6">
+          <div *ngIf="message" class="text-sm text-primary">
+            {{ t(message) }}
+          </div>
+          <button mat-flat-button color="primary" type="submit" [disabled]="formGroup.invalid">
+            {{ t('form.actions.save') }}
+          </button>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </ng-container>
 </div>

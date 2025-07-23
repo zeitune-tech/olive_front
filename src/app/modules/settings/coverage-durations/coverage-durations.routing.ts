@@ -12,9 +12,5 @@ export const routes: Routes = [
     {
         path: "list",
         component: CoverageDurationsListComponent
-    },
-    {
-        path: "new",
-        component: CoverageDurationNewComponent
     }
 ];
