@@ -1,4 +1,4 @@
-<div class="w-full p-4" *transloco="let t;" tabindex="0">
+<div class="w-full p-4 flex flex-col gap-4" *transloco="let t;" tabindex="0">
 	<!-- ----------------------------------------------------- -->
 	<!-- En-tête de la page                                     -->
 	<!-- ----------------------------------------------------- -->
@@ -11,10 +11,27 @@
 		</p>
 	</div>
 
+	<!-- --------------------------------------------- -->
+  <!-- Barre de recherche                            -->
+  <!-- --------------------------------------------- -->
+  <div class="flex flex-col md:flex-row items-center gap-4 justify-between">
+    <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
+      <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
+      <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [formControl]="searchCtrl">
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button mat-raised-button color="primary" class="text-white" (click)="openAddDialog()">
+        {{ t('form.actions.add') }}
+      </button>
+    </div>
+      
+  </div>
+
 	<!-- ----------------------------------------------------- -->
 	<!-- Tableau                                               -->
 	<!-- ----------------------------------------------------- -->
-	<div class="overflow-y-hidden overflow-x-auto pb-4">
+	<div class="overflow-auto">
 		<table mat-table [dataSource]="dataSource" matSort class="w-full rounded-md bg-card">
 
 			<!-- ================================================= -->

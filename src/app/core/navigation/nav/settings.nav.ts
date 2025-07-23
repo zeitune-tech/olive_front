@@ -21,28 +21,12 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 permission: PERMISSIONS.VIEW_COVERAGES
             },
             {
-                id: 'coverages-new',
-                title: 'sidebar.coverages.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/coverages/new',
-                permission: PERMISSIONS.CREATE_COVERAGES
-            },
-            {
                 id: 'products.list',
                 title: 'sidebar.products.list',
                 type: 'basic',
                 icon: 'fluent:people-team',
                 link: '/parameters/products/list',
                 permission: PERMISSIONS.VIEW_PRODUCTS
-            },
-            {
-                id: 'products-new',
-                title: 'sidebar.products.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/products/new',
-                permission: PERMISSIONS.CREATE_PRODUCTS
             },
             {
                 id: 'coverages.list',
@@ -59,14 +43,6 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 icon: 'fluent:people-team',
                 link: '/parameters/coverages/incompatibilities',
                 permission: PERMISSIONS.VIEW_COVERAGES
-            },
-            {
-                id: 'incompatible-coverages-new',
-                title: 'sidebar.incompatible_coverages.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/coverages/new-incompatibility',
-                permission: PERMISSIONS.CREATE_COVERAGES
             }
         ]
     },
@@ -84,14 +60,6 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 icon: 'fluent:people-team',
                 link: '/parameters/coverage-durations/list',
                 permission: PERMISSIONS.VIEW_COVERAGE_DURATIONS
-            },
-            {
-                id: 'coverage-durations.new',
-                title: 'sidebar.coverage_durations.new',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/parameters/coverage-durations/new',
-                permission: PERMISSIONS.CREATE_COVERAGE_DURATIONS
             },
             {
                 id: 'duration-rates.list',

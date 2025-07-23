@@ -15,16 +15,7 @@ export class AccessoryNewComponent implements OnInit {
   formGroup!: UntypedFormGroup;
   message: string = '';
 
-  /**
-   *     
-   * 
-   * 
-   */
-
-  accessoryTypes = [
-    { value: 'RISQUES', label: 'entities.accessory.options.accessoryType.RISQUES' },
-    { value: 'POLICE', label: 'entities.accessory.options.accessoryType.POLICE' },
-  ];
+  
 
   endorsements: Endorsment[] = [];
   products: Product[] = [];
@@ -41,11 +32,14 @@ export class AccessoryNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
-      dateEffective: [null, Validators.required],
+      dateEffective: [null],
       actType: [null, Validators.required],
-      accessoryType: [null, Validators.required],
-      accessoryAmount: [null, Validators.required],
+      accessoryRisk: [null],
+      accessoryPolice: [null],
       productId: [null, Validators.required],
+      day: [null, Validators.required],
+      hour: [0, [Validators.required, Validators.min(0), Validators.max(23)]],
+      minute: [0, [Validators.required, Validators.min(0), Validators.max(59)]],
     });
 
 
@@ -61,20 +55,48 @@ export class AccessoryNewComponent implements OnInit {
       if (accessoire) {
         this.editMode = true;
         this.accessoryId = accessoire.id;
-        this.formGroup.patchValue({
+
+        const patch: any = {
           dateEffective: accessoire.dateEffective,
           actType: accessoire.endorsement ? accessoire.endorsement.id : null,
-          accessoryType: accessoire.accessoryType,
-          accessoryAmount: accessoire.accessoryAmount,
-          productId: accessoire.product ? accessoire.product.id : null
-        });
+          accessoryRisk: accessoire.accessoryRisk,
+          accessoryPolice: accessoire.accessoryPolice,
+          productId: accessoire.product ? accessoire.product.id : null,
+        };
+
+        if (accessoire.effectiveDate) {
+          const date = new Date(accessoire.effectiveDate);
+          patch.day = date;
+          patch.hour = date.getHours();
+          patch.minute = date.getMinutes();
+        }
+
+        this.formGroup.patchValue(patch);
       }
     });
+
   }
 
   onSubmit(): void {
     if (this.formGroup.valid) {
-      const data = this.formGroup.value;
+      const formValues = this.formGroup.value;
+
+    // Créer une date complète à partir de jour + heure + minute
+    const date: Date = new Date(formValues.day);
+    date.setHours(formValues.hour);
+    date.setMinutes(formValues.minute);
+
+    // Créer le payload final avec effectiveDate calculé
+    const data = {
+      ...formValues,
+      effectiveDate: date
+    };
+
+    // Supprimer les champs intermédiaires du payload si nécessaire
+    delete data.day;
+    delete data.hour;
+    delete data.minute;
+
       if (this.editMode && this.accessoryId) {
         this._accessoryService.update(this.accessoryId, data).subscribe({
           next: () => {

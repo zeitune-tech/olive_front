@@ -600,18 +600,23 @@
       "fields": {
         "dateEffective": "Date d'effet",
         "actType": "Type d'acte",
-        "accessoryAmount": "Montant de l'accessoire",
-        "accessoryType": "Type d'accessoire",
+        "accessoryPolice": "Accessoire/police",
+        "accessoryRisk": "Accessoire/risque",
         "product": "Produit",
+        "effectiveDate": "Prise d'effet",
+        "day": "Jour",
+        "hour": "Heure",
+        "minute": "Minute",
         "managementEntity": "Entité de gestion",
         "actions": "Actions"
       },
       "options": {
         "actType": {
-          "NEW_BUSINESS": "Affaire nouvelle",
-          "MODIFICATION": "Modification",
-          "SUSPENSION": "Suspension",
-          "REINSTATEMENT": "Remise en vigueur"
+          "NEW_BUSINESS": "Nouvelle affaire",
+          "MODIFICATION": "Modification standard",
+          "SUSPENSION": "Arrêt de couverture",
+          "REINSTATEMENT": "Reconduction"
+
         },
         "accessoryType": {
           "RISQUES": "Risques",
@@ -1130,7 +1135,7 @@
     "products": {
       "title": "Produits",
       "list": "Liste des produits",
-      "new": "Ajouter / Modifier un produit"
+      "new": "Ajouter un produit"
     },
     "coverages": {
       "title": "Produits",
@@ -1384,7 +1389,9 @@
         "profiles": "Profils",
         "profiles_description": "Gestion des profils utilisateurs et des rôles.",
         "users": "Utilisateurs",
-        "users_description": "Gestion des comptes utilisateurs."
+        "users_description": "Gestion des comptes utilisateurs.",
+        "contributors": "Apporteurs",
+        "contributors_description": "Gestion des apporteurs."
       }
     },
     "settings": {
@@ -1393,14 +1400,22 @@
       "features": {
         "coverages": "Garanties",
         "coverages_description": "Gestion des types de garantie.",
-        "coverage_durations": "Durées de garantie",
-        "coverage_durations_description": "Définir les durées de garantie disponibles.",
+        "coverage_durations": "Durées de couverture",
+        "coverage_durations_description": "Définir les durées de couverture.",
         "insured_registries": "Registres des assurés",
         "insured_registries_description": "Consulter et gérer les assurés enregistrés.",
         "production_registries": "Registres de production",
         "production_registries_description": "Suivi des données de production.",
         "closures": "Clôtures",
-        "closures_description": "Configurer les périodes de clôture."
+        "closures_description": "Configurer les périodes de clôture.",
+        "endorsements": "Avenants",
+        "endorsements_description": "Gestion des avenants",
+        "accessories": "Accessoires",
+        "accessories_description": "Gestion des accessoires",
+        "taxes": "Taxes",
+        "taxes_description": "Gestion des taxes",
+        "commissions": "Commissions",
+        "commissions_description": "Gestion des commissions"
       }
     },
     "insureds": {

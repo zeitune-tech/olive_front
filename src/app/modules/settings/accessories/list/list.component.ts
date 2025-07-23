@@ -12,6 +12,8 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { Router } from "@angular/router";
 import { LayoutService } from "../layout.service";
+import { MatDialog } from "@angular/material/dialog";
+import { AccessoryNewComponent } from "../new/new.component";
 
 @Component({
     selector: "app-closures-list",
@@ -29,8 +31,9 @@ export class AccessoriesListComponent {
             { label: 'entities.accessory.fields.dateEffective', property: 'dateEffective', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.actType', property: 'actType', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.product', property: 'product', visible: true, type: 'text' },
-            { label: 'entities.accessory.fields.accessoryType', property: 'accessoryType', visible: true, type: 'text' },
-            { label: 'entities.accessory.fields.accessoryAmount', property: 'accessoryAmount', visible: true, type: 'text' }
+            { label: 'entities.accessory.fields.accessoryRisk', property: 'accessoryRisk', visible: true, type: 'text' },
+            { label: 'entities.accessory.fields.accessoryPolice', property: 'accessoryPolice', visible: true, type: 'text' },
+            { label: 'entities.accessory.fields.effectiveDate', property: 'effectiveDate', visible: true, type: 'text' }
         ],
         imageOptions: {
             label: 'closure.columns.logo',
@@ -46,8 +49,8 @@ export class AccessoriesListComponent {
                 return element.product?.name;
             }
 
-            if (property === 'accessoryType') {
-                return this._translateService.translate(`entities.accessory.options.accessoryType.${element.accessoryType}`);
+            if (property === 'effectiveDate') {
+                return this._translateService.translate(`entities.accessory.options.effectiveDate.${element.effectiveDate}`);
             }
 
             if (property === 'actType') {
@@ -62,6 +65,7 @@ export class AccessoriesListComponent {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
     dataSource: MatTableDataSource<Accessory> = new MatTableDataSource();
     selection = new SelectionModel<Accessory>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
@@ -71,7 +75,8 @@ export class AccessoriesListComponent {
         private _accessoryService: AccessoryService,
         private _translateService: TranslocoService,
         private _router: Router,
-        private _layoutService: LayoutService
+        private _layoutService: LayoutService,
+        private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -97,9 +102,6 @@ export class AccessoriesListComponent {
         this._unsubscribeAll.complete();
     }
 
-    openAddDialog(): void {
-        this._router.navigate(['/parameters/accessories/new']); 
-    }
     onView(item: Accessory): void {}
 
     onDelete(accessory: Accessory): void {}
@@ -113,6 +115,14 @@ export class AccessoriesListComponent {
         let columns: string[] = this.tableOptions.columns.filter(column => column.visible).map(column => column.property);
         columns.push('actions');
         return columns;
+    }
+
+    openAddDialog() {
+        this._dialog.open(AccessoryNewComponent, {
+            width: '600px',
+            maxWidth: '90vw',
+            data: { accessory: this.searchCtrl.value }
+        });
     }
 
     trackByProperty(index: number, column: TableColumn<Accessory>) {

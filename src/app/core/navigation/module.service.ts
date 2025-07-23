@@ -49,16 +49,6 @@ export class ModuleService {
             ],
             features: [
                 {
-                    name: "products",
-                    title: "modules.administration.features.products",
-                    description: "modules.administration.features.products_description",
-                    icon: "production_quantity_limits",
-                    route: "/administration/products",
-                    permissions: [
-                        PERMISSIONS.VIEW_PRODUCTS,
-                    ]
-                },
-                {
                     name: "market_level_organizations",
                     title: "modules.administration.features.market_level_organizations",
                     description: "modules.administration.features.market_level_organizations_description",
@@ -117,6 +107,16 @@ export class ModuleService {
                     permissions: [
                         PERMISSIONS.VIEW_USERS,
                     ]
+                },
+                {
+                    name: "closures",
+                    title: "modules.settings.features.closures",
+                    description: "modules.settings.features.closures_description",
+                    icon: "settings",
+                    route: "/parameters/closures",
+                    permissions: [
+                        PERMISSIONS.VIEW_CLOSURES,
+                    ]
                 }
             ]
         },
@@ -130,6 +130,16 @@ export class ModuleService {
                 PERMISSIONS.VIEW_COVERAGES,
             ],
             features: [
+                {
+                    name: "products",
+                    title: "modules.administration.features.products",
+                    description: "modules.administration.features.products_description",
+                    icon: "production_quantity_limits",
+                    route: "/parameters/products",
+                    permissions: [
+                        PERMISSIONS.VIEW_PRODUCTS,
+                    ]
+                },
                 {
                     name: "coverages",
                     title: "modules.settings.features.coverages",
@@ -151,33 +161,43 @@ export class ModuleService {
                     ]
                 },
                 {
-                    name: "insured_registries",
-                    title: "modules.settings.features.insured_registries",
-                    description: "modules.settings.features.insured_registries_description",
+                    name: "endorsements",
+                    title: "modules.settings.features.endorsements",
+                    description: "modules.settings.features.endorsements_description",
                     icon: "settings",
-                    route: "/parameters/insured-registries",
+                    route: "/parameters/endorsements",
                     permissions: [
-                        PERMISSIONS.VIEW_INSURED_REGISTRIES,
+
                     ]
                 },
                 {
-                    name: "production_registries",
-                    title: "modules.settings.features.production_registries",
-                    description: "modules.settings.features.production_registries_description",
+                    name: "accessories",
+                    title: "modules.settings.features.accessories",
+                    description: "modules.settings.features.accessories_description",
                     icon: "settings",
-                    route: "/parameters/production-registries",
+                    route: "/parameters/accessories",
                     permissions: [
-                        PERMISSIONS.VIEW_PRODUCTION_REGISTRIES,
+                        
                     ]
                 },
                 {
-                    name: "closures",
-                    title: "modules.settings.features.closures",
-                    description: "modules.settings.features.closures_description",
+                    name: "taxes",
+                    title: "modules.settings.features.taxes",
+                    description: "modules.settings.features.taxes_description",
                     icon: "settings",
-                    route: "/parameters/closures",
+                    route: "/parameters/taxes",
                     permissions: [
-                        PERMISSIONS.VIEW_CLOSURES,
+                        
+                    ]
+                },
+                {
+                    name: "commissions",
+                    title: "modules.settings.features.commissions",
+                    description: "modules.settings.features.commissions_description",
+                    icon: "settings",
+                    route: "/parameters/commissions",
+                    permissions: [
+                        
                     ]
                 }
             ]
