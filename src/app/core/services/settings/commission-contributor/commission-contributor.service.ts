@@ -9,9 +9,11 @@ import { RequestMetadata } from '../../common.interface';
 @Injectable({ providedIn: 'root' })
 export class CommissionContributorService {
 
-  baseUrl = environment.settings_url + '/commission-contributors';
+  baseUrl = environment.settings_url + '/commissions-contributors';
   private _commissionContributor = new ReplaySubject<CommissionContributor>(1);
-  private _commissionContributors = new ReplaySubject<CommissionContributor[]>(1);
+  private _commissionContributorPrimes = new ReplaySubject<CommissionContributor[]>(1);
+  private _commissionContributorAccessories = new ReplaySubject<CommissionContributor[]>(1);
+
   private _metadata = new ReplaySubject<RequestMetadata>(1);
 
   set commissionContributor(value: CommissionContributor) {
@@ -22,12 +24,20 @@ export class CommissionContributorService {
     return this._commissionContributor.asObservable();
   }
 
-  set commissionContributors(value: CommissionContributor[]) {
-    this._commissionContributors.next(value);
+  set commissionContributorPrimes(value: CommissionContributor[]) {
+    this._commissionContributorPrimes.next(value);
   }
 
-  get commissionContributors$() {
-    return this._commissionContributors.asObservable();
+  get commissionContributorPrimes$() {
+    return this._commissionContributorPrimes.asObservable();
+  }
+
+  set commissionContributorAccessories(value: CommissionContributor[]) {
+    this._commissionContributorAccessories.next(value);
+  }
+
+  get commissionContributorAccessories$() {
+    return this._commissionContributorAccessories.asObservable();
   }
 
   set metadata(value: RequestMetadata) {
@@ -54,12 +64,16 @@ export class CommissionContributorService {
     );
   }
 
-  getAll(): Observable<CommissionContributor[]> {
-    return this._httpClient.get<CommissionContributor[]>(this.baseUrl).pipe(
-      tap((response: CommissionContributor[]) => {
-        this.commissionContributors = response;
-        return response;
-      }),
+  getAllPrimes(): Observable<CommissionContributor[]> {
+    return this._httpClient.get<CommissionContributor[]>(`${this.baseUrl}/primes`).pipe(
+      tap((res) => this.commissionContributorPrimes = res),
+      catchError(() => of([] as CommissionContributor[]))
+    );
+  }
+
+  getAllAccessories(): Observable<CommissionContributor[]> {
+    return this._httpClient.get<CommissionContributor[]>(`${this.baseUrl}/accessories`).pipe(
+      tap((res) => this.commissionContributorAccessories = res),
       catchError(() => of([] as CommissionContributor[]))
     );
   }

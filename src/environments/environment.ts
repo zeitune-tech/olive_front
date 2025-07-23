@@ -1,9 +1,8 @@
 export const environment = {
-  auth_url: "http://localhost:8010/api/v1",
-  administration_url: "http://localhost:8020/api/v1/app",
-  settings_url: "http://localhost:8030/api/v1/app",
-  attestations_url: "http://localhost:8040/api/v1/app",
-  insured_url: "http://localhost:8050/api/v1/app",
+  auth_url: "https://dev.adminolive.zeitune.tech/auth",
+  administration_url: "https://dev.adminolive.zeitune.tech/admin",
+  settings_url: "https://dev.adminolive.zeitune.tech/settings",
+  attestations_url: "https://dev.adminolive.zeitune.tech",
+  insured_url: "https://dev.adminolive.zeitune.tech",
   production: false
 };
-

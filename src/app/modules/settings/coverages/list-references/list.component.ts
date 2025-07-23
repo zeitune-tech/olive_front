@@ -13,6 +13,8 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { CoverageReferenceEditComponent } from "../edit-reference/edit.component";
 import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
+import { Router } from "@angular/router";
+import { CoverageReferenceNewComponent } from "../new-reference/new.component";
 
 @Component({
     selector: "app-coverage-reference-list",
@@ -58,7 +60,9 @@ export class CoverageReferenceListComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _coverageService: CoverageReferenceService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _router: Router
+
     ) { }
 
     ngOnInit(): void {
@@ -102,8 +106,8 @@ export class CoverageReferenceListComponent {
         this._dialog.open(ConfirmDeleteComponent, {
             width: '400px',
             data: {
-                title: 'entities.coverage_reference.delete.title',
-                message: 'entities.coverage_reference.delete.message',
+                title: 'form.actions.deleteTitle',
+                message: 'form.actions.deleteMessage',
                 itemName: coverageReference.designation
             },
             disableClose: true,
@@ -131,5 +135,13 @@ export class CoverageReferenceListComponent {
 
     trackByProperty(index: number, column: TableColumn<CoverageReference>) {
         return column.property;
+    }
+
+    openAddDialog() {
+        this._dialog.open(CoverageReferenceNewComponent, {
+            width: '600px',
+            maxWidth: '90vw',
+            data: { coverageDuration: this.searchCtrl.value }
+        });
     }
 }

@@ -86,7 +86,7 @@ export class TypeListComponent {
         actions: [],
         renderItem: (element: TaxType, property: keyof TaxType) => {
             if (property === 'nature') {
-                return 'entities.tax-type.nature' + element.nature;
+                return this._translateService.translate(`entities.tax-type.options.nature.${element.nature}`);
             }
             return element[property];
         },
@@ -116,17 +116,8 @@ export class TypeListComponent {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: TaxType[]) => {
 
-
-                // this.products = data
-                //     .map(taxType => taxType.)
-                //     .filter((product, index, self) =>
-                //         index === self.findIndex((p) => p.id === product.id)
-                //     );
-
-                this.selectedProduct = this.products[0] || {} as Product;
                 this.data = data;
-                // this.dataSource.data = data;
-                // this.dataSource.data = this.data.filter(TaxType => TaxType.product.id === this.selectedProduct.id);
+                this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
             });
 
@@ -198,35 +189,35 @@ export class TypeListComponent {
             width: '700px',
             data: {
                 mode: 'add',
-                product: this.selectedProduct,
+                data: {} as TaxType
             }
         }).afterClosed().subscribe((result: TaxType) => {
             if (result) {
-                
+                this.data.push(result);
             }
         })
     }
 
-    // openEditDialog(item: any): void {
-    //     const dialogRef = this._dialog.open(TaxTypesEditDialogComponent, {
-    //         width: '700px',
-    //         data: item
-    //     });
+    openEditDialog(item: any): void {
+        const dialogRef = this._dialog.open(TypeFormComponent, {
+            width: '700px',
+            data: {
+                mode: 'edit',
+                data: item
+            }
+        });
 
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         if (result) {
-    //             // Appeler ici le service pour mettre à jour les données
-    //             this._taxTypeService.update(item.id, result).subscribe(() => {
-    //                 // rechargement, toast, etc.
-    //                 this._taxTypeService.getAll().subscribe((data: TaxType[]) => {
-    //                     this.data = data;
-    //                     this.dataSource.data = data;
-    //                     this._changeDetectorRef.detectChanges();
-    //                 });
-    //             });
-    //         }
-    //     });
-    // }
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                const index = this.data.findIndex(t => t.id === result.id);
+                if (index !== -1) {
+                    this.data[index] = result;
+                    this.dataSource.data = [...this.data];
+                    this._changeDetectorRef.detectChanges();
+                }
+            }
+        });
+    }
 
     openDeleteDialog(item: any): void { }
 

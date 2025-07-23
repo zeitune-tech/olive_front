@@ -10,10 +10,13 @@ import { CommissionPointOfSale } from './commission-point-of-sale.interface';
 export class CommissionPointOfSaleService {
   
 
-  baseUrl = environment.settings_url + '/commissions/contributors';
+  baseUrl = environment.settings_url + '/commissions-points-of-sale';
   private _commissionPointOfSale = new ReplaySubject<CommissionPointOfSale>(1);
   private _commissionsPointOfSale = new ReplaySubject<CommissionPointOfSale[]>(1);
   private _metadata = new ReplaySubject<RequestMetadata>(1);
+
+  private _commissionsPointsOfSalePrimes = new ReplaySubject<CommissionPointOfSale[]>(1);
+  private _commissionsPointsOfSaleAccessories = new ReplaySubject<CommissionPointOfSale[]>(1);
 
   set commissionPointOfSale(value: CommissionPointOfSale) {
     this._commissionPointOfSale.next(value);
@@ -29,6 +32,22 @@ export class CommissionPointOfSaleService {
 
   get commissionsPointOfSale$() {
     return this._commissionsPointOfSale.asObservable();
+  }
+
+  get commissionsPointsOfSalePrimes$() {
+    return this._commissionsPointsOfSalePrimes.asObservable();
+  }
+
+  get commissionsPointsOfSaleAccessories$() {
+    return this._commissionsPointsOfSaleAccessories.asObservable();
+  }
+
+  set commissionsPointsOfSalePrimes(value: CommissionPointOfSale[]) {
+    this._commissionsPointsOfSalePrimes.next(value);
+  }
+
+  set commissionsPointsOfSaleAccessories(value: CommissionPointOfSale[]) {
+    this._commissionsPointsOfSaleAccessories.next(value);
   }
 
   set metadata(value: RequestMetadata) {
@@ -61,6 +80,20 @@ export class CommissionPointOfSaleService {
         this.commissionsPointOfSale = response;
         return response;
       }),
+      catchError(() => of([] as CommissionPointOfSale[]))
+    );
+  }
+
+  getAllPrimes(): Observable<CommissionPointOfSale[]> {
+    return this._httpClient.get<CommissionPointOfSale[]>(`${this.baseUrl}/primes`).pipe(
+      tap((res) => this.commissionsPointsOfSalePrimes = res),
+      catchError(() => of([] as CommissionPointOfSale[]))
+    );
+  }
+
+  getAllAccessories(): Observable<CommissionPointOfSale[]> {
+    return this._httpClient.get<CommissionPointOfSale[]>(`${this.baseUrl}/accessories`).pipe(
+      tap((res) => this.commissionsPointsOfSaleAccessories = res),
       catchError(() => of([] as CommissionPointOfSale[]))
     );
   }

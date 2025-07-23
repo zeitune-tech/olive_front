@@ -14,6 +14,8 @@ import { Router } from "@angular/router";
 import { LayoutService } from "../layout.service";
 import { Endorsment } from "@core/services/settings/endorsement/endorsement.interface";
 import { EndorsementService } from "@core/services/settings/endorsement/endorsement.service";
+import { EndorsementNewComponent } from "../new/new.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
     selector: "app-closures-list",
@@ -28,7 +30,7 @@ export class EndorsementListComponent {
     tableOptions: TableOptions<Endorsment> = {
         title: '',
         columns: [
-            { label: 'entities.endorsment.fields.designation', property: 'designation', visible: true, type: 'text' },
+            { label: 'entities.endorsment.fields.name', property: 'name', visible: true, type: 'text' },
             { label: 'entities.endorsment.fields.nature', property: 'nature', visible: true, type: 'text' },
         ],
         imageOptions: {
@@ -53,6 +55,7 @@ export class EndorsementListComponent {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
     dataSource: MatTableDataSource<Endorsment> = new MatTableDataSource();
     selection = new SelectionModel<Endorsment>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
@@ -62,7 +65,8 @@ export class EndorsementListComponent {
         private _translateService: TranslocoService,
         private _router: Router,
         private _endorsmentService: EndorsementService,
-        private _layoutService: LayoutService
+        private _layoutService: LayoutService,
+        private _dialog: MatDialog
     ) { }
 
     ngOnInit(): void {
@@ -70,6 +74,7 @@ export class EndorsementListComponent {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: Endorsment[]) => {
                 this.data = data;
+                console.log('Endorsements data:', this.data);
                 this.dataSource.data = data;
                 this._changeDetectorRef.detectChanges();
             });
@@ -88,9 +93,6 @@ export class EndorsementListComponent {
         this._unsubscribeAll.complete();
     }
 
-    openAddDialog(): void {
-        this._router.navigate(['/parameters/endorsements/new']); 
-    }
     onView(item: Endorsment): void {}
 
     onDelete(endorsement: Endorsment): void {}
@@ -108,5 +110,16 @@ export class EndorsementListComponent {
 
     trackByProperty(index: number, column: TableColumn<Endorsment>) {
         return column.property;
+    }
+
+    openAddDialog() {
+        this._dialog.open(EndorsementNewComponent, {
+            width: '600px',
+            maxWidth: '90vw',
+            data: {
+                mode: 'create',
+                endorsement: null
+            }
+        });
     }
 }

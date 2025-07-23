@@ -43,7 +43,10 @@ export class TypeFormComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<TypeFormComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: TaxType,
+        @Inject(MAT_DIALOG_DATA) public data: {
+            mode: 'create' | 'edit',
+            data: TaxType,
+        },
         private _taxTypeService: TaxTypeService,
         private translocoService: TranslocoService,
         private snackBar: MatSnackBar
@@ -51,9 +54,11 @@ export class TypeFormComponent implements OnInit {
 
     ngOnInit(): void {
 
+        this.mode = this.data.mode;
+
         this.formGroup = this.fb.group({
-            name: [this.data.name, Validators.required],
-            nature: [this.data.nature, Validators.required],
+            name: [this.data.data?.name, Validators.required],
+            nature: [this.data.data?.nature, Validators.required],
         });
 
 
@@ -67,6 +72,44 @@ export class TypeFormComponent implements OnInit {
     }
 
     onSubmit(): void {
+        
+        if (this.mode === 'create') {
+            this.onCreate();
+        } else {
+            this.onUpdate();
+        }
+    }
+
+    onCreate(): void {
+        if (this.formGroup.invalid) return;
+
+        this.formGroup.disable();
+
+        const newTaxType: TaxType = {
+            ...this.formGroup.value
+        };
+
+        this._taxTypeService.create(newTaxType).subscribe({
+            next: () => {
+                this.snackBar.open(
+                    this.translocoService.translate('form.success.create'),
+                    undefined,
+                    { duration: 3000, panelClass: 'snackbar-success' }
+                );
+                this.dialogRef.close(newTaxType);
+            },
+            error: () => {
+                this.snackBar.open(
+                    this.translocoService.translate('form.errors.submission'),
+                    undefined,
+                    { duration: 3000, panelClass: 'snackbar-error' }
+                );
+                this.formGroup.enable();
+            }
+        });
+    }
+
+    onUpdate(): void {
         if (this.formGroup.invalid) return;
 
         this.formGroup.disable();
@@ -75,14 +118,16 @@ export class TypeFormComponent implements OnInit {
             ...this.formGroup.value
         };
 
-        this._taxTypeService.update(this.data.id,updated).subscribe({
+        this._taxTypeService.update(this.data.data?.id, updated).subscribe({
             next: () => {
                 this.snackBar.open(
                     this.translocoService.translate('form.success.update'),
                     undefined,
                     { duration: 3000, panelClass: 'snackbar-success' }
                 );
-                this.dialogRef.close(true);
+                this.dialogRef.close(
+                    updated
+                );
             },
             error: () => {
                 this.snackBar.open(

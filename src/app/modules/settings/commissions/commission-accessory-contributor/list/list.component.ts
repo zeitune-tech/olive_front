@@ -51,7 +51,7 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
         private _dialog: MatDialog
     ) {
 
-        this._commissionContributorService.commissionContributors$
+        this._commissionContributorService.commissionContributorAccessories$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: CommissionContributor[]) => {
                 this.data = data;

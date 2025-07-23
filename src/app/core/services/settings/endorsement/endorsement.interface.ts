@@ -1,11 +1,11 @@
 export class Endorsment {
   id: string;
-  designation: string;
+  name: string;
   nature: string;
 
   constructor(data: any) {
     this.id = data.id || '';
-    this.designation = data.designation || '';
+    this.name = data.name || '';
     this.nature = data.nature || '';
   }
 }

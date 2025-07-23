@@ -50,7 +50,7 @@ export class CommissionPrimeContributorListComponent implements OnInit {
         private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._commissionContributorService.commissionContributors$
+        this._commissionContributorService.commissionContributorAccessories$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: CommissionContributor[]) => {
                 this.data = data;

@@ -64,6 +64,7 @@ export class CoverageDurationsListComponent {
     dataSource: MatTableDataSource<CoverageDuration> = new MatTableDataSource();
     selection = new SelectionModel<CoverageDuration>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
+    searchCtrl: UntypedFormControl = new UntypedFormControl('');
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
@@ -117,5 +118,13 @@ export class CoverageDurationsListComponent {
 
     trackByProperty(index: number, column: TableColumn<CoverageDuration>) {
         return column.property;
+    }
+
+    openAddDialog() {
+        this._dialog.open(DurationRateNewComponent, {
+            width: '600px',
+            maxWidth: '90vw',
+            data: { coverageDuration: this.searchCtrl.value }
+        });
     }
 }
