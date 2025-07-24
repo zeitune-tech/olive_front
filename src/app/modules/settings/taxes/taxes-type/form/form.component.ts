@@ -90,13 +90,13 @@ export class TypeFormComponent implements OnInit {
         };
 
         this._taxTypeService.create(newTaxType).subscribe({
-            next: () => {
+            next: (response: TaxType) => {
                 this.snackBar.open(
                     this.translocoService.translate('form.success.create'),
                     undefined,
                     { duration: 3000, panelClass: 'snackbar-success' }
                 );
-                this.dialogRef.close(newTaxType);
+                this.dialogRef.close(response);
             },
             error: () => {
                 this.snackBar.open(
@@ -119,14 +119,14 @@ export class TypeFormComponent implements OnInit {
         };
 
         this._taxTypeService.update(this.data.data?.id, updated).subscribe({
-            next: () => {
+            next: (response: TaxType) => {
                 this.snackBar.open(
                     this.translocoService.translate('form.success.update'),
                     undefined,
                     { duration: 3000, panelClass: 'snackbar-success' }
                 );
                 this.dialogRef.close(
-                    updated
+                    response
                 );
             },
             error: () => {

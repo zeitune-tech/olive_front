@@ -52,14 +52,14 @@ export class CommissionPrimeFormComponent implements OnInit {
         this.mode = this.data.mode;
 
         this.formGroup = this.fb.group({
-            dateEffective: [this.data.commissionPointOfSale.dateEffective, Validators.required],
-            calculationBase: ["PRIME", Validators.required],
-            managementRate: [this.data.commissionPointOfSale.managementRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-            contributionRate: [this.data.commissionPointOfSale.contributionRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-            typePointOfSale: [this.data.commissionPointOfSale.typePointOfSale],
-            pointOfSale: [this.data.commissionPointOfSale.pointOfSale],
-            product: [this.data.commissionPointOfSale.product, Validators.required],
-            coverage: [this.data.commissionPointOfSale.coverage],
+            dateEffective: [this.data?.commissionPointOfSale.dateEffective, Validators.required],
+            calculationBase: ["PRIME"],
+            managementRate: [this.data?.commissionPointOfSale.managementRate, [Validators.required, Validators.min(0), Validators.max(100)]],
+            contributionRate: [this.data?.commissionPointOfSale.contributionRate, [Validators.required, Validators.min(0), Validators.max(100)]],
+            pointOfSaleType: [this.data?.commissionPointOfSale.typePointOfSale],
+            pointOfSaleId: [this.data?.commissionPointOfSale.pointOfSale?.id || null],
+            productId: [this.data?.commissionPointOfSale.product?.id || null, Validators.required],
+            coverageId: [this.data?.commissionPointOfSale.coverage?.id || null],
         });
 
         this._productService.products$.subscribe(products => {
@@ -86,13 +86,13 @@ export class CommissionPrimeFormComponent implements OnInit {
         };
 
         this._commissionPointOfSaleService.create(newCommission).subscribe({
-            next: () => {
+            next: (response: CommissionPointOfSale) => {
                 this.snackBar.open(
                     this.translocoService.translate('form.success.create'),
                     undefined,
                     { duration: 3000, panelClass: 'snackbar-success' }
                 );
-                this.dialogRef.close(true);
+                this.dialogRef.close(response);
             },
             error: () => {
                 this.snackBar.open(
@@ -116,13 +116,13 @@ export class CommissionPrimeFormComponent implements OnInit {
         };
 
         this._commissionPointOfSaleService.update(updatedCommission.id, updatedCommission).subscribe({
-            next: () => {
+            next: (response: CommissionPointOfSale) => {
                 this.snackBar.open(
                     this.translocoService.translate('form.success.update'),
                     undefined,
                     { duration: 3000, panelClass: 'snackbar-success' }
                 );
-                this.dialogRef.close(true);
+                this.dialogRef.close(response);
             },
             error: () => {
                 this.snackBar.open(

@@ -935,7 +935,8 @@
           "VAT_ACCESSORIES": "TVA sur accessoire",
           "FGA": "FGA",
           "BROWN_CARD": "Carte brune",
-          "OTHERS": "Autres"
+          "OTHERS": "Autres",
+          "OTHER": "Autres"
         }
       }
     },

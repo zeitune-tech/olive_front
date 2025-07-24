@@ -49,13 +49,19 @@ export class TaxCommissionListComponent implements OnInit {
         private _managementEntityService: ManagementEntityService,
         private _dialog: MatDialog
     ) {
-        // this._productService.products$
-        //     .pipe(takeUntil(this._unsubscribeAll))
-        //     .subscribe((data: TaxCommissionsPointOfSale[]) => {
-        //         this.data = data;
-        //         this.dataSource.data = data;
-        //     });
+        this._productService.products$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: Product[]) => {
+                this.products = data;
+            });
 
+        this._taxCommissions.commissionTaxes$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: TaxCommissionsPointOfSale[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+            });
+            
         this._managementEntityService.entity$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: ManagementEntity) => {
@@ -165,9 +171,20 @@ export class TaxCommissionListComponent implements OnInit {
         this._dialog.open(TaxCommissionFormComponent, {
             width: '600px',
             disableClose: true,
+            data: {
+                mode: 'create',
+                commissionTaxPointOfSale: new TaxCommissionsPointOfSale({})
+            }
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                const index = this.dataSource.data.findIndex(item => item.id === result.id);
+                if (index > -1) {
+                    this.dataSource.data[index] = result;
+                    this.dataSource._updateChangeSubscription();
+                } else {
+                    this.dataSource.data.push(result);
+                    this.dataSource._updateChangeSubscription();
+                }
             }
         });
     }
@@ -187,14 +204,21 @@ export class TaxCommissionListComponent implements OnInit {
     /**
         * Edit TaxCommissionsPointOfSale TaxCommissionsPointOfSale
         */
-    onEdit(product: TaxCommissionsPointOfSale): void {
+    onEdit(taxCom: TaxCommissionsPointOfSale): void {
         this._dialog.open(TaxCommissionFormComponent, {
-            data: product,
+            data: {
+                mode: 'edit',
+                commissionTaxPointOfSale: taxCom
+            },
             width: '600px',
             disableClose: true,
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                const index = this.dataSource.data.findIndex(item => item.id === result.id);
+                if (index > -1) {
+                    this.dataSource.data[index] = result;
+                    this.dataSource._updateChangeSubscription();
+                }
             }
         })
     }
