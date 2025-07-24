@@ -11,7 +11,7 @@ export class TaxCommissionsPointOfSale {
   pointOfSaleType: "BROKER" | "GENERAL_AGENT" | "DIRECT_OFFICE";
   product: Product;
 
-  constructor(data: Partial<TaxCommissionsPointOfSale> = {}) {
+  constructor(data: any) {
     this.id = data.id || '';
     this.dateEffective = data.dateEffective || '';
     this.rate = data.rate || null;
@@ -19,7 +19,7 @@ export class TaxCommissionsPointOfSale {
     this.managementEntity = data.managementEntity || '';
     this.pointOfSale = data.pointOfSale || new PointOfSale({});
     this.product = data.product || new Product({});
-    this.pointOfSaleType = data.pointOfSaleType || "BROKER"; // Default to "BROKER" if not provided
+    this.pointOfSaleType = data.pointOfSaleType	 || "BROKER"; // Default to "BROKER" if not provided
     Object.assign(this, data);
   }
 }

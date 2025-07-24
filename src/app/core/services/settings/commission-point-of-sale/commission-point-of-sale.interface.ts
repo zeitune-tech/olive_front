@@ -20,7 +20,7 @@ export class CommissionPointOfSale {
   calculationBase: string;
   managementRate: number | null;
   contributionRate: number | null;
-  typePointOfSale: string;
+  pointOfSaleType	: string;
   product: Product;
   coverage: Coverage;
   pointOfSale: PointOfSale;
@@ -32,7 +32,7 @@ export class CommissionPointOfSale {
     this.calculationBase = data.calculationBase || '';
     this.managementRate = data.managementRate || null;
     this.contributionRate = data.contributionRate || null;
-    this.typePointOfSale = data.typePointOfSale || '';
+    this.pointOfSaleType	 = data.pointOfSaleType	 || '';
     this.product = data.product || new Product({});
     this.coverage = data.coverage || new Coverage({});
     this.pointOfSale = data.pointOfSale || new PointOfSale({});

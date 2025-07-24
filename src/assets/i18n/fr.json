@@ -682,7 +682,7 @@
         "product": "Produit",
         "managementEntity": "Entité de gestion",
         "coverage": "Couverture",
-        "typePointOfSale": "Type de point de vente",
+        "pointOfSaleType": "Type de point de vente",
         "pointOfSale": "Point de vente",
         "contributor": "Apporteur",
         "contributorType": "Type d'apporteur",
@@ -706,6 +706,13 @@
         "accessory-create": {
           "title": "Créer une commission sur accessoire",
           "subtitle": "Veuillez remplir les champs requis pour créer une commission sur accessoire"
+        }
+      },
+      "options": {
+        "pointOfSaleType": {
+          "GENERAL_AGENT": "Agent général",
+          "BROKER": "Courtier",
+          "DIRECT_OFFICE": "Bureau direct"
         }
       }
     },

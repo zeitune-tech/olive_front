@@ -30,7 +30,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.commission.fields.typePointOfSale') }}</mat-label>
+                    <mat-label>{{ t('entities.commission.fields.pointOfSaleType') }}</mat-label>
                     <mat-select formControlName="pointOfSaleType">
                         <mat-option *ngFor="let type of typesPointOfSale" [value]="type.value">
                             {{ type.label }}

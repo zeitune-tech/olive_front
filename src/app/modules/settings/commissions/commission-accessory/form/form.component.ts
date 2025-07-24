@@ -58,7 +58,7 @@ export class CommissionAccessoryFormComponent implements OnInit {
             calculationBase: ["ACCESSORY"],
             managementRate: [this.data?.commissionPointOfSale.managementRate, [Validators.required, Validators.min(0), Validators.max(100)]],
             contributionRate: [this.data?.commissionPointOfSale.contributionRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-            pointOfSaleType: [this.data?.commissionPointOfSale.typePointOfSale],
+            pointOfSaleType: [this.data?.commissionPointOfSale.pointOfSaleType],
             pointOfSaleId: [this.data?.commissionPointOfSale.pointOfSale?.id || null],
             productId: [this.data?.commissionPointOfSale.product?.id || null, Validators.required],
         });

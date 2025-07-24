@@ -175,7 +175,7 @@ export class CommissionPrimeContributorListComponent implements OnInit {
             disableClose: true,
             data: {
                 mode: 'create',
-                commissionContributor: null
+                commissionContributor: {} as CommissionContributor
             }
         }).afterClosed().subscribe((result) => {
             if (result) {
