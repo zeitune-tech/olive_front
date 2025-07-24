@@ -21,6 +21,8 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { MatRadioModule } from "@angular/material/radio";
 import { DurationRateNewComponent } from "./new/new.component";
 import { DurationRateListComponent } from "./list/list.component";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 
 @NgModule({
     declarations: [
@@ -46,7 +48,9 @@ import { DurationRateListComponent } from "./list/list.component";
         MatProgressSpinnerModule,
         MatStepperModule,
         MatCheckboxModule,
-        MatRadioModule
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     providers: [],
     exports: [],

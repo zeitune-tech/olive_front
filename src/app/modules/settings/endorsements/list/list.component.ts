@@ -93,13 +93,19 @@ export class EndorsementListComponent {
         this._unsubscribeAll.complete();
     }
 
-    onView(item: Endorsment): void {}
+    assignProduct(item: Endorsment): void {}
 
     onDelete(endorsement: Endorsment): void {}
 
     onEdit(endorsement: Endorsment): void {
         this._layoutService.setSelectedEndorsement(endorsement);
-        this._router.navigate(['/parameters/endorsements/new']); // ou route vers le même formulaire mais dans un mode "édition"
+        this._dialog.open(EndorsementNewComponent, {
+            width: '600px',
+            data: { 
+                mode: 'edit',
+                endorsement: endorsement
+            }
+        });
     }
 
     get visibleColumns() {

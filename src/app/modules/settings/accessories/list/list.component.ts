@@ -112,7 +112,10 @@ export class AccessoriesListComponent {
 
     onEdit(accessory: Accessory): void {
         this._layoutService.setSelectedAccessory(accessory);
-        this._router.navigate(['/parameters/accessories/new']); // ou route vers le même formulaire mais dans un mode "édition"
+        this._dialog.open(AccessoryNewComponent, {
+            width: '600px',
+            data: { accessory }
+        });
     }
 
     get visibleColumns() {

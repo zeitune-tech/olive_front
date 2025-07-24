@@ -50,7 +50,15 @@ export class EndorsementNewComponent implements OnInit {
 			nature: [null, Validators.required],
 		});
 
-	}
+		if (this.data.mode === 'edit' && this.data.endorsement) {
+			this.editMode = true;
+			this.endorsmentId = this.data.endorsement.id;  // <== Important !
+			this.formGroup.patchValue({
+				name: this.data.endorsement.name,
+				nature: this.data.endorsement.nature,
+			});
+		}
+ 	}
 
 	onSubmit(): void {
 		if (this.formGroup.valid) {

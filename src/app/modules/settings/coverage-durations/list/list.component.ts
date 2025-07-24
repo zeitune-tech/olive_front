@@ -12,6 +12,7 @@ import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { DurationRateNewComponent } from "../../taux-duration/new/new.component";
+import { CoverageDurationNewComponent } from "../new/new.component";
 
 @Component({
     selector: "app-coverage-durations-list",
@@ -121,7 +122,7 @@ export class CoverageDurationsListComponent {
     }
 
     openAddDialog() {
-        this._dialog.open(DurationRateNewComponent, {
+        this._dialog.open(CoverageDurationNewComponent, {
             width: '600px',
             maxWidth: '90vw',
             data: { coverageDuration: this.searchCtrl.value }
