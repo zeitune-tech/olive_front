@@ -9,6 +9,7 @@ import { RequestMetadata } from '../../common.interface';
 @Injectable({ providedIn: 'root' })
 export class CommissionContributorService {
 
+
   baseUrl = environment.settings_url + '/commissions-contributors';
   private _commissionContributor = new ReplaySubject<CommissionContributor>(1);
   private _commissionContributorPrimes = new ReplaySubject<CommissionContributor[]>(1);
@@ -50,8 +51,15 @@ export class CommissionContributorService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  create(item: CommissionContributor): Observable<CommissionContributor> {
+  create(item: any): Observable<CommissionContributor> {
     return this._httpClient.post<CommissionContributor>(this.baseUrl, item).pipe(
+      tap((res) => this.commissionContributor = res),
+      catchError(() => of({} as CommissionContributor))
+    );
+  }
+
+  update(id: string, updated: any) : Observable<CommissionContributor> {
+    return this._httpClient.put<CommissionContributor>(`${this.baseUrl}/${id}`, updated).pipe(
       tap((res) => this.commissionContributor = res),
       catchError(() => of({} as CommissionContributor))
     );
