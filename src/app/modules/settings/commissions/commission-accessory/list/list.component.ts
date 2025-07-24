@@ -45,6 +45,7 @@ export class CommissionAccessoryListComponent implements OnInit {
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) {
         this._commissionPointOfSale.commissionsPointOfSale$
@@ -80,7 +81,7 @@ export class CommissionAccessoryListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { property: "typePointOfSale", type: 'text', label: 'entities.commission.fields.typePointOfSale', visible: true },
+                { property: "pointOfSaleType", type: 'text', label: 'entities.commission.fields.pointOfSaleType', visible: true },
                 { property: "pointOfSale", type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
                 { property: "contributionRate", type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
                 { property: "managementRate", type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
@@ -91,6 +92,9 @@ export class CommissionAccessoryListComponent implements OnInit {
             actions: [],
             renderItem: (element: CommissionPointOfSale, property: keyof CommissionPointOfSale) => {
 
+                if (property === 'pointOfSaleType') {
+                    return this._translateService.translate(`entities.commission.options.pointOfSaleType.${element.pointOfSaleType}`);
+                }
 
                 return element[property] ?? '--';
             },
@@ -174,6 +178,10 @@ export class CommissionAccessoryListComponent implements OnInit {
         this._dialog.open(CommissionAccessoryFormComponent, {
             width: '600px',
             disableClose: true,
+            data: {
+                mode: 'create',
+                commissionPointOfSale: {} as CommissionPointOfSale
+            }
         }).afterClosed().subscribe((result) => {
             if (result) {
                 this._productService.getAll().subscribe();
@@ -188,7 +196,7 @@ export class CommissionAccessoryListComponent implements OnInit {
             disableClose: true,
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                this.dataSource.data = this.dataSource.data.filter(item => item.id !== product.id);
             }
         });
     }
@@ -196,8 +204,23 @@ export class CommissionAccessoryListComponent implements OnInit {
     /**
         * Edit Product Product
         */
-    onEdit(product: Product): void {
-
+    onEdit(commission: CommissionPointOfSale): void {
+        this._dialog.open(CommissionAccessoryFormComponent, {
+            data: {
+                mode: 'edit',
+                commissionPointOfSale: commission
+            },
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                const index = this.dataSource.data.findIndex(item => item.id === result.id);
+                if (index !== -1) {
+                    this.dataSource.data[index] = result;
+                }
+                this.dataSource._updateChangeSubscription();
+            }
+        });
     }
 
 

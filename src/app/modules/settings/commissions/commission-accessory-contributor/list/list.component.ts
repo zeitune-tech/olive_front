@@ -168,9 +168,13 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
         this._dialog.open(CommissionAccessoryContributorFormComponent, {
             width: '600px',
             disableClose: true,
+            data: {
+                mode: 'create',
+                commissionContributor: new CommissionContributor({})
+            }
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                this.dataSource.data = this.dataSource.data.concat(result);
             }
         });
     }
@@ -182,7 +186,7 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
             disableClose: true,
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                this.dataSource.data = this.dataSource.data.filter(item => item.id !== product.id);
             }
         });
     }
@@ -192,12 +196,19 @@ export class CommissionAccessoryContributorListComponent implements OnInit {
         */
     onEdit(product: Product): void {
         this._dialog.open(CommissionAccessoryContributorFormComponent, {
-            data: product,
             width: '600px',
             disableClose: true,
+            data: {
+                mode: 'edit',
+                commissionContributor: product
+            }
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                const index = this.dataSource.data.findIndex(item => item.id === result.id);
+                if (index > -1) {
+                    this.dataSource.data[index] = result;
+                    this.dataSource._updateChangeSubscription();
+                }
             }
         })
     }
