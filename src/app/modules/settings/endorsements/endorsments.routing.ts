@@ -11,9 +11,5 @@ export const routes: Routes = [
     {
         path: "list",
         component: EndorsementListComponent,
-    },
-    {
-        path: "new",
-        component: EndorsementNewComponent,
     }
 ];

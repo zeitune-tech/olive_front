@@ -12,9 +12,5 @@ export const routes: Routes = [
     {
         path: "list",
         component: AccessoriesListComponent
-    },
-    {
-        path: "new",
-        component: AccessoryNewComponent
     }
 ];

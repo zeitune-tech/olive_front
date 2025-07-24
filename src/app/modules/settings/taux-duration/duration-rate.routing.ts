@@ -11,9 +11,5 @@ export const routes: Routes = [
     {
         path: "list",
         component: DurationRateListComponent
-    },
-    {
-        path: "new",
-        component: DurationRateNewComponent
     }
 ];
