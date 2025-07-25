@@ -369,6 +369,28 @@ export class ModuleService {
                     ]
                 }
             ]
+        },
+        {
+            name: "sinisters",
+            title: "modules.sinisters.title",
+            description: "modules.sinisters.description",
+            icon: "assets/images/modules/sinister.png",
+            route: "/sinister",
+            permissions: [
+                // PERMISSIONS.VIEW_CLAIMS,
+            ],
+            features: []
+        },
+        {
+            name: "cessions",
+            title: "modules.cessions.title",
+            description: "modules.cessions.description",
+            icon: "assets/images/modules/cession.png",
+            route: "/cessions",
+            permissions: [
+                // PERMISSIONS.VIEW_CESSIONS,
+            ],
+            features: []
         }
     ];
 

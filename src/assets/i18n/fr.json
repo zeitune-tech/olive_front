@@ -658,6 +658,10 @@
         "nature": "Nature",
         "actions": "Actions"
       },
+      "product_assignment": {
+        "title": "Affectation de produits",
+        "subtitle": "Sélectionnez les produits associés à cet avenant"
+      },
       "options": {
         "nature": {
           "NEW_BUSINESS": "Nouvelle Affaire",
@@ -1436,7 +1440,7 @@
       }
     },
     "insureds": {
-      "title": "Gestion des assurés",
+      "title": "Module Assuré",
       "description": "Gérer les assurés et leurs véhicules",
       "features": {
         "insureds": "Liste des assurés",
@@ -1464,6 +1468,18 @@
         "companies": "Demande aux compagnies",
         "companies_demands_description": "Création de demandes pour les compagnies."
       }
+    },
+    "princing": {
+      "title": "Module Tarification",
+      "description": "Gérer les tarifs."
+    },
+    "sinisters": {
+      "title": "Module Sinistres",
+      "description": "Gérer les sinistres."
+    },
+    "cessions": {
+      "title": "Module Cessions / Rétrocessions",
+      "description": "Gérer les cessions et les rétrocessions."
     }
   },
   "user": {

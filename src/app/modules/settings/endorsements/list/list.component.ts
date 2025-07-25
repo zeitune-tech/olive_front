@@ -16,6 +16,7 @@ import { Endorsment } from "@core/services/settings/endorsement/endorsement.inte
 import { EndorsementService } from "@core/services/settings/endorsement/endorsement.service";
 import { EndorsementNewComponent } from "../new/new.component";
 import { MatDialog } from "@angular/material/dialog";
+import { AssignProductComponent } from "../assign-product/assign-product.component";
 
 @Component({
     selector: "app-closures-list",
@@ -93,7 +94,23 @@ export class EndorsementListComponent {
         this._unsubscribeAll.complete();
     }
 
-    assignProduct(item: Endorsment): void {}
+    assignProduct(item: Endorsment): void {
+        this._dialog.open(AssignProductComponent, {
+            width: '600px',
+            data: { endorsmentId: item.id }
+        }).afterClosed().subscribe((selectedProducts: string[]) => {
+            if (selectedProducts && selectedProducts.length) {
+                this._endorsmentService.assignProducts(item.id, selectedProducts).subscribe({
+                    next: () => {
+                    console.log('Produits assignés avec succès');
+                    },
+                    error: (err) => {
+                    console.error('Erreur lors de l’assignation :', err);
+                    }
+                });
+            }
+        });
+    }
 
     onDelete(endorsement: Endorsment): void {}
 

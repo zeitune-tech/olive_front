@@ -1,0 +1,64 @@
+<div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t">
+  <h2 mat-dialog-title>{{ t('entities.endorsment.product_assignment.title') || 'Assigner des produits' }}</h2>
+  <mat-divider></mat-divider>
+
+  <mat-dialog-content class="py-4">
+    <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="checkbox">
+        <th mat-header-cell *matHeaderCellDef class="uppercase text-center">
+          <mat-checkbox
+            (change)="masterToggle()"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+          ></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-center">
+          <mat-checkbox
+            (change)="toggleSelection(row)"
+            [checked]="selection.isSelected(row)"
+            aria-label="Sélectionner une ligne"
+          ></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Nom du produit -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="uppercase" mat-sort-header>Nom</th>
+        <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+      </ng-container>
+
+      <!-- Description -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef class="uppercase" mat-sort-header>Description</th>
+        <td mat-cell *matCellDef="let product">{{ product.description }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor-pointer"></tr>
+
+      <!-- No Data -->
+      <tr *matNoDataRow>
+        <td colspan="3" class="text-center py-4">{{ t('common.no_data') || 'Aucun produit disponible' }}</td>
+      </tr>
+    </table>
+
+    <mat-paginator
+      class="rounded-b-md border-t"
+      [length]="dataSource.data.length"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
+    <button mat-button mat-flat-button color="basic" (click)="onCancel()">
+      {{ t('form.actions.cancel') }}
+    </button>
+    <button mat-button mat-flat-button color="primary" (click)="onAssign()" [disabled]="selection.isEmpty()">
+      {{ t('form.actions.save') || 'Assigner' }}
+    </button>
+  </mat-dialog-actions>
+</div>
