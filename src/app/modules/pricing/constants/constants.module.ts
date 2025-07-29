@@ -1,7 +1,4 @@
 import { NgModule } from "@angular/core";
-import { ConstantEditComponent } from "./edit/edit.component";
-import { ConstantsNewComponent } from "./new/new.component";
-import { ConstantsListComponent } from "./list/list.component";
 import { SharedModule } from "@shared/shared.module";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -20,13 +17,15 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { LayoutService } from "./layout.service";
+import { ConstantListComponent } from "./list/list.component";
+import { ConstantService } from "@core/services/pricing/constant/constant.service";
+import { Constant } from "@core/services/pricing/constant/constant.interface";
+import { ConstantFormComponent } from "./form/form.component";
 
 @NgModule({
     declarations: [
-        ConstantEditComponent,
-        ConstantsNewComponent,
-        ConstantsListComponent
-
+      ConstantListComponent,
+      ConstantFormComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -48,7 +47,8 @@ import { LayoutService } from "./layout.service";
     ],
     exports: [],
     providers: [
-        LayoutService
+        LayoutService,
+        ConstantService
     ]
 })
 export class ConstantsModule {

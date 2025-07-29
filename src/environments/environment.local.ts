@@ -8,6 +8,8 @@ export const environment = {
   settings_url: "http://localhost:8080/settings/app",
   attestations_url: "http://localhost:8080/attestations/app",
   insured_url: "http://localhost:8080/insured/app",
+  pricing_url: "http://localhost:8080/princing",
+
   production: false
 };
 
