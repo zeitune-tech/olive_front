@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --configuration local",
     "dev": "ng serve --configuration development",
+    "dev-local": "ng serve --configuration development-local",
     "local": "ng serve --configuration local",
     "start:prod": "ng serve",
     "build": "ng build --configuration development",

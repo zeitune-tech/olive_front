@@ -808,7 +808,7 @@
         "description": "Liste des exonérations de taxes appliquées aux produits",
         "empty-state": "Aucune exonération de taxe trouvée"
       },
-     
+
       "fields": {
        "name": "Nom de l'exonération",
        "taxes": "Taxes exonérées",
@@ -1033,6 +1033,365 @@
         "coverages": "Garanties",
         "premiums": "Prime",
         "summary": "Résumé"
+      }
+    },
+    "pricing": {
+      "label": "Tarification",
+      "description": "Gestion des éléments de tarification et de calcul des primes.",
+      "formula": {
+        "label": "Formule de tarification",
+        "description": "Définition des formules de calcul des primes.",
+        "form": {
+          "title": "Formule de tarification",
+          "subtitle": "Créer ou modifier une formule de tarification"
+        },
+        "table": {
+          "title": "Formules de tarification",
+          "description": "Liste des formules de calcul des primes",
+          "empty_state": "Aucune formule de tarification trouvée."
+        },
+        "fields": {
+          "name": "Nom de la formule",
+          "description": "Description",
+          "expression": "Expression",
+          "product": "Produit",
+          "managementEntity": "Entité de gestion",
+          "actions": "Actions"
+        },
+        "sections": {
+          "symbols": "Symboles",
+          "numbers": "Chiffres",
+          "operators": "Opérateurs",
+          "variables": "Variables",
+          "add_new_variable": {
+            "title": "Ajouter une nouvelle variable",
+            "add_constant": "Ajouter une constante",
+            "add_field": "Ajouter un champ",
+            "add_variable_condition": "Ajouter une variable conditionnée"
+          }
+        }
+      },
+      "variable_condition": {
+        "label": "Variables conditionnées",
+        "description": "Définition des conditions applicables aux variables de tarification.",
+        "form": {
+          "title": "Variables conditionnées",
+          "subtitle": "Créer ou modifier une condition de variable"
+        },
+        "table": {
+          "title": "Variables conditionnées",
+          "description": "Liste des conditions de variables",
+          "empty_state": "Aucune condition de variable trouvée."
+        },
+        "fields": {
+          "name": "Nom de la condition",
+          "description": "Description",
+          "variable": "Variable",
+          "operator": "Opérateur",
+          "value": "Valeur",
+          "actions": "Actions"
+        }
+      },
+      "field": {
+        "label": "Champs de tarification",
+        "description": "Gestion des champs utilisés dans les calculs de tarification.",
+        "form": {
+          "title": "Champ de tarification",
+          "subtitle": "Créer ou modifier un champ de tarification"
+        },
+        "table": {
+          "title": "Champs de tarification",
+          "description": "Liste des champs de tarification",
+          "empty_state": "Aucun champ de tarification trouvé."
+        },
+        "fields": {
+          "name": "Nom du champ",
+          "label": "Libellé",
+          "description": "Description",
+          "variableName": "Nom de variable",
+          "toReturn": "À retourner",
+          "managementEntityId": "Entité de gestion",
+          "productId": "Produit",
+          "coverageId": "Garantie",
+          "type": "Type de champ",
+          "options": "Options",
+          "value": "Valeur",
+          "required": "Obligatoire",
+          "defaultValue": "Valeur par défaut",
+          "actions": "Actions"
+        },
+        "options": {
+          "type": {
+            "TEXT": "Texte",
+            "NUMBER": "Nombre",
+            "NUMERIC": "Numérique",
+            "DATE": "Date",
+            "SELECT": "Liste de sélection",
+            "BOOLEAN": "Booléen"
+          }
+        }
+      },
+      "field_list": {
+        "label": "Liste des champs",
+        "description": "Vue d'ensemble de tous les champs de tarification.",
+        "table": {
+          "title": "Liste des champs",
+          "description": "Tous les champs de tarification disponibles",
+          "empty_state": "Aucun champ disponible."
+        }
+      },
+      "select_field_option": {
+        "label": "Options de champs de sélection",
+        "description": "Gestion des options pour les champs de type sélection.",
+        "form": {
+          "title": "Options de champs",
+          "subtitle": "Ajouter ou modifier des options de sélection"
+        },
+        "table": {
+          "title": "Options de champs de sélection",
+          "description": "Liste des options disponibles pour les champs de sélection",
+          "empty_state": "Aucune option de champ trouvée."
+        },
+        "fields": {
+          "field": "Champ",
+          "label": "Libellé",
+          "value": "Valeur",
+          "order": "Ordre",
+          "active": "Actif",
+          "actions": "Actions"
+        }
+      },
+      "constants": {
+        "label": "Constantes de tarification",
+        "description": "Définition des constantes utilisées dans les calculs.",
+        "form": {
+          "title": "Constante de tarification",
+          "subtitle": "Créer ou modifier une constante"
+        },
+        "table": {
+          "title": "Constantes de tarification",
+          "description": "Liste des constantes de calcul",
+          "empty_state": "Aucune constante trouvée."
+        },
+        "fields": {
+          "name": "Nom de la constante",
+          "description": "Description",
+          "value": "Valeur",
+          "type": "Type",
+          "unit": "Unité",
+          "actions": "Actions"
+        },
+        "options": {
+          "type": {
+            "NUMERIC": "Numérique",
+            "PERCENTAGE": "Pourcentage",
+            "CURRENCY": "Monétaire"
+          }
+        }
+      },
+      "conditions": {
+        "label": "Conditions de tarification",
+        "description": "Définition des conditions logiques pour la tarification.",
+        "form": {
+          "title": "Condition de tarification",
+          "subtitle": "Créer ou modifier une condition"
+        },
+        "table": {
+          "title": "Conditions de tarification",
+          "description": "Liste des conditions logiques",
+          "empty_state": "Aucune condition trouvée."
+        },
+        "fields": {
+          "name": "Nom de la condition",
+          "description": "Description",
+          "expression": "Expression logique",
+          "priority": "Priorité",
+          "active": "Active",
+          "actions": "Actions"
+        }
+      },
+      "condition_list": {
+        "label": "Liste des conditions",
+        "description": "Vue d'ensemble de toutes les conditions de tarification."
+      },
+      "new_condition": {
+        "label": "Nouvelle condition",
+        "description": "Créer une nouvelle condition de tarification."
+      },
+      "caracteristics": {
+        "label": "Caractéristiques de tarification",
+        "description": "Définition des caractéristiques spécifiques à la tarification.",
+        "form": {
+          "title": "Caractéristique de tarification",
+          "subtitle": "Créer ou modifier une caractéristique"
+        },
+        "table": {
+          "title": "Caractéristiques de tarification",
+          "description": "Liste des caractéristiques",
+          "empty_state": "Aucune caractéristique trouvée."
+        },
+        "fields": {
+          "name": "Nom de la caractéristique",
+          "description": "Description",
+          "category": "Catégorie",
+          "dataType": "Type de données",
+          "mandatory": "Obligatoire",
+          "actions": "Actions"
+        }
+      },
+      "caracteristic_list": {
+        "label": "Liste des caractéristiques",
+        "description": "Vue d'ensemble de toutes les caractéristiques de tarification."
+      },
+      "new_caracteristic": {
+        "label": "Nouvelle caractéristique",
+        "description": "Créer une nouvelle caractéristique de tarification."
+      }
+    },
+    "constant": {
+      "label": "Constante de tarification",
+      "description": "Constantes utilisées dans les calculs de tarification.",
+      "form": {
+        "title": "Constante de tarification",
+        "subtitle": "Créer ou modifier une constante de tarification",
+        "create": {
+          "title": "Créer une constante de tarification"
+        },
+        "edit": {
+          "title": "Modifier une constante de tarification"
+        },
+        "view": {
+          "title": "Voir une constante de tarification"
+        }
+      },
+      "table": {
+        "title": "Constantes de tarification",
+        "description": "Liste des constantes utilisées dans les calculs",
+        "empty_state": "Aucune constante de tarification trouvée."
+      },
+      "fields": {
+        "label": "Libellé",
+        "description": "Description",
+        "variableName": "Nom de variable",
+        "toReturn": "À retourner",
+        "managementEntityId": "Entité de gestion",
+        "productId": "Produit",
+        "coverageId": "Garantie",
+        "value": "Valeur",
+        "actions": "Actions"
+      },
+      "options": {
+        "toReturn": {
+          "true": "Oui",
+          "false": "Non"
+        }
+      }
+    },
+    "field": {
+      "label": "Champ de tarification",
+      "description": "Champs utilisés dans les calculs de tarification.",
+      "form": {
+        "title": "Champ de tarification",
+        "subtitle": "Créer ou modifier un champ de tarification",
+        "create": {
+          "title": "Créer un champ"
+        },
+        "edit": {
+          "title": "Modifier le champ"
+        },
+        "view": {
+          "title": "Détails du champ"
+        }
+      },
+      "table": {
+        "title": "Champs de tarification",
+        "description": "Liste des champs utilisés dans les calculs",
+        "empty_state": "Aucun champ de tarification trouvé."
+      },
+      "fields": {
+        "label": "Libellé",
+        "description": "Description",
+        "variableName": "Nom de variable",
+        "toReturn": "À retourner",
+        "managementEntityId": "Entité de gestion",
+        "productId": "Produit",
+        "coverageId": "Garantie",
+        "type": "Type de champ",
+        "selectFieldOptions": "Options de sélection",
+        "options": "Options",
+        "value": "Valeur",
+        "actions": "Actions"
+      },
+      "options": {
+        "type": {
+          "NUMBER": "Numérique",
+          "SELECT": "Sélection",
+          "NUMERIC": "Numérique"
+        },
+        "toReturn": {
+          "true": "Oui",
+          "false": "Non"
+        }
+      }
+    },
+    "select-field-options": {
+      "label": "Options de champs de sélection",
+      "description": "Options disponibles pour les champs de type sélection.",
+      "form": {
+        "title": "Options de champ",
+        "subtitle": "Créer ou modifier des options de sélection"
+      },
+      "table": {
+        "title": "Options de champs de sélection",
+        "description": "Liste des options configurées pour les champs de sélection",
+        "empty_state": "Aucune option de champ trouvée."
+      },
+      "fields": {
+        "id": "Identifiant",
+        "label": "Libellé",
+        "name": "Nom",
+        "description": "Description",
+        "possibilities": "Possibilités",
+        "actions": "Actions"
+      },
+      "options": {
+        "status": {
+          "active": "Actif",
+          "inactive": "Inactif"
+        }
+      }
+    },
+    "formula": {
+      "label": "Formule de tarification",
+      "description": "Définition des formules de calcul des primes.",
+      "form": {
+        "title": "Formule de tarification",
+        "subtitle": "Créer ou modifier une formule de tarification"
+      },
+      "table": {
+        "title": "Formules de tarification",
+        "description": "Liste des formules de calcul des primes",
+        "empty_state": "Aucune formule de tarification trouvée."
+      },
+      "fields": {
+        "name": "Nom de la formule",
+        "description": "Description",
+        "expression": "Expression",
+        "product": "Produit",
+        "managementEntity": "Entité de gestion",
+        "actions": "Actions"
+      },
+      "sections": {
+        "symbols": "Symboles",
+        "numbers": "Chiffres",
+        "operators": "Opérateurs",
+        "variables": "Variables",
+        "add_new_variable": {
+          "title": "Ajouter une nouvelle variable",
+          "add_constant": "Ajouter une constante",
+          "add_field": "Ajouter un champ",
+          "add_variable_condition": "Ajouter une variable conditionnée"
+        }
       }
     }
 
@@ -1305,6 +1664,21 @@
       "ristourne": "Ristourne",
       "motifAvenantsProduit": "Motif Avenants / Produit",
       "motifAnnulationProduit": "Motif Annulation / Produit"
+    },
+    "pricing": {
+      "title": "Tarification",
+      "formula": "Formule",
+      "variable_condition": "Variables conditionnées",
+      "field": "Champs",
+      "field_list": "Liste des champs",
+      "select_field_option": "Options de champs de sélection",
+      "constants": "Constantes",
+      "conditions": "Conditions",
+      "condition_list": "Liste des conditions",
+      "new_condition": "Nouvelle condition",
+      "caracteristics": "Caractéristiques",
+      "caracteristic_list": "Liste des caractéristiques",
+      "new_caracteristic": "Nouvelle caractéristique"
     }
   },
 
@@ -1327,7 +1701,8 @@
       "max": "La valeur maximale est {{ max }}.",
       "inferieurToFrom": "Cette valeur doit être supérieure à la précédente.",
       "inferieurTo0": "Cette valeur doit être positive.",
-      "invalid_phone": "Invalide"
+      "invalid_phone": "Invalide",
+      "submission": "Erreur lors de la soumission du formulaire"
     },
     "options": {
       "yes": "Oui",
@@ -1348,12 +1723,14 @@
       "next": "Suivant",
       "previous": "Précédent",
       "remove": "Supprimer",
+      "clear": "Effacer",
       "addIncompatible": "Ajouter / Modifier une incompatibilité"
     },
     "success": {
       "title": "Succès",
       "message": "L'opération a été effectuée avec succès.",
-      "creation": "Création réussie"
+      "creation": "Création réussie",
+      "update": "Modification réussie"
     }
   },
   "enums": {
@@ -1463,6 +1840,24 @@
         "market_level_organization_description": "Création de demandes pour les organisations de niveau marché.",
         "companies": "Demande aux compagnies",
         "companies_demands_description": "Création de demandes pour les compagnies."
+      }
+    },
+    "princing": {
+      "title": "Module Tarification",
+      "description": "Gestion des éléments de tarification et calcul des primes.",
+      "features": {
+        "formula": "Formules",
+        "formula_description": "Configuration et gestion des formules de calcul des primes.",
+        "variable_conditions": "Variables conditionnées",
+        "variable_conditions_description": "Gestion des conditions appliquées aux variables de tarification.",
+        "fields": "Champs",
+        "fields_description": "Configuration des champs utilisés dans la tarification.",
+        "constants": "Constantes",
+        "constants_description": "Définition des constantes utilisées dans les calculs de tarification.",
+        "caracteristics": "Caractéristiques",
+        "caracteristics_description": "Configuration des caractéristiques de tarification.",
+        "conditions": "Conditions",
+        "conditions_description": "Gestion des conditions de tarification et règles métier."
       }
     }
   },
@@ -1593,6 +1988,10 @@
   },
   "select-module": {
     "title": "Sélectionner un module"
+  },
+  "branch-selection": {
+    "title": "Sélectionner une branche",
+    "change": "Changer de branche"
   },
   "message": {
     "success": "Opération réussie",

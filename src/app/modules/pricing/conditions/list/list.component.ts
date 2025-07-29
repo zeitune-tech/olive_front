@@ -14,42 +14,42 @@ import { ProductService } from "@core/services/settings/product/product.service"
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
 import { TranslocoService } from "@jsverse/transloco";
-import { ConditionsEditComponent } from "../edit/edit.component";
+import { CommissionAccessoryFormComponent } from "../form/form.component";
+import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import { CommissionPointOfSale } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.interface";
+import { CommissionPointOfSaleService } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.service";
 
 @Component({
     selector: "app-products-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class ConditionsListComponent implements OnInit {
+export class CommissionAccessoryListComponent implements OnInit {
 
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<CommissionPointOfSale>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<CommissionPointOfSale>([]); // Ajoute les données réelles ici
 
-        constructor(
+    constructor(
+        private _commissionPointOfSale: CommissionPointOfSaleService,
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
-        private _layoutService: LayoutService,
-        private _tanslateService: TranslocoService,
-        private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._productService.products$
+        this._commissionPointOfSale.commissionsPointOfSale$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
+            .subscribe((data: CommissionPointOfSale[]) => {
                 this.data = data;
                 this.dataSource.data = data;
             });
@@ -61,13 +61,13 @@ export class ConditionsListComponent implements OnInit {
             });
     }
 
-    
-    data: Product[] = [];
+
+    data: CommissionPointOfSale[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<CommissionPointOfSale>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
@@ -80,56 +80,31 @@ export class ConditionsListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
-                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                {
-                    label: 'entities.product.table.custom_fields.risk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
-                        { label: 'entities.product.table.custom_fields.min', property: 'minRisk', type: 'text', visible: true },
-                        { label: 'entities.product.table.custom_fields.max', property: 'maxRisk', type: 'text', visible: true },
-                    ]
-                },
-                { label: 'entities.product.table.custom_fields.minCoverage', property: 'minimumGuaranteeNumber', type: 'text', visible: true, cssClasses: ['text-sm'] },
-                { label: 'entities.product.table.custom_fields.fleet', property: 'fleet', type: 'text', visible: true },
-                { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
+                { property: "typePointOfSale", type: 'text', label: 'entities.commission.fields.typePointOfSale', visible: true },
+                { property: "pointOfSale", type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
+                { property: "contributionRate", type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
+                { property: "managementRate", type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
+                { property: "dateEffective", type: 'text', label: 'entities.commission.fields.dateEffective', visible: true },
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [],
-            renderItem: (element: Product, property: keyof Product) => {
-                if (property === 'branch') {
-                    return element.branch?.name ?? '--';
-                } else if (property === 'fleet') {
-                    return element.fleet ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
-                } else if (property === 'hasReduction') {
-                    return element.hasReduction ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
-                } else if (property === 'category') {
-                    return element.branch?.category?.name ?? '--';
-                }
+            renderItem: (element: CommissionPointOfSale, property: keyof CommissionPointOfSale) => {
 
-                if (property === 'name') {
-                    const display = element.name;
-                    if (element.description && element.description.trim() !== '') {
-                        return `${display} - ${element.description}`;
-                    }
-                    return display;
-                }
-
-                if (property === 'visibility') {
-                    let provider = element.owner?.name || '--';
-                    if (provider.length > 20) {
-                        provider = provider.substring(0, 20) + '...';
-                    }
-                    if (element.visibility === 'PRIVATE') {
-                        return this._tanslateService.translate('enums.productVisibility.PRIVATE');
-                    }else  {
-                        return this._tanslateService.translate('enums.productVisibility.PUBLIC', { provider: provider });
-                    }
-                }
 
                 return element[property] ?? '--';
             },
         };
+
+        this._commissionPointOfSale.commissionsPointsOfSaleAccessories$.subscribe({
+            next: (data: CommissionPointOfSale[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+            },
+            error: (error) => {
+                console.error('Error fetching commission point of sale data:', error);
+            }
+        });
 
         // Construction des lignes d’en-tête
         this.buildHeaderRows();
@@ -150,7 +125,7 @@ export class ConditionsListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -174,11 +149,40 @@ export class ConditionsListComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Product Product
-        */
-    onEdit(product: Product): void {
-        this._dialog.open(ConditionsEditComponent, {
+
+    products: Product[] = []
+    searchCtrl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = new Product({});
+
+    openSelection() {
+        this._dialog.open(SelectDialogComponent, {
+            width: '700px',
+            data: {
+                items: this.products,
+            }
+        }).afterClosed().subscribe((product: Product) => {
+            if (product) {
+                this.selectedProduct = product;
+                // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                this.dataSource.paginator = this.paginator;
+                // this._changeDetectorRef.detectChanges();
+            }
+        })
+    }
+
+    onAdd(): void {
+        this._dialog.open(CommissionAccessoryFormComponent, {
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._productService.getAll().subscribe();
+            }
+        });
+    }
+
+    onDelete(product: Product): void {
+        this._dialog.open(CommissionAccessoryFormComponent, {
             data: product,
             width: '600px',
             disableClose: true,
@@ -186,12 +190,19 @@ export class ConditionsListComponent implements OnInit {
             if (result) {
                 this._productService.getAll().subscribe();
             }
-        })
+        });
+    }
+
+    /**
+        * Edit Product Product
+        */
+    onEdit(product: Product): void {
+
     }
 
 
+
     onView(product: Product): void {
-        this._layoutService.setSelectedProduct(product);
         //this._router.navigate(['/administration/products/list']);
     }
 
@@ -214,7 +225,7 @@ export class ConditionsListComponent implements OnInit {
     }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<CommissionPointOfSale>) {
         return column.property;
     }
 }

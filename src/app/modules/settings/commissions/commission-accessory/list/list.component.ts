@@ -90,8 +90,6 @@ export class CommissionAccessoryListComponent implements OnInit {
             pageSizeOptions: [5, 6, 8],
             actions: [],
             renderItem: (element: CommissionPointOfSale, property: keyof CommissionPointOfSale) => {
-
-
                 return element[property] ?? '--';
             },
         };

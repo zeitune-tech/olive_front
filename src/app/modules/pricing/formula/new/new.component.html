@@ -1,14 +1,32 @@
 <div class="w-full pb-10" *transloco="let t">
-    <div class="flex flex-col mb-10">
+    <div class="flex justify-between items-end">
+      <div class="flex flex-col mb-10">
         <h1 class="text-2xl md:text-4xl font-bold py-4">
-            {{ t('entities.formula.table.title') }}
+          {{ t('entities.formula.table.title') }}
         </h1>
         <p class="text-sm text-gray-600">
-            {{ t('entities.formula.form.subtitle') }}
+          {{ t('entities.formula.form.subtitle') }}
         </p>
+      </div>
+
+      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 mb-5">
+        <span>{{ selectedBranch?.name || t('branch-selection.title') }}</span>
+        <button mat-button class="ml-4 bg-primary-600 text-white rounded-lg" (click)="openBranchSelection()">
+          {{ t('branch-selection.change') }}
+        </button>
+      </div>
+
+      @if (selectedBranch) {
+      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 mb-5">
+        <span>{{ selectedProduct?.name || t('product-selection.title') }}</span>
+        <button mat-button class="ml-4 bg-primary-600 text-white rounded-lg" (click)="openProductSelection()">
+          {{ t('product-selection.change') }}
+        </button>
+      </div>
+      }
     </div>
 
-    <form [formGroup]="formGroup" class="w-full  bg-card p-4 rounded-xl mx-auto">
+    <form [formGroup]="formGroup" class="w-full bg-card p-4 rounded-xl mx-auto">
         <div class="flex flex-col mb-6 text-center text-primary">
             <h1 class="text-2xl font-bold">
                 {{ t('entities.formula.form.title') }}
@@ -95,7 +113,7 @@
 
                     <mat-form-field class="w-full" appearance="outline">
                         <mat-label>{{ t('form.search') }}</mat-label>
-                        <input matInput [(ngModel)]="searchTerm" />
+                        <input matInput [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" />
                     </mat-form-field>
 
                     <div class="mt-4 max-h-64 overflow-y-auto space-y-2">
@@ -104,8 +122,24 @@
                             {{ variable.label }} ({{ variable.name }})
                         </button>
                     </div>
-                </div>
 
+                  <div class="mt-6" >
+                    <p class="font-semibold text-gray-700 mb-2">{{ t('entities.formula.sections.add_new_variable.title') }}</p>
+
+                    <div class="mt-4 max-h-64 overflow-y-auto space-y-2">
+                      <button (click)="onAddNewVariable('CONSTANT')" class="w-full text-left py-2 px-3 bg-green-100 text-green-800 font-semibold rounded hover:bg-green-200">
+                        {{ t('entities.formula.sections.add_new_variable.add_constant') }}
+                      </button>
+                      <button (click)="onAddNewVariable('FIELD')" class="w-full text-left py-2 px-3 bg-green-100 text-green-800 font-semibold rounded hover:bg-green-200">
+                        {{ t('entities.formula.sections.add_new_variable.add_field') }}
+                      </button>
+                      <button (click)="add('new_variable_condition')" class="w-full text-left py-2 px-3 bg-green-100 text-green-800 font-semibold rounded hover:bg-green-200">
+                        {{ t('entities.formula.sections.add_new_variable.add_variable_condition') }}
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
             </div>
 
             <!-- Bouton Valider -->

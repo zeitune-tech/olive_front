@@ -31,8 +31,6 @@ export class ContributorNewComponent implements OnInit {
         private _pointOfSaleService: PointOfSaleService,
         private _managementEntityService: ManagementEntityService
     ) {
-        
-
 
         this._managementEntityService.entity$.subscribe((entity: ManagementEntity | null) => {
             if (entity?.type === 'POINT_OF_SALE') {
