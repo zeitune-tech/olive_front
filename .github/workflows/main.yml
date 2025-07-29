@@ -22,6 +22,8 @@ jobs:
         with:
           name: dist-artifact
           path: dist/*
+          retention-days: 1  # expire après 1 jour
+
   deploy:
     needs:
       - build
