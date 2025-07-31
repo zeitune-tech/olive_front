@@ -1,23 +1,35 @@
-<div class="flex flex-col gap-6 py-4" [formGroup]="form" *transloco="let t from 'entities.policy'">
+<div class="flex flex-col gap-6 py-4" [formGroup]="form" *transloco="let t">
+
+  <div class="flex items-center gap-2">
+    <mat-form-field appearance="outline" class="flex-1">
+      <mat-label>{{ t('entities.contract.fields.pricing') }}</mat-label>
+      <mat-select formControlName="pricing">
+        <mat-option *ngFor="let option of pricingOptions" [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div formArrayName="coverages" class="flex flex-col gap-3">
     <div *ngFor="let cov of coverages.controls; let i = index" [formGroupName]="i" class="flex items-center gap-4">
       <mat-form-field appearance="outline" class="flex-1">
         <input matInput formControlName="name" readonly />
       </mat-form-field>
-      <button mat-icon-button color="warn" (click)="removeCoverage(i)" aria-label="Supprimer">
+      <button mat-icon-button color="warn" (click)="removeCoverage(i)" aria-label="form.actions.removeCoverage">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
+    <button mat-stroked-button color="primary" (click)="addCoverage()">
+      <mat-icon>add</mat-icon> {{ t('form.actions.addCoverage') }}
+    </button>
+
   </div>
 
   <div class="flex justify-between pt-4">
-    <button mat-stroked-button color="primary" (click)="addCoverage()">
-      <mat-icon>add</mat-icon> {{ t('actions.addCoverage') }}
-    </button>
 
     <button mat-raised-button color="primary" (click)="goNext()">
-      {{ t('actions.next') }}
+      {{ t('form.actions.next') }}
     </button>
   </div>
 </div>

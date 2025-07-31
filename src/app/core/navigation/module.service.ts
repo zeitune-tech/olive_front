@@ -319,56 +319,78 @@ export class ModuleService {
             ]
         },
         {
-            name: "princing",
-            title: "modules.princing.title",
-            description: "modules.princing.description",
-            icon: "assets/images/modules/princing_icon.png",
-            route: "/princing",
+            name: "pricing",
+            title: "modules.pricing.title",
+            description: "modules.pricing.description",
+            icon: "assets/images/modules/pricing.png",
+            route: "/pricing",
             permissions: [
                 // PERMISSIONS.VIEW_PRINCING,
             ],
             features: [
                 {
                     name: "formula",
-                    title: "modules.princing.features.formula",
-                    description: "modules.princing.features.formula_description",
+                    title: "modules.pricing.features.formula",
+                    description: "modules.pricing.features.formula_description",
                     icon: "calculate",
-                    route: "/princing/formula",
+                    route: "/pricing/formula",
                     permissions: [
                         // PERMISSIONS.VIEW_PRINCING,
                     ]
                 },
                 {
                     name: "constants",
-                    title: "modules.princing.features.constants",
-                    description: "modules.princing.features.constants_description",
+                    title: "modules.pricing.features.constants",
+                    description: "modules.pricing.features.constants_description",
                     icon: "settings",
-                    route: "/princing/constants",
+                    route: "/pricing/constants",
                     permissions: [
                         // PERMISSIONS.VIEW_PRINCING_CONSTANTS,
                     ]
                 },
                 {
                     name: "conditions",
-                    title: "modules.princing.features.conditions",
-                    description: "modules.princing.features.conditions_description",
+                    title: "modules.pricing.features.conditions",
+                    description: "modules.pricing.features.conditions_description",
                     icon: "settings",
-                    route: "/princing/conditions",
+                    route: "/pricing/conditions",
                     permissions: [
                         // PERMISSIONS.VIEW_PRICING_CONDITIONS,
                     ]
                 },
                 {
                     name: "caracteristics",
-                    title: "modules.princing.features.caracteristics",
-                    description: "modules.princing.features.caracteristics_description",
+                    title: "modules.pricing.features.caracteristics",
+                    description: "modules.pricing.features.caracteristics_description",
                     icon: "settings",
-                    route: "/princing/caracteristics",
+                    route: "/pricing/caracteristics",
                     permissions: [
                         // PERMISSIONS.VIEW_PRICING_CARACTERISTICS,
                     ]
                 }
             ]
+        },
+        {
+            name: "sinisters",
+            title: "modules.sinisters.title",
+            description: "modules.sinisters.description",
+            icon: "assets/images/modules/sinister.png",
+            route: "/sinisters",
+            permissions: [
+                // PERMISSIONS.VIEW_SINISTERS,
+            ],
+            features: []
+        },
+        {
+            name: "cessions-retrocessions",
+            title: "modules.cessions_retrocessions.title",
+            description: "modules.cessions_retrocessions.description",
+            icon: "assets/images/modules/cession_retrocession.png",
+            route: "/cessions-retrocessions",
+            permissions: [
+                // PERMISSIONS.VIEW_CESSIONS_RETROCESSIONS,
+            ],
+            features: []
         }
     ];
 

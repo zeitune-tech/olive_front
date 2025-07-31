@@ -41,13 +41,13 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.tax-commission.fields.pointOfSaleType') }}</mat-label>
-                    <mat-select formControlName="pointOfSaleType">
-                        <mat-option *ngFor="let type of typesPointOfSale" [value]="type.value">
-                            {{ type.label }}
+                    <mat-label>{{ t('entities.tax-commission.fields.pointOfSale') }}</mat-label>
+                    <mat-select formControlName="pointOfSale">
+                        <mat-option *ngFor="let pointOfSale of pointsOfSale" [value]="pointOfSale.id">
+                            {{ pointOfSale.name }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formGroup.get('pointOfSaleType')?.hasError('required')">
+                    <mat-error *ngIf="formGroup.get('pointOfSale')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>

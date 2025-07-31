@@ -4,10 +4,10 @@
     <h2 mat-dialog-title>{{ data.title }}</h2>
 
     <mat-dialog-content class="flex flex-col gap-4">
-      <mat-form-field appearance="outline">
-        <mat-label>Recherche</mat-label>
-        <input matInput [(ngModel)]="search" (input)="filter()" />
-      </mat-form-field>
+      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
+          <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
+          <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [(ngModel)]="search" (input)="filter()" />
+      </div>
 
       <mat-nav-list>
         <mat-list-item *ngFor="let item of filteredItems" (click)="select(item)" class="cursor-pointer">

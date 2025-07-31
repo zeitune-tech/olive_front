@@ -22,6 +22,18 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.contributor.fields.contributorType') }}</mat-label>
+                <mat-select formControlName="contributorTypeId">
+                    <mat-option *ngFor="let type of contributorTypes" [value]="type.id">
+                        {{ type.label }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formGroup.get('contributorTypeId')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
                 <mat-label>{{ t('entities.contributor.fields.email') }}</mat-label>
                 <input matInput formControlName="email" />
                 <mat-error *ngIf="formGroup.get('email')?.hasError('email')">
@@ -30,9 +42,9 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-full">
-                <mat-label>{{ t('entities.contributor.fields.gsm') }}</mat-label>
-                <input matInput formControlName="gsm" />
-                <mat-error *ngIf="formGroup.get('gsm')?.hasError('required')">
+                <mat-label>{{ t('entities.contributor.fields.phone') }}</mat-label>
+                <input matInput formControlName="phone" />
+                <mat-error *ngIf="formGroup.get('phone')?.hasError('required')">
                     {{ t('form.errors.required') }}
                 </mat-error>
             </mat-form-field>

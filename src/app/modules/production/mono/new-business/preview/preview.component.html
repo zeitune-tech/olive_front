@@ -1,0 +1,116 @@
+<div class="max-w-[800px] mx-auto bg-white p-6 rounded-xl shadow border text-sm text-gray-800">
+  <!-- 1. En-tête : logo + infos compagnie -->
+  <div class="flex items-start gap-4 mb-6">
+    <!-- Logo -->
+    <div class="w-24 h-24 p-2 border -bg-gray-100 rounded-md flex items-center justify-center">
+      <img *ngIf="company?.logo" [src]="company.logo" alt="logo" class="h-full object-contain" />
+      <span *ngIf="!company?.logo" class="text-xs text-gray-400">Logo</span>
+    </div>
+
+    <!-- Infos compagnie -->
+    <div class="flex-1 space-y-1 text-sm">
+      <p class="font-bold text-base">{{ company.name }}</p>
+      <p>{{ company.email }}</p>
+      <p>{{ company.address }}</p>
+      <p>{{ company.phone }}</p>
+    </div>
+  </div>
+
+  <!-- 2. Encadré titre -->
+  <div class="border-2 border-black rounded-md p-4 mb-6 bg-gray-50 text-center">
+    <h2 class="font-bold uppercase text-base mb-1">Conditions particulières</h2>
+    <p class="text-sm">Produit :
+      <span class="font-semibold">{{ formStepOne?.value?.product }}</span>
+    </p>
+    <p class="text-sm">
+      Police N° : <span class="font-semibold">{{ formStepOne?.value?.reference || 'N/A' }}</span> |
+      Point de vente : <span class="font-semibold">{{ formStepOne?.value?.pointOfSale || 'Non défini' }}</span>
+    </p>
+  </div>
+
+  <!-- 3. Section assuré -->
+  <div class="mb-6">
+    <h3 class="font-semibold underline mb-2">Assuré</h3>
+    <p><span class="font-semibold">Nom :</span> {{ formStepTwo?.value?.lastName }} {{ formStepTwo?.value?.firstName }}</p>
+    <p><span class="font-semibold">Adresse :</span> {{ formStepTwo?.value?.address }}, {{ formStepTwo?.value?.city }}</p>
+    <p><span class="font-semibold">Téléphone :</span> {{ formStepTwo?.value?.mobile || formStepTwo?.value?.phone }}</p>
+    <p><span class="font-semibold">Email :</span> {{ formStepTwo?.value?.email }}</p>
+    <p><span class="font-semibold">Profession :</span> {{ formStepTwo?.value?.profession }}</p>
+  </div>
+
+  <!-- 4. Section véhicule -->
+  <div class="mb-6">
+    <h3 class="font-semibold underline mb-2">Véhicule</h3>
+    <p><span class="font-semibold">Marque / Modèle :</span> {{ formStepThree?.value?.brand }} {{ formStepThree?.value?.modelType }}</p>
+    <p><span class="font-semibold">Immatriculation :</span> {{ formStepThree?.value?.registrationNumber }}</p>
+    <p><span class="font-semibold">Date de mise en circulation :</span> {{ formStepThree?.value?.registrationDate | date: 'dd/MM/yyyy' }}</p>
+    <p><span class="font-semibold">Châssis :</span> {{ formStepThree?.value?.chassisNumber }}</p>
+    <p><span class="font-semibold">Énergie :</span> {{ formStepThree?.value?.energyType }}</p>
+    <p><span class="font-semibold">Puissance :</span> {{ formStepThree?.value?.power }} CV</p>
+    <p><span class="font-semibold">Valeur neuve :</span> {{ formStepThree?.value?.catalogValue | number }} FCFA</p>
+    <p><span class="font-semibold">Valeur vénale :</span> {{ formStepThree?.value?.declaredValue | number }} FCFA</p>
+  </div>
+
+  <!-- 5. Section garanties -->
+    <div class="mb-6">
+        <h3 class="font-semibold underline mb-2">Garanties accordées</h3>
+        <!-- <p><span class="font-semibold">Tarification :</span> {{ formStepFour?.value?.pricing }}</p> -->
+        <table class="w-full border border-gray-300 text-sm">
+            <thead>
+                <tr>
+                    <th class="border p-1">Désignation</th>
+                    <th class="border p-1">Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let coverage of coverages">
+                    <td class="border p-1">{{ coverage.name }}</td>
+                    <td class="border p-1 text-right">{{ coverage.amount | number }} FCFA</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="font-bold">
+                    <td class="border p-1">Total</td>
+                    <td class="border p-1 text-right">{{ totalCoverages | number }} FCFA</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+  <!-- 6. Section tarifs -->
+  <div class="mb-6">
+    <h3 class="font-semibold underline mb-2">
+        Quittance
+    </h3>
+    <table class="w-full border border-gray-300 text-sm mb-4">
+      <tbody>
+        <tr><td class="border p-1">Prime Nette</td><td class="border p-1 text-right">33 846 FCFA</td></tr>
+        <tr><td class="border p-1">Accessoires</td><td class="border p-1 text-right">2 000 FCFA</td></tr>
+        <tr><td class="border p-1">FGA</td><td class="border p-1 text-right">
+            <!-- 5% prime nette -->
+            {{ (33_846 * 0.05) | number }} FCFA
+        </td></tr>
+        <tr><td class="border p-1">TVA</td><td class="border p-1 text-right">
+            <!-- 18% prime nette -->
+            {{ (33_846 * 0.18) | number }} FCFA
+        </td></tr>
+        <tr><td class="border p-1">Carte Brune</td><td class="border p-1 text-right">0 FCFA</td></tr>
+        <tr class="font-bold"><td class="border p-1">Total Prime</td><td class="border p-1 text-right">
+            {{ (33_846 + 2_000 + (33_846 * 0.05) + (33_846 * 0.18)) | number }} FCFA
+        </td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 6. Pied de page -->
+  <div class="mt-10 text-xs text-gray-600 italic">
+    <p>Fait à {{ formStepOne?.value?.pointOfSale || '...' }}, le {{ today | date: 'dd/MM/yyyy' }} - en 3 exemplaires.</p>
+    <!-- <p>Il n’est rien changé aux autres clauses et conditions de la police à laquelle le présent avenant demeure annexé.</p> -->
+    <p>...</p>
+  </div>
+
+  <div class="flex justify-between mt-6 text-sm pb-10">
+    <p>L’assuré</p>
+    <p>Pour la compagnie</p>
+  </div>
+</div>

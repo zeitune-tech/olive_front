@@ -155,6 +155,10 @@ export class TaxCommissionsContributorListComponent implements OnInit {
         this._dialog.open(TaxCommissionContributorFormComponent, {
             width: '600px',
             disableClose: true,
+            data: {
+                mode: 'create',
+                item: new TaxCommissionsContributor({})
+            }
         }).afterClosed().subscribe((result) => {
             if (result) {
                 this._productService.getAll().subscribe();
@@ -177,9 +181,12 @@ export class TaxCommissionsContributorListComponent implements OnInit {
     /**
         * Edit TaxCommissionsContributor TaxCommissionsContributor
         */
-    onEdit(product: TaxCommissionsContributor): void {
+    onEdit(taxCommissions: TaxCommissionsContributor): void {
         this._dialog.open(TaxCommissionContributorFormComponent, {
-            data: product,
+            data: {
+                mode: 'edit',
+                item: taxCommissions
+            },
             width: '600px',
             disableClose: true,
         }).afterClosed().subscribe((result) => {

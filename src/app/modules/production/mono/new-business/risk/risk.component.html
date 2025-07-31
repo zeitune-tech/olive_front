@@ -1,42 +1,55 @@
 <div class="flex flex-col gap-8 py-4" [formGroup]="form" *transloco="let t">
 
+
+  <!-- Immatriculation + Chargement -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+    <mat-form-field appearance="outline" class="col-span-3">
+      <mat-label>{{ t('entities.risk.fields.registrationNumber') }}</mat-label>
+      <input matInput formControlName="registrationNumber" />
+    </mat-form-field>
+
+    <button mat-raised-button class="bg-gray-500 text-white" (click)="loadVehicleDataFromTransport()">
+      {{ t('form.actions.loadTransportData') }}
+    </button>
+  </div>
+
   <!-- Identification -->
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
     <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.policy.fields.orderNumber') }}</mat-label>
+      <mat-label>{{ t('entities.risk.fields.orderNumber') }}</mat-label>
       <input matInput formControlName="orderNumber" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.policy.fields.brand') }}</mat-label>
+      <mat-label>{{ t('entities.risk.fields.brand') }}</mat-label>
       <input matInput formControlName="brand" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.policy.fields.modelType') }}</mat-label>
+      <mat-label>{{ t('entities.risk.fields.modelType') }}</mat-label>
       <input matInput formControlName="modelType" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.policy.fields.category') }}</mat-label>
-      <input matInput formControlName="category" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.policy.fields.registrationNumber') }}</mat-label>
-      <input matInput formControlName="registrationNumber" />
+      <mat-label>{{ t('entities.risk.fields.category') }}</mat-label>
+      <mat-select formControlName="category">
+        <mat-option value="Tourisme">Tourisme</mat-option>
+        <mat-option value="Utilitaire">Utilitaire</mat-option>
+        <mat-option value="Camion">Camion</mat-option>
+        <mat-option value="Moto">Moto</mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
 
   <!-- Mise en circulation -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.policy.fields.registrationDate') }}</mat-label>
+      <mat-label>{{ t('entities.risk.fields.registrationDate') }}</mat-label>
       <input matInput type="date" formControlName="registrationDate" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>{{ t('entities.policy.fields.energyType') }}</mat-label>
+      <mat-label>{{ t('entities.risk.fields.energyType') }}</mat-label>
       <mat-select formControlName="energyType">
         <mat-option value="Essence">Essence</mat-option>
         <mat-option value="Diesel">Diesel</mat-option>
@@ -48,29 +61,75 @@
 
   <!-- Caractéristiques -->
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.chassisNumber') }}</mat-label><input matInput formControlName="chassisNumber" /></mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.engineNumber') }}</mat-label><input matInput formControlName="engineNumber" /></mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.bodyType') }}</mat-label><input matInput formControlName="bodyType" /></mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.chassisNumber') }}</mat-label>
+      <input matInput formControlName="chassisNumber" />
+    </mat-form-field>
 
-    <mat-checkbox formControlName="turbo">{{ t('entities.policy.fields.turbo') }}</mat-checkbox>
-    <mat-checkbox formControlName="creditDelivery">{{ t('entities.policy.fields.creditDelivery') }}</mat-checkbox>
-    <mat-checkbox formControlName="withTrailer">{{ t('entities.policy.fields.withTrailer') }}</mat-checkbox>
-    <mat-checkbox formControlName="flammableMaterial">{{ t('entities.policy.fields.flammableMaterial') }}</mat-checkbox>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.engineNumber') }}</mat-label>
+      <input matInput formControlName="engineNumber" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.bodyType') }}</mat-label>
+      <mat-select formControlName="bodyType">
+        <mat-option value="Berline">Berline</mat-option>
+        <mat-option value="4x4">4x4</mat-option>
+        <mat-option value="Camionnette">Camionnette</mat-option>
+        <mat-option value="Moto">Moto</mat-option>
+        <mat-option value="Fourgon">Fourgon</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
-  <!-- Capacité -->
+  <!-- Options -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <mat-checkbox formControlName="turbo">{{ t('entities.risk.fields.turbo') }}</mat-checkbox>
+    <mat-checkbox formControlName="creditDelivery">{{ t('entities.risk.fields.creditDelivery') }}</mat-checkbox>
+    <mat-checkbox formControlName="withTrailer">{{ t('entities.risk.fields.withTrailer') }}</mat-checkbox>
+    <mat-checkbox formControlName="flammableMaterial">{{ t('entities.risk.fields.flammableMaterial') }}</mat-checkbox>
+  </div>
+
+  <!-- Capacités -->
   <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.power') }}</mat-label><input matInput formControlName="power" /></mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.payload') }}</mat-label><input matInput formControlName="payload" /></mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.cylinder') }}</mat-label><input matInput formControlName="cylinder" /></mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.seats') }}</mat-label><input matInput formControlName="seats" /></mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.power') }}</mat-label>
+      <input matInput type="number" formControlName="power" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.payload') }}</mat-label>
+      <input matInput type="number" formControlName="payload" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.cylinder') }}</mat-label>
+      <input matInput type="number" formControlName="cylinder" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.seats') }}</mat-label>
+      <input matInput type="number" formControlName="seats" />
+    </mat-form-field>
   </div>
 
   <!-- Valeurs -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.catalogValue') }}</mat-label><input matInput formControlName="catalogValue" /></mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.declaredValue') }}</mat-label><input matInput formControlName="declaredValue" /></mat-form-field>
-    <mat-form-field appearance="outline"><mat-label>{{ t('entities.policy.fields.certificateNumber') }}</mat-label><input matInput formControlName="certificateNumber" /></mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.catalogValue') }}</mat-label>
+      <input matInput type="number" formControlName="catalogValue" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.declaredValue') }}</mat-label>
+      <input matInput type="number" formControlName="declaredValue" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.risk.fields.certificateNumber') }}</mat-label>
+      <input matInput formControlName="certificateNumber" />
+    </mat-form-field>
   </div>
 
   <!-- Action -->

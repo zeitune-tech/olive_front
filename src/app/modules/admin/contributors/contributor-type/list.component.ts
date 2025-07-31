@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { Contributor } from "@core/services/administration/contributor/contributor.interface";
+import { ContributorType } from "@core/services/administration/contributor/contributor.interface";
 import { ContributorService } from "@core/services/administration/contributor/contributor.service";
 import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
@@ -13,6 +13,7 @@ import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { ContributorFormComponent } from "../edit/edit.component";
 import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
+import { ContributorTypeFormComponent } from "../contributor-type-form/form.component";
 import { AccountComponent } from "../account/account.component";
 
 @Component({
@@ -20,54 +21,32 @@ import { AccountComponent } from "../account/account.component";
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class ContributorsListComponent {
+export class ContributorsTypeListComponent {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
         
-    tableOptions: TableOptions<Contributor> = {
+    tableOptions: TableOptions<ContributorType> = {
         title: '',
         columns: [
-            { label: 'entities.contributor.fields.firstname', property: 'firstname', type: 'text', visible: true },
-            { label: 'entities.contributor.fields.lastname', property: 'lastname', type: 'text', visible: true },
-            { label: 'entities.contributor.fields.email', property: 'email', type: 'text', visible: true },
-            { label: 'entities.contributor.fields.contributorType', property: 'contributorType', type: 'text', visible: true },
-            { label: 'entities.contributor.fields.phone', property: 'phone', type: 'text', visible: true },
-            { label: 'entities.contributor.fields.level', property: 'level', type: 'text', visible: true },
-            { label: 'entities.contributor.fields.pointOfSale', property: 'managementEntity', type: 'text', visible: true },
+            { label: 'entities.contributor-type.fields.label', property: 'label', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [],
-        renderItem: (element: Contributor, property: keyof Contributor) => {
-            if (property === 'level') {
-                
-                return this._translateService.translate(`entities.contributor.options.level.${element[property]}`);
-            }
-
-            if (property === 'managementEntity') {
-                if (element.level === 'POINT_OF_SALE' && element.managementEntity && typeof element.managementEntity === 'string') {
-                    return element.managementEntity;
-                } else {
-                    return '-';
-                }
-            }
-
-            if (property === 'contributorType') {
-                return element.contributorType ? element.contributorType.label : '-';
-            }
+        renderItem: (element: ContributorType, property: keyof ContributorType) => {
 
             return element[property];
         }
 
     };
-    data: Contributor[] = [];
+    data: ContributorType[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    dataSource: MatTableDataSource<Contributor> = new MatTableDataSource();
-    selection = new SelectionModel<Contributor>(true, []);
-    searchInputControl: UntypedFormControl = new UntypedFormControl();
+    dataSource: MatTableDataSource<ContributorType> = new MatTableDataSource();
+    selection = new SelectionModel<ContributorType>(true, []);
+    searchControl: UntypedFormControl = new UntypedFormControl();
 
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
@@ -77,9 +56,9 @@ export class ContributorsListComponent {
     ) {}
 
     ngOnInit(): void {
-        this._contributorService.contributors$
+        this._contributorService.contributorTypes$
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: Contributor[]) => {
+        .subscribe((data: ContributorType[]) => {
             this.data = data;
             this.dataSource.data = data;
             this._changeDetectorRef.detectChanges();
@@ -100,26 +79,42 @@ export class ContributorsListComponent {
     }
 
     onCreate(): void {
-        const dialogRef = this._dialog.open(ContributorFormComponent, {
+        const dialogRef = this._dialog.open(ContributorTypeFormComponent, {
             width: '600px',
             data: {
                 mode: 'create',
-                contributor: {} as Contributor
+                contributorType: { label: '' } as ContributorType
             }
-        });
-        dialogRef.afterClosed().subscribe(result => {
+        }).afterClosed().subscribe(result => {
             if (result) {
                 // this._contributorService.refreshContributors();
             }
         });
     }
 
-    onEdit(element: Contributor): void {
-       
-        const dialogRef = this._dialog.open(ContributorFormComponent, {
+    onEdit(element: ContributorType): void {
+
+        const dialogRef = this._dialog.open(ContributorTypeFormComponent, {
             width: '600px',
             data: {
                 mode: 'edit',
+                contributorType: element
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // this._contributorService.refreshContributors();
+            }
+        });
+    }
+
+    
+
+    onView(element: ContributorType): void {
+        const dialogRef = this._dialog.open(AccountComponent, {
+            width: '600px',
+            data: {
+                mode: 'view',
                 contributor: element
             }
         });
@@ -129,17 +124,8 @@ export class ContributorsListComponent {
             }
         });
     }
-    onView(element: Contributor): void {
-        this._dialog.open(AccountComponent, {
-            width: '600px',
-            data: {
-                contributor: element
-            }
-        });
 
-    }
-
-    onDelete(element: Contributor): void {
+    onDelete(element: ContributorType): void {
         this._dialog.open(ConfirmDeleteComponent, {
             width: '400px',
             data: {
@@ -161,7 +147,7 @@ export class ContributorsListComponent {
         return columns;
     }
 
-    trackByProperty(index: number, column: TableColumn<Contributor>) {
+    trackByProperty(index: number, column: TableColumn<ContributorType>) {
         return column.property;
     }
 }

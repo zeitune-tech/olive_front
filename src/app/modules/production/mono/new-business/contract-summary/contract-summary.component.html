@@ -1,0 +1,55 @@
+<div class="bg-white border rounded-lg p-6 shadow space-y-6 text-sm text-gray-800">
+  <h2 class="text-lg font-semibold mb-4">Résumé du contrat</h2>
+
+  <!-- Informations générales -->
+  <div>
+    <h3 class="font-semibold mb-2 underline">Informations générales</h3>
+    <p><strong>Compagnie :</strong> {{ formStepOne?.value?.company }}</p>
+    <p><strong>Produit :</strong> {{ formStepOne?.value?.product }}</p>
+    <p><strong>Référence :</strong> {{ formStepOne?.value?.reference || '-' }}</p>
+    <p><strong>Note n° :</strong> {{ formStepOne?.value?.noteNumber || '-' }}</p>
+    <p><strong>Nombre de véhicules :</strong> {{ formStepOne?.value?.numberOfVehicles }}</p>
+    <p><strong>Type contrat :</strong> {{ formStepOne?.value?.typeContract }}</p>
+    <p><strong>Nature contrat :</strong> {{ formStepOne?.value?.natureContract }}</p>
+    <p><strong>Date de début :</strong> {{ formStepOne?.value?.startDate | date:'dd/MM/yyyy' }}</p>
+    <p><strong>Taux de durée :</strong> {{ formStepOne?.value?.durationRate }}</p>
+  </div>
+
+  <!-- Assuré -->
+  <div>
+    <h3 class="font-semibold mb-2 underline">Assuré</h3>
+    <p><strong>Nom :</strong> {{ formStepTwo?.value?.lastName }} {{ formStepTwo?.value?.firstName }}</p>
+    <p><strong>Date de naissance :</strong> {{ formStepTwo?.value?.birthDate | date:'dd/MM/yyyy' }}</p>
+    <p><strong>Adresse :</strong> {{ formStepTwo?.value?.address }}, {{ formStepTwo?.value?.city }}</p>
+    <p><strong>Téléphone :</strong> {{ formStepTwo?.value?.mobile || formStepTwo?.value?.phone }}</p>
+    <p><strong>Email :</strong> {{ formStepTwo?.value?.email }}</p>
+    <p><strong>Profession :</strong> {{ formStepTwo?.value?.profession }}</p>
+    <p><strong>Activité :</strong> {{ formStepTwo?.value?.activity }}</p>
+    <p><strong>Entreprise :</strong> {{ formStepTwo?.value?.companyName }}</p>
+  </div>
+
+  <!-- Véhicule -->
+  <div>
+    <h3 class="font-semibold mb-2 underline">Véhicule</h3>
+    <p><strong>Immatriculation :</strong> {{ formStepThree?.value?.registrationNumber }}</p>
+    <p><strong>Marque / Modèle :</strong> {{ formStepThree?.value?.brand }} {{ formStepThree?.value?.modelType }}</p>
+    <p><strong>Catégorie :</strong> {{ formStepThree?.value?.category }}</p>
+    <p><strong>Date de mise en circulation :</strong> {{ formStepThree?.value?.registrationDate | date:'dd/MM/yyyy' }}</p>
+    <p><strong>Énergie :</strong> {{ formStepThree?.value?.energyType }}</p>
+    <p><strong>Châssis :</strong> {{ formStepThree?.value?.chassisNumber }}</p>
+    <p><strong>Moteur :</strong> {{ formStepThree?.value?.engineNumber }}</p>
+    <p><strong>Puissance :</strong> {{ formStepThree?.value?.power }}</p>
+    <p><strong>Places :</strong> {{ formStepThree?.value?.seats }}</p>
+    <p><strong>Valeur neuve :</strong> {{ formStepThree?.value?.catalogValue | number }} FCFA</p>
+    <p><strong>Valeur déclarée :</strong> {{ formStepThree?.value?.declaredValue | number }} FCFA</p>
+  </div>
+
+  <!-- Garanties -->
+  <div *ngIf="formStepFour">
+    <h3 class="font-semibold mb-2 underline">Garanties choisies</h3>
+    <p><strong>Tarification :</strong> {{ formStepFour?.value?.pricing }}</p>
+    <ul class="list-disc list-inside">
+      <li *ngFor="let c of formStepFour?.value?.coverages">{{ c.name }}</li>
+    </ul>
+  </div>
+</div>
