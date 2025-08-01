@@ -70,4 +70,8 @@ export class EndorsementService {
             catchError(() => of({} as Endorsment))
         );        
     }
+
+    assignProducts(endorsementId: string, productIds: string[]): Observable<any> {
+        return this._httpClient.post(`${this.baseUrl}/${endorsementId}/products`, { productIds });
+    }
 }

@@ -19,11 +19,14 @@ import { SharedModule } from "@shared/shared.module";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { EndorsementListComponent } from "./list/list.component";
 import { EndorsementNewComponent } from "./new/new.component";
+import { AssignProductComponent } from "./assign-product/assign-product.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
         EndorsementListComponent,
-        EndorsementNewComponent
+        EndorsementNewComponent,
+        AssignProductComponent
     ],
 
     imports: [
@@ -43,6 +46,7 @@ import { EndorsementNewComponent } from "./new/new.component";
         SharedModule,
         TableModule,
         MatProgressSpinnerModule,
+        MatCheckboxModule
     ],
     providers: [
         LayoutService

@@ -33,7 +33,9 @@
       <!-- Date Effective -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>{{ t('entities.duration-rate.fields.dateEffective') }}</mat-label>
-        <input matInput type="date" formControlName="dateEffective" />
+        <input matInput [matDatepicker]="picker" formControlName="dateEffective" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
           {{ t('form.errors.required') }}
         </mat-error>

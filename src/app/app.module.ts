@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServicesModule } from './core/services/services.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @NgModule({
 	declarations: [
@@ -39,6 +40,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 	],
 	providers: [
         provideHttpClient(withInterceptorsFromDi()),
+		provideNativeDateAdapter()
 	],
 	bootstrap: [AppComponent]
 })

@@ -3,13 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  auth_url: "http://localhost:8080/auth",
-  administration_url: "http://localhost:8080/admin/app",
-  settings_url: "http://localhost:8080/settings/app",
-  attestations_url: "http://localhost:8080/attestations/app",
-  insured_url: "http://localhost:8080/insured/app",
-  pricing_url: "http://localhost:8080/princing",
-
+  auth_url: "https://dev.adminolive.zeitune.tech/auth",
+  administration_url: "https://dev.adminolive.zeitune.tech/admin/app",
+  settings_url: "https://dev.adminolive.zeitune.tech/settings/app",
+  attestations_url: "https://dev.adminolive.zeitune.tech/app",
+  insured_url: "https://dev.adminolive.zeitune.tech/app",
   production: false
 };
 
