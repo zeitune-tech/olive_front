@@ -1,4 +1,4 @@
-name: Angular CI/CD
+name: DEV | Angular CI/CD
 on:
   push:
     branches: dev
@@ -22,6 +22,8 @@ jobs:
         with:
           name: dist-artifact
           path: dist/*
+          retention-days: 1  # expire après 1 jour
+
   deploy:
     needs:
       - build

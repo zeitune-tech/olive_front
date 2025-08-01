@@ -1,7 +1,7 @@
 <div class="space-y-2 p-2 " #dialogRef *transloco="let t">
 
   <div class="flex flex-col gap-4 ">
-    <h2 mat-dialog-title>{{ data.title }}</h2>
+    <h2 mat-dialog-title>{{ t(data.title) }}</h2>
 
     <mat-dialog-content class="flex flex-col gap-4">
       <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
@@ -9,11 +9,18 @@
           <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [(ngModel)]="search" (input)="filter()" />
       </div>
 
+<!--      <mat-form-field class="w-full" appearance="outline">-->
+<!--      </mat-form-field>-->
+
       <mat-nav-list>
         <mat-list-item *ngFor="let item of filteredItems" (click)="select(item)" class="cursor-pointer">
           {{ item[data.displayField] }}
         </mat-list-item>
       </mat-nav-list>
+
+      @if (filteredItems.length === 0) {
+        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">{{t('product.table.no-data')}}</div>
+      }
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">

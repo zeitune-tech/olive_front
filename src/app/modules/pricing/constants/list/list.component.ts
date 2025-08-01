@@ -1,5 +1,5 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
@@ -14,125 +14,127 @@ import { ProductService } from "@core/services/settings/product/product.service"
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { LayoutService } from "../layout.service";
 import { Router } from "@angular/router";
-import { TranslocoService } from "@jsverse/transloco";
-import { ConstantEditComponent } from "../edit/edit.component";
+import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import { CommissionPointOfSale } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.interface";
+import { Constant } from "@core/services/pricing/constant/constant.interface";
+import { ConstantService } from "@core/services/pricing/constant/constant.service";
+import {Branch} from "@core/services/settings/branch/branch.interface";
+import {BranchService} from "@core/services/settings/branch/branch.service";
+import { ConstantFormComponent } from "../form/form.component";
 
 @Component({
-    selector: "app-products-list",
+    selector: "app-constant-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class ConstantsListComponent implements OnInit {
-
+export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<Constant>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
+    branches: Branch[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<Constant>([]); // Ajoute les données réelles ici
 
-        constructor(
+    constructor(
+        private _constantService: ConstantService,
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
-        private _layoutService: LayoutService,
-        private _tanslateService: TranslocoService,
-        private _router: Router,
+        private _branchService: BranchService,
         private _dialog: MatDialog
     ) {
-        this._productService.products$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
-                this.data = data;
-                this.dataSource.data = data;
-            });
 
-        this._managementEntityService.entity$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: ManagementEntity) => {
-                this.managementEntity = data;
-            });
     }
 
-    
-    data: Product[] = [];
+    data: Constant[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<Constant>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
 
-
-
-
     ngOnInit(): void {
-        // Initialisation de la configuration de la table
-        this.tableOptions = {
-            title: '',
-            columns: [
-                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
-                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                {
-                    label: 'entities.product.table.custom_fields.risk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
-                        { label: 'entities.product.table.custom_fields.min', property: 'minRisk', type: 'text', visible: true },
-                        { label: 'entities.product.table.custom_fields.max', property: 'maxRisk', type: 'text', visible: true },
-                    ]
-                },
-                { label: 'entities.product.table.custom_fields.minCoverage', property: 'minimumGuaranteeNumber', type: 'text', visible: true, cssClasses: ['text-sm'] },
-                { label: 'entities.product.table.custom_fields.fleet', property: 'fleet', type: 'text', visible: true },
-                { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
-            ],
-            pageSize: 8,
-            pageSizeOptions: [5, 6, 8],
-            actions: [],
-            renderItem: (element: Product, property: keyof Product) => {
-                if (property === 'branch') {
-                    return element.branch?.name ?? '--';
-                } else if (property === 'fleet') {
-                    return element.fleet ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
-                } else if (property === 'hasReduction') {
-                    return element.hasReduction ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
-                } else if (property === 'category') {
-                    return element.branch?.category?.name ?? '--';
-                }
+      this._constantService.getAll()
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: any) => {
+          this.data = data?.content || [];
+          this.dataSource.data = data?.content || [];
+          console.log('Constants loaded:', data);
+        });
 
-                if (property === 'name') {
-                    const display = element.name;
-                    if (element.description && element.description.trim() !== '') {
-                        return `${display} - ${element.description}`;
-                    }
-                    return display;
-                }
+      this._constantService.constants$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: Constant[]) => {
+          this.data = data;
+          this.dataSource.data = data;
+        });
 
-                if (property === 'visibility') {
-                    let provider = element.owner?.name || '--';
-                    if (provider.length > 20) {
-                        provider = provider.substring(0, 20) + '...';
-                    }
-                    if (element.visibility === 'PRIVATE') {
-                        return this._tanslateService.translate('enums.productVisibility.PRIVATE');
-                    }else  {
-                        return this._tanslateService.translate('enums.productVisibility.PUBLIC', { provider: provider });
-                    }
-                }
+      this._managementEntityService.entity$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: ManagementEntity) => {
+          this.managementEntity = data;
+        });
 
-                return element[property] ?? '--';
-            },
-        };
+      this._branchService.branches$.subscribe(branches => {
+        this.branches = branches;
+      });
 
-        // Construction des lignes d’en-tête
-        this.buildHeaderRows();
+      // Initialisation de la configuration de la table
+      this.tableOptions = {
+          title: '',
+          columns: [
+              // label: string;
+              // description: string;
+              // variableName: string;
+              // toReturn: boolean;
+              // managementEntityId: string;
+              // productId: string;
+              // coverageId: string;
+              // value: number;
+
+              { label: 'entities.constant.fields.label', property: 'label', type: 'text', visible: true },
+              { label: 'entities.constant.fields.description', property: 'description', type: 'text', visible: true },
+              { label: 'entities.constant.fields.variableName', property: 'variableName', type: 'text', visible: true },
+              { label: 'entities.constant.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
+              // { label: 'entities.constant.fields.managementEntityId', property: 'managementEntity', type: 'text', visible: true },
+              // { label: 'entities.constant.fields.productId', property: 'product', type: 'text', visible: true },
+              { label: 'entities.constant.fields.coverageId', property: 'coverage', type: 'text', visible: true },
+              { label: 'entities.constant.fields.value', property: 'value', type: 'text', visible: true },
+
+          ],
+          pageSize: 8,
+          pageSizeOptions: [5, 6, 8],
+          actions: [],
+          renderItem: (element: Constant, property: keyof Constant) => {
+              if (property === 'toReturn') {
+                  return element.toReturn ? 'Oui' : 'Non';
+              }
+              return element[property] ?? '--';
+          },
+      };
+
+      this._constantService.constants$.subscribe({
+          next: (data: Constant[]) => {
+              this.data = data;
+              this.dataSource.data = data;
+          },
+          error: (error) => {
+              console.error('Error fetching constant data:', error);
+          }
+      });
+
+      // Construction des lignes d’en-tête
+      this.buildHeaderRows();
     }
 
     buildHeaderRows(): void {
@@ -150,7 +152,7 @@ export class ConstantsListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -174,25 +176,89 @@ export class ConstantsListComponent implements OnInit {
         this._unsubscribeAll.complete();
     }
 
-    /**
-        * Edit Product Product
-        */
-    onEdit(product: Product): void {
-        this._dialog.open(ConstantEditComponent, {
-            data: product,
-            width: '600px',
-            disableClose: true,
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._productService.getAll().subscribe();
+  selectedBranch: Branch|undefined;
+
+  openBranchSelection() {
+
+    this._dialog.open(SelectDialogComponent, {
+      width: '700px',
+      data: {
+        displayField: "name",
+        items: this.branches,
+        title: "branch-selection.title"
+      }
+    }).afterClosed().subscribe((branch: Branch) => {
+      if (branch) {
+        this.selectedBranch = branch;
+        // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+        this.dataSource.paginator = this.paginator;
+        // this._changeDetectorRef.detectChanges();
+      }
+    })
+  }
+
+
+  products: Product[] = []
+    searchCtrl: UntypedFormControl = new UntypedFormControl();
+    selectedProduct: Product = new Product({});
+
+    openSelection() {
+        this._dialog.open(SelectDialogComponent, {
+            width: '700px',
+            data: {
+                items: this.products,
+            }
+        }).afterClosed().subscribe((product: Product) => {
+            if (product) {
+                this.selectedProduct = product;
+                // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                this.dataSource.paginator = this.paginator;
+                // this._changeDetectorRef.detectChanges();
             }
         })
     }
 
+    onAdd(): void {
+        this._dialog.open(ConstantFormComponent, {
+            width: '600px',
+            disableClose: true,
+            data: {
+                mode: 'create',
+                product: this.selectedProduct?.id
+            }
+
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._constantService.getAll().subscribe();
+            }
+        });
+    }
+
+    
+
+    onDelete(constant: Constant): void {
+    }
+
+    /**
+        * Edit Constant
+        */
+    onEdit(constant: Constant): void {
+        this._dialog.open(ConstantFormComponent, {
+            width: '600px',
+            disableClose: true,
+            data: {
+                mode: 'edit',
+                ...constant
+            }
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._constantService.getAll().subscribe();
+            }
+        });
+    }
 
 
-    onView(product: Product): void {
-        this._layoutService.setSelectedProduct(product);
+    onView(constant: Constant): void {
         //this._router.navigate(['/administration/products/list']);
     }
 
@@ -215,7 +281,7 @@ export class ConstantsListComponent implements OnInit {
     }
 
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
+    trackByProperty(index: number, column: TableColumn<Constant>) {
         return column.property;
     }
 }
