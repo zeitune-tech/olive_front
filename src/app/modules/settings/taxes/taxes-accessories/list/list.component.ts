@@ -15,6 +15,7 @@ import { TaxAccessory } from "@core/services/settings/tax-accessory/tax-accessor
 import { TaxAccessoryService } from "@core/services/settings/tax-accessory/tax-accessory.service";
 import { PrimesFormComponent } from "../../taxes-primes/form/form.component";
 import { AccessoriesFormComponent } from "../form/form.component";
+import { TaxCommissionFormComponent } from "../../../commissions/tax-commission/form/form.component";
 
 @Component({
     selector: "app-tax-accessories-list",
@@ -63,6 +64,7 @@ export class AccessoriesListComponent {
     tableOptions: TableOptions<TaxAccessory> = {
         title: '',
         columns: [
+            { property: 'name', type: 'text', label: 'entities.tax.fields.name', visible: true },
             { property: 'taxType', type: 'text', label: 'entities.tax.fields.taxType', visible: true },
             { property: 'isFlatRate', type: 'text', label: 'entities.tax.fields.isFlatRate', visible: true },
             { property: 'flatRateAmount', type: 'text', label: 'entities.tax.fields.flatRateAmount', visible: true },
@@ -194,36 +196,39 @@ export class AccessoriesListComponent {
         this._dialog.open(AccessoriesFormComponent, {
             width: '700px',
             data: {
-                mode: 'add',
+                mode: 'create',
                 product: this.selectedProduct,
+                data: {} as TaxAccessory
             }
         }).afterClosed().subscribe((result: TaxAccessory) => {
             if (result) {
-                
+                this.dataSource.data.push(result);
+                this._changeDetectorRef.detectChanges();
             }
         })
     }
 
-    // openEditDialog(item: any): void {
-    //     const dialogRef = this._dialog.open(TaxAccessorysEditDialogComponent, {
-    //         width: '700px',
-    //         data: item
-    //     });
+    openEditDialog(item: any): void {
+        const dialogRef = this._dialog.open(AccessoriesFormComponent, {
+            width: '700px',
+            data: {
+                mode: 'edit',
+                data: item,
+                product: this.selectedProduct
+            }
+        });
 
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         if (result) {
-    //             // Appeler ici le service pour mettre à jour les données
-    //             this._TaxAccessoryService.update(item.id, result).subscribe(() => {
-    //                 // rechargement, toast, etc.
-    //                 this._TaxAccessoryService.getAll().subscribe((data: TaxAccessory[]) => {
-    //                     this.data = data;
-    //                     this.dataSource.data = data;
-    //                     this._changeDetectorRef.detectChanges();
-    //                 });
-    //             });
-    //         }
-    //     });
-    // }
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                const index = this.data.findIndex(t => t.id === result.id);
+                if (index !== -1) {
+                    this.data[index] = result;
+                    this.dataSource.data = [...this.dataSource.data]; // Mettre à jour la source de données
+                    this._changeDetectorRef.detectChanges();
+                }
+            }
+        });
+    }
 
     openDeleteDialog(item: any): void { }
 

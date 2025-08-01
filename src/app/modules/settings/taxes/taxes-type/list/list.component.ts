@@ -188,12 +188,12 @@ export class TypeListComponent {
         this._dialog.open(TypeFormComponent, {
             width: '700px',
             data: {
-                mode: 'add',
+                mode: 'create',
                 data: {} as TaxType
             }
         }).afterClosed().subscribe((result: TaxType) => {
             if (result) {
-                this.data.push(result);
+                this.dataSource.data.push(result);
             }
         })
     }

@@ -90,8 +90,6 @@ export class CommissionAccessoryListComponent implements OnInit {
             pageSizeOptions: [5, 6, 8],
             actions: [],
             renderItem: (element: CommissionPointOfSale, property: keyof CommissionPointOfSale) => {
-
-
                 return element[property] ?? '--';
             },
         };
@@ -174,6 +172,10 @@ export class CommissionAccessoryListComponent implements OnInit {
         this._dialog.open(CommissionAccessoryFormComponent, {
             width: '600px',
             disableClose: true,
+            data: {
+                mode: 'create',
+                commissionPointOfSale: {} as CommissionPointOfSale
+            }
         }).afterClosed().subscribe((result) => {
             if (result) {
                 this._productService.getAll().subscribe();
@@ -188,7 +190,7 @@ export class CommissionAccessoryListComponent implements OnInit {
             disableClose: true,
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                this.dataSource.data = this.dataSource.data.filter(item => item.id !== product.id);
             }
         });
     }
@@ -196,8 +198,23 @@ export class CommissionAccessoryListComponent implements OnInit {
     /**
         * Edit Product Product
         */
-    onEdit(product: Product): void {
-
+    onEdit(commission: CommissionPointOfSale): void {
+        this._dialog.open(CommissionAccessoryFormComponent, {
+            data: {
+                mode: 'edit',
+                commissionPointOfSale: commission
+            },
+            width: '600px',
+            disableClose: true,
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                const index = this.dataSource.data.findIndex(item => item.id === result.id);
+                if (index !== -1) {
+                    this.dataSource.data[index] = result;
+                }
+                this.dataSource._updateChangeSubscription();
+            }
+        });
     }
 
 

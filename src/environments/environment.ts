@@ -6,3 +6,4 @@ export const environment = {
   insured_url: "https://dev.adminolive.zeitune.tech/app",
   production: false
 };
+

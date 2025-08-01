@@ -96,6 +96,19 @@ export class CommissionPrimeListComponent implements OnInit {
             renderItem: (element: CommissionPointOfSale, property: keyof CommissionPointOfSale) => {
 
 
+
+                if (property === 'coverage') {
+                    return element.coverage?.reference?.designation || '--';
+                } 
+
+                if (property === 'typePointOfSale') {
+                    return this._tanslateService.translate(`entities.commission.options.typePointOfSale.${element.typePointOfSale}`);
+                }
+
+                if (property === 'pointOfSale') {
+                    return element.pointOfSale?.name ?? '--';
+                }
+
                 return element[property] ?? '--';
             },
         };
@@ -170,7 +183,8 @@ export class CommissionPrimeListComponent implements OnInit {
             }
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._commissionService.getAll().subscribe();
+                this.dataSource.data.push(result);
+                this.dataSource._updateChangeSubscription();
             }
         });
     }
@@ -185,7 +199,11 @@ export class CommissionPrimeListComponent implements OnInit {
             disableClose: true,
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._commissionService.getAll().subscribe();
+                const index = this.dataSource.data.findIndex(item => item.id === result.id);
+                if (index !== -1) {
+                    this.dataSource.data[index] = result;
+                    this.dataSource._updateChangeSubscription();
+                }
             }
         })
     }

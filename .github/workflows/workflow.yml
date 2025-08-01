@@ -1,7 +1,7 @@
-name: Angular CI/CD
+name: DEV | Angular CI/CD
 on:
   push:
-    branches: laminef-deploy-dev-11/07/2025
+    branches: dev
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,10 +22,12 @@ jobs:
         with:
           name: dist-artifact
           path: dist/*
+          retention-days: 1  # expire après 1 jour
+
   deploy:
     needs:
       - build
-    if: ${{ github.ref == 'refs/heads/laminef-deploy-dev-11/07/2025' }}
+    if: ${{ github.ref == 'refs/heads/dev' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

@@ -55,9 +55,9 @@ export class PrimesFormComponent implements OnInit {
             isFlatRate: [this.data.data.isFlatRate, Validators.required],
             flatRateAmount: [this.data.data.flatRateAmount, [Validators.min(0), Validators.max(10000)]],
             rate: [this.data.data.rate, [Validators.required, Validators.min(0), Validators.max(100)]],
-            taxTypeId: [this.data.data.taxType, Validators.required],
-            coverageId: [this.data.data.coverage],
-            productId: [this.data.data.product, Validators.required],
+            taxTypeId: [this.data.data.taxType.id, Validators.required],
+            coverageId: [this.data.data.coverage.id],
+            productId: [this.data.data.product.id, Validators.required],
         });
 
         this._productService.products$.subscribe(products => {
@@ -92,13 +92,13 @@ export class PrimesFormComponent implements OnInit {
         };
 
         this._TaxPrimeService.create(newTaxPrime).subscribe({
-            next: () => {
+            next: (response: TaxPrime) => {
                 this.snackBar.open(
                     this.translocoService.translate('form.success.create'),
                     undefined,
                     { duration: 3000, panelClass: 'snackbar-success' }
                 );
-                this.dialogRef.close(newTaxPrime);
+                this.dialogRef.close(response);
             },
             error: () => {
                 this.snackBar.open(
@@ -121,13 +121,13 @@ export class PrimesFormComponent implements OnInit {
         };
 
         this._TaxPrimeService.update(this.data.data.id, updated).subscribe({
-            next: () => {
+            next: (response: TaxPrime) => {
                 this.snackBar.open(
                     this.translocoService.translate('form.success.update'),
                     undefined,
                     { duration: 3000, panelClass: 'snackbar-success' }
                 );
-                this.dialogRef.close(updated);
+                this.dialogRef.close(response);
             },
             error: () => {
                 this.snackBar.open(

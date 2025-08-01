@@ -3,9 +3,10 @@ import { RouterModule } from "@angular/router";
 import { routes } from "./pricing.routing";
 
 @NgModule({
-    declarations: [],
+    declarations: [
+    ],
     imports: [
-        RouterModule.forChild(routes)
+        RouterModule.forChild(routes),
     ],
     exports: [],
     providers: []

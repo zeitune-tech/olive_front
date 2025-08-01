@@ -21,6 +21,11 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { FormulaEditComponent } from "./edit/edit.component";
 import { LayoutService } from "./layout.service";
+import { FormulaService } from "@core/services/pricing/formula/formula.service";
+import { ConstantService } from "@core/services/pricing/constant/constant.service";
+import { Field } from "@core/services/pricing/field/field.interface";
+import { FieldService } from "@core/services/pricing/field/field.service";
+import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options.service";
 
 @NgModule({
     declarations: [
@@ -48,7 +53,11 @@ import { LayoutService } from "./layout.service";
     ],
     exports: [],
     providers: [
-        LayoutService
+        LayoutService,
+        FormulaService,
+        ConstantService,
+        FieldService,
+        SelectFieldOptionsService
     ]
 })
 export class FormulaModule {

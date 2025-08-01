@@ -50,7 +50,7 @@ export class CommissionPrimeContributorListComponent implements OnInit {
         private _router: Router,
         private _dialog: MatDialog
     ) {
-        this._commissionContributorService.commissionContributorAccessories$
+        this._commissionContributorService.commissionContributorPrimes$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: CommissionContributor[]) => {
                 this.data = data;
@@ -173,9 +173,15 @@ export class CommissionPrimeContributorListComponent implements OnInit {
         this._dialog.open(CommissionPrimeContributorFormComponent, {
             width: '600px',
             disableClose: true,
+            data: {
+                mode: 'create',
+                commissionContributor: null
+            }
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                this.dataSource.data = this.dataSource.data.concat(result);
+                this.dataSource.paginator = this.paginator;
+                // this._changeDetectorRef.detectChanges();
             }
         });
     }
@@ -197,12 +203,19 @@ export class CommissionPrimeContributorListComponent implements OnInit {
         */
     onEdit(product: Product): void {
         this._dialog.open(CommissionPrimeContributorFormComponent, {
-            data: product,
+            data: {
+                mode: 'edit',
+                commissionContributor: product
+            },
             width: '600px',
             disableClose: true,
         }).afterClosed().subscribe((result) => {
             if (result) {
-                this._productService.getAll().subscribe();
+                const index = this.dataSource.data.findIndex(item => item.id === result.id);
+                if (index > -1) {
+                    this.dataSource.data[index] = result;
+                    this.dataSource._updateChangeSubscription();
+                }
             }
         })
     }

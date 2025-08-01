@@ -62,6 +62,7 @@ export class PrimesListComponent {
     tableOptions: TableOptions<TaxPrime> = {
         title: '',
         columns: [
+            { property: 'name', type: 'text', label: 'entities.tax.fields.name', visible: true },
             {
                 property: 'taxType',
                 visible: true,
@@ -108,8 +109,21 @@ export class PrimesListComponent {
                 return element.product.name; // Affiche le nom du produit associé
             } else if (property === 'taxType') {
                 return element.taxType.name; // Affiche le nom du type de taxe
-            } else if (property === 'calculationBase') {
-                return 'entities.taxes-prime.calculation-base. + element.calculation-base';
+            }
+            else if (property === 'coverage') {
+                return element.coverage.reference.designation; // Affiche le nom de la couverture
+            }
+            else if (property === 'isFlatRate') {
+                return element.isFlatRate ? 'Yes' : 'No'; // Affiche si c'est un tarif forfaitaire
+            }
+            else if (property === 'flatRateAmount') {
+                return element.flatRateAmount ? element.flatRateAmount.toFixed(2) : 'N/A'; // Affiche le montant forfaitaire
+            }
+            else if (property === 'rate') {
+                return element.rate ? element.rate.toFixed(2) : 'N/A'; // Affiche le taux
+            }
+            else if (property === 'dateEffective') {
+                return element.dateEffective ? new Date(element.dateEffective).toLocaleDateString() : 'N/A'; // Affiche la date d'effet
             }
             return element[property];
         }

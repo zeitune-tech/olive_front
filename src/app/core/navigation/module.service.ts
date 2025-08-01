@@ -333,7 +333,7 @@ export class ModuleService {
                     title: "modules.princing.features.formula",
                     description: "modules.princing.features.formula_description",
                     icon: "calculate",
-                    route: "/princing/formula",
+                    route: "/pricing/formula/new",
                     permissions: [
                         // PERMISSIONS.VIEW_PRINCING,
                     ]

@@ -19,92 +19,125 @@ import { ContributorService } from '@core/services/administration/contributor/co
 })
 export class CommissionPrimeContributorFormComponent implements OnInit {
 
-     formGroup!: FormGroup;
-     message = '';
- 
-     products: Product[] = [];
-     coverages: Coverage[] = [];
-     contributors: Contributor[] = [];
-     contributorTypes: ContributorType[] = []
- 
-     mode: 'create' | 'edit' = 'create';
- 
-     constructor(
-         private fb: FormBuilder,
-         private dialogRef: MatDialogRef<CommissionPrimeFormComponent>,
-         @Inject(MAT_DIALOG_DATA) public data: CommissionContributor,
-         private _commissionContributorService: CommissionContributorService,
-         private _productService: ProductService,
-         private _coverageService: CoverageService,
-         private _contributorService: ContributorService,
-         private translocoService: TranslocoService,
-         private snackBar: MatSnackBar
-     ) {}
- 
-     ngOnInit(): void {
- 
-         if (this.data) {
-             this.mode = 'edit';
-             this.dialogRef.updateSize('600px', 'auto');
-         } else {
-             this.data = {} as CommissionContributor;
-             this.mode = 'create';
-             this.dialogRef.updateSize('600px', 'auto');
-         }
- 
- 
-         this.formGroup = this.fb.group({
-             dateEffective: [this.data.dateEffective, Validators.required],
-             calculationBase: ["PRIME", Validators.required],
-             managementRate: [this.data.managementRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-             contributionRate: [this.data.contributionRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-             contributorType: [this.data.contributorType, Validators.required],
-             contributor: [this.data.contributor, Validators.required],
-             product: [this.data.product, Validators.required],
-             coverage: [this.data.coverage, Validators.required],
-         });
- 
-         this._productService.products$.subscribe(products => {
-             this.products = products;
-         });
- 
-         this._coverageService.coverages$.subscribe(coverages => {
-             this.coverages = coverages;
-         });
- 
-    
-     }
- 
-     onSubmit(): void {
-         if (this.formGroup.invalid) return;
- 
-         this.formGroup.disable();
- 
-         const updated = {
-             ...this.formGroup.value
-         };
- 
-        //  this._commissionContributorService.update(this.data.id,updated).subscribe({
-        //      next: () => {
-        //          this.snackBar.open(
-        //              this.translocoService.translate('form.success.update'),
-        //              undefined,
-        //              { duration: 3000, panelClass: 'snackbar-success' }
-        //          );
-        //          this.dialogRef.close(true);
-        //      },
-        //      error: () => {
-        //          this.snackBar.open(
-        //              this.translocoService.translate('form.errors.submission'),
-        //              undefined,
-        //              { duration: 3000, panelClass: 'snackbar-error' }
-        //          );
-        //          this.formGroup.enable();
-        //      }
-        //  });
-     }
- 
-     onCancel(): void {
-         this.dialogRef.close(false);
-     }
- }
+    formGroup!: FormGroup;
+    message = '';
+
+    products: Product[] = [];
+    coverages: Coverage[] = [];
+    contributors: Contributor[] = [];
+    contributorTypes: ContributorType[] = []
+
+    mode: 'create' | 'edit' = 'create';
+
+    constructor(
+        private fb: FormBuilder,
+        private dialogRef: MatDialogRef<CommissionPrimeFormComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: {
+            mode: 'create' | 'edit',
+            commissionContributor: CommissionContributor
+        },
+        private _commissionContributorService: CommissionContributorService,
+        private _productService: ProductService,
+        private _coverageService: CoverageService,
+        private _contributorService: ContributorService,
+        private translocoService: TranslocoService,
+        private snackBar: MatSnackBar
+    ) { }
+
+    ngOnInit(): void {
+
+        this.mode = this.data.mode;
+
+        this.formGroup = this.fb.group({
+            dateEffective: [this.data?.commissionContributor.dateEffective || new Date(), Validators.required],
+            calculationBase: ["PRIME"],
+            managementRate: [this.data?.commissionContributor.managementRate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+            contributionRate: [this.data?.commissionContributor.contributionRate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+            contributorTypeId: [this.data?.commissionContributor.contributorType.id, Validators.required],
+            contributorId: [this.data?.commissionContributor.contributorId, Validators.required],
+            productId: [this.data?.commissionContributor.product.id, Validators.required],
+        })
+
+
+        this._productService.products$.subscribe(products => {
+            this.products = products;
+        });
+
+        this._coverageService.coverages$.subscribe(coverages => {
+            this.coverages = coverages;
+        });
+
+    }
+
+    onCreate(): void {
+        if (this.formGroup.invalid) return;
+        this.formGroup.disable();
+
+        const newCommission = {
+            ...this.formGroup.value
+        }
+
+        this._commissionContributorService.create(newCommission).subscribe({
+            next: (response: CommissionContributor) => {
+                this.snackBar.open(
+                    this.translocoService.translate('form.success.create'),
+                    undefined,
+                    { duration: 3000, panelClass: 'snackbar-success' }
+                );
+                this.dialogRef.close(response);
+            },
+            error: () => {
+                this.snackBar.open(
+                    this.translocoService.translate('form.errors.submission'),
+                    undefined,
+                    { duration: 3000, panelClass: 'snackbar-error' }
+                );
+                this.formGroup.enable();
+            }
+        });
+    }
+
+    onUpdate(): void {
+        if (this.formGroup.invalid) return;
+        this.formGroup.disable();
+
+        const updated = {
+            ...this.formGroup.value
+        };
+
+        this._commissionContributorService.update(this.data.commissionContributor.id, updated).subscribe({
+            next: (response: CommissionContributor) => {
+                this.snackBar.open(
+                    this.translocoService.translate('form.success.update'),
+                    undefined,
+                    { duration: 3000, panelClass: 'snackbar-success' }
+                );
+                this.dialogRef.close(response);
+            },
+            error: () => {
+                this.snackBar.open(
+                    this.translocoService.translate('form.errors.submission'),
+                    undefined,
+                    { duration: 3000, panelClass: 'snackbar-error' }
+                );
+                this.formGroup.enable();
+            }
+        });
+    }
+
+    onSubmit(): void {
+        if (this.formGroup.invalid) return;
+
+        this.formGroup.disable();
+
+        if (this.mode === 'create') {
+            this.onCreate();
+        } else {
+            this.onUpdate();
+        }
+    }
+
+    onCancel(): void {
+        this.dialogRef.close(false);
+    }
+}
