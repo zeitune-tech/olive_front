@@ -13,15 +13,14 @@ import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-dele
 import { SelectDialogComponent } from './components/select-dialog/select-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatListModule} from '@angular/material/list';
-import {MatIcon} from "@angular/material/icon";
-import {MatInput} from "@angular/material/input";
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
         NewDemandComponent,
         ConfirmDialogComponent,
         ConfirmDeleteComponent,
-        SelectDialogComponent
+        SelectDialogComponent,
     ],
     imports: [
         CommonModule,
@@ -36,8 +35,8 @@ import {MatInput} from "@angular/material/input";
         MatDialogModule,
         MatFormFieldModule,
         MatListModule,
-        MatIcon,
-        MatInput
+        MatIconModule
+
     ],
     exports: [
         CommonModule,

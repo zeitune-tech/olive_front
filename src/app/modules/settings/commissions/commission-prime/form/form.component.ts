@@ -54,9 +54,9 @@ export class CommissionPrimeFormComponent implements OnInit {
         this.formGroup = this.fb.group({
             dateEffective: [this.data?.commissionPointOfSale.dateEffective, Validators.required],
             calculationBase: ["PRIME"],
-            managementRate: [this.data?.commissionPointOfSale.managementRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-            contributionRate: [this.data?.commissionPointOfSale.contributionRate, [Validators.required, Validators.min(0), Validators.max(100)]],
-            pointOfSaleType: [this.data?.commissionPointOfSale.typePointOfSale],
+            managementRate: [this.data?.commissionPointOfSale.managementRate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+            contributionRate: [this.data?.commissionPointOfSale.contributionRate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+            pointOfSaleType: [this.data?.commissionPointOfSale.pointOfSaleType],
             pointOfSaleId: [this.data?.commissionPointOfSale.pointOfSale?.id || null],
             productId: [this.data?.commissionPointOfSale.product?.id || null, Validators.required],
             coverageId: [this.data?.commissionPointOfSale.coverage?.id || null],

@@ -17,6 +17,7 @@ export class NewBusinessComponent implements OnInit {
   formStepSeven!: UntypedFormGroup;   // Garanties (détaillées)
   formStepEight!: UntypedFormGroup;   // Quittance
 
+  currentView: 'contract' | 'attestation' = 'contract';
   selectedIndex: number = 0;
   product!: string;
 

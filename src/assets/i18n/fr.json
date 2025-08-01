@@ -491,7 +491,7 @@
         "access_level": "Niveau d'accès",
         "company": "Compagnie",
         "point_of_sale": "Point de vente",
-        "profile": "Profil",
+        "profiles": "Profils",
         "management_entity": "Entité de gestion",
         "actions": "Actions"
       },
@@ -682,7 +682,7 @@
         "product": "Produit",
         "managementEntity": "Entité de gestion",
         "coverage": "Couverture",
-        "typePointOfSale": "Type de point de vente",
+        "pointOfSaleType": "Type de point de vente",
         "pointOfSale": "Point de vente",
         "contributor": "Apporteur",
         "contributorType": "Type d'apporteur",
@@ -706,6 +706,13 @@
         "accessory-create": {
           "title": "Créer une commission sur accessoire",
           "subtitle": "Veuillez remplir les champs requis pour créer une commission sur accessoire"
+        }
+      },
+      "options": {
+        "pointOfSaleType": {
+          "GENERAL_AGENT": "Agent général",
+          "BROKER": "Courtier",
+          "DIRECT_OFFICE": "Bureau direct"
         }
       }
     },
@@ -828,6 +835,24 @@
         "editTitle": "Modifier l'exonération de taxe"
       }
     },
+    "contributor-type": {
+      "label": "Type d'apporteur",
+      "description": "Liste des types d'apporteurs et leurs caractéristiques.",
+      "form": {
+        "title": "Type d'apporteur",
+        "subtitle": "Ajouter ou modifier un type d'apporteur"
+      },
+      "table": {
+        "title": "Types d'apporteurs",
+        "description": "Liste des types d'apporteurs",
+        "empty_state": "Aucun type d'apporteur trouvé"
+      },
+      "fields": {
+        "label": "Type d'apporteur",
+        "description": "Description",
+        "actions": "Actions"
+      }
+    },
     "contributor": {
       "label": "Apporteur",
       "description": "Liste des apporteurs et leurs informations.",
@@ -849,7 +874,9 @@
         "gsm": "GSM",
         "level": "Niveau d'accès",
         "phone": "Téléphone",
+        "contributorType": "Type d'apporteur",
         "address": "Adresse",
+        "pointOfSale": "Point de vente",
         "managementEntity": "Entité de gestion",
         "actions": "Actions"
       },
@@ -1025,7 +1052,11 @@
         "productionRegistry": "Registre de production",
         "product": "Produit",
         "durationRate": "Taux de durée",
-        "startDate": "Date de début"
+        "startDate": "Date de début",
+        "attributeKey": "Nom caractéristique",
+        "attributeValue": "Valeur caractéristique",
+        "pricing": "Type de Tarification",
+        "pricing-title": "Tarification du contrat"
       },
       "steps": {
         "contract_info": "Informations du contrat",
@@ -1035,6 +1066,81 @@
         "premiums": "Prime",
         "summary": "Résumé"
       }
+    },
+    "policy": {
+      "fields": {
+        "company": "Compagnie",
+        "pointOfSale": "Point de vente",
+        "reference": "Référence",
+        "noteNumber": "Numéro de note",
+        "product": "Produit",
+        "numberOfVehicles": "Nombre de véhicules",
+        "durationRate": "Durée de couverture",
+        "startDate": "Date de début",
+        "endorsement": "Avenant",
+        "typeContract": "Type de contrat",
+        "natureContract": "Nature du contrat",
+        "createdBy": "Créé par",
+        "createdAt": "Date de création",
+        "title": "Civilité",
+        "lastName": "Nom",
+        "firstName": "Prénom",
+        "birthDate": "Date de naissance",
+        "idType": "Type de pièce d'identité",
+        "idNumber": "Numéro de pièce",
+        "address": "Adresse",
+        "city": "Ville",
+        "email": "Email",
+        "phone": "Téléphone",
+        "mobile": "Portable",
+        "socioProfessionalGroup": "Groupe socioprofessionnel",
+        "profession": "Profession",
+        "activity": "Activité",
+        "companyName": "Raison sociale",
+        "patent": "Patente",
+        "commercialRegister": "Registre de commerce",
+        "quality": "Qualité"
+      },
+      "form": {
+        "title": "Créer un contrat",
+        "subtitle": "Veuillez remplir les informations nécessaires pour établir un nouveau contrat"
+      },
+      "steps": {
+        "producer": "Informations générales",
+        "insured": "Informations sur l'assuré",
+        "advanced": "Options avancées",
+        "vehicle": "Informations sur le véhicule",
+        "extra": "Caractéristiques supplémentaires",
+        "coverages": "Tarification et Garanties appliquées",
+        "premiums": "Tarification",
+        "summary": "Récapitulatif"
+      }
+    },
+    "risk": {
+      "fields": {
+        "orderNumber": "Numéro de commande",
+        "brand": "Marque",
+        "modelType": "Modèle / Type",
+        "category": "Catégorie",
+        "registrationNumber": "Immatriculation",
+        "registrationDate": "Date de mise en circulation",
+        "energyType": "Type d'énergie",
+        "chassisNumber": "Numéro de châssis",
+        "engineNumber": "Numéro de moteur",
+        "bodyType": "Carrosserie",
+        "turbo": "Turbo",
+        "creditDelivery": "Véhicule livré à crédit",
+        "withTrailer": "Avec remorque",
+        "flammableMaterial": "Transport de matières inflammables",
+        "power": "Puissance fiscale",
+        "payload": "Charge utile",
+        "cylinder": "Cylindrée",
+        "seats": "Nombre de places",
+        "catalogValue": "Valeur vénale",
+        "declaredValue": "Valeur à neuf",
+        "certificateNumber": "Numéro du certificat"
+      }
+    }
     },
     "pricing": {
       "label": "Tarification",
@@ -1726,6 +1832,16 @@
       "remove": "Supprimer",
       "clear": "Effacer",
       "addIncompatible": "Ajouter / Modifier une incompatibilité"
+      "addIncompatible": "Ajouter / Modifier une incompatibilité",
+      "loadTransportData": "Charger les données",
+      "addAttribute": "Ajouter une caractéristique",
+      "removeAttribute": "Supprimer la caractéristique",
+      "addVehicle": "Ajouter un véhicule",
+      "removeVehicle": "Supprimer le véhicule",
+      "addInsured": "Ajouter un assuré",
+      "removeInsured": "Supprimer l'assuré",
+      "addCoverage": "Ajouter une garantie",
+      "removeCoverage": "Supprimer la garantie"
     },
     "success": {
       "title": "Succès",

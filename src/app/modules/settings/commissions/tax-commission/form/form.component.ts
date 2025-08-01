@@ -55,9 +55,10 @@ export class TaxCommissionFormComponent implements OnInit {
 
         this.formGroup = this.fb.group({
             dateEffective: [this.data.commissionTaxPointOfSale.dateEffective, Validators.required],
-            rate: [this.data.commissionTaxPointOfSale.rate, [Validators.required, Validators.min(0), Validators.max(100)]],
+            rate: [this.data.commissionTaxPointOfSale.rate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
             pointOfSaleType: [this.data.commissionTaxPointOfSale.pointOfSaleType],
             pointOfSaleId: [this.data.commissionTaxPointOfSale.pointOfSale.id],
+            toWithhold: [this.data.commissionTaxPointOfSale.toWithhold || false],
             productId: [this.data.commissionTaxPointOfSale.product.id, Validators.required],
         });
 

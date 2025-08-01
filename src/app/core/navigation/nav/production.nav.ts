@@ -10,13 +10,13 @@ export const defaultProductionNavigation: NavigationItem[] = [
     type: 'collapsable',
     icon: 'fluent:car-20-regular',
     children: [
-        { id: 'affaire-nouvelle', title: 'Affaire Nouvelle', type: 'basic', link: '/production-mono/affaire-nouvelle' },
-        { id: 'avenants', title: 'Avenants', type: 'basic', link: '/production-mono/avenants' },
-        { id: 'annulation', title: 'Annulation', type: 'basic', link: '/production-mono/annulation' },
-        { id: 'production-consultation', title: 'Production [Consultation]', type: 'basic', link: '/production-mono/production-consultation' },
-        { id: 'vehicule-consultation', title: 'Véhicule [Consultation]', type: 'basic', link: '/production-mono/vehicule-consultation' },
-        { id: 'assure', title: 'Assuré', type: 'basic', link: '/production-mono/assure' },
-        { id: 'assure-consultation', title: 'Assuré [Consultation]', type: 'basic', link: '/production-mono/assure-consultation' },
+        { id: 'affaire-nouvelle', title: 'Affaire Nouvelle', type: 'basic', link: '/production/mono/new-business' },
+        { id: 'avenants', title: 'Avenants', type: 'basic', link: '/production/mono/avenants' },
+        { id: 'annulation', title: 'Annulation', type: 'basic', link: '/production/mono/annulation' },
+        { id: 'production-consultation', title: 'Production [Consultation]', type: 'basic', link: '/production/mono/list-business' },
+        { id: 'vehicule-consultation', title: 'Véhicule [Consultation]', type: 'basic', link: '/production/mono/vehicule-consultation' },
+        { id: 'assure', title: 'Assuré', type: 'basic', link: '/production/mono/assure' },
+        { id: 'assure-consultation', title: 'Assuré [Consultation]', type: 'basic', link: '/production/mono/assure-consultation' },
     ]
     },
     {

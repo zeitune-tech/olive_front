@@ -1,0 +1,57 @@
+<div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
+    <h2 mat-dialog-title>{{ t('entities.contributor.details.title')}}</h2>
+
+    <mat-divider></mat-divider>
+
+    <mat-dialog-content class="py-4">
+        <!-- Contributor Details -->
+        <h3 class="text-lg font-semibold mb-4">{{ t('entities.contributor.details.subtitle') }}</h3>
+        <div class="flex items-center gap-4 mb-4">
+            <img [src]="contributor.managementEntity.logo" alt=" " class="w-16 h-16 bg-slate-300 rounded-full">
+            <div>
+                <h4 class="text-xl font-bold text-gray-700">{{ contributor.firstname }} {{ contributor.lastname }}</h4>
+                email : <p class="text-sm text-gray-600">{{ contributor.email }}</p>
+            </div>
+        </div>
+        <div class="space-y-4">
+            <p><strong>{{ t('entities.contributor.fields.contributorType') }}:</strong> {{
+                contributor.contributorType.label || '-' }}</p>
+            <p><strong>{{ t('entities.contributor.fields.phone') }}:</strong> {{ contributor.phone }}</p>
+            <p><strong>{{ t('entities.contributor.fields.level') }}:</strong> {{ contributor.level }}</p>
+            <p><strong>{{ t('entities.contributor.fields.managementEntity') }}:</strong> {{ contributor.managementEntity
+                }}</p>
+                <div>
+                    <p><strong>{{ t('entities.contributor.fields.isActive') }}:</strong> {{ user.isActive ? t('form.actions.active') : t('form.actions.inactive') }}</p>
+                    <p>
+                        <button mat-button color="primary" (click)="onToggleActive()">
+                            <span *ngIf="user.isActive">{{ t('form.actions.deactivate') }}</span>
+                            <span *ngIf="!user.isActive">{{ t('form.actions.activate') }}</span>
+                        </button>
+                    </p>
+                </div>
+        </div>
+
+        <!-- Contributor Account Information (login) -->
+        <div class="mt-6 flex items-center justify-between flex-wrap">
+            <h3 class="text-lg font-semibold mt-6 mb-4">{{ t('entities.contributor.details.accountInfo') }}</h3>
+            <button mat-raised-button color="primary" class="text-white" (click)="onEdit()">
+                {{ t('form.actions.edit') }}
+            </button>
+        </div>
+
+        <form [formGroup]="formGroupLogin" class="space-y-4">
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>{{ t('entities.contributor.fields.login') }}</mat-label>
+                <input matInput formControlName="login" />
+                <mat-error *ngIf="formGroupLogin.get('login')?.hasError('required')">
+                    {{ t('form.errors.required') }}
+                </mat-error>
+            </mat-form-field>
+        </form>
+
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+    </mat-dialog-actions>
+</div>

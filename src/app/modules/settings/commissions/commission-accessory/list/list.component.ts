@@ -45,6 +45,7 @@ export class CommissionAccessoryListComponent implements OnInit {
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
+        private _translateService: TranslocoService,
         private _dialog: MatDialog
     ) {
         this._commissionPointOfSale.commissionsPointOfSale$
@@ -80,7 +81,7 @@ export class CommissionAccessoryListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { property: "typePointOfSale", type: 'text', label: 'entities.commission.fields.typePointOfSale', visible: true },
+                { property: "pointOfSaleType", type: 'text', label: 'entities.commission.fields.pointOfSaleType', visible: true },
                 { property: "pointOfSale", type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
                 { property: "contributionRate", type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
                 { property: "managementRate", type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
@@ -90,6 +91,11 @@ export class CommissionAccessoryListComponent implements OnInit {
             pageSizeOptions: [5, 6, 8],
             actions: [],
             renderItem: (element: CommissionPointOfSale, property: keyof CommissionPointOfSale) => {
+
+                if (property === 'pointOfSaleType') {
+                    return this._translateService.translate(`entities.commission.options.pointOfSaleType.${element.pointOfSaleType}`);
+                }
+
                 return element[property] ?? '--';
             },
         };

@@ -85,6 +85,7 @@ export class AdministrationResolver implements Resolve<any> {
 
         // if (this._permissionService.hasPermission(PERMISSIONS.VIEW_CONTRIBUTORS)) {
             resolList.push(this._contributorService.getAll());
+            resolList.push(this._contributorService.getContributorTypes());
         // }
 
         return forkJoin(resolList)

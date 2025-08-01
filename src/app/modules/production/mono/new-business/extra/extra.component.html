@@ -1,15 +1,15 @@
-<div class="w-full p-4 flex flex-col gap-6 py-4 " [formGroup]="form" *transloco="let t from 'entities.policy'">
+<div class="w-full p-4 flex flex-col gap-6 py-4 " [formGroup]="form" *transloco="let t">
 
   <div formArrayName="attributes" class="flex flex-col gap-4">
     <div *ngFor="let attr of attributes.controls; let i = index" [formGroupName]="i" class="grid grid-cols-12 gap-4 items-center">
       
       <mat-form-field appearance="outline" class="col-span-5">
-        <mat-label>{{ t('fields.attributeKey') }}</mat-label>
+        <mat-label>{{ t('entities.contract.fields.attributeKey') }}</mat-label>
         <input matInput formControlName="key" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="col-span-5">
-        <mat-label>{{ t('fields.attributeValue') }}</mat-label>
+        <mat-label>{{ t('entities.contract.fields.attributeValue') }}</mat-label>
         <input matInput formControlName="value" />
       </mat-form-field>
 
@@ -22,11 +22,11 @@
 
   <div class="flex justify-between pt-4">
     <button mat-stroked-button color="primary" (click)="addAttribute()">
-      <mat-icon>add</mat-icon> {{ t('actions.addAttribute') }}
+      <mat-icon>add</mat-icon> {{ t('form.actions.addAttribute') }}
     </button>
 
     <button mat-raised-button color="primary" (click)="goNext()">
-      {{ t('actions.next') }}
+      {{ t('form.actions.next') }}
     </button>
   </div>
 </div>

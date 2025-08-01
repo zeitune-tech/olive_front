@@ -84,7 +84,7 @@ export class CommissionPrimeListComponent implements OnInit {
             title: '',
             columns: [
                 { property: 'coverage', type: 'text', label: 'entities.commission.fields.coverage', visible: true },
-                { property: 'typePointOfSale', type: 'text', label: 'entities.commission.fields.typePointOfSale', visible: true },
+                { property: 'pointOfSaleType', type: 'text', label: 'entities.commission.fields.pointOfSaleType', visible: true },
                 { property: 'pointOfSale', type: 'text', label: 'entities.commission.fields.pointOfSale', visible: true },
                 { property: 'managementRate', type: 'text', label: 'entities.commission.fields.managementRate', visible: true },
                 { property: 'contributionRate', type: 'text', label: 'entities.commission.fields.contributionRate', visible: true },
@@ -101,8 +101,8 @@ export class CommissionPrimeListComponent implements OnInit {
                     return element.coverage?.reference?.designation || '--';
                 } 
 
-                if (property === 'typePointOfSale') {
-                    return this._tanslateService.translate(`entities.commission.options.typePointOfSale.${element.typePointOfSale}`);
+                if (property === 'pointOfSaleType') {
+                    return this._tanslateService.translate(`entities.commission.options.pointOfSaleType.${element.pointOfSaleType}`);
                 }
 
                 if (property === 'pointOfSale') {

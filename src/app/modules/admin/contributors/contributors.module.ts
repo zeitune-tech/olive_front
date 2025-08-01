@@ -18,13 +18,19 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
 import { SharedModule } from "@shared/shared.module";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { ContributorEditComponent } from "./edit/edit.component";
+import { ContributorFormComponent } from "./edit/edit.component";
+import { ContributorsTypeListComponent } from "./contributor-type/list.component";
+import { ContributorTypeFormComponent } from "./contributor-type-form/form.component";
+import { AccountComponent } from "./account/account.component";
 
 @NgModule({
     declarations: [
         ContributorsListComponent,
         ContributorNewComponent,
-        ContributorEditComponent
+        ContributorFormComponent,
+        ContributorsTypeListComponent,
+        ContributorTypeFormComponent,
+        AccountComponent
     ],
     imports: [
         RouterModule.forChild(routes),

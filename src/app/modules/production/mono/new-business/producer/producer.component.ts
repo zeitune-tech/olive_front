@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
@@ -34,22 +34,27 @@ export class ProducerFormComponent implements OnInit {
         private _managementEntityService: ManagementEntityService,
         private _pointOfSaleService: PointOfSaleService,
         private _productService: ProductService,
-        private _companyService: CompanyService
-    ) { }
+        private _companyService: CompanyService,
+        private _changeDetectorRef: ChangeDetectorRef
+    ) { 
+
+    }
 
     ngOnInit(): void {
-        this.form = this.fb.group({
-            company: [null, Validators.required],
-            pointOfSale: [null, Validators.required],
-            reference: [null, Validators.required],
-            noteNumber: [null, Validators.required],
-            product: [null, Validators.required],
-            createdBy: [null, Validators.required],
-            createdAt: [new Date(), Validators.required],
-            numberOfVehicles: [1, Validators.required],
-            typeContract: [null, Validators.required],
-            natureContract: [null, Validators.required],
+                this.form = this.fb.group({
+            company: [''],
+            pointOfSale: [''],
+            reference: [''],
+            noteNumber: [''],
+            product: [''],
+            numberOfVehicles: [1],
+            durationRate: [''],
+            startDate: [null],
+            typeContract: [''],
+            natureContract: ['']
         });
+
+        this.fetchInitialData();
     }
 
     fetchInitialData(): void {
@@ -60,11 +65,11 @@ export class ProducerFormComponent implements OnInit {
                     if (entity.type === 'COMPANY') {
                         this.company = entity;
                         this.isCompany = true;
-                        this.form.patchValue({ company: entity.id });
+                        this.form.patchValue({ company: entity.name });
                     } else if (entity.type === 'POINT_OF_SALE') {
                         this.company = entity.superiorEntity || new ManagementEntity({});
                         this.form.patchValue({
-                            pointOfSale: entity.id
+                            pointOfSale: entity.name
                         });
                         this.isCompany = false;
                     }
@@ -120,7 +125,7 @@ export class ProducerFormComponent implements OnInit {
         const dialogRef = this.dialog.open(SelectDialogComponent, {
             width: '600px',
             data: {
-                title: 'Select Point of Sale',
+                title: 'Choix du Point de Vente',
                 items: this.pointsOfSale,
                 displayField: 'name',
             },
@@ -138,7 +143,7 @@ export class ProducerFormComponent implements OnInit {
         const dialogRef = this.dialog.open(SelectDialogComponent, {
             width: '600px',
             data: {
-                title: 'Select Product',
+                title: 'Choix du Produit',
                 items: this.products,
                 displayField: 'name',
             },

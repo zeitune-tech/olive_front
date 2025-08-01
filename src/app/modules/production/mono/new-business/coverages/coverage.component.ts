@@ -19,10 +19,15 @@ export class VehicleCoveragesComponent implements OnInit {
     { id: 4, name: 'Bris de glace' }
   ];
 
+  pricingOptions = [
+    { value: 'TPV', label: 'Tarif TPV' },
+  ]
+
   constructor(private fb: FormBuilder, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
+      pricing: ['TPV'],  // Sélection par défaut
       coverages: this.fb.array([])  // chaque couverture = { id, name }
     });
   }

@@ -4,12 +4,10 @@
     <h2 mat-dialog-title>{{ t(data.title) }}</h2>
 
     <mat-dialog-content class="flex flex-col gap-4">
-      <mat-form-field appearance="outline">
-        <mat-icon matPrefix [svgIcon]="'fluent:search'" class="mr-2"></mat-icon>
-        <mat-label>Recherche</mat-label>
-        <input matInput [placeholder]="t('form.fields.search')" [(ngModel)]="search" (input)="filter()" >
-<!--        <input mat-input [(ngModel)]="search" (input)="filter()" />-->
-      </mat-form-field>
+      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
+          <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
+          <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [(ngModel)]="search" (input)="filter()" />
+      </div>
 
 <!--      <mat-form-field class="w-full" appearance="outline">-->
 <!--      </mat-form-field>-->

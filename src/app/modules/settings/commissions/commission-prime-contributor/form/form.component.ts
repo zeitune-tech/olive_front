@@ -48,15 +48,29 @@ export class CommissionPrimeContributorFormComponent implements OnInit {
 
         this.mode = this.data.mode;
 
-        this.formGroup = this.fb.group({
-            dateEffective: [this.data?.commissionContributor.dateEffective || new Date(), Validators.required],
-            calculationBase: ["PRIME"],
-            managementRate: [this.data?.commissionContributor.managementRate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
-            contributionRate: [this.data?.commissionContributor.contributionRate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
-            contributorTypeId: [this.data?.commissionContributor.contributorType.id, Validators.required],
-            contributorId: [this.data?.commissionContributor.contributorId, Validators.required],
-            productId: [this.data?.commissionContributor.product.id, Validators.required],
-        })
+        if (this.mode === 'edit') {
+            this.formGroup = this.fb.group({
+                dateEffective: [this.data?.commissionContributor.dateEffective, Validators.required],
+                calculationBase: ["PRIME"],
+                managementRate: [this.data?.commissionContributor.managementRate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+                contributionRate: [this.data?.commissionContributor.contributionRate || 0, [Validators.required, Validators.min(0), Validators.max(100)]],
+                contributorTypeId: [this.data?.commissionContributor.contributorType.id],
+                contributorId: [this.data?.commissionContributor.contributor.id],
+                coverageId: [this.data?.commissionContributor.coverage?.id || null],
+                productId: [this.data?.commissionContributor.product.id, Validators.required],
+            });
+        } else {
+            this.formGroup = this.fb.group({
+                dateEffective: [null, Validators.required],
+                calculationBase: ["PRIME"],
+                managementRate: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+                contributionRate: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
+                contributorTypeId: [null, ],
+                contributorId: [null, ],
+                coverageId: [null, ],
+                productId: [null, Validators.required],
+            });
+        }
 
 
         this._productService.products$.subscribe(products => {

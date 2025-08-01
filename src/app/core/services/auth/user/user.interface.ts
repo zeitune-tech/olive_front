@@ -12,6 +12,7 @@ export class User {
     entityAccessLevel: string;
     managementEntity: string;
     profiles: Profile[];
+    isActive: boolean;
 
     constructor(user: any) {
         this.id = user?.id || '';
@@ -23,5 +24,6 @@ export class User {
         this.entityAccessLevel = user?.entityAccessLevel || '';
         this.profiles = user?.profiles || [];
         this.managementEntity = user?.managementEntity || null;
+        this.isActive = user?.isActive !== undefined ? user.isActive : true; // Default to true if not provided
     }
 }

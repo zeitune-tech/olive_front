@@ -30,7 +30,11 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <mat-form-field appearance="outline">
       <mat-label>{{ t('entities.policy.fields.idType') }}</mat-label>
-      <input matInput formControlName="idType" />
+      <mat-select formControlName="idType">
+        <mat-option value="CNI">CNI</mat-option>
+        <mat-option value="Passport">Passport</mat-option>
+        <mat-option value="Driver's License">Permis de conduire</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -68,7 +72,7 @@
   </div>
 
   <!-- 👔 Profil professionnel -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
     <mat-form-field appearance="outline">
       <mat-label>{{ t('entities.policy.fields.socioProfessionalGroup') }}</mat-label>
@@ -84,7 +88,35 @@
       <mat-label>{{ t('entities.policy.fields.activity') }}</mat-label>
       <input matInput formControlName="activity" />
     </mat-form-field>
+
+      
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.policy.fields.quality') }}</mat-label>
+    <input matInput formControlName="quality" />
+  </mat-form-field>
   </div>
+
+
+
+  <!-- 🏢 Informations entreprise -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.policy.fields.companyName') }}</mat-label>
+    <input matInput formControlName="companyName" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.policy.fields.patent') }}</mat-label>
+    <input matInput formControlName="patent" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ t('entities.policy.fields.commercialRegister') }}</mat-label>
+    <input matInput formControlName="commercialRegister" />
+  </mat-form-field>
+
+</div>
+
 
   <!-- Action -->
   <div class="flex justify-end pt-6">

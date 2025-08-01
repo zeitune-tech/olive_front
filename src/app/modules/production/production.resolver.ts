@@ -12,6 +12,7 @@ import { AccessoryService } from '@core/services/settings/accessory/accessory.se
 import { PointOfSaleService } from '@core/services/administration/point-of-sale/point-of-sale.service';
 import { DurationRateService } from '@core/services/settings/duration-rate/duration-rate.service';
 import { ProductionRegistryService } from '@core/services/settings/production-registry/production-registry.service';
+import { CompanyService } from '@core/services/administration/company/company.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,7 @@ export class ProductionResolver implements Resolve<any> {
      * Constructor
      */
     constructor(
+        private _companyService: CompanyService,
         private _permissionService: PermissionsService,
         private _insuredRegistryService: InsuredRegistryService,
         private _productionRegistryService: ProductionRegistryService,
@@ -34,7 +36,7 @@ export class ProductionResolver implements Resolve<any> {
         private _pointsOfSaleService: PointOfSaleService,
         private _durationRateService: DurationRateService
     ) {
-     
+        
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -55,6 +57,7 @@ export class ProductionResolver implements Resolve<any> {
 
         const resolList: Observable<any>[] = [];
 
+        // resolList.push(this._companyService.getMyCompany());
 
         // // if (this._permissionService.hasPermission('VIEW_INSUREDS')) {
         //     resolList.push(this._insuredService.getAll());

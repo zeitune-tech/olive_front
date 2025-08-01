@@ -113,6 +113,14 @@ export const defaultAdministrationNavigation: NavigationItem[] = [
                 // permission: PERMISSIONS.VIEW_CONTRIBUTORS
             },
             {
+                id: 'contributors-types',
+                title: 'sidebar.contributors.types',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/administration/contributors/types',
+                // permission: PERMISSIONS.VIEW_CONTRIBUTOR_TYPES
+            },
+            {
                 id: 'contributors-new',
                 title: 'sidebar.contributors.new',
                 type: 'basic',
