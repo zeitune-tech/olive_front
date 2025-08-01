@@ -3,11 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  auth_url: "http://192.168.1.9:8080/auth",
-  administration_url: "http://192.168.1.9:8080/admin/app",
-  settings_url: "http://192.168.1.9:8080/settings/app",
-  attestations_url: "http://192.168.1.9:8080/attestations/app",
-  insured_url: "http://192.168.1.9:8080/insured/app",
+  auth_url: "http://localhost:5432/auth",
+  administration_url: "http://localhost:5433/admin/app",
+  settings_url: "http://localhost:5434/settings/app",
+  attestations_url: "http://localhost:5435/attestations/app",
+  insured_url: "http://localhost:5436/insured/app",
   production: false
 };
 
