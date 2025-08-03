@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { routes } from "./pricing.routing";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [

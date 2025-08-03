@@ -23,9 +23,9 @@ import { FormulaEditComponent } from "./edit/edit.component";
 import { LayoutService } from "./layout.service";
 import { FormulaService } from "@core/services/pricing/formula/formula.service";
 import { ConstantService } from "@core/services/pricing/constant/constant.service";
-import { Field } from "@core/services/pricing/field/field.interface";
 import { FieldService } from "@core/services/pricing/field/field.service";
 import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options.service";
+import { VariableItemService } from "@core/services/pricing/variable-item/variable-item.service";
 
 @NgModule({
     declarations: [
@@ -57,7 +57,8 @@ import { SelectFieldOptionsService } from "@core/services/pricing/field/select-f
         FormulaService,
         ConstantService,
         FieldService,
-        SelectFieldOptionsService
+        SelectFieldOptionsService,
+        VariableItemService
     ]
 })
 export class FormulaModule {

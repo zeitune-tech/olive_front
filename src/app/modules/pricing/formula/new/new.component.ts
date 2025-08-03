@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import { FormBuilder, UntypedFormGroup } from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {Product} from "@core/services/settings/product/product.interface";
@@ -14,7 +14,10 @@ import {BranchService} from "@core/services/settings/branch/branch.service";
 import { ConstantService } from "@core/services/pricing/constant/constant.service";
 import { ConstantFormComponent } from "../../constants/form/form.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import {FieldFormComponent} from "../../field/form/form.component";
+import { VariableItemResponse, VariableItemService } from "@core/services/pricing/variable-item/variable-item.service";
+import { ProductService } from "@core/services/settings/product/product.service";
+import { Subject, takeUntil } from "rxjs";
+import { NumericFieldFormComponent } from "../../field/numeric-form/form.component";
 
 export interface Variable {
     id: number;
@@ -26,7 +29,9 @@ export interface Variable {
     selector: 'pricing-new',
     templateUrl: './new.component.html',
 })
-export class PricingNewComponent implements OnInit {
+export class PricingNewComponent implements OnInit, OnDestroy {
+
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   formGroup!: UntypedFormGroup;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -36,18 +41,15 @@ export class PricingNewComponent implements OnInit {
   branches: Branch[] = [];
 
   selectedProduct: Product | undefined;
-
-  products: Product[] = [
-    new Product({ id: '1', name: 'Product 1', description: 'Description of Product 1' }),
-    new Product({ id: '2', name: 'Product 2', description: 'Description of Product 2' }),
-    new Product({ id: '3', name: 'Product 3', description: 'Description of Product 3' })
-  ];
+  products: Product[] = [];
 
   constructor(
       private _formBuilder: FormBuilder,
       private _dialog: MatDialog,
       private _branchService: BranchService,
       private _constantService: ConstantService,
+      private _variableItemService: VariableItemService,
+      private _productService: ProductService,
       private _snackBar: MatSnackBar
   ) {
 
@@ -59,6 +61,43 @@ export class PricingNewComponent implements OnInit {
       this.branches = branches;
     });
 
+    // Initialiser les produits
+    this._productService.getAll()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data: Product[]) => {
+        this.products = data || [];
+      });
+
+    this._productService.products$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data: Product[]) => {
+        this.products = data;
+      });
+
+    // Initialiser les variables avec le service VariableItemService
+    this._variableItemService.getAll()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: (data: VariableItemResponse[]) => {
+          this.variables = data || [];
+        },
+        error: (error) => {
+          console.error('Error loading variables:', error);
+        }
+      });
+
+    this._variableItemService.variableItems$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: (data: VariableItemResponse[]) => {
+          this.variables = data;
+        },
+        error: (error) => {
+          console.error('Error in variableItems$ subscription:', error);
+        }
+      });
+
+
     this.formGroup = this._formBuilder.group({
         name: [''],
         description: [''],
@@ -66,16 +105,17 @@ export class PricingNewComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
+  }
+
   formula = '';
 
   searchTerm = '';
 
-  variables = [
-      { name: 'CA', label: "Chiffre d'affaires", value: 5000 },
-      { name: 'NB_CLIENTS', label: 'Nombre de clients', value: 25 },
-      { name: 'MARGE', label: 'Marge brute', value: 1200 }
-  ];
-
+  variables: VariableItemResponse[] = [];
 
   append(value: string) {
     this.formula += value;
@@ -92,11 +132,15 @@ export class PricingNewComponent implements OnInit {
     this.formGroup.get('formula')?.setValue(this.formula);
   }
 
+
   filteredVariables() {
-    if (!this.searchTerm) return this.variables;
+    if (!this.searchTerm) {
+      return this.variables;
+    }
+
     return this.variables.filter(v =>
       v.label.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      v.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      v.variableName.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
@@ -104,7 +148,6 @@ export class PricingNewComponent implements OnInit {
     console.log(this.formGroup.value);
     // Ici, envoie vers ton API pour sauvegarder la formule
   }
-
 
   openProductSelection() {
     this._dialog.open(SelectDialogComponent, {
@@ -117,9 +160,9 @@ export class PricingNewComponent implements OnInit {
     }).afterClosed().subscribe((product: Product) => {
       if (product) {
         this.selectedProduct = product;
-        // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+        // Recharger les variables pour le produit sélectionné
+        this.loadVariables();
         this.dataSource.paginator = this.paginator;
-        // this._changeDetectorRef.detectChanges();
       }
     })
   }
@@ -135,20 +178,43 @@ export class PricingNewComponent implements OnInit {
     }).afterClosed().subscribe((branch: Branch) => {
       if (branch) {
         this.selectedBranch = branch;
-        // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+        // Filtrer les produits par branche sélectionnée
+        this._productService.getByBranchOrAll(branch.id)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((products: Product[]) => {
+            this.products = products || [];
+            // Réinitialiser la sélection de produit si elle n'existe plus dans la nouvelle liste
+            if (this.selectedProduct && !this.products.find(p => p.id === this.selectedProduct?.id)) {
+              this.selectedProduct = undefined;
+            }
+            // Recharger les variables si on a une branche et un produit sélectionnés
+            this.loadVariables();
+          });
         this.dataSource.paginator = this.paginator;
-        // this._changeDetectorRef.detectChanges();
       }
     })
   }
 
-  onAddNewVariable(variable: "CONSTANT" | "FIELD"): void {
+  loadVariables(): void {
+    // Recharger les variables selon la sélection actuelle
+    this._variableItemService.getAll()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe({
+        next: (data: VariableItemResponse[]) => {
+          this.variables = data || [];
+        },
+        error: (error) => {
+          console.error('Error reloading variables:', error);
+        }
+      });
+  }
 
+  onAddNewVariable(variable: "CONSTANT" | "FIELD"): void {
     if (!this.selectedBranch) {
         this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
         return;
     }
-    
+
     if (!this.selectedProduct) {
         this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
         return;
@@ -166,11 +232,13 @@ export class PricingNewComponent implements OnInit {
         }).afterClosed().subscribe((result) => {
             if (result) {
                 this._constantService.getAll().subscribe();
+                // Recharger les variables après ajout d'une constante
+                this.loadVariables();
             }
         });
     }
     else if (variable === "FIELD") {
-        this._dialog.open(FieldFormComponent, {
+        this._dialog.open(NumericFieldFormComponent, {
             width: '600px',
             disableClose: true,
             data: {
@@ -179,7 +247,8 @@ export class PricingNewComponent implements OnInit {
             }
         }).afterClosed().subscribe((result) => {
             if (result) {
-                // Handle the result if needed
+                // Recharger les variables après ajout d'un champ
+                this.loadVariables();
             }
         });
     }

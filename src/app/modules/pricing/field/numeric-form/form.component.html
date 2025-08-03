@@ -2,11 +2,11 @@
     <div>
         <h2 mat-dialog-title>
             @if (mode === 'create') {
-                {{ t('entities.field.form.create.title') }}
+                {{ t('entities.numeric-field.form.create.title') }}
             } @else if (mode === 'edit') {
-                {{ t('entities.field.form.edit.title') }}
+                {{ t('entities.numeric-field.form.edit.title') }}
             } @else {
-                {{ t('entities.field.form.view.title') }}
+                {{ t('entities.numeric-field.form.view.title') }}
             }
         </h2>
     </div>
@@ -18,7 +18,7 @@
             <div class="flex flex-col gap-6">
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.field.fields.label') }}</mat-label>
+                    <mat-label>{{ t('entities.numeric-field.fields.label') }}</mat-label>
                     <input matInput formControlName="label" required>
                     <mat-error *ngIf="formGroup.get('label')?.hasError('required')">
                         {{ t('form.errors.required') }}
@@ -26,7 +26,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.field.fields.description') }}</mat-label>
+                    <mat-label>{{ t('entities.numeric-field.fields.description') }}</mat-label>
                     <textarea matInput formControlName="description" required rows="3"></textarea>
                     <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
                         {{ t('form.errors.required') }}
@@ -34,7 +34,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.field.fields.variableName') }}</mat-label>
+                    <mat-label>{{ t('entities.numeric-field.fields.variableName') }}</mat-label>
                     <input matInput formControlName="variableName" required>
                     <mat-error *ngIf="formGroup.get('variableName')?.hasError('required')">
                         {{ t('form.errors.required') }}
@@ -42,7 +42,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.field.fields.toReturn') }}</mat-label>
+                    <mat-label>{{ t('entities.numeric-field.fields.toReturn') }}</mat-label>
                     <mat-select formControlName="toReturn" required>
                         <mat-option [value]="true">{{ t('entities.field.options.toReturn.true') }}</mat-option>
                         <mat-option [value]="false">{{ t('entities.field.options.toReturn.false') }}</mat-option>
@@ -52,8 +52,8 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.field.fields.coverageId') }}</mat-label>
+                <!-- <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.numeric-field.fields.coverageId') }}</mat-label>
                     <mat-select formControlName="coverage" required>
                         <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
                             {{ coverage.nature }}
@@ -62,33 +62,16 @@
                     <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
 
-                <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.field.fields.type') }}</mat-label>
-                    <mat-select formControlName="type" required>
-                        <mat-option *ngFor="let type of types" [value]="type.value">
-                            {{ t('entities.field.options.type.' + type.value) }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('type')?.hasError('required')">
+                <!-- <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.numeric-field.fields.value') }}</mat-label>
+                    <input matInput formControlName="value" required>
+                    <mat-error *ngIf="formGroup.get('value')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
 
-              @if (isSelectField()) {
-                <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.field.fields.selectFieldOptions') }}</mat-label>
-                    <mat-select  formControlName="options" multiple>
-                        <mat-option *ngFor="let option of selectFieldOptions" [value]="option.id">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('options')?.hasError('required')">
-                        {{ t('form.errors.required') }}
-                    </mat-error>
-                </mat-form-field>
-              }
             </div>
         </form>
     </mat-dialog-content>

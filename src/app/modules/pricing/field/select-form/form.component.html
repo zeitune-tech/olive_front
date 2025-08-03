@@ -1,0 +1,102 @@
+<div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
+  <div>
+    <h2 mat-dialog-title>
+      @if (mode === 'create') {
+        {{ t('entities.numeric-field.form.create.title') }}
+      } @else if (mode === 'edit') {
+        {{ t('entities.numeric-field.form.edit.title') }}
+      } @else {
+        {{ t('entities.numeric-field.form.view.title') }}
+      }
+    </h2>
+  </div>
+  <mat-divider></mat-divider>
+
+  <mat-dialog-content class="py-4">
+    <form [formGroup]="formGroup" class="space-y-4">
+
+      <div class="flex flex-col gap-6">
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.numeric-field.fields.label') }}</mat-label>
+          <input matInput formControlName="label" required>
+          <mat-error *ngIf="formGroup.get('label')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.numeric-field.fields.description') }}</mat-label>
+          <textarea matInput formControlName="description" required rows="3"></textarea>
+          <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.numeric-field.fields.variableName') }}</mat-label>
+          <input matInput formControlName="variableName" required>
+          <mat-error *ngIf="formGroup.get('variableName')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.numeric-field.fields.toReturn') }}</mat-label>
+          <mat-select formControlName="toReturn" required>
+            <mat-option [value]="true">{{ t('entities.field.options.toReturn.true') }}</mat-option>
+            <mat-option [value]="false">{{ t('entities.field.options.toReturn.false') }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('toReturn')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.numeric-field.fields.options') }}</mat-label>
+          <mat-select formControlName="options" required>
+            <mat-option *ngFor="let option of options" [value]="option.id">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('options')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.numeric-field.fields.coverageId') }}</mat-label>
+            <mat-select formControlName="coverage" required>
+                <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
+                    {{ coverage.nature }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
+                {{ t('form.errors.required') }}
+            </mat-error>
+        </mat-form-field> -->
+
+        <!-- <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.numeric-field.fields.value') }}</mat-label>
+            <input matInput formControlName="value" required>
+            <mat-error *ngIf="formGroup.get('value')?.hasError('required')">
+                {{ t('form.errors.required') }}
+            </mat-error>
+        </mat-form-field> -->
+
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
+    <button mat-button mat-flat-button color="basic" (click)="onCancel()">
+      {{ t('form.actions.cancel') }}
+    </button>
+    <button mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
+            (click)="onSubmit()">
+      {{ t('form.actions.save') }}
+    </button>
+  </mat-dialog-actions>
+
+
+</div>

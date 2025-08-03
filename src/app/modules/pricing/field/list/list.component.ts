@@ -22,7 +22,9 @@ import { SelectFieldOptionValue } from "@core/services/pricing/field/select-fiel
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
 import {UntypedFormControl} from "@angular/forms";
-import { FieldFormComponent } from "../form/form.component";
+import { NumericFieldFormComponent } from "../numeric-form/form.component";
+import {SelectFieldFormComponent} from "../select-form/form.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: "app-field-list",
@@ -48,7 +50,8 @@ export class FieldListComponent implements OnInit {
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _branchService: BranchService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _snackBar: MatSnackBar
     ) {
     }
 
@@ -62,8 +65,7 @@ export class FieldListComponent implements OnInit {
     searchInputControl: UntypedFormControl = new UntypedFormControl();
 
     managementEntity: ManagementEntity = new ManagementEntity({});
-
-    ngOnInit(): void {
+  ngOnInit(): void {
 
       // Charger les données des champs
       this._fieldService.getAll().subscribe();
@@ -95,7 +97,7 @@ export class FieldListComponent implements OnInit {
               // toReturn: boolean;
               // managementEntityId: string;
               // productId: string;
-              // coverageId: string;
+              // branchId: string;
               // type: "NUMERIC" | "SELECT";
               // options: SelectFieldOptions | null;
               // value: SelectFieldOptionValue | null;
@@ -105,8 +107,8 @@ export class FieldListComponent implements OnInit {
               { label: 'entities.pricing.field.fields.variableName', property: 'variableName', type: 'text', visible: true },
               { label: 'entities.pricing.field.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
               // { label: 'entities.pricing.field.fields.managementEntityId', property: 'managementEntity', type: 'text', visible: true },
-              // { label: 'entities.pricing.field.fields.productId', property: 'product', type: 'text', visible: true },
-              { label: 'entities.pricing.field.fields.coverageId', property: 'coverage', type: 'text', visible: true },
+              { label: 'entities.pricing.field.fields.branch', property: 'branch', type: 'text', visible: true },
+              { label: 'entities.pricing.field.fields.product', property: 'product', type: 'text', visible: true },
               { label: 'entities.pricing.field.fields.type', property: 'type', type: 'text', visible: true },
               { label: 'entities.pricing.field.fields.options', property: 'options', type: 'text', visible: true },
               // { label: 'entities.pricing.field.fields.value', property: 'value', type: 'text', visible: true },
@@ -193,7 +195,6 @@ export class FieldListComponent implements OnInit {
   selectedBranch: Branch | undefined;
 
   openBranchSelection() {
-
     this._dialog.open(SelectDialogComponent, {
       width: '700px',
       data: {
@@ -204,93 +205,128 @@ export class FieldListComponent implements OnInit {
     }).afterClosed().subscribe((branch: Branch) => {
       if (branch) {
         this.selectedBranch = branch;
-        // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+        // Filtrer les produits par branche sélectionnée
+        this._productService.getByBranchOrAll(branch.id)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((products: Product[]) => {
+            this.products = products || [];
+            // Réinitialiser la sélection de produit si elle n'existe plus dans la nouvelle liste
+            if (this.selectedProduct && !this.products.find(p => p.id === this.selectedProduct?.id)) {
+              this.selectedProduct = undefined;
+            }
+        });
+      }
+    })
+  }
+
+  products: Product[] = []
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  selectedProduct: Product|undefined = new Product({});
+
+  openSelection() {
+    this._dialog.open(SelectDialogComponent, {
+      width: '700px',
+      data: {
+        displayField: "name",
+        items: this.products,
+        title: "product-selection.title"
+      }
+    }).afterClosed().subscribe((product: Product) => {
+      if (product) {
+        this.selectedProduct = product;
+        // Filtrer les constantes par produit sélectionné si nécessaire
+        // this.dataSource.data = this.data.filter(constant => constant.productId === this.selectedProduct.id);
         this.dataSource.paginator = this.paginator;
         // this._changeDetectorRef.detectChanges();
       }
     })
   }
 
+  onAddNumeric(): void {
 
-    products: Product[] = []
-    searchCtrl: UntypedFormControl = new UntypedFormControl();
-    selectedProduct: Product = new Product({});
-
-    openSelection() {
-        this._dialog.open(SelectDialogComponent, {
-            width: '700px',
-            data: {
-                items: this.products,
-            }
-        }).afterClosed().subscribe((product: Product) => {
-            if (product) {
-                this.selectedProduct = product;
-                // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
-                this.dataSource.paginator = this.paginator;
-                // this._changeDetectorRef.detectChanges();
-            }
-        })
+    if (!this.selectedBranch) {
+      this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
+      return;
     }
 
-    onAdd(): void {
-        this._dialog.open(FieldFormComponent, {
-            width: '600px',
-            disableClose: true,
-            data: {
-                mode: 'create',
-                product: this.selectedProduct?.id,
-            }
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._productService.getAll().subscribe();
-            }
-        });
+    if (!this.selectedProduct) {
+      this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
+      return;
     }
 
-    onDelete(product: Product): void {
-        this._dialog.open(SelectDialogComponent, {
-            data: product,
-            width: '600px',
-            disableClose: true,
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._productService.getAll().subscribe();
-            }
-        });
-    }
+      this._dialog.open(NumericFieldFormComponent, {
+          width: '600px',
+          disableClose: true,
+          data: {
+              mode: 'create',
+              product: this.selectedProduct!.id,
+              branch: this.selectedBranch!.id
+          }
+      }).afterClosed().subscribe((result) => {
+          if (result) {
+              this._productService.getAll().subscribe();
+          }
+      });
+  }
 
-    /**
-        * Edit Product Product
-        */
-    onEdit(product: Product): void {
+  onAddSelect(): void {
+    this._dialog.open(SelectFieldFormComponent, {
+      width: '600px',
+      disableClose: true,
+      data: {
+        mode: 'create',
+        product: this.selectedProduct!.id,
+        branch: this.selectedBranch!.id
+      }
+    }).afterClosed().subscribe((result) => {
+      if (result) {
+        this._productService.getAll().subscribe();
+      }
+    });
+  }
 
-    }
+  onDelete(product: Product): void {
+      this._dialog.open(SelectDialogComponent, {
+          data: product,
+          width: '600px',
+          disableClose: true,
+      }).afterClosed().subscribe((result) => {
+          if (result) {
+              this._productService.getAll().subscribe();
+          }
+      });
+  }
 
+  /**
+      * Edit Product Product
+      */
+  onEdit(product: Product): void {
 
-    onView(product: Product): void {
-        //this._router.navigate(['/administration/products/list']);
-    }
+  }
 
-    onButtonClick(product: Product, column: string): void {
-        if (column === 'productionRegistry') {
-            alert('Production Registry button clicked for product: ' + product.name);
-        }
-    }
+  onView(product: Product): void {
+      //this._router.navigate(['/administration/products/list']);
+  }
 
-    hasPermission(product: Product): boolean {
-        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm) {
-            return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-            return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-            return true;
-        } else
-            return false;
-    }
+  onButtonClick(product: Product, column: string): void {
+      if (column === 'productionRegistry') {
+          alert('Production Registry button clicked for product: ' + product.name);
+      }
+  }
 
+  hasPermission(product: Product): boolean {
+      let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
+      if (!hasPerm) {
+          return false;
+      } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
+          return true;
+      } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
+          return true;
+      } else
+          return false;
+  }
 
-    trackByProperty(index: number, column: TableColumn<Field>) {
-        return column.property;
-    }
+  trackByProperty(index: number, column: TableColumn<Field>) {
+      return column.property;
+  }
 }

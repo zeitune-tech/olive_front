@@ -147,6 +147,26 @@ export class ProductService {
             );
     }
 
+    getByBranch(branchId: string): Observable<Product[]> {
+        return this._httpClient.get<Product[]>(`${this.baseUrl}/all-on-branch/${branchId}`)
+            .pipe(
+                tap((response: Product[]) => {
+                    this.products = response.map((item: any) => new Product(item));
+                    return response;
+                }),
+                catchError((error) => {
+                    return of(error);
+                })
+            );
+    }
+
+    getByBranchOrAll(branchId?: string): Observable<Product[]> {
+        if (branchId) {
+            return this.getByBranch(branchId);
+        }
+        return this.getAll();
+    }
+
     shareProduct(id: string, companies: string[]): Observable<any> {
         return this._httpClient.patch(`${this.baseUrl}/${id}/share`, companies)
             .pipe(

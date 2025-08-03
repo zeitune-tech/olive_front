@@ -20,14 +20,16 @@ import { LayoutService } from "./layout.service";
 import { FieldService } from "@core/services/pricing/field/field.service";
 import { FieldListComponent } from "./list/list.component";
 import {SelectFieldOptionsListComponent} from "./select-options/list/list.component";
-import { FieldFormComponent } from "./form/form.component";
 import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options.service";
+import { NumericFieldFormComponent } from "./numeric-form/form.component";
+import { SelectFieldFormComponent } from "./select-form/form.component";
 
 @NgModule({
     declarations: [
         FieldListComponent,
         SelectFieldOptionsListComponent,
-        FieldFormComponent
+        NumericFieldFormComponent,
+        SelectFieldFormComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -46,6 +48,8 @@ import { SelectFieldOptionsService } from "@core/services/pricing/field/select-f
         SharedModule,
         TableModule,
         MatProgressSpinnerModule,
+        MatDividerModule,
+        MatDialogModule
     ],
     exports: [],
     providers: [

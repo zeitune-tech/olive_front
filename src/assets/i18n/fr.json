@@ -1275,8 +1275,11 @@
         "description": "Description",
         "variableName": "Nom de variable",
         "toReturn": "À retourner",
+        "branch": "Branche",
+        "product": "Produit",
         "managementEntityId": "Entité de gestion",
         "productId": "Produit",
+        "branchId": "Branche",
         "coverageId": "Garantie",
         "value": "Valeur",
         "actions": "Actions"
@@ -1992,7 +1995,8 @@
   },
   "branch-selection": {
     "title": "Sélectionner une branche",
-    "change": "Changer de branche"
+    "change": "Changer de branche",
+    "clear": "Réinitialiser la sélection"
   },
   "message": {
     "success": "Opération réussie",

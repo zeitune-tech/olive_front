@@ -8,12 +8,14 @@ import { ConstantService } from '@core/services/pricing/constant/constant.servic
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import { Cons } from 'rxjs';
+import { NumericField, SelectField } from '@core/services/pricing/field/field.interface';
+import {FieldService} from "@core/services/pricing/field/field.service";
 
 @Component({
-    selector: 'app-coverage-reference-edit',
+    selector: 'app-numeric-form',
     templateUrl: './form.component.html'
 })
-export class ConstantFormComponent implements OnInit {
+export class NumericFieldFormComponent implements OnInit {
 
       formGroup!: FormGroup;
       message = '';
@@ -23,9 +25,9 @@ export class ConstantFormComponent implements OnInit {
 
       constructor(
           private fb: FormBuilder,
-          private dialogRef: MatDialogRef<ConstantFormComponent>,
-          @Inject(MAT_DIALOG_DATA) public data: Constant,
-          private _constantService: ConstantService,
+          private dialogRef: MatDialogRef<NumericFieldFormComponent>,
+          @Inject(MAT_DIALOG_DATA) public data: NumericField,
+          private _fieldService: FieldService,
           private translocoService: TranslocoService,
           private snackBar: MatSnackBar,
           private _managementEntityService: ManagementEntityService
@@ -45,14 +47,11 @@ export class ConstantFormComponent implements OnInit {
             this.managementEntity = entity;
         });
 
-
         this.formGroup = this.fb.group({
               label: [this.data.label || '', Validators.required],
               description: [this.data.description || '', Validators.required],
               variableName: [this.data.variableName || '', Validators.required],
               toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
-              branch: [this.data.branch || '', Validators.required],
-              value: [this.data.value || '', Validators.required],
         });
 
     }
@@ -66,11 +65,13 @@ export class ConstantFormComponent implements OnInit {
             ...this.formGroup.value,
             managementEntity: this.managementEntity?.id,
             product: this.data.product,
+            branch: this.data.branch,
+            type: 'NUMBER',
         };
 
         console.log("Submitting form data:", formData);
 
-        this._constantService.create(formData).subscribe({
+        this._fieldService.create(formData).subscribe({
             next: () => {
                 const successMessage = this.mode === 'edit'
                     ? 'form.success.update'

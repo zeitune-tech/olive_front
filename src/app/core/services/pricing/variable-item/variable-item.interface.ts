@@ -15,7 +15,7 @@ export class VariableItem {
     toReturn: boolean;
     managementEntity: string;
     product: string;
-    coverage: string;
+    branch: string;
 
     constructor(entity: any) {
         this.id = entity?.id ?? '';
@@ -25,6 +25,6 @@ export class VariableItem {
         this.toReturn = entity?.toReturn ?? false;
         this.managementEntity = entity?.managementEntity ?? '';
         this.product = entity?.product ?? '';
-        this.coverage = entity?.coverage ?? '';
+        this.branch = entity?.branch ?? '';
     }
 }

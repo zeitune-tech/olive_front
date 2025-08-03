@@ -5,7 +5,7 @@ import { SharedModule } from "@shared/shared.module";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { MatDialogModule } from "@angular/material/dialog";
+import { MatDialogActions, MatDialogModule } from "@angular/material/dialog";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
@@ -21,10 +21,13 @@ import { TableModule } from "@lhacksrt/components/table/table.module";
 import { LayoutService } from "./layout.service";
 import { VariableConditionListComponent } from "./list/list.component";
 import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
+import { VariableConditionFormComponent } from "./form/form.component";
+import { FieldService } from "@core/services/pricing/field/field.service";
 
 @NgModule({
     declarations: [
-        VariableConditionListComponent
+        VariableConditionListComponent,
+        VariableConditionFormComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -39,17 +42,19 @@ import { VariableConditionService } from "@core/services/pricing/variable-condit
         MatInputModule,
         MatSelectModule,
         MatDividerModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
         ReactiveFormsModule,
         SharedModule,
         TableModule,
         MatProgressSpinnerModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatDialogActions
     ],
     exports: [],
     providers: [
         LayoutService,
-        VariableConditionService
+        VariableConditionService,
+        FieldService
     ]
 })
 

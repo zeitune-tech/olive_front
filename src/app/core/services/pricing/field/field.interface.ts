@@ -10,7 +10,7 @@ export interface NumericField {
   toReturn: boolean;
   managementEntity: string;
   product: string;
-  coverage: string;
+  branch: string;
 }
 
 export interface SelectField {
@@ -21,10 +21,9 @@ export interface SelectField {
   toReturn: boolean;
   managementEntity: string;
   product: string;
-  coverage: string;
+  branch: string;
   options: any;
 }
-
 
 export class Field extends VariableItem {
 

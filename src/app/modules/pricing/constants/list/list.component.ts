@@ -14,14 +14,13 @@ import { ProductService } from "@core/services/settings/product/product.service"
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { Router } from "@angular/router";
 import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
-import { CommissionPointOfSale } from "@core/services/settings/commission-point-of-sale/commission-point-of-sale.interface";
 import { Constant } from "@core/services/pricing/constant/constant.interface";
 import { ConstantService } from "@core/services/pricing/constant/constant.service";
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
 import { ConstantFormComponent } from "../form/form.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
     selector: "app-constant-list",
@@ -48,9 +47,9 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _branchService: BranchService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _snackBar: MatSnackBar
     ) {
-
     }
 
     data: Constant[] = [];
@@ -64,6 +63,19 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
     managementEntity: ManagementEntity = new ManagementEntity({});
 
     ngOnInit(): void {
+      // Initialiser les produits
+      this._productService.getAll()
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: Product[]) => {
+          this.products = data || [];
+        });
+
+      this._productService.products$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: Product[]) => {
+          this.products = data;
+        });
+
       this._constantService.getAll()
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((data: any) => {
@@ -89,6 +101,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.branches = branches;
       });
 
+
       // Initialisation de la configuration de la table
       this.tableOptions = {
           title: '',
@@ -99,16 +112,15 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
               // toReturn: boolean;
               // managementEntityId: string;
               // productId: string;
-              // coverageId: string;
+              // branchId: string;
               // value: number;
 
               { label: 'entities.constant.fields.label', property: 'label', type: 'text', visible: true },
               { label: 'entities.constant.fields.description', property: 'description', type: 'text', visible: true },
               { label: 'entities.constant.fields.variableName', property: 'variableName', type: 'text', visible: true },
               { label: 'entities.constant.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
-              // { label: 'entities.constant.fields.managementEntityId', property: 'managementEntity', type: 'text', visible: true },
-              // { label: 'entities.constant.fields.productId', property: 'product', type: 'text', visible: true },
-              { label: 'entities.constant.fields.coverageId', property: 'coverage', type: 'text', visible: true },
+              { label: 'entities.constant.fields.branch', property: 'branch', type: 'text', visible: true },
+              { label: 'entities.constant.fields.product', property: 'product', type: 'text', visible: true },
               { label: 'entities.constant.fields.value', property: 'value', type: 'text', visible: true },
 
           ],
@@ -119,6 +131,13 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
               if (property === 'toReturn') {
                   return element.toReturn ? 'Oui' : 'Non';
               }
+              if (property === 'branch') {
+                    return this.branches.find(b => b.id === element.branch)?.name ?? '--';
+              }
+              if (property === 'product') {
+                  return this.products.find(p => p.id === element.product)?.name ?? '--';
+              }
+              //   return element.branch ? element.branch.name : '--';
               return element[property] ?? '--';
           },
       };
@@ -179,7 +198,6 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedBranch: Branch|undefined;
 
   openBranchSelection() {
-
     this._dialog.open(SelectDialogComponent, {
       width: '700px',
       data: {
@@ -190,28 +208,48 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
     }).afterClosed().subscribe((branch: Branch) => {
       if (branch) {
         this.selectedBranch = branch;
-        // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
-        this.dataSource.paginator = this.paginator;
-        // this._changeDetectorRef.detectChanges();
+        // Filtrer les produits par branche sélectionnée
+        this._productService.getByBranchOrAll(branch.id)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((products: Product[]) => {
+            this.products = products || [];
+            // Réinitialiser la sélection de produit si elle n'existe plus dans la nouvelle liste
+            if (this.selectedProduct && !this.products.find(p => p.id === this.selectedProduct?.id)) {
+              this.selectedProduct = undefined;
+            }
+          });
       }
     })
   }
 
+  clearBranchSelection(): void {
+    this.selectedBranch = undefined;
+    this.selectedProduct = undefined;
+    // Recharger tous les produits
+    this._productService.getAll()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((products: Product[]) => {
+        this.products = products || [];
+      });
+  }
 
   products: Product[] = []
     searchCtrl: UntypedFormControl = new UntypedFormControl();
-    selectedProduct: Product = new Product({});
+    selectedProduct: Product|undefined;
 
     openSelection() {
         this._dialog.open(SelectDialogComponent, {
             width: '700px',
             data: {
+                displayField: "name",
                 items: this.products,
+                title: "product-selection.title"
             }
         }).afterClosed().subscribe((product: Product) => {
             if (product) {
                 this.selectedProduct = product;
-                // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                // Filtrer les constantes par produit sélectionné si nécessaire
+                // this.dataSource.data = this.data.filter(constant => constant.productId === this.selectedProduct.id);
                 this.dataSource.paginator = this.paginator;
                 // this._changeDetectorRef.detectChanges();
             }
@@ -219,22 +257,34 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onAdd(): void {
-        this._dialog.open(ConstantFormComponent, {
-            width: '600px',
-            disableClose: true,
-            data: {
-                mode: 'create',
-                product: this.selectedProduct?.id
-            }
 
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._constantService.getAll().subscribe();
-            }
-        });
+      if (!this.selectedBranch) {
+        this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
+        return;
+      }
+
+      if (!this.selectedProduct) {
+        this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
+        return;
+      }
+
+      this._dialog.open(ConstantFormComponent, {
+          width: '600px',
+          disableClose: true,
+          data: {
+              mode: 'create',
+              product: this.selectedProduct?.id,
+              branch: this.selectedBranch?.id
+          }
+
+      }).afterClosed().subscribe((result) => {
+          if (result) {
+              this._constantService.getAll().subscribe();
+          }
+      });
     }
 
-    
+
 
     onDelete(constant: Constant): void {
     }

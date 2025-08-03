@@ -1,5 +1,6 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { UntypedFormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -16,14 +17,14 @@ import { Subject, takeUntil } from "rxjs";
 import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
-import {UntypedFormControl} from "@angular/forms";
-import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
+import { VariableConditionFormComponent } from "../form/form.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { VariableCondition } from "@core/services/pricing/variable-condition/variable-condition.interface";
+import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
 
 @Component({
-    selector: "app-variable_condition-list",
+    selector: "app-variable-condition-list",
     templateUrl: "./list.component.html",
-    // template: "<lh-table [dataSource]='dataSource' [tableOptions]='tableOptions' [groupHeader]='groupHeader' [subHeader]='subHeader' [visibleColumns]='visibleColumns'></lh-table>",
     animations: animations
 })
 export class VariableConditionListComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -36,16 +37,18 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
+    branches: Branch[] = [];
 
     dataSource = new MatTableDataSource<VariableCondition>([]); // Ajoute les données réelles ici
 
     constructor(
-        private _variableConditionService: VariableConditionService,
+        private _VariableConditionService: VariableConditionService,
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
         private _branchService: BranchService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        private _snackBar: MatSnackBar
     ) {
     }
 
@@ -60,13 +63,30 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     managementEntity: ManagementEntity = new ManagementEntity({});
 
     ngOnInit(): void {
-
-      // Charger les données des champs
-      this._variableConditionService.getAll().subscribe();
-
-      this._variableConditionService.variableConditions$
+      // Initialiser les produits
+      this._productService.getAll()
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: VariableCondition []) => {
+        .subscribe((data: Product[]) => {
+          this.products = data || [];
+        });
+
+      this._productService.products$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: Product[]) => {
+          this.products = data;
+        });
+
+      this._VariableConditionService.getAll()
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: any) => {
+          this.data = data?.content || [];
+          this.dataSource.data = data?.content || [];
+          console.log('VariableConditions loaded:', data);
+        });
+
+      this._VariableConditionService.variableConditions$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: VariableCondition[]) => {
           this.data = data;
           this.dataSource.data = data;
         });
@@ -81,9 +101,10 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         this.branches = branches;
       });
 
+
       // Initialisation de la configuration de la table
       this.tableOptions = {
-          title: 'entities.pricing.variable-conditions.table.title',
+          title: '',
           columns: [
               // label: string;
               // description: string;
@@ -91,14 +112,15 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
               // toReturn: boolean;
               // managementEntityId: string;
               // productId: string;
-              // coverageId: string;
-              // Set<RuleResponseDTO> rules,
+              // branchId: string;
+              // value: number;
 
-              { label: 'entities.pricing.variable-conditions.fields.description', property: 'description', type: 'text', visible: true },
-              { label: 'entities.pricing.variable-conditions.fields.variableName', property: 'variableName', type: 'text', visible: true },
-              { label: 'entities.pricing.variable-conditions.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
-              { label: 'entities.pricing.variable-conditions.fields.coverageId', property: 'coverage', type: 'text', visible: true },
-              { label: 'entities.pricing.variable-conditions.fields.rules', property: 'rules', type: 'text', visible: true },
+              { label: 'entities.variable-condition.fields.label', property: 'label', type: 'text', visible: true },
+              { label: 'entities.variable-condition.fields.description', property: 'description', type: 'text', visible: true },
+              { label: 'entities.variable-condition.fields.variableName', property: 'variableName', type: 'text', visible: true },
+              { label: 'entities.variable-condition.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
+              { label: 'entities.variable-condition.fields.branch', property: 'branch', type: 'text', visible: true },
+              { label: 'entities.variable-condition.fields.product', property: 'product', type: 'text', visible: true },
 
           ],
           pageSize: 8,
@@ -108,51 +130,54 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
               if (property === 'toReturn') {
                   return element.toReturn ? 'Oui' : 'Non';
               }
-                if (property === 'rules') {
-                    return element.rules ? element.rules.map(rule => rule.name).join(', ') : 'Aucune règle définie';
-                }
-
+              if (property === 'branch') {
+                    return this.branches.find(b => b.id === element.branch)?.name ?? '--';
+              }
+              if (property === 'product') {
+                  return this.products.find(p => p.id === element.product)?.name ?? '--';
+              }
+              //   return element.branch ? element.branch.name : '--';
               return element[property] ?? '--';
           },
       };
 
-      this._variableConditionService.variableConditions$.subscribe({
+      this._VariableConditionService.variableConditions$.subscribe({
           next: (data: VariableCondition[]) => {
               this.data = data;
               this.dataSource.data = data;
           },
           error: (error) => {
-              console.error('Error fetching field data:', error);
+              console.error('Error fetching VariableCondition data:', error);
           }
       });
 
       // Construction des lignes d’en-tête
       this.buildHeaderRows();
-  }
+    }
 
-  buildHeaderRows(): void {
-      this.tableOptions.columns.forEach(col => {
-          if (col.type === 'collapse' && col.collapseOptions?.length) {
-              // En-tête parent (ligne 1)
-              const parent = col.property as string + '-parent';
-              this.groupHeader.push(parent);
+    buildHeaderRows(): void {
+        this.tableOptions.columns.forEach(col => {
+            if (col.type === 'collapse' && col.collapseOptions?.length) {
+                // En-tête parent (ligne 1)
+                const parent = col.property as string + '-parent';
+                this.groupHeader.push(parent);
 
-              // Sous-colonnes (ligne 2)
-              col.collapseOptions.forEach(child => {
-                  this.subHeader.push(child.property as string);
-                  this.visibleColumns.push(child.property as string);
-              });
-          } else {
-              // Colonne simple (même valeur dans les 2 lignes)
-              this.groupHeader.push(col.property as string);
+                // Sous-colonnes (ligne 2)
+                col.collapseOptions.forEach(child => {
+                    this.subHeader.push(child.property as string);
+                    this.visibleColumns.push(child.property as string);
+                });
+            } else {
+                // Colonne simple (même valeur dans les 2 lignes)
+                this.groupHeader.push(col.property as string);
 
-              this.visibleColumns.push(col.property as string);
-          }
-      });
+                this.visibleColumns.push(col.property as string);
+            }
+        });
 
-      // Ajout de la colonne d’actions si nécessaire
-      this.groupHeader.push('actions');
-      this.visibleColumns.push('actions');
+        // Ajout de la colonne d’actions si nécessaire
+        this.groupHeader.push('actions');
+        this.visibleColumns.push('actions');
     }
 
 
@@ -160,11 +185,6 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         if (this.dataSource) {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
-        }
-        
-        // Définir la taille de page initiale
-        if (this.paginator && this.tableOptions.pageSize) {
-            this.paginator.pageSize = this.tableOptions.pageSize;
         }
     }
 
@@ -174,11 +194,9 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         this._unsubscribeAll.complete();
     }
 
-  branches: Branch[] = [];
-  selectedBranch: Branch | undefined;
+  selectedBranch: Branch|undefined;
 
   openBranchSelection() {
-
     this._dialog.open(SelectDialogComponent, {
       width: '700px',
       data: {
@@ -189,28 +207,48 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     }).afterClosed().subscribe((branch: Branch) => {
       if (branch) {
         this.selectedBranch = branch;
-        // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
-        this.dataSource.paginator = this.paginator;
-        // this._changeDetectorRef.detectChanges();
+        // Filtrer les produits par branche sélectionnée
+        this._productService.getByBranchOrAll(branch.id)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((products: Product[]) => {
+            this.products = products || [];
+            // Réinitialiser la sélection de produit si elle n'existe plus dans la nouvelle liste
+            if (this.selectedProduct && !this.products.find(p => p.id === this.selectedProduct?.id)) {
+              this.selectedProduct = undefined;
+            }
+          });
       }
     })
   }
 
+  clearBranchSelection(): void {
+    this.selectedBranch = undefined;
+    this.selectedProduct = undefined;
+    // Recharger tous les produits
+    this._productService.getAll()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((products: Product[]) => {
+        this.products = products || [];
+      });
+  }
 
-    products: Product[] = []
+  products: Product[] = []
     searchCtrl: UntypedFormControl = new UntypedFormControl();
-    selectedProduct: Product = new Product({});
+    selectedProduct: Product|undefined;
 
     openSelection() {
         this._dialog.open(SelectDialogComponent, {
             width: '700px',
             data: {
+                displayField: "name",
                 items: this.products,
+                title: "product-selection.title"
             }
         }).afterClosed().subscribe((product: Product) => {
             if (product) {
                 this.selectedProduct = product;
-                // this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+                // Filtrer les VariableConditiones par produit sélectionné si nécessaire
+                // this.dataSource.data = this.data.filter(VariableCondition => VariableCondition.productId === this.selectedProduct.id);
                 this.dataSource.paginator = this.paginator;
                 // this._changeDetectorRef.detectChanges();
             }
@@ -218,37 +256,58 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     }
 
     onAdd(): void {
-        this._dialog.open(SelectDialogComponent, {
-            width: '600px',
-            disableClose: true,
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._productService.getAll().subscribe();
-            }
-        });
+
+      if (!this.selectedBranch) {
+        this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
+        return;
+      }
+
+      if (!this.selectedProduct) {
+        this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
+        return;
+      }
+
+      this._dialog.open(VariableConditionFormComponent, {
+          width: '600px',
+          disableClose: true,
+          data: {
+              mode: 'create',
+              product: this.selectedProduct?.id,
+              branch: this.selectedBranch?.id
+          }
+
+      }).afterClosed().subscribe((result) => {
+          if (result) {
+              this._VariableConditionService.getAll().subscribe();
+          }
+      });
     }
 
-    onDelete(product: Product): void {
-        this._dialog.open(SelectDialogComponent, {
-            data: product,
-            width: '600px',
-            disableClose: true,
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._productService.getAll().subscribe();
-            }
-        });
+
+
+    onDelete(VariableCondition: VariableCondition): void {
     }
 
     /**
-        * Edit Product Product
+        * Edit VariableCondition
         */
-    onEdit(product: Product): void {
-
+    onEdit(VariableCondition: VariableCondition): void {
+        this._dialog.open(VariableConditionFormComponent, {
+            width: '600px',
+            disableClose: true,
+            data: {
+                mode: 'edit',
+                ...VariableCondition
+            }
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                this._VariableConditionService.getAll().subscribe();
+            }
+        });
     }
 
 
-    onView(product: Product): void {
+    onView(VariableCondition: VariableCondition): void {
         //this._router.navigate(['/administration/products/list']);
     }
 

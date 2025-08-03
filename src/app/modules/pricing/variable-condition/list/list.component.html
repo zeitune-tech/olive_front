@@ -5,10 +5,10 @@
   <div class="flex justify-between items-end">
     <div class="flex flex-col">
       <h1 class="text-2xl md:text-4xl font-bold py-4">
-        {{ t('entities.pricing.field.table.title') }}
+        {{ t('entities.variable-condition.table.title') }}
       </h1>
       <p class="text-sm md:text-base text-gray-600">
-        {{ t('entities.pricing.field.table.description') }}
+        {{ t('entities.variable-condition.table.description') }}
       </p>
     </div>
 
@@ -18,17 +18,24 @@
         <button mat-button class="ml-4 bg-primary-600 text-white rounded-lg" (click)="openBranchSelection()">
           {{ t('branch-selection.change') }}
         </button>
+        @if (selectedBranch) {
+          <button mat-icon-button class="ml-2 text-red-500" (click)="clearBranchSelection()"
+                  [matTooltip]="t('branch-selection.clear')">
+            <mat-icon [svgIcon]="'fluent:dismiss'"></mat-icon>
+          </button>
+        }
       </div>
 
       @if (selectedBranch) {
-        <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
-          <span>{{ selectedProduct.name || t('product-selection.title') }}</span>
-          <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openSelection()">
-            {{ t('product-selection.change') }}
-          </button>
-        </div>
+      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
+        <span>{{ selectedProduct?.name || t('product-selection.title') }}</span>
+        <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openSelection()">
+          {{ t('product-selection.change') }}
+        </button>
+      </div>
       }
     </div>
+
   </div>
 
   <!-- --------------------------------------------- -->
@@ -36,8 +43,8 @@
   <!-- --------------------------------------------- -->
   <div class="flex flex-col md:flex-row items-center gap-4 justify-between mt-6">
     <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
-      <!-- <mat-icon [svgIcon]="'fluent:search'"></mat-icon> -->
-      <!-- <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [formControl]="searchCtrl"> -->
+      <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
+      <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [formControl]="searchCtrl">
     </div>
 
     <div class="flex items-center gap-2">
@@ -141,14 +148,14 @@
       <tr mat-header-row *matHeaderRowDef="subHeader"></tr>
 
       <!-- ============= LIGNES DE DONNÉES =============== -->
-      <tr mat-row *matRowDef="let row; columns: visibleColumns;" @fadeInBottom class="trans-ease-out cursor-pointer">
+      <tr mat-row *matRowDef="let row; columns: visibleColumns;" @fadeInTop class="trans-ease-out cursor-pointer">
       </tr>
 
       <!-- ============= Aucune donnée =================== -->
       @let count = visibleColumns.length;
       <tr *matNoDataRow>
         <td [attr.colspan]="count" class="text-center py-4">
-          {{ t('entities.pricing.field.table.empty_state') }}
+          {{ t('entities.variable-condition.table.empty_state') }}
         </td>
       </tr>
     </table>
@@ -158,6 +165,7 @@
   <!-- Paginator                                     -->
   <!-- --------------------------------------------- -->
   @let pageSizeOptions = tableOptions.pageSizeOptions;
-  <mat-paginator class="rounded-b-md border-t" [pageSizeOptions]="pageSizeOptions">
+  @let pageSize = tableOptions.pageSize;
+  <mat-paginator class="rounded-b-md border-t" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize">
   </mat-paginator>
 </div>
