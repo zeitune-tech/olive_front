@@ -18,7 +18,7 @@ export const defaultPrincingNavigation: NavigationItem[] = [
       title: 'sidebar.pricing.variable_condition',
       type: 'basic',
       icon: 'fluent:people-team',
-      link: '/pricing/variable-conditions',
+      link: '/pricing/variable-conditions/list',
       // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
       children: []
     },

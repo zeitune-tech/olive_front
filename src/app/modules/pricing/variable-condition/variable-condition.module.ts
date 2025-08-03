@@ -15,14 +15,13 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatNativeDateModule } from "@angular/material/core";
 import { TableModule } from "@lhacksrt/components/table/table.module";
-import { LayoutService } from "./layout.service";
 import { VariableConditionListComponent } from "./list/list.component";
 import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
 import { VariableConditionFormComponent } from "./form/form.component";
 import { FieldService } from "@core/services/pricing/field/field.service";
+import { RuleService } from "@core/services/pricing/variable-condition/rule/rule.service";
+import { ConditionService } from "@core/services/pricing/variable-condition/conditions/condition.service";
 
 @NgModule({
     declarations: [
@@ -52,9 +51,10 @@ import { FieldService } from "@core/services/pricing/field/field.service";
     ],
     exports: [],
     providers: [
-        LayoutService,
         VariableConditionService,
-        FieldService
+        FieldService,
+        RuleService,
+        ConditionService
     ]
 })
 
