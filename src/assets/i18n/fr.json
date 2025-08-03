@@ -1076,21 +1076,58 @@
         "label": "Variables conditionnées",
         "description": "Définition des conditions applicables aux variables de tarification.",
         "form": {
-          "title": "Variables conditionnées",
-          "subtitle": "Créer ou modifier une condition de variable"
+          "create": {
+            "title": "Créer une variable conditionnée"
+          },
+          "edit": {
+            "title": "Modifier une variable conditionnée"
+          },
+          "view": {
+            "title": "Consulter une variable conditionnée"
+          }
         },
         "table": {
           "title": "Variables conditionnées",
           "description": "Liste des conditions de variables",
           "empty_state": "Aucune condition de variable trouvée."
         },
+        "sections": {
+          "variable-item-infos": "Informations de la Variable",
+          "rules": "Règles"
+        },
         "fields": {
-          "name": "Nom de la condition",
+          "label": "Libellé",
           "description": "Description",
+          "variableName": "Nom de variable",
+          "toReturn": "À retourner",
+          "branch": "Branche",
+          "product": "Produit",
           "variable": "Variable",
           "operator": "Opérateur",
           "value": "Valeur",
+          "min": "Minimum",
+          "max": "Maximum",
+          "field": "Champ",
+          "rule-value": "Valeur de retour",
           "actions": "Actions"
+        },
+        "options": {
+          "toReturn": {
+            "true": "Oui",
+            "false": "Non"
+          }
+        },
+        "operators": {
+          "equals": "Égal à",
+          "not-equals": "Différent de",
+          "greater-than": "Supérieur à",
+          "less-than": "Inférieur à",
+          "greater-or-equal": "Supérieur ou égal à",
+          "less-or-equal": "Inférieur ou égal à"
+        },
+        "errors": {
+          "numeric-condition-required": "Au moins une valeur (valeur, minimum ou maximum) doit être renseignée pour les champs numériques",
+          "min-greater-than-max": "La valeur minimum ne peut pas être supérieure à la valeur maximum"
         }
       },
       "field": {
@@ -1247,6 +1284,105 @@
       "new_caracteristic": {
         "label": "Nouvelle caractéristique",
         "description": "Créer une nouvelle caractéristique de tarification."
+      }
+    },
+    "variable-condition": {
+      "label": "Variable conditionnée",
+      "description": "Gestion des variables conditionnées pour la tarification.",
+      "form": {
+        "create": {
+          "title": "Créer une variable conditionnée"
+        },
+        "edit": {
+          "title": "Modifier la variable conditionnée"
+        },
+        "view": {
+          "title": "Détails de la variable conditionnée"
+        }
+      },
+      "table": {
+        "title": "Variables conditionnées",
+        "description": "Liste des variables conditionnées pour la tarification",
+        "empty_state": "Aucune variable conditionnée trouvée."
+      },
+      "fields": {
+        "label": "Libellé",
+        "description": "Description",
+        "variableName": "Nom de la variable",
+        "toReturn": "À retourner",
+        "ruleValue": "Valeur de règle",
+        "field": "Champ",
+        "operator": "Opérateur",
+        "value": "Valeur",
+        "min": "Minimum",
+        "max": "Maximum",
+        "actions": "Actions"
+      },
+      "options": {
+        "toReturn": {
+          "true": "Oui",
+          "false": "Non"
+        }
+      },
+      "sections": {
+        "variable-item-info": "Informations de la variable",
+        "variable-item-infos": "Informations de la variable",
+        "rules": "Règles"
+      },
+      "field-types": {
+        "numeric": "Numérique",
+        "select": "Sélection",
+        "numeric-indicator": "*Numérique",
+        "select-indicator": "*Sélection",
+        "SELECT": "Sélection",
+        "NUMBER": "Numérique"
+      },
+      "errors": {
+        "numeric-condition-required": "Une condition numérique est requise (valeur, min ou max)",
+        "min-greater-than-max": "La valeur minimum ne peut pas être supérieure à la valeur maximum"
+      }
+    },
+    "rule": {
+      "title": "Règle",
+      "fields": {
+        "label": "Libellé",
+        "name": "Nom",
+        "value": "Valeur"
+      }
+    },
+    "condition": {
+      "title": "Condition",
+      "fields": {
+        "field": "Champ",
+        "operator": "Opérateur",
+        "value": "Valeur",
+        "minValue": "Valeur minimale",
+        "maxValue": "Valeur maximale"
+      },
+      "operators": {
+        "eq": "Égal à",
+        "ne": "Différent de",
+        "gt": "Supérieur à",
+        "gte": "Supérieur ou égal à",
+        "lt": "Inférieur à",
+        "lte": "Inférieur ou égal à",
+        "in": "Dans",
+        "nin": "Pas dans",
+        "between": "Entre",
+        "exists": "Existe",
+        "not_exists": "N'existe pas",
+        "equal": "Égal à",
+        "different": "Différent de",
+        "less_than": "Inférieur à",
+        "greater_than": "Supérieur à",
+        "less_or_equal": "Inférieur ou égal à",
+        "greater_or_equal": "Supérieur ou égal à"
+      },
+      "hints": {
+        "optional-if-minmax": "Optionnel si min/max sont définis"
+      },
+      "errors": {
+        "numeric-field-required": "Une valeur, min ou max est requise pour les champs numériques"
       }
     },
     "constant": {
@@ -1716,6 +1852,8 @@
     },
     "actions": {
       "add": "Ajouter",
+      "add-rule": "Ajouter une règle",
+      "add-condition": "Ajouter une condition",
       "save": "Enregistrer",
       "cancel": "Annuler",
       "edit": "Modifier",
