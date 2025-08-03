@@ -1,0 +1,63 @@
+.variable-condition-form {
+  .section-header {
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .rule-card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease-in-out;
+    
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .condition-card {
+    border-left: 4px solid #3b82f6;
+    transition: border-color 0.2s ease-in-out;
+    
+    &:hover {
+      border-left-color: #1d4ed8;
+    }
+  }
+
+  .section-variable-item {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  }
+
+  .section-rules {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  }
+
+  .add-button {
+    min-width: 120px;
+  }
+
+  .delete-button {
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out;
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  mat-form-field {
+    margin-bottom: 0.5rem;
+  }
+
+  .grid-responsive {
+    display: grid;
+    gap: 1rem;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
