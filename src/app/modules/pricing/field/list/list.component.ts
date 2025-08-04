@@ -13,12 +13,9 @@ import { ProductService } from "@core/services/settings/product/product.service"
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { Router } from "@angular/router";
 import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
 import { Field} from "@core/services/pricing/field/field.interface";
 import { FieldService } from "@core/services/pricing/field/field.service";
-import { SelectFieldOptions } from "@core/services/pricing/field/select-field-options.interface";
-import { SelectFieldOptionValue } from "@core/services/pricing/field/select-field-option-value.interface";
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
 import {UntypedFormControl} from "@angular/forms";

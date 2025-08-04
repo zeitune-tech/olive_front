@@ -3,7 +3,7 @@ import { SharedModule } from "@shared/shared.module";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { RouterModule } from "@angular/router";
-import { routes } from "./field.routing";
+import { routes } from "./select-options.routing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogActions, MatDialogModule } from "@angular/material/dialog";
@@ -16,19 +16,19 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
-import { LayoutService } from "./layout.service";
-import { FieldService } from "@core/services/pricing/field/field.service";
-import { FieldListComponent } from "./list/list.component";
-import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options.service";
-import { NumericFieldFormComponent } from "./numeric-form/form.component";
-import { SelectFieldFormComponent } from "./select-form/form.component";
 import { SelectFieldOptionValueService } from "@core/services/pricing/field/select-field-option-value.service";
+import {SelectFieldOptionValueListComponent} from "./select-option-value/list/list.component";
+import {SelectFieldOptionValueFormComponent} from "./select-option-value/form/form.component";
+import {SelectFieldOptionsListComponent} from "./select-options/list/list.component";
+import {SelectFieldOptionsFormComponent} from "./select-options/form/form.component";
+import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options.service";
 
 @NgModule({
     declarations: [
-        FieldListComponent,
-        NumericFieldFormComponent,
-        SelectFieldFormComponent,
+      SelectFieldOptionsListComponent,
+      SelectFieldOptionsFormComponent,
+      SelectFieldOptionValueListComponent,
+      SelectFieldOptionValueFormComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -49,17 +49,15 @@ import { SelectFieldOptionValueService } from "@core/services/pricing/field/sele
         MatDividerModule,
         MatDialogModule,
         MatDialogActions,
-        MatFormFieldModule
+        MatFormFieldModule,
     ],
     exports: [],
     providers: [
-        LayoutService,
-        FieldService,
-        SelectFieldOptionsService,
-        SelectFieldOptionValueService
+      SelectFieldOptionsService,
+      SelectFieldOptionValueService
     ]
 })
-export class FieldModule {
+export class SelectOptionsModule {
     constructor() {
         // Module initialization logic can go here
     }

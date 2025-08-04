@@ -1143,7 +1143,9 @@
           "empty_state": "Aucun champ de tarification trouvé."
         },
         "fields": {
+          "branch": "Branche",
           "name": "Nom du champ",
+          "product": "Produit",
           "label": "Libellé",
           "description": "Description",
           "variableName": "Nom de variable",
@@ -1455,6 +1457,8 @@
         "toReturn": "À retourner",
         "managementEntityId": "Entité de gestion",
         "productId": "Produit",
+        "product": "Produit",
+        "branch": "Branche",
         "coverageId": "Garantie",
         "type": "Type de champ",
         "selectFieldOptions": "Options de sélection",
@@ -1474,12 +1478,82 @@
         }
       }
     },
+    "numeric-field": {
+      "label": "Champ numérique",
+      "description": "Champs numériques utilisés dans les calculs de tarification.",
+      "form": {
+        "title": "Champ numérique",
+        "subtitle": "Créer ou modifier un champ numérique",
+        "create": {
+          "title": "Créer un champ numérique"
+        },
+        "edit": {
+          "title": "Modifier le champ numérique"
+        },
+        "view": {
+          "title": "Détails du champ numérique"
+        }
+      },
+      "table": {
+        "title": "Champs numériques",
+        "description": "Liste des champs numériques de tarification",
+        "empty_state": "Aucun champ numérique trouvé."
+      },
+      "fields": {
+        "label": "Libellé",
+        "description": "Description",
+        "variableName": "Nom de variable",
+        "toReturn": "À retourner",
+        "coverageId": "Garantie",
+        "value": "Valeur",
+        "actions": "Actions"
+      }
+    },
+    "select-field": {
+      "label": "Champ de sélection",
+      "description": "Champs de sélection utilisés dans les calculs de tarification.",
+      "form": {
+        "title": "Champ de sélection",
+        "subtitle": "Créer ou modifier un champ de sélection",
+        "create": {
+          "title": "Créer un champ de sélection"
+        },
+        "edit": {
+          "title": "Modifier le champ de sélection"
+        },
+        "view": {
+          "title": "Détails du champ de sélection"
+        }
+      },
+      "table": {
+        "title": "Champs de sélection",
+        "description": "Liste des champs de sélection de tarification",
+        "empty_state": "Aucun champ de sélection trouvé."
+      },
+      "fields": {
+        "label": "Libellé",
+        "description": "Description",
+        "variableName": "Nom de variable",
+        "toReturn": "À retourner",
+        "options": "Options de sélection",
+        "actions": "Actions"
+      }
+    },
     "select-field-options": {
       "label": "Options de champs de sélection",
       "description": "Options disponibles pour les champs de type sélection.",
       "form": {
         "title": "Options de champ",
-        "subtitle": "Créer ou modifier des options de sélection"
+        "subtitle": "Créer ou modifier des options de sélection",
+        "create": {
+          "title": "Créer une liste des options de champ"
+        },
+        "edit": {
+          "title": "Modifier l'option de champ"
+        },
+        "view": {
+          "title": "Détails de l'option de champ"
+        }
       },
       "table": {
         "title": "Options de champs de sélection",
@@ -1492,6 +1566,42 @@
         "name": "Nom",
         "description": "Description",
         "possibilities": "Possibilités",
+        "group": "Groupe",
+        "actions": "Actions"
+      },
+      "options": {
+        "status": {
+          "active": "Actif",
+          "inactive": "Inactif"
+        }
+      }
+    },
+    "select-field-option-value": {
+      "label": "Valeurs des options de champs",
+      "description": "Valeurs disponibles pour les options de champs de sélection.",
+      "form": {
+        "title": "Valeur d'option de champ",
+        "subtitle": "Créer ou modifier une valeur d'option",
+        "create": {
+          "title": "Créer une valeur d'option"
+        },
+        "edit": {
+          "title": "Modifier la valeur d'option"
+        },
+        "view": {
+          "title": "Détails de la valeur d'option"
+        }
+      },
+      "table": {
+        "title": "Valeurs des options de champs",
+        "description": "Liste des valeurs configurées pour les options de champs",
+        "empty_state": "Aucune valeur d'option trouvée."
+      },
+      "fields": {
+        "id": "Identifiant",
+        "label": "Libellé",
+        "name": "Nom",
+        "group": "Groupe",
         "actions": "Actions"
       },
       "options": {
@@ -1533,6 +1643,12 @@
           "add_variable_condition": "Ajouter une variable conditionnée"
         }
       }
+    },
+    "branch-selection": {
+      "not-select-error-title": "Veuillez d'abord sélectionner une branche"
+    },
+    "product-selection": {
+      "not-select-error-title": "Veuillez d'abord sélectionner un produit"
     }
 
   },
@@ -1811,7 +1927,9 @@
       "variable_condition": "Variables conditionnées",
       "field": "Champs",
       "field_list": "Liste des champs",
+      "select_field": "Champs de sélection",
       "select_field_option": "Options de champs de sélection",
+      "select_field_option_value": "Valeurs des options de champs de sélection",
       "constants": "Constantes",
       "conditions": "Conditions",
       "condition_list": "Liste des conditions",
@@ -1867,6 +1985,16 @@
       "remove": "Supprimer",
       "clear": "Effacer",
       "addIncompatible": "Ajouter / Modifier une incompatibilité"
+    },
+    "numeric-field": {
+      "actions": {
+        "add": "Ajouter un champ numérique"
+      }
+    },
+    "select-field": {
+      "actions": {
+        "add": "Ajouter un champ de sélection"
+      }
     },
     "success": {
       "title": "Succès",
@@ -2106,7 +2234,8 @@
     "title": "Sélectionner un produit",
     "description": "Sélectionnez le produit que vous souhaitez gérer.",
     "no-products": "Aucun produit pour l'instant",
-    "change": "Changer de produit"
+    "change": "Changer de produit",
+    "not-select-error-title": "Veuillez d'abord sélectionner un produit"
   },
   "Common": {
     "search": {
@@ -2134,7 +2263,8 @@
   "branch-selection": {
     "title": "Sélectionner une branche",
     "change": "Changer de branche",
-    "clear": "Réinitialiser la sélection"
+    "clear": "Réinitialiser la sélection",
+    "not-select-error-title": "Veuillez d'abord sélectionner une branche"
   },
   "message": {
     "success": "Opération réussie",

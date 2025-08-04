@@ -47,6 +47,40 @@ export class ConditionService {
   }
 
   /**
+   * Crée une condition numérique
+   */
+  createNumericalCondition(conditionData: any): Observable<any> {
+    return this._httpClient.post<any>(this.numericBaseUrl, conditionData)
+      .pipe(
+        tap((response: any) => {
+          console.log('Numerical condition created:', response);
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error creating numerical condition:', error);
+          throw error;
+        })
+      );
+  }
+
+  /**
+   * Crée une condition de champ de sélection
+   */
+  createSelectFieldCondition(conditionData: any): Observable<any> {
+    return this._httpClient.post<any>(this.selectBaseUrl, conditionData)
+      .pipe(
+        tap((response: any) => {
+          console.log('Select field condition created:', response);
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error creating select field condition:', error);
+          throw error;
+        })
+      );
+  }
+
+  /**
    * Récupère tous les champs depuis les deux endpoints
    * Combine les numerical-conditions et select-field-conditions en une seule liste
    */

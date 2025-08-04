@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpClient } from '@angular/common/http';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import { VariableCondition } from '@core/services/pricing/variable-condition/variable-condition.interface';
@@ -14,7 +13,6 @@ import { Condition } from '@core/services/pricing/variable-condition/conditions/
 import { ConditionService } from '@core/services/pricing/variable-condition/conditions/condition.service';
 import { Field } from '@core/services/pricing/field/field.interface';
 import { FieldService } from '@core/services/pricing/field/field.service';
-import { environment } from '@env/environment';
 
 @Component({
     selector: 'app-variable-condition-edit',
@@ -43,8 +41,7 @@ export class VariableConditionFormComponent implements OnInit {
           private _fieldService: FieldService,
           private translocoService: TranslocoService,
           private snackBar: MatSnackBar,
-          private _managementEntityService: ManagementEntityService,
-          private _httpClient: HttpClient
+          private _managementEntityService: ManagementEntityService
       ) {}
 
     ngOnInit(): void {
@@ -218,18 +215,27 @@ export class VariableConditionFormComponent implements OnInit {
 
         this.formGroup.disable();
 
-        console.log("Starting creation workflow...");
+        console.log("Starting creation workflow: Conditions -> Rules -> Variable Condition");
 
-        // Suivre le nouveau workflow: 1) Conditions -> 2) Règles -> 3) Variable Condition
+        // Workflow: 1) Créer toutes les conditions -> 2) Créer les règles -> 3) Créer la variable condition
         this.createAllConditions();
     }
 
+    /**
+     * Étape 1: Créer toutes les conditions de toutes les règles
+     * Les conditions sont créées en premier car les règles ont besoin de leurs IDs
+     */
+
+    /**
+     * Étape 1: Créer toutes les conditions de toutes les règles
+     * Les conditions sont créées en premier car les règles ont besoin de leurs IDs
+     */
     private createAllConditions(): void {
         const rules = this.formGroup.value.rules;
         const allConditions: any[] = [];
         const conditionIndexMap: { ruleIndex: number, conditionIndex: number }[] = [];
 
-        // Collecter toutes les conditions de toutes les règles
+        // Collecter toutes les conditions de toutes les règles avec leur mapping
         rules.forEach((ruleData: any, ruleIndex: number) => {
             ruleData.conditions.forEach((conditionData: any, conditionIndex: number) => {
                 allConditions.push(conditionData);
@@ -246,68 +252,76 @@ export class VariableConditionFormComponent implements OnInit {
         let completedConditions = 0;
 
         allConditions.forEach((conditionData: any, index: number) => {
+            const conditionToCreate = this.buildConditionPayload(conditionData);
             const field = this.fields.find(f => f.id === conditionData.field);
             const conditionType = field?.type || 'NUMBER';
 
-            // Adapter les champs selon le type de condition et les attentes de l'API
-            let conditionToCreate: any;
-            
-            if (conditionType === 'SELECT') {
-                conditionToCreate = {
-                    value: conditionData.value,
-                    fieldId: conditionData.field,
-                    operator: conditionData.operator
-                };
-            } else if (conditionType === 'NUMBER') {
-                conditionToCreate = {
-                    fieldId: conditionData.field,
-                    numericOperator: conditionData.operator,
-                    value: conditionData.value,
-                    minValue: conditionData.minValue,
-                    maxValue: conditionData.maxValue
-                };
-            } else {
-                // Fallback pour autres types
-                conditionToCreate = {
-                    fieldId: conditionData.field,
-                    operator: conditionData.operator,
-                    value: conditionData.value,
-                    minValue: conditionData.minValue,
-                    maxValue: conditionData.maxValue
-                };
-            }
-
             console.log(`Creating condition ${index + 1}:`, conditionToCreate);
 
-            // Utiliser directement HttpClient pour appeler les bons endpoints
-            const baseUrl = conditionType === 'NUMBER' 
-                ? `${environment.pricing_url}/numerical-conditions`
-                : `${environment.pricing_url}/select-field-conditions`;
+            // Utiliser les méthodes du service selon le type de condition
+            const createConditionObservable = conditionType === 'NUMBER' 
+                ? this._conditionService.createNumericalCondition(conditionToCreate)
+                : this._conditionService.createSelectFieldCondition(conditionToCreate);
 
-            this._httpClient.post<any>(baseUrl, conditionToCreate).subscribe({
+            createConditionObservable.subscribe({
                 next: (createdCondition: any) => {
                     console.log(`Condition ${index + 1} created:`, createdCondition);
                     createdConditionIds[index] = createdCondition.id;
                     completedConditions++;
                     
                     if (completedConditions === allConditions.length) {
-                        // Toutes les conditions sont créées, passer à la création des règles
+                        // Toutes les conditions sont créées, passer à l'étape 2
                         this.createAllRules(createdConditionIds, conditionIndexMap);
                     }
                 },
                 error: (error: any) => {
                     console.error(`Error creating condition ${index + 1}:`, error);
-                    this.snackBar.open(
-                        this.translocoService.translate('form.errors.submission'),
-                        undefined,
-                        { duration: 3000, panelClass: 'snackbar-error' }
-                    );
-                    this.formGroup.enable();
+                    this.handleSubmissionError('form.errors.submission');
                 }
             });
         });
     }
 
+    /**
+     * Construit le payload pour la création d'une condition selon son type
+     */
+    private buildConditionPayload(conditionData: any): any {
+        const field = this.fields.find(f => f.id === conditionData.field);
+        const conditionType = field?.type || 'NUMBER';
+
+        if (conditionType === 'SELECT') {
+            return {
+                value: conditionData.value,
+                fieldId: conditionData.field,
+                operator: conditionData.operator
+            };
+        } else if (conditionType === 'NUMBER') {
+            return {
+                fieldId: conditionData.field,
+                numericOperator: conditionData.operator,
+                value: conditionData.value,
+                minValue: conditionData.minValue,
+                maxValue: conditionData.maxValue
+            };
+        } else {
+            // Fallback pour autres types
+            return {
+                fieldId: conditionData.field,
+                operator: conditionData.operator,
+                value: conditionData.value,
+                minValue: conditionData.minValue,
+                maxValue: conditionData.maxValue
+            };
+        }
+    }
+
+    /**
+     * Étape 2: Créer toutes les règles avec les IDs des conditions
+     */
+
+    /**
+     * Étape 2: Créer toutes les règles avec les IDs des conditions
+     */
     private createAllRules(conditionIds: string[], conditionIndexMap?: { ruleIndex: number, conditionIndex: number }[]): void {
         const rules = this.formGroup.value.rules;
         const createdRuleIds: string[] = [];
@@ -319,23 +333,7 @@ export class VariableConditionFormComponent implements OnInit {
         }
 
         rules.forEach((ruleData: any, ruleIndex: number) => {
-            // Collecter les IDs des conditions pour cette règle
-            const ruleConditionIds: string[] = [];
-            if (conditionIndexMap) {
-                conditionIndexMap.forEach((mapping, conditionGlobalIndex) => {
-                    if (mapping.ruleIndex === ruleIndex) {
-                        ruleConditionIds.push(conditionIds[conditionGlobalIndex]);
-                    }
-                });
-            }
-
-            const ruleToCreate = {
-                label: ruleData.label,
-                name: ruleData.name,
-                value: ruleData.value,
-                conditions: ruleConditionIds, // IDs des conditions créées
-                managementEntity: this.managementEntity?.id
-            };
+            const ruleToCreate = this.buildRulePayload(ruleData, ruleIndex, conditionIds, conditionIndexMap);
 
             console.log(`Creating rule ${ruleIndex + 1}:`, ruleToCreate);
 
@@ -346,34 +344,55 @@ export class VariableConditionFormComponent implements OnInit {
                     completedRules++;
                     
                     if (completedRules === rules.length) {
-                        // Toutes les règles sont créées, passer à la création de la variable condition
+                        // Toutes les règles sont créées, passer à l'étape 3
                         this.createVariableCondition(createdRuleIds);
                     }
                 },
                 error: (error: any) => {
                     console.error(`Error creating rule ${ruleIndex + 1}:`, error);
-                    this.snackBar.open(
-                        this.translocoService.translate('form.errors.submission'),
-                        undefined,
-                        { duration: 3000, panelClass: 'snackbar-error' }
-                    );
-                    this.formGroup.enable();
+                    this.handleSubmissionError('form.errors.submission');
                 }
             });
         });
     }
 
-    private createVariableCondition(ruleIds: string[]): void {
-        const variableConditionData = {
-            label: this.formGroup.value.label,
-            description: this.formGroup.value.description,
-            variableName: this.formGroup.value.variableName,
-            toReturn: this.formGroup.value.toReturn,
-            branch: this.formGroup.value.branch,
-            managementEntity: this.managementEntity?.id,
-            product: this.data.product,
-            ruleIds: ruleIds // IDs des règles créées (selon le workflow API)
+    /**
+     * Construit le payload pour la création d'une règle
+     */
+    private buildRulePayload(
+        ruleData: any, 
+        ruleIndex: number, 
+        conditionIds: string[], 
+        conditionIndexMap?: { ruleIndex: number, conditionIndex: number }[]
+    ): any {
+        // Collecter les IDs des conditions pour cette règle
+        const ruleConditionIds: string[] = [];
+        if (conditionIndexMap) {
+            conditionIndexMap.forEach((mapping, conditionGlobalIndex) => {
+                if (mapping.ruleIndex === ruleIndex) {
+                    ruleConditionIds.push(conditionIds[conditionGlobalIndex]);
+                }
+            });
+        }
+
+        return {
+            label: ruleData.label,
+            name: ruleData.name,
+            value: ruleData.value,
+            conditions: ruleConditionIds,
+            managementEntity: this.managementEntity?.id
         };
+    }
+
+    /**
+     * Étape 3: Créer la variable condition avec les IDs des règles
+     */
+
+    /**
+     * Étape 3: Créer la variable condition avec les IDs des règles
+     */
+    private createVariableCondition(ruleIds: string[]): void {
+        const variableConditionData = this.buildVariableConditionPayload(ruleIds);
 
         console.log("Creating variable condition:", variableConditionData);
 
@@ -384,14 +403,37 @@ export class VariableConditionFormComponent implements OnInit {
             },
             error: (error: any) => {
                 console.error("Error creating variable condition:", error);
-                this.snackBar.open(
-                    this.translocoService.translate('form.errors.submission'),
-                    undefined,
-                    { duration: 3000, panelClass: 'snackbar-error' }
-                );
-                this.formGroup.enable();
+                this.handleSubmissionError('form.errors.submission');
             }
         });
+    }
+
+    /**
+     * Construit le payload pour la création de la variable condition
+     */
+    private buildVariableConditionPayload(ruleIds: string[]): any {
+        return {
+            label: this.formGroup.value.label,
+            description: this.formGroup.value.description,
+            variableName: this.formGroup.value.variableName,
+            toReturn: this.formGroup.value.toReturn,
+            branch: this.formGroup.value.branch,
+            managementEntity: this.managementEntity?.id,
+            product: this.data.product,
+            ruleIds: ruleIds
+        };
+    }
+
+    /**
+     * Gère les erreurs de soumission et réactive le formulaire
+     */
+    private handleSubmissionError(errorMessage: string): void {
+        this.snackBar.open(
+            this.translocoService.translate(errorMessage),
+            undefined,
+            { duration: 3000, panelClass: 'snackbar-error' }
+        );
+        this.formGroup.enable();
     }
 
     private onSubmissionSuccess(): void {
