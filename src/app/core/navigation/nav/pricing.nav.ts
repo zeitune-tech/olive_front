@@ -38,14 +38,6 @@ export const defaultPrincingNavigation: NavigationItem[] = [
         // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
         children: [
           {
-            id: 'select-field-option',
-            title: 'sidebar.pricing.select_field_option',
-            type: 'basic',
-            icon: 'fluent:people-team',
-            link: '/pricing/fields/select-options/list',
-            // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
-          },
-          {
             id: 'select-field-option-value',
             title: 'sidebar.pricing.select_field_option_value',
             type: 'basic',
@@ -53,6 +45,15 @@ export const defaultPrincingNavigation: NavigationItem[] = [
             link: '/pricing/fields/select-options/values',
             // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
           },
+          {
+            id: 'select-field-option',
+            title: 'sidebar.pricing.select_field_option',
+            type: 'basic',
+            icon: 'fluent:people-team',
+            link: '/pricing/fields/select-options/list',
+            // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
+          },
+          
         ]
       },
     ]

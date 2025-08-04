@@ -53,4 +53,26 @@ export class ConstantService {
         );
     }
 
+    update(constant: Constant, uuid:string): Observable<Constant> {
+        return this._httpClient.put<Constant>(`${this.baseUrl}/${uuid}`, constant)
+        .pipe(
+            tap((response: Constant) => {
+                this.constant = response;
+                return response;
+            }),
+            catchError(() => of({} as Constant))
+        );
+    }
+
+    delete(id: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this.baseUrl}/${id}`)
+        .pipe(
+            tap(() => {
+                this.constant = {} as Constant;
+                return;
+            }),
+            catchError(() => of())
+        );
+    }
+
 }

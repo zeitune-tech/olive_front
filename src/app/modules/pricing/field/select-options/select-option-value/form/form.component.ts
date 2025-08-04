@@ -64,7 +64,32 @@ export class SelectFieldOptionValueFormComponent implements OnInit {
             branch: (this.data as any)?.branch  || '',
         };
 
-        console.log("Submitting form data:", formData);
+        if (this.mode === 'edit') {
+            formData['id'] = this.data.id; // Ensure the ID is included for updates
+            this._selectFieldOptionValueService.update(this.data.id, formData).subscribe({
+                next: () => {
+                    const successMessage = this.mode === 'edit'
+                        ? 'form.success.update'
+                        : 'form.success.creation';
+
+                    this.snackBar.open(
+                        this.translocoService.translate(successMessage),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-success' }
+                    );
+                    this.dialogRef.close(true);
+                },
+                error: () => {
+                    this.snackBar.open(
+                        this.translocoService.translate('form.errors.submission'),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-error' }
+                    );
+                    this.formGroup.enable();
+                }
+            });
+            return;
+        }
 
         this._selectFieldOptionValueService.create(formData).subscribe({
             next: () => {

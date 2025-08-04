@@ -56,4 +56,15 @@ export class SelectFieldOptionsService {
         );
     }
 
+    update(selectFieldOptions: SelectFieldOptions, uuid: string): Observable<SelectFieldOptions> {
+        return this._httpClient.put<SelectFieldOptions>(`${this.baseUrl}/${uuid}`, selectFieldOptions)
+        .pipe(
+            tap((response: SelectFieldOptions) => {
+                this.selectFieldOptions = response;
+                return response;
+            }),
+            catchError(() => of({} as SelectFieldOptions))
+        );
+    }
+
 }

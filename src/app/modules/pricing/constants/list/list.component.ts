@@ -21,6 +21,7 @@ import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
 import { ConstantFormComponent } from "../form/form.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-constant-list",
@@ -59,11 +60,9 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     selection = new SelectionModel<Constant>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
-
     managementEntity: ManagementEntity = new ManagementEntity({});
 
     ngOnInit(): void {
-      // Initialiser les produits
       this._productService.getAll()
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((data: Product[]) => {
@@ -78,18 +77,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this._constantService.getAll()
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: any) => {
-          this.data = data?.content || [];
-          this.dataSource.data = data?.content || [];
-          console.log('Constants loaded:', data);
-        });
-
-      this._constantService.constants$
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((data: Constant[]) => {
-          this.data = data;
-          this.dataSource.data = data;
-        });
+        .subscribe();
 
       this._managementEntityService.entity$
         .pipe(takeUntil(this._unsubscribeAll))
@@ -101,56 +89,53 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.branches = branches;
       });
 
+      // Configuration du contrôle de recherche
+      this.searchCtrl.valueChanges
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(value => {
+          this.applyFilter(value);
+        });
+
+      // Charger les données des constantes
+      this._constantService.constants$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: Constant[]) => {
+          this.data = data;
+          this.dataSource.data = data;
+          // Appliquer le filtre actuel après le chargement des données
+          if (this.searchCtrl.value) {
+            this.applyFilter(this.searchCtrl.value);
+          }
+        });
 
       // Initialisation de la configuration de la table
       this.tableOptions = {
           title: '',
           columns: [
-              // label: string;
-              // description: string;
-              // variableName: string;
-              // toReturn: boolean;
-              // managementEntityId: string;
-              // productId: string;
-              // branchId: string;
-              // value: number;
-
-              { label: 'entities.constant.fields.label', property: 'label', type: 'text', visible: true },
-              { label: 'entities.constant.fields.description', property: 'description', type: 'text', visible: true },
-              { label: 'entities.constant.fields.variableName', property: 'variableName', type: 'text', visible: true },
-              { label: 'entities.constant.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
-              { label: 'entities.constant.fields.branch', property: 'branch', type: 'text', visible: true },
-              { label: 'entities.constant.fields.product', property: 'product', type: 'text', visible: true },
-              { label: 'entities.constant.fields.value', property: 'value', type: 'text', visible: true },
-
+            { label: 'entities.constant.fields.label', property: 'label', type: 'text', visible: true },
+            { label: 'entities.constant.fields.description', property: 'description', type: 'text', visible: true },
+            { label: 'entities.constant.fields.variableName', property: 'variableName', type: 'text', visible: true },
+            { label: 'entities.constant.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
+            { label: 'entities.constant.fields.branch', property: 'branch', type: 'text', visible: true },
+            { label: 'entities.constant.fields.product', property: 'product', type: 'text', visible: true },
+            { label: 'entities.constant.fields.value', property: 'value', type: 'text', visible: true },
           ],
           pageSize: 8,
           pageSizeOptions: [5, 6, 8],
           actions: [],
           renderItem: (element: Constant, property: keyof Constant) => {
-              if (property === 'toReturn') {
-                  return element.toReturn ? 'Oui' : 'Non';
-              }
-              if (property === 'branch') {
-                    return this.branches.find(b => b.id === element.branch)?.name ?? '--';
-              }
-              if (property === 'product') {
-                  return this.products.find(p => p.id === element.product)?.name ?? '--';
-              }
-              //   return element.branch ? element.branch.name : '--';
-              return element[property] ?? '--';
+            if (property === 'toReturn') {
+                return element.toReturn ? 'Oui' : 'Non';
+            }
+            if (property === 'branch') {
+                  return this.branches.find(b => b.id === element.branch)?.name ?? '--';
+            }
+            if (property === 'product') {
+                return this.products.find(p => p.id === element.product)?.name ?? '--';
+            }
+            return element[property] ?? '--';
           },
       };
-
-      this._constantService.constants$.subscribe({
-          next: (data: Constant[]) => {
-              this.data = data;
-              this.dataSource.data = data;
-          },
-          error: (error) => {
-              console.error('Error fetching constant data:', error);
-          }
-      });
 
       // Construction des lignes d’en-tête
       this.buildHeaderRows();
@@ -181,11 +166,37 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.visibleColumns.push('actions');
     }
 
-
     ngAfterViewInit() {
         if (this.dataSource) {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+            
+            // Configuration du filtre personnalisé
+            this.dataSource.filterPredicate = (data: Constant, filter: string) => {
+                const searchText = filter.toLowerCase();
+                
+                // Recherche dans les propriétés de base
+                const basicSearch = (
+                    (data.label?.toLowerCase() || '').includes(searchText) ||
+                    (data.description?.toLowerCase() || '').includes(searchText) ||
+                    (data.variableName?.toLowerCase() || '').includes(searchText) ||
+                    (data.value?.toString().toLowerCase() || '').includes(searchText)
+                );
+                
+                // Recherche dans le nom de la branche
+                const branchName = this.branches.find(b => b.id === data.branch)?.name?.toLowerCase() || '';
+                const branchSearch = branchName.includes(searchText);
+                
+                // Recherche dans le nom du produit
+                const productName = this.products.find(p => p.id === data.product)?.name?.toLowerCase() || '';
+                const productSearch = productName.includes(searchText);
+                
+                // Recherche dans la valeur booléenne toReturn
+                const toReturnText = data.toReturn ? 'oui' : 'non';
+                const toReturnSearch = toReturnText.includes(searchText);
+                
+                return basicSearch || branchSearch || productSearch || toReturnSearch;
+            };
         }
     }
 
@@ -195,8 +206,27 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-  selectedBranch: Branch|undefined;
+    /**
+     * Applique un filtre de recherche sur les données du tableau
+     */
+    applyFilter(filterValue: string): void {
+        filterValue = filterValue.trim().toLowerCase();
+        this.dataSource.filter = filterValue;
 
+        if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
+        }
+    }
+
+    /**
+     * Efface le filtre de recherche
+     */
+    clearFilter(): void {
+        this.searchCtrl.setValue('');
+        this.dataSource.filter = '';
+    }
+
+  selectedBranch: Branch|undefined;
   openBranchSelection() {
     this._dialog.open(SelectDialogComponent, {
       width: '700px',
@@ -218,6 +248,20 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
               this.selectedProduct = undefined;
             }
           });
+        // Recharger les constantes pour la branche sélectionnée
+        this._constantService.constants$.subscribe({
+          next: (data: Constant[]) => {
+            this.data = data;
+            this.dataSource.data = data;
+            // Réappliquer le filtre après le chargement des données
+            if (this.searchCtrl.value) {
+              this.applyFilter(this.searchCtrl.value);
+            }
+          },
+          error: (error) => {
+            console.error('Error fetching constant data:', error);
+          }
+        });
       }
     })
   }
@@ -230,108 +274,145 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((products: Product[]) => {
         this.products = products || [];
+        // Réappliquer le filtre après le chargement des produits
+        if (this.searchCtrl.value) {
+          this.applyFilter(this.searchCtrl.value);
+        }
       });
   }
 
   products: Product[] = []
-    searchCtrl: UntypedFormControl = new UntypedFormControl();
-    selectedProduct: Product|undefined;
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  selectedProduct: Product|undefined;
 
-    openSelection() {
-        this._dialog.open(SelectDialogComponent, {
-            width: '700px',
-            data: {
-                displayField: "name",
-                items: this.products,
-                title: "product-selection.title"
-            }
-        }).afterClosed().subscribe((product: Product) => {
-            if (product) {
-                this.selectedProduct = product;
-                // Filtrer les constantes par produit sélectionné si nécessaire
-                // this.dataSource.data = this.data.filter(constant => constant.productId === this.selectedProduct.id);
-                this.dataSource.paginator = this.paginator;
-                // this._changeDetectorRef.detectChanges();
-            }
-        })
+  openSelection() {
+      this._dialog.open(SelectDialogComponent, {
+          width: '700px',
+          data: {
+              displayField: "name",
+              items: this.products,
+              title: "product-selection.title"
+          }
+      }).afterClosed().subscribe((product: Product) => {
+          if (product) {
+              this.selectedProduct = product;
+              this.dataSource.paginator = this.paginator;
+
+          }
+      })
+  }
+
+  onAdd(): void {
+
+    if (!this.selectedBranch) {
+      this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
+      return;
     }
 
-    onAdd(): void {
+    if (!this.selectedProduct) {
+      this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
+      return;
+    }
 
-      if (!this.selectedBranch) {
-        this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
-        return;
-      }
+    this._dialog.open(ConstantFormComponent, {
+        width: '600px',
+        disableClose: true,
+        data: {
+            mode: 'create',
+            product: this.selectedProduct?.id,
+            branch: this.selectedBranch?.id
+        }
 
-      if (!this.selectedProduct) {
-        this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
-        return;
-      }
+    }).afterClosed().subscribe((result) => {
+        if (result) {
+            this._constantService.getAll().subscribe(() => {
+                // Réappliquer le filtre après le rechargement des données
+                if (this.searchCtrl.value) {
+                    this.applyFilter(this.searchCtrl.value);
+                }
+            });
+        }
+    });
+  }
 
+  onDelete(constant: Constant): void {
+    this._dialog.open(ConfirmDeleteComponent, {
+        width: '400px',
+        data: {
+            title: 'entities.constant.delete.title',
+            message: 'entities.constant.delete.message',
+            confirmButtonText: 'actions.delete',
+            cancelButtonText: 'actions.cancel'
+        }
+    }).afterClosed().subscribe((confirmed) => {
+        if (confirmed) {
+            this._constantService.delete(constant.id).subscribe({
+                next: () => {
+                    this._snackBar.open('entities.constant.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
+                    this._constantService.getAll().subscribe(() => {
+                        // Réappliquer le filtre après le rechargement des données
+                        if (this.searchCtrl.value) {
+                            this.applyFilter(this.searchCtrl.value);
+                        }
+                    });
+                },
+                error: () => {
+                    this._snackBar.open('entities.constant.delete.error', '', { duration: 3000, panelClass: 'snackbar-error' });
+                }
+            });
+        }
+    });
+
+  }
+
+  /**
+  * Edit Constant
+  */
+  onEdit(constant: Constant): void {
       this._dialog.open(ConstantFormComponent, {
           width: '600px',
           disableClose: true,
           data: {
-              mode: 'create',
-              product: this.selectedProduct?.id,
-              branch: this.selectedBranch?.id
+              mode: 'edit',
+              ...constant
           }
-
       }).afterClosed().subscribe((result) => {
           if (result) {
-              this._constantService.getAll().subscribe();
+              this._constantService.getAll().subscribe(() => {
+                  // Réappliquer le filtre après le rechargement des données
+                  if (this.searchCtrl.value) {
+                      this.applyFilter(this.searchCtrl.value);
+                  }
+              });
           }
       });
-    }
+  }
 
 
+  onView(constant: Constant): void {
+      //this._router.navigate(['/administration/products/list']);
+  }
 
-    onDelete(constant: Constant): void {
-    }
+  onButtonClick(product: Product, column: string): void {
+      if (column === 'productionRegistry') {
+          alert('Production Registry button clicked for product: ' + product.name);
+      }
+  }
 
-    /**
-        * Edit Constant
-        */
-    onEdit(constant: Constant): void {
-        this._dialog.open(ConstantFormComponent, {
-            width: '600px',
-            disableClose: true,
-            data: {
-                mode: 'edit',
-                ...constant
-            }
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._constantService.getAll().subscribe();
-            }
-        });
-    }
-
-
-    onView(constant: Constant): void {
-        //this._router.navigate(['/administration/products/list']);
-    }
-
-    onButtonClick(product: Product, column: string): void {
-        if (column === 'productionRegistry') {
-            alert('Production Registry button clicked for product: ' + product.name);
-        }
-    }
-
-    hasPermission(product: Product): boolean {
-        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm) {
-            return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-            return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-            return true;
-        } else
-            return false;
-    }
+  hasPermission(product: Product): boolean {
+      let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
+      if (!hasPerm) {
+          return false;
+      } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
+          return true;
+      } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
+          return true;
+      } else
+          return false;
+  }
 
 
-    trackByProperty(index: number, column: TableColumn<Constant>) {
-        return column.property;
-    }
+  trackByProperty(index: number, column: TableColumn<Constant>) {
+      return column.property;
+  }
 }

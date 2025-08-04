@@ -1609,6 +1609,12 @@
           "active": "Actif",
           "inactive": "Inactif"
         }
+      },
+      "delete": {
+        "title": "Supprimer la valeur d'option",
+        "message": "Êtes-vous sûr de vouloir supprimer cette valeur d'option de champ ?",
+        "success": "Valeur d'option supprimée avec succès",
+        "error": "Erreur lors de la suppression de la valeur d'option"
       }
     },
     "formula": {
@@ -1960,7 +1966,33 @@
       "inferieurToFrom": "Cette valeur doit être supérieure à la précédente.",
       "inferieurTo0": "Cette valeur doit être positive.",
       "invalid_phone": "Invalide",
-      "submission": "Erreur lors de la soumission du formulaire"
+      "submission": "Erreur lors de la soumission du formulaire",
+      "unexpected": "Une erreur inattendue s'est produite",
+      "client": "Erreur: {{message}}",
+      "badRequest": "Données invalides. Veuillez vérifier les informations saisies.",
+      "unauthorized": "Non autorisé. Veuillez vous reconnecter.",
+      "forbidden": "Accès interdit. Vous n'avez pas les permissions nécessaires.",
+      "notFound": "Ressource non trouvée.",
+      "conflict": "Conflit. Cette ressource existe déjà ou est en cours d'utilisation.",
+      "unprocessableEntity": "Données non valides. Veuillez corriger les erreurs.",
+      "serverError": "Erreur interne du serveur. Veuillez réessayer plus tard.",
+      "httpError": "Erreur {{status}}: {{message}}"
+    },
+    "validation": {
+      "nameRequired": "Le nom est requis",
+      "labelRequired": "Le libellé est requis",
+      "nameMaxLength": "Le nom ne peut pas dépasser {{max}} caractères",
+      "labelMaxLength": "Le libellé ne peut pas dépasser {{max}} caractères",
+      "idRequired": "L'ID de la valeur d'option est requis",
+      "idRequiredForDeletion": "L'ID de la valeur d'option est requis pour la suppression",
+      "errors": "Erreurs de validation: {{errors}}"
+    },
+    "operations": {
+      "create": "Création de la valeur d'option",
+      "getAll": "Récupération des valeurs d'options",
+      "getById": "Récupération de la valeur d'option",
+      "update": "Mise à jour de la valeur d'option",
+      "delete": "Suppression de la valeur d'option"
     },
     "options": {
       "yes": "Oui",

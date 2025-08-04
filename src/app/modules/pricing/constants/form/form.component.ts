@@ -45,7 +45,6 @@ export class ConstantFormComponent implements OnInit {
             this.managementEntity = entity;
         });
 
-
         this.formGroup = this.fb.group({
               label: [this.data.label || '', Validators.required],
               description: [this.data.description || '', Validators.required],
@@ -54,7 +53,6 @@ export class ConstantFormComponent implements OnInit {
               branch: [this.data.branch || '', Validators.required],
               value: [this.data.value || '', Validators.required],
         });
-
     }
 
     onSubmit(): void {
@@ -70,28 +68,55 @@ export class ConstantFormComponent implements OnInit {
 
         console.log("Submitting form data:", formData);
 
-        this._constantService.create(formData).subscribe({
-            next: () => {
-                const successMessage = this.mode === 'edit'
-                    ? 'form.success.update'
-                    : 'form.success.creation';
+        if (this.mode === 'edit') {
+            this._constantService.update(formData, this.data.id).subscribe({
+                next: () => {
+                    const successMessage = this.mode === 'edit'
+                        ? 'form.success.update'
+                        : 'form.success.creation';
 
-                this.snackBar.open(
-                    this.translocoService.translate(successMessage),
-                    undefined,
-                    { duration: 3000, panelClass: 'snackbar-success' }
-                );
-                this.dialogRef.close(true);
-            },
-            error: () => {
-                this.snackBar.open(
-                    this.translocoService.translate('form.errors.submission'),
-                    undefined,
-                    { duration: 3000, panelClass: 'snackbar-error' }
-                );
-                this.formGroup.enable();
-            }
-        });
+                    this.snackBar.open(
+                        this.translocoService.translate(successMessage),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-success' }
+                    );
+                    this.dialogRef.close(true);
+                },
+                error: () => {
+                    this.snackBar.open(
+                        this.translocoService.translate('form.errors.submission'),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-error' }
+                    );
+                    this.formGroup.enable();
+                }
+            });
+        } else {
+            this._constantService.create(formData).subscribe({
+                next: () => {
+                    const successMessage = this.mode === 'edit'
+                        ? 'form.success.update'
+                        : 'form.success.creation';
+
+                    this.snackBar.open(
+                        this.translocoService.translate(successMessage),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-success' }
+                    );
+                    this.dialogRef.close(true);
+                },
+                error: () => {
+                    this.snackBar.open(
+                        this.translocoService.translate('form.errors.submission'),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-error' }
+                    );
+                    this.formGroup.enable();
+                }
+            });
+        }
+
+        
     }
 
       onCancel(): void {

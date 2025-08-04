@@ -41,6 +41,10 @@ export class SelectFieldOptionsFormComponent implements OnInit {
 
         this._selectFieldOptionValueService.selectFieldOptionValues$.subscribe((values) => {
             this.possibilities = values;
+            // Réinitialiser le champ possibilities après avoir reçu les données
+            if (this.formGroup && this.mode === 'edit') {
+                this.initializePossibilities();
+            }
         });
 
         this.mode = (this.data as any).mode;
@@ -55,15 +59,34 @@ export class SelectFieldOptionsFormComponent implements OnInit {
             this.managementEntity = entity;
         });
 
-
+        // Initialiser le formulaire avec les valeurs par défaut
         this.formGroup = this.fb.group({
               label: [this.data.label || '', Validators.required],
               name: [this.data.name || '', Validators.required],
               description: [this.data.description || '', Validators.required],
-              possibilities: [this.data.possibilities || '', Validators.required],
+              possibilities: [[], Validators.required], // Initialiser avec un tableau vide
               // value: [this.data.value || '', Validators.required],
         });
 
+    }
+
+    /**
+     * Initialise les possibilités sélectionnées pour le mode édition
+     */
+    private initializePossibilities(): void {
+        if (this.data.possibilities && this.mode === 'edit') {
+            let selectedIds: string[] = [];
+            
+            // Si this.data.possibilities est un tableau d'objets SelectFieldOptionValue
+            if (Array.isArray(this.data.possibilities)) {
+                selectedIds = this.data.possibilities.map((item: SelectFieldOptionValue) => item.id);
+            }
+            
+            // Mettre à jour le FormControl avec les IDs sélectionnés
+            this.formGroup.patchValue({
+                possibilities: selectedIds
+            });
+        }
     }
 
     onSubmit(): void {
@@ -77,8 +100,41 @@ export class SelectFieldOptionsFormComponent implements OnInit {
             branch: (this.data as any)!.branch,
         };
 
+        // Ajouter l'ID pour le mode édition
+        if (this.mode === 'edit') {
+            formData['id'] = this.data.id;
+        }
+
         console.log("Submitting form data:", formData);
 
+        if (this.mode === 'edit') {
+            this._selectFieldOptionsService.update(formData, this.data.id).subscribe({
+                next: () => {
+                    const successMessage = this.mode === 'edit'
+                        ? 'form.success.update'
+                        : 'form.success.creation';
+
+                    this.snackBar.open(
+                        this.translocoService.translate(successMessage),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-success' }
+                    );
+                    this.dialogRef.close(true);
+                },
+                error: () => {
+                    this.snackBar.open(
+                        this.translocoService.translate('form.errors.submission'),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-error' }
+                    );
+                    this.formGroup.enable();
+                }
+            });
+            return;
+        }
+
+        // TODO: Ajouter la méthode update au service SelectFieldOptionsService
+        // Pour l'instant, on utilise create pour les deux modes
         this._selectFieldOptionsService.create(formData).subscribe({
             next: () => {
                 const successMessage = this.mode === 'edit'

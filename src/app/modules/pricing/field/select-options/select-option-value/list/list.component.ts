@@ -21,6 +21,8 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import {SelectFieldOptionValueService} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.service";
 import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.interface";
 import {SelectFieldOptionValueFormComponent} from "../form/form.component";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
+import { TranslocoService } from "@jsverse/transloco";
 
 @Component({
     selector: "app-constant-list",
@@ -48,7 +50,8 @@ export class SelectFieldOptionValueListComponent implements OnInit, AfterViewIni
         private _managementEntityService: ManagementEntityService,
         private _branchService: BranchService,
         private _dialog: MatDialog,
-        private _snackBar: MatSnackBar
+        private _snackBar: MatSnackBar,
+        private _translocoService: TranslocoService,
     ) {
     }
 
@@ -235,12 +238,20 @@ export class SelectFieldOptionValueListComponent implements OnInit, AfterViewIni
     onAdd(): void {
 
       if (!this.selectedBranch) {
-        this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
+        this._snackBar.open(
+          this._translocoService.translate("entities.branch-selection.not-select-error-title"), 
+          "", 
+          { duration: 3000 }
+        );
         return;
       }
 
       if (!this.selectedProduct) {
-        this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
+        this._snackBar.open(
+          this._translocoService.translate("entities.product-selection.not-select-error-title"), 
+          "", 
+          { duration: 3000 }
+        );
         return;
       }
 
@@ -260,14 +271,9 @@ export class SelectFieldOptionValueListComponent implements OnInit, AfterViewIni
       });
     }
 
-
-
-    onDelete(constant: SelectFieldOptionValue): void {
-    }
-
     /**
-        * Edit SelectFieldOptionValue
-        */
+    * Edit SelectFieldOptionValue
+    */
     onEdit(constant: SelectFieldOptionValue): void {
         this._dialog.open(SelectFieldOptionValueFormComponent, {
             width: '600px',
@@ -283,6 +289,39 @@ export class SelectFieldOptionValueListComponent implements OnInit, AfterViewIni
         });
     }
 
+    /**
+     * Delete SelectFieldOptionValue
+     */
+    onDelete(constant: SelectFieldOptionValue): void {
+      this._dialog.open(ConfirmDeleteComponent, {
+          data: {
+              title: 'entities.select-field-option-value.delete.title',
+              message: 'entities.select-field-option-value.delete.message',
+              confirmButtonText: 'form.actions.delete',
+              cancelButtonText: 'form.actions.cancel'
+          }
+      }).afterClosed().subscribe((confirmed) => {
+          if (confirmed) {
+              this._selectFieldOptionValueService.delete(constant.id).subscribe({
+                  next: () => {
+                      this._snackBar.open(
+                          this._translocoService.translate('entities.select-field-option-value.delete.success'),
+                          '',
+                          { duration: 3000, panelClass: 'snackbar-success' }
+                      );
+                      this._selectFieldOptionValueService.getAll().subscribe();
+                  },
+                  error: () => {
+                      this._snackBar.open(
+                          this._translocoService.translate('entities.select-field-option-value.delete.error'),
+                          '',
+                          { duration: 3000, panelClass: 'snackbar-error' }
+                      );
+                  }
+              });
+          }
+      });
+    }
 
     onView(constant: SelectFieldOptionValue): void {
         //this._router.navigate(['/administration/products/list']);

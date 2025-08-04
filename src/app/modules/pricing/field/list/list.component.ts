@@ -124,12 +124,13 @@ export class FieldListComponent implements OnInit {
               if (property === 'options') {
                   return element.options ? element.options.label : 'Aucune option';
               }
-              // if (property === 'value') {
-              //     if (element.value instanceof SelectFieldOptionValue) {
-              //         return element.value.label;
-              //     }
-              //     return element.value ? element.value : 'Aucune valeur';
-              // }
+              
+              if (property === 'branch') {
+                  return this.branches.find(b => b.id === element.branch)?.name ?? '--';
+              }
+              if (property === 'product') {
+                  return this.products.find(p => p.id === element.product)?.name ?? '--';
+              }
 
               return element[property] ?? '--';
           },
