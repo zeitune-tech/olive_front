@@ -141,4 +141,34 @@ export class FieldService {
             catchError(() => of([]))
         );
     }
+
+    //delete
+    delete(id: string): Observable<void> {
+        const baseUrl = id.startsWith('NUMBER') ? this.numericBaseUrl : this.selectBaseUrl;
+        return this._httpClient.delete<void>(`${baseUrl}/${id}`)
+        .pipe(
+            tap(() => {
+                // Mettre à jour le subject après la suppression
+                this.fields$.pipe(
+                    map(fields => fields.filter(field => field.id !== id))
+                ).subscribe(updatedFields => this.fields = updatedFields);
+            }),
+            catchError(() => of())
+        );
+    }
+
+    //update
+    update(field: Field): Observable<Field> {
+        const baseUrl = field.type === 'NUMBER' ? this.numericBaseUrl : this.selectBaseUrl;
+        return this._httpClient.put<Field>(`${baseUrl}/${field.id}`, field)
+        .pipe(
+            tap(() => {
+                // Mettre à jour le subject après la mise à jour
+                this.fields$.pipe(
+                    map(fields => fields.map(f => f.id === field.id ? field : f))
+                ).subscribe(updatedFields => this.fields = updatedFields);
+            }),
+            catchError(() => of(field))
+        );
+    }
 }

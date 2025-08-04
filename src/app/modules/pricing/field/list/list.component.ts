@@ -22,6 +22,7 @@ import {UntypedFormControl} from "@angular/forms";
 import { NumericFieldFormComponent } from "../numeric-form/form.component";
 import {SelectFieldFormComponent} from "../select-form/form.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-field-list",
@@ -88,17 +89,6 @@ export class FieldListComponent implements OnInit {
       this.tableOptions = {
           title: 'entities.pricing.field.table.title',
           columns: [
-              // label: string;
-              // description: string;
-              // variableName: string;
-              // toReturn: boolean;
-              // managementEntityId: string;
-              // productId: string;
-              // branchId: string;
-              // type: "NUMERIC" | "SELECT";
-              // options: SelectFieldOptions | null;
-              // value: SelectFieldOptionValue | null;
-
               // { label: 'entities.pricing.field.fields.label', property: 'label', type: 'text', visible: true },
               { label: 'entities.pricing.field.fields.description', property: 'description', type: 'text', visible: true },
               { label: 'entities.pricing.field.fields.variableName', property: 'variableName', type: 'text', visible: true },
@@ -283,16 +273,34 @@ export class FieldListComponent implements OnInit {
     });
   }
 
-  onDelete(product: Product): void {
-      this._dialog.open(SelectDialogComponent, {
-          data: product,
-          width: '600px',
-          disableClose: true,
-      }).afterClosed().subscribe((result) => {
-          if (result) {
-              this._productService.getAll().subscribe();
-          }
-      });
+  onDelete(field: Field): void {
+    this._dialog.open(ConfirmDeleteComponent, {
+            width: '400px',
+            data: {
+                title: 'entities.constant.delete.title',
+                message: 'entities.constant.delete.message',
+                confirmButtonText: 'actions.delete',
+                cancelButtonText: 'actions.cancel'
+            }
+        }).afterClosed().subscribe((confirmed) => {
+            if (confirmed) {
+                this._fieldService.delete(field.id).subscribe({
+                    next: () => {
+                        this._snackBar.open('entities.field.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
+                        this._fieldService.getAll().subscribe(() => {
+                            // Réappliquer le filtre après le rechargement des données
+                            if (this.searchCtrl.value) {
+                                // this.applyFilter(this.searchCtrl.value);
+                            }
+                        });
+                    },
+                    error: () => {
+                        this._snackBar.open('entities.constant.delete.error', '', { duration: 3000, panelClass: 'snackbar-error' });
+                    }
+                });
+            }
+        });
+      
   }
 
   /**

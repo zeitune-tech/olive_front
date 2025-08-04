@@ -1312,6 +1312,8 @@
         "description": "Description",
         "variableName": "Nom de la variable",
         "toReturn": "À retourner",
+        "branch": "Branche",
+        "product": "Produit",
         "ruleValue": "Valeur de règle",
         "field": "Champ",
         "operator": "Opérateur",
@@ -1378,7 +1380,13 @@
         "less_than": "Inférieur à",
         "greater_than": "Supérieur à",
         "less_or_equal": "Inférieur ou égal à",
-        "greater_or_equal": "Supérieur ou égal à"
+        "greater_or_equal": "Supérieur ou égal à",
+        "EQUALS": "Égal à",
+        "NOT_EQUALS": "Différent de",
+        "LESS_THAN": "Inférieur à",
+        "GREATER_THAN": "Supérieur à",
+        "LESS_OR_EQUAL": "Inférieur ou égal à",
+        "GREATER_OR_EQUAL": "Supérieur ou égal à"
       },
       "hints": {
         "optional-if-minmax": "Optionnel si min/max sont définis"
@@ -2007,6 +2015,7 @@
       "save": "Enregistrer",
       "cancel": "Annuler",
       "edit": "Modifier",
+      "view": "Voir",
       "delete": "Supprimer",
       "deleteTitle": "Supprimer l'élément",
       "deleteMessage": "Êtes-vous sûr de vouloir supprimer cet élément ?",
@@ -2303,6 +2312,10 @@
     "error": "Une erreur s'est produite",
     "warning": "Avertissement",
     "info": "Information"
+  },
+  "actions": {
+    "add-rule": "Ajouter une règle",
+    "add-condition": "Ajouter une condition"
   },
   "action_button": {
     "create": "Créer",

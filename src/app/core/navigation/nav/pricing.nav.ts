@@ -22,14 +22,6 @@ export const defaultPrincingNavigation: NavigationItem[] = [
     // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
     children: [
       {
-        id: 'field',
-        title: 'sidebar.pricing.field_list',
-        type: 'basic',
-        icon: 'fluent:people-team',
-        link: '/pricing/fields/list',
-        // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
-      },
-      {
         id: 'select-field',
         title: 'sidebar.pricing.select_field',
         type: 'collapsable',
@@ -55,6 +47,14 @@ export const defaultPrincingNavigation: NavigationItem[] = [
           },
           
         ]
+      },
+      {
+        id: 'field',
+        title: 'sidebar.pricing.field_list',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/pricing/fields/list',
+        // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
       },
     ]
   },
