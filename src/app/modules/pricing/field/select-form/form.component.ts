@@ -6,9 +6,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import { SelectField } from '@core/services/pricing/field/field.interface';
-import {SelectFieldOptions} from "@core/services/pricing/field/select-field-options.interface";
+import {SelectFieldOptions} from "@core/services/pricing/field/select-field-options/select-field-options.interface";
 import {FieldService} from "@core/services/pricing/field/field.service";
-import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options.service";
+import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options/select-field-options.service";
 
 @Component({
     selector: 'app-select-form',

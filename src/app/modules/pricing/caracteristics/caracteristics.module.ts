@@ -1,9 +1,6 @@
 import { NgModule } from "@angular/core";
-import { CaracteristicListComponent } from "./list/list.component";
 import { RouterModule } from "@angular/router";
 import { routes } from "./caracteristics.routing";
-import { CaracteristicNewComponent } from "./new/new.component";
-import { CaracteristicEditComponent } from "./edit/edit.component";
 import { SharedModule } from "@shared/shared.module";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -23,9 +20,6 @@ import { LayoutService } from "./layout.service";
 
 @NgModule({
     declarations: [
-        CaracteristicListComponent,
-        CaracteristicNewComponent,
-        CaracteristicEditComponent
     ],
     imports: [
         RouterModule.forChild(routes),

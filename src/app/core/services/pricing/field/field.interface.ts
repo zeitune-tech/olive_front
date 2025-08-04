@@ -1,5 +1,5 @@
 import {VariableItem} from "@core/services/pricing/variable-item/variable-item.interface";
-import { SelectFieldOptions } from "./select-field-options.interface";
+import { SelectFieldOptions } from "./select-field-options/select-field-options.interface";
 
 // Interfaces pour les DTOs
 export interface NumericField {

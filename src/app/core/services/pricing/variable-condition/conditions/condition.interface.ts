@@ -1,5 +1,5 @@
 import {NumericField, SelectField} from "@core/services/pricing/field/field.interface";
-import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field-option-value.interface";
+import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.interface";
 
 export interface NumericalCondition {
     value: number;

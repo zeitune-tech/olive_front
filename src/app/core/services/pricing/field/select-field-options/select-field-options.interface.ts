@@ -1,4 +1,4 @@
-import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field-option-value.interface";
+import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.interface";
 
 export class SelectFieldOptions {
 

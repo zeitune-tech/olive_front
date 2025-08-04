@@ -1,5 +1,5 @@
 import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
-import { Field } from "./field.interface";
+import { Field } from "../field.interface";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";

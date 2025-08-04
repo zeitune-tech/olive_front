@@ -6,10 +6,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import { Cons } from 'rxjs';
-import {SelectFieldOptions} from "@core/services/pricing/field/select-field-options.interface";
-import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options.service";
-import { SelectFieldOptionValue } from '@core/services/pricing/field/select-field-option-value.interface';
-import { SelectFieldOptionValueService } from '@core/services/pricing/field/select-field-option-value.service';
+import {SelectFieldOptions} from "@core/services/pricing/field/select-field-options/select-field-options.interface";
+import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options/select-field-options.service";
+import { SelectFieldOptionValue } from '@core/services/pricing/field/select-field-option-value/select-field-option-value.interface';
+import { SelectFieldOptionValueService } from '@core/services/pricing/field/select-field-option-value/select-field-option-value.service';
 
 @Component({
     selector: 'app-coverage-reference-edit',

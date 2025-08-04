@@ -19,10 +19,10 @@ import { TableModule } from "@lhacksrt/components/table/table.module";
 import { LayoutService } from "./layout.service";
 import { FieldService } from "@core/services/pricing/field/field.service";
 import { FieldListComponent } from "./list/list.component";
-import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options.service";
+import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options/select-field-options.service";
 import { NumericFieldFormComponent } from "./numeric-form/form.component";
 import { SelectFieldFormComponent } from "./select-form/form.component";
-import { SelectFieldOptionValueService } from "@core/services/pricing/field/select-field-option-value.service";
+import { SelectFieldOptionValueService } from "@core/services/pricing/field/select-field-option-value/select-field-option-value.service";
 
 @NgModule({
     declarations: [

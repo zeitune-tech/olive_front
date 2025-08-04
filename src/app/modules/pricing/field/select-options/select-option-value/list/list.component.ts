@@ -18,8 +18,8 @@ import { SelectDialogComponent } from "@shared/components/select-dialog/select-d
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import {SelectFieldOptionValueService} from "@core/services/pricing/field/select-field-option-value.service";
-import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field-option-value.interface";
+import {SelectFieldOptionValueService} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.service";
+import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.interface";
 import {SelectFieldOptionValueFormComponent} from "../form/form.component";
 
 @Component({
