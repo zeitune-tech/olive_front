@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import { VariableCondition } from '@core/services/pricing/variable-condition/variable-condition.interface';
@@ -13,6 +14,7 @@ import { Condition } from '@core/services/pricing/variable-condition/conditions/
 import { ConditionService } from '@core/services/pricing/variable-condition/conditions/condition.service';
 import { Field } from '@core/services/pricing/field/field.interface';
 import { FieldService } from '@core/services/pricing/field/field.service';
+import { environment } from '@env/environment';
 
 @Component({
     selector: 'app-variable-condition-edit',
@@ -25,11 +27,11 @@ export class VariableConditionFormComponent implements OnInit {
       managementEntity: ManagementEntity | undefined;
       fields: Field[] = [];
       availableOperators: { [key: string]: string[] } = {
-          'SELECT': ['equal', 'different'],
-          'NUMBER': ['equal', 'different', 'less_than', 'greater_than', 'less_or_equal', 'greater_or_equal']
+          'SELECT': ['EQUALS', 'NOT_EQUALS'],
+          'NUMBER': ['EQUALS', 'NOT_EQUALS', 'LESS_THAN', 'GREATER_THAN', 'LESS_OR_EQUAL', 'GREATER_OR_EQUAL']
       };
 
-      mode: 'create' | 'edit' = 'create';
+      mode: 'create' | 'edit' | 'view' = 'create';
 
       constructor(
           private fb: FormBuilder,
@@ -41,13 +43,16 @@ export class VariableConditionFormComponent implements OnInit {
           private _fieldService: FieldService,
           private translocoService: TranslocoService,
           private snackBar: MatSnackBar,
-          private _managementEntityService: ManagementEntityService
+          private _managementEntityService: ManagementEntityService,
+          private _httpClient: HttpClient
       ) {}
 
     ngOnInit(): void {
 
         this.mode = (this.data as any).mode;
         if (this.mode == 'edit') {
+            this.dialogRef.updateSize('800px', 'auto');
+        } else if (this.mode == 'view') {
             this.dialogRef.updateSize('800px', 'auto');
         } else {
             this.dialogRef.updateSize('800px', 'auto');
@@ -73,6 +78,11 @@ export class VariableConditionFormComponent implements OnInit {
             // Section Rules
             rules: this.fb.array(this.data.rules?.length ? this.data.rules.map(rule => this.createRuleFormGroup(rule)) : [this.createRuleFormGroup()])
         });
+
+        // Désactiver le formulaire en mode view
+        if (this.mode === 'view') {
+            this.formGroup.disable();
+        }
 
     }
 
@@ -196,36 +206,184 @@ export class VariableConditionFormComponent implements OnInit {
         if (field?.type === 'SELECT' && field.options) {
             return field.options.possibilities || [];
         }
-        return [];
+        return[];
+    }
+
+    isReadOnly(): boolean {
+        return this.mode === 'view';
     }
 
     onSubmit(): void {
-        if (this.formGroup.invalid) return;
+        if (this.formGroup.invalid || this.mode === 'view') return;
 
         this.formGroup.disable();
 
-        const formData = {
-            ...this.formGroup.value,
+        console.log("Starting creation workflow...");
+
+        // Suivre le nouveau workflow: 1) Conditions -> 2) Règles -> 3) Variable Condition
+        this.createAllConditions();
+    }
+
+    private createAllConditions(): void {
+        const rules = this.formGroup.value.rules;
+        const allConditions: any[] = [];
+        const conditionIndexMap: { ruleIndex: number, conditionIndex: number }[] = [];
+
+        // Collecter toutes les conditions de toutes les règles
+        rules.forEach((ruleData: any, ruleIndex: number) => {
+            ruleData.conditions.forEach((conditionData: any, conditionIndex: number) => {
+                allConditions.push(conditionData);
+                conditionIndexMap.push({ ruleIndex, conditionIndex });
+            });
+        });
+
+        if (allConditions.length === 0) {
+            this.createAllRules([]);
+            return;
+        }
+
+        const createdConditionIds: string[] = [];
+        let completedConditions = 0;
+
+        allConditions.forEach((conditionData: any, index: number) => {
+            const field = this.fields.find(f => f.id === conditionData.field);
+            const conditionType = field?.type || 'NUMBER';
+
+            // Adapter les champs selon le type de condition et les attentes de l'API
+            let conditionToCreate: any;
+            
+            if (conditionType === 'SELECT') {
+                conditionToCreate = {
+                    value: conditionData.value,
+                    fieldId: conditionData.field,
+                    operator: conditionData.operator
+                };
+            } else if (conditionType === 'NUMBER') {
+                conditionToCreate = {
+                    fieldId: conditionData.field,
+                    numericOperator: conditionData.operator,
+                    value: conditionData.value,
+                    minValue: conditionData.minValue,
+                    maxValue: conditionData.maxValue
+                };
+            } else {
+                // Fallback pour autres types
+                conditionToCreate = {
+                    fieldId: conditionData.field,
+                    operator: conditionData.operator,
+                    value: conditionData.value,
+                    minValue: conditionData.minValue,
+                    maxValue: conditionData.maxValue
+                };
+            }
+
+            console.log(`Creating condition ${index + 1}:`, conditionToCreate);
+
+            // Utiliser directement HttpClient pour appeler les bons endpoints
+            const baseUrl = conditionType === 'NUMBER' 
+                ? `${environment.pricing_url}/numerical-conditions`
+                : `${environment.pricing_url}/select-field-conditions`;
+
+            this._httpClient.post<any>(baseUrl, conditionToCreate).subscribe({
+                next: (createdCondition: any) => {
+                    console.log(`Condition ${index + 1} created:`, createdCondition);
+                    createdConditionIds[index] = createdCondition.id;
+                    completedConditions++;
+                    
+                    if (completedConditions === allConditions.length) {
+                        // Toutes les conditions sont créées, passer à la création des règles
+                        this.createAllRules(createdConditionIds, conditionIndexMap);
+                    }
+                },
+                error: (error: any) => {
+                    console.error(`Error creating condition ${index + 1}:`, error);
+                    this.snackBar.open(
+                        this.translocoService.translate('form.errors.submission'),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-error' }
+                    );
+                    this.formGroup.enable();
+                }
+            });
+        });
+    }
+
+    private createAllRules(conditionIds: string[], conditionIndexMap?: { ruleIndex: number, conditionIndex: number }[]): void {
+        const rules = this.formGroup.value.rules;
+        const createdRuleIds: string[] = [];
+        let completedRules = 0;
+
+        if (rules.length === 0) {
+            this.createVariableCondition([]);
+            return;
+        }
+
+        rules.forEach((ruleData: any, ruleIndex: number) => {
+            // Collecter les IDs des conditions pour cette règle
+            const ruleConditionIds: string[] = [];
+            if (conditionIndexMap) {
+                conditionIndexMap.forEach((mapping, conditionGlobalIndex) => {
+                    if (mapping.ruleIndex === ruleIndex) {
+                        ruleConditionIds.push(conditionIds[conditionGlobalIndex]);
+                    }
+                });
+            }
+
+            const ruleToCreate = {
+                label: ruleData.label,
+                name: ruleData.name,
+                value: ruleData.value,
+                conditions: ruleConditionIds, // IDs des conditions créées
+                managementEntity: this.managementEntity?.id
+            };
+
+            console.log(`Creating rule ${ruleIndex + 1}:`, ruleToCreate);
+
+            this._ruleService.create(ruleToCreate as any).subscribe({
+                next: (createdRule: Rule) => {
+                    console.log(`Rule ${ruleIndex + 1} created:`, createdRule);
+                    createdRuleIds[ruleIndex] = createdRule.id;
+                    completedRules++;
+                    
+                    if (completedRules === rules.length) {
+                        // Toutes les règles sont créées, passer à la création de la variable condition
+                        this.createVariableCondition(createdRuleIds);
+                    }
+                },
+                error: (error: any) => {
+                    console.error(`Error creating rule ${ruleIndex + 1}:`, error);
+                    this.snackBar.open(
+                        this.translocoService.translate('form.errors.submission'),
+                        undefined,
+                        { duration: 3000, panelClass: 'snackbar-error' }
+                    );
+                    this.formGroup.enable();
+                }
+            });
+        });
+    }
+
+    private createVariableCondition(ruleIds: string[]): void {
+        const variableConditionData = {
+            label: this.formGroup.value.label,
+            description: this.formGroup.value.description,
+            variableName: this.formGroup.value.variableName,
+            toReturn: this.formGroup.value.toReturn,
+            branch: this.formGroup.value.branch,
             managementEntity: this.managementEntity?.id,
             product: this.data.product,
+            ruleIds: ruleIds // IDs des règles créées (selon le workflow API)
         };
 
-        console.log("Submitting form data:", formData);
+        console.log("Creating variable condition:", variableConditionData);
 
-        this._variableConditionService.create(formData).subscribe({
-            next: () => {
-                const successMessage = this.mode === 'edit'
-                    ? 'form.success.update'
-                    : 'form.success.creation';
-
-                this.snackBar.open(
-                    this.translocoService.translate(successMessage),
-                    undefined,
-                    { duration: 3000, panelClass: 'snackbar-success' }
-                );
-                this.dialogRef.close(true);
+        this._variableConditionService.create(variableConditionData as any).subscribe({
+            next: (createdVariableCondition: VariableCondition) => {
+                console.log("Variable condition created:", createdVariableCondition);
+                this.onSubmissionSuccess();
             },
-            error: () => {
+            error: (error: any) => {
+                console.error("Error creating variable condition:", error);
                 this.snackBar.open(
                     this.translocoService.translate('form.errors.submission'),
                     undefined,
@@ -234,6 +392,19 @@ export class VariableConditionFormComponent implements OnInit {
                 this.formGroup.enable();
             }
         });
+    }
+
+    private onSubmissionSuccess(): void {
+        const successMessage = this.mode === 'edit'
+            ? 'form.success.update'
+            : 'form.success.creation';
+
+        this.snackBar.open(
+            this.translocoService.translate(successMessage),
+            undefined,
+            { duration: 3000, panelClass: 'snackbar-success' }
+        );
+        this.dialogRef.close(true);
     }
 
       onCancel(): void {

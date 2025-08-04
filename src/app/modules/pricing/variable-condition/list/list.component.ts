@@ -125,7 +125,14 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
-            actions: [],
+            actions: [
+                // {
+                //     label: 'actions.view',
+                //     icon: 'heroicons_outline:eye',
+                //     action: (element: VariableCondition) => this.onView(element),
+                //     cssClasses: ['text-blue-600', 'hover:text-blue-800']
+                // }
+            ],
             renderItem: (element: VariableCondition, property: keyof VariableCondition) => {
                 if (property === 'toReturn') {
                     return element.toReturn ? 'Oui' : 'Non';
@@ -307,8 +314,16 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     }
 
 
-    onView(VariableCondition: VariableCondition): void {
-        //this._router.navigate(['/administration/products/list']);
+    onView(variableCondition: VariableCondition): void {
+        // Ouvrir le formulaire en mode lecture seule pour voir les détails
+        this._dialog.open(VariableConditionFormComponent, {
+            width: '800px',
+            disableClose: false,
+            data: {
+                mode: 'view',
+                ...variableCondition
+            }
+        });
     }
 
     onButtonClick(product: Product, column: string): void {
