@@ -21,7 +21,6 @@ import { VariableConditionFormComponent } from "../form/form.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { VariableCondition } from "@core/services/pricing/variable-condition/variable-condition.interface";
 import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
-import { VariableConditionFormRefactoredComponent } from "../form/variable-condition-form-refactored.component";
 
 @Component({
     selector: "app-variable-condition-list",
