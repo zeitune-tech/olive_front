@@ -21,6 +21,7 @@ import { VariableConditionFormComponent } from "../form/form.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { VariableCondition } from "@core/services/pricing/variable-condition/variable-condition.interface";
 import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
+import { VariableConditionFormRefactoredComponent } from "../form/variable-condition-form-refactored.component";
 
 @Component({
     selector: "app-variable-condition-list",
@@ -106,32 +107,16 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         this.tableOptions = {
             title: '',
             columns: [
-                // label: string;
-                // description: string;
-                // variableName: string;
-                // toReturn: boolean;
-                // managementEntityId: string;
-                // productId: string;
-                // branchId: string;
-                // value: number;
-
                 { label: 'entities.variable-condition.fields.label', property: 'label', type: 'text', visible: true },
                 { label: 'entities.variable-condition.fields.description', property: 'description', type: 'text', visible: true },
                 { label: 'entities.variable-condition.fields.variableName', property: 'variableName', type: 'text', visible: true },
                 { label: 'entities.variable-condition.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
                 { label: 'entities.variable-condition.fields.branch', property: 'branch', type: 'text', visible: true },
                 { label: 'entities.variable-condition.fields.product', property: 'product', type: 'text', visible: true },
-
             ],
             pageSize: 8,
             pageSizeOptions: [5, 6, 8],
             actions: [
-                // {
-                //     label: 'actions.view',
-                //     icon: 'heroicons_outline:eye',
-                //     action: (element: VariableCondition) => this.onView(element),
-                //     cssClasses: ['text-blue-600', 'hover:text-blue-800']
-                // }
             ],
             renderItem: (element: VariableCondition, property: keyof VariableCondition) => {
                 if (property === 'toReturn') {
@@ -275,7 +260,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         }
 
         this._dialog.open(VariableConditionFormComponent, {
-            width: '600px',
+            width: '800px',
             disableClose: true,
             data: {
                 mode: 'create',
@@ -300,7 +285,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
      */
     onEdit(VariableCondition: VariableCondition): void {
         this._dialog.open(VariableConditionFormComponent, {
-            width: '600px',
+            width: '800px',
             disableClose: true,
             data: {
                 mode: 'edit',
@@ -312,7 +297,6 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
             }
         });
     }
-
 
     onView(variableCondition: VariableCondition): void {
         // Ouvrir le formulaire en mode lecture seule pour voir les détails

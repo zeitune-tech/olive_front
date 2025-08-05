@@ -14,7 +14,7 @@ import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
-import { Field} from "@core/services/pricing/field/field.interface";
+import {Field, FieldType} from "@core/services/pricing/field/field.interface";
 import { FieldService } from "@core/services/pricing/field/field.service";
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
@@ -31,42 +31,45 @@ import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confir
 })
 export class FieldListComponent implements OnInit {
 
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Field>;
+  tableOptions!: TableOptions<Field>;
 
-    // Pour les mat-header-row
-    groupHeader: string[] = [];
-    subHeader: string[] = [];
-    visibleColumns: string[] = [];
+  // Pour les mat-header-row
+  groupHeader: string[] = [];
+  subHeader: string[] = [];
+  visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Field>([]); // Ajoute les données réelles ici
+  dataSource = new MatTableDataSource<Field>([]); // Ajoute les données réelles ici
 
-    constructor(
-        private _fieldService: FieldService,
-        private _productService: ProductService,
-        private _permissionService: PermissionsService,
-        private _managementEntityService: ManagementEntityService,
-        private _branchService: BranchService,
-        private _dialog: MatDialog,
-        private _snackBar: MatSnackBar
-    ) {
-    }
+  constructor(
+      private _fieldService: FieldService,
+      private _productService: ProductService,
+      private _permissionService: PermissionsService,
+      private _managementEntityService: ManagementEntityService,
+      private _branchService: BranchService,
+      private _dialog: MatDialog,
+      private _snackBar: MatSnackBar
+  ) {
+  }
 
 
-    data: Field[] = [];
+  data: Field[] = [];
 
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Field>(true, []);
-    searchInputControl: UntypedFormControl = new UntypedFormControl();
+  selection = new SelectionModel<Field>(true, []);
+  searchInputControl: UntypedFormControl = new UntypedFormControl();
 
-    managementEntity: ManagementEntity = new ManagementEntity({});
+  managementEntity: ManagementEntity = new ManagementEntity({});
+
   ngOnInit(): void {
 
       // Charger les données des champs
-      this._fieldService.getAll().subscribe();
+      this._fieldService.getAll()
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe();
 
       this._fieldService.fields$
         .pipe(takeUntil(this._unsubscribeAll))
@@ -89,7 +92,7 @@ export class FieldListComponent implements OnInit {
       this.tableOptions = {
           title: 'entities.pricing.field.table.title',
           columns: [
-              // { label: 'entities.pricing.field.fields.label', property: 'label', type: 'text', visible: true },
+              { label: 'entities.pricing.field.fields.label', property: 'label', type: 'text', visible: true },
               { label: 'entities.pricing.field.fields.description', property: 'description', type: 'text', visible: true },
               { label: 'entities.pricing.field.fields.variableName', property: 'variableName', type: 'text', visible: true },
               { label: 'entities.pricing.field.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
@@ -109,12 +112,12 @@ export class FieldListComponent implements OnInit {
                   return element.toReturn ? 'Oui' : 'Non';
               }
               if (property === 'type') {
-                  return element.type === 'NUMBER' ? 'Numérique' : 'Sélection';
+                  return element.type === FieldType.NUMBER ? 'Numérique' : 'Sélection';
               }
               if (property === 'options') {
                   return element.options ? element.options.label : 'Aucune option';
               }
-              
+
               if (property === 'branch') {
                   return this.branches.find(b => b.id === element.branch)?.name ?? '--';
               }
@@ -252,7 +255,11 @@ export class FieldListComponent implements OnInit {
           }
       }).afterClosed().subscribe((result) => {
           if (result) {
-              this._productService.getAll().subscribe();
+              this._fieldService.getAll().subscribe(
+                (fields) => {
+                  this.data = fields || [];
+                }
+              );
           }
       });
   }
@@ -268,7 +275,11 @@ export class FieldListComponent implements OnInit {
       }
     }).afterClosed().subscribe((result) => {
       if (result) {
-        this._productService.getAll().subscribe();
+        this._fieldService.getAll().subscribe(
+          (fields) => {
+            this.data = fields || [];
+          }
+        );
       }
     });
   }
@@ -284,7 +295,7 @@ export class FieldListComponent implements OnInit {
             }
         }).afterClosed().subscribe((confirmed) => {
             if (confirmed) {
-                this._fieldService.delete(field.id).subscribe({
+                this._fieldService.delete(field, field.id).subscribe({
                     next: () => {
                         this._snackBar.open('entities.field.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
                         this._fieldService.getAll().subscribe(() => {
@@ -300,13 +311,45 @@ export class FieldListComponent implements OnInit {
                 });
             }
         });
-      
+
   }
 
   /**
-      * Edit Product Product
-      */
-  onEdit(product: Product): void {
+  * Edit Product Product
+  */
+  onEdit(field: Field): void {
+    if (field.type === FieldType.NUMBER) {
+        this._dialog.open(NumericFieldFormComponent, {
+            width: '600px',
+            disableClose: true,
+              data: {
+                ...field,
+                mode: 'edit',
+              }
+          }).afterClosed().subscribe((result) => {
+              if (result) {
+                  this._fieldService.fields$.subscribe((fields: Field[]) => {
+                      this.data = fields || [];
+                      this.dataSource.data = fields || [];
+                  });
+              }
+          });
+      } else if (field.type === FieldType.SELECT) {
+          this._dialog.open(SelectFieldFormComponent, {
+              width: '600px',
+              disableClose: true,
+              data: {
+                ...field,
+                mode: 'edit',
+                product: this.selectedProduct,
+                branch: this.selectedBranch
+              }
+          }).afterClosed().subscribe((result) => {
+              if (result) {
+                  this._productService.getAll().subscribe();
+              }
+          });
+      }
 
   }
 

@@ -9,9 +9,8 @@ import { VariableCondition } from '@core/services/pricing/variable-condition/var
 import { VariableConditionService } from '@core/services/pricing/variable-condition/variable-condition.service';
 import { Rule } from '@core/services/pricing/variable-condition/rule/rule.interface';
 import { RuleService } from '@core/services/pricing/variable-condition/rule/rule.service';
-import { Condition } from '@core/services/pricing/variable-condition/conditions/condition.interface';
 import { ConditionService } from '@core/services/pricing/variable-condition/conditions/condition.service';
-import { Field } from '@core/services/pricing/field/field.interface';
+import {Field, FieldType} from '@core/services/pricing/field/field.interface';
 import { FieldService } from '@core/services/pricing/field/field.service';
 
 @Component({
@@ -71,16 +70,65 @@ export class VariableConditionFormComponent implements OnInit {
             variableName: [this.data.variableName || '', Validators.required],
             toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
             branch: [this.data.branch || '', Validators.required],
-            
+
             // Section Rules
             rules: this.fb.array(this.data.rules?.length ? this.data.rules.map(rule => this.createRuleFormGroup(rule)) : [this.createRuleFormGroup()])
         });
+
+        // Initialiser les validateurs pour les conditions existantes en mode édition
+        if (this.mode === 'edit' && this.data.rules?.length) {
+            setTimeout(() => {
+                this.initializeExistingConditionsValidators();
+            });
+        }
 
         // Désactiver le formulaire en mode view
         if (this.mode === 'view') {
             this.formGroup.disable();
         }
 
+    }
+
+    /**
+     * Initialise les validateurs pour les conditions existantes lors de l'édition
+     */
+    private initializeExistingConditionsValidators(): void {
+        this.rulesFormArray.controls.forEach((ruleControl, ruleIndex) => {
+            const conditionsArray = this.getConditionsFormArray(ruleIndex);
+            conditionsArray.controls.forEach((conditionControl, conditionIndex) => {
+                const fieldId = conditionControl.get('field')?.value;
+                if (fieldId) {
+                    const field = this.fields.find(f => f.id === fieldId);
+                    if (field) {
+                        this.applyValidatorsForFieldType(ruleIndex, conditionIndex, field);
+                    }
+                }
+            });
+        });
+    }
+
+    /**
+     * Applique les validateurs appropriés selon le type de champ
+     */
+    private applyValidatorsForFieldType(ruleIndex: number, conditionIndex: number, field: any): void {
+        const conditionGroup = this.getConditionsFormArray(ruleIndex).at(conditionIndex) as FormGroup;
+
+        if (field.type === 'SELECT') {
+            conditionGroup.get('value')?.setValidators([Validators.required]);
+            conditionGroup.get('minValue')?.clearValidators();
+            conditionGroup.get('maxValue')?.clearValidators();
+            conditionGroup.clearValidators();
+        } else if (field.type === FieldType.NUMBER) {
+            conditionGroup.get('value')?.clearValidators();
+            conditionGroup.get('minValue')?.clearValidators();
+            conditionGroup.get('maxValue')?.clearValidators();
+            conditionGroup.setValidators(this.numericFieldValidator);
+        }
+
+        conditionGroup.get('value')?.updateValueAndValidity();
+        conditionGroup.get('minValue')?.updateValueAndValidity();
+        conditionGroup.get('maxValue')?.updateValueAndValidity();
+        conditionGroup.updateValueAndValidity();
     }
 
     createRuleFormGroup(rule?: Rule): FormGroup {
@@ -94,10 +142,25 @@ export class VariableConditionFormComponent implements OnInit {
     }
 
     createConditionFormGroup(condition?: any): FormGroup {
+        // Pour les champs SELECT, la valeur peut être un objet SelectFieldOptionValue ou un ID string
+        let valueToSet = '';
+        if (condition?.value) {
+            // Si c'est un objet avec un ID (SelectFieldOptionValue), extraire l'ID
+            if (typeof condition.value === 'object' && condition.value.id) {
+                valueToSet = condition.value.id;
+            } else if (typeof condition.value === 'string') {
+                // Si c'est déjà un string ID
+                valueToSet = condition.value;
+            } else {
+                // Pour les valeurs numériques
+                valueToSet = condition.value;
+            }
+        }
+
         return this.fb.group({
             field: [condition?.field?.id || '', Validators.required],
             operator: [condition?.operator || '', Validators.required],
-            value: [condition?.value || ''],
+            value: [valueToSet],
             minValue: [condition?.minValue || ''],
             maxValue: [condition?.maxValue || '']
         });
@@ -135,42 +198,54 @@ export class VariableConditionFormComponent implements OnInit {
     onFieldSelectionChange(ruleIndex: number, conditionIndex: number, fieldId: string): void {
         const field = this.fields.find(f => f.id === fieldId);
         const conditionGroup = this.getConditionsFormArray(ruleIndex).at(conditionIndex) as FormGroup;
-        
-        if (field) {
-            // Réinitialiser les champs selon le type de field
-            conditionGroup.patchValue({
-                operator: '',
-                value: '',
-                minValue: '',
-                maxValue: ''
-            });
 
-            // Configurer les validateurs selon le type de field
-            if (field.type === 'SELECT') {
-                // Pour les SelectField, seuls 'equal' et 'different' sont permis
-                conditionGroup.get('value')?.setValidators([Validators.required]);
-                conditionGroup.get('minValue')?.clearValidators();
-                conditionGroup.get('maxValue')?.clearValidators();
-            } else if (field.type === 'NUMBER') {
-                // Pour les NumericField, configurer selon les besoins
-                conditionGroup.get('value')?.clearValidators();
-                conditionGroup.get('minValue')?.clearValidators();
-                conditionGroup.get('maxValue')?.clearValidators();
-                
-                // Ajouter validation personnalisée pour s'assurer qu'au moins une valeur est renseignée
-                conditionGroup.setValidators(this.numericFieldValidator);
+        if (field) {
+            // Sauvegarder les valeurs actuelles si elles existent
+            const currentValues = {
+                operator: conditionGroup.get('operator')?.value,
+                value: conditionGroup.get('value')?.value,
+                minValue: conditionGroup.get('minValue')?.value,
+                maxValue: conditionGroup.get('maxValue')?.value
+            };
+
+            // Réinitialiser seulement si le type de champ change
+            const needsReset = this.shouldResetConditionValues(field, currentValues);
+
+            if (needsReset) {
+                conditionGroup.patchValue({
+                    operator: '',
+                    value: '',
+                    minValue: '',
+                    maxValue: ''
+                });
             }
 
-            conditionGroup.get('value')?.updateValueAndValidity();
-            conditionGroup.get('minValue')?.updateValueAndValidity();
-            conditionGroup.get('maxValue')?.updateValueAndValidity();
-            conditionGroup.updateValueAndValidity();
+            // Appliquer les validateurs appropriés
+            this.applyValidatorsForFieldType(ruleIndex, conditionIndex, field);
         }
+    }
+
+    /**
+     * Détermine si les valeurs de condition doivent être réinitialisées
+     */
+    private shouldResetConditionValues(field: any, currentValues: any): boolean {
+        // Si c'est un nouveau champ SELECT et qu'il n'y a pas de valeur actuelle, ne pas réinitialiser
+        if (field.type === FieldType.SELECT && !currentValues.value) {
+            return false;
+        }
+
+        // Si c'est un champ NUMBER et qu'il n'y a pas de valeurs actuelles, ne pas réinitialiser
+        if (field.type === FieldType.NUMBER && !currentValues.value && !currentValues.minValue && !currentValues.maxValue) {
+            return false;
+        }
+
+        // Pour un changement de type de champ, réinitialiser
+        return true;
     }
 
     numericFieldValidator(control: any) {
         if (!control || !control.get) return null;
-        
+
         const value = control.get('value')?.value;
         const minValue = control.get('minValue')?.value;
         const maxValue = control.get('maxValue')?.value;
@@ -193,14 +268,14 @@ export class VariableConditionFormComponent implements OnInit {
         return this.availableOperators[field.type] || [];
     }
 
-    getFieldType(fieldId: string): string {
+    getFieldType(fieldId: string): FieldType {
         const field = this.fields.find(f => f.id === fieldId);
-        return field?.type || '';
+        return field ? field.type : FieldType.NUMBER;
     }
 
     getSelectFieldOptions(fieldId: string): any[] {
         const field = this.fields.find(f => f.id === fieldId);
-        if (field?.type === 'SELECT' && field.options) {
+        if (field?.type === FieldType.SELECT && field.options) {
             return field.options.possibilities || [];
         }
         return[];
@@ -215,11 +290,230 @@ export class VariableConditionFormComponent implements OnInit {
 
         this.formGroup.disable();
 
-        console.log("Starting creation workflow: Conditions -> Rules -> Variable Condition");
-
-        // Workflow: 1) Créer toutes les conditions -> 2) Créer les règles -> 3) Créer la variable condition
-        this.createAllConditions();
+        if (this.mode === 'edit') {
+            console.log("Starting update workflow: Conditions -> Rules -> Variable Condition");
+            this.updateAllConditions();
+        } else {
+            console.log("Starting creation workflow: Conditions -> Rules -> Variable Condition");
+            this.createAllConditions();
+        }
     }
+
+    /**
+     * ========== LOGIQUE D'UPDATE ==========
+     */
+
+    /**
+     * Étape 1: Mettre à jour toutes les conditions de toutes les règles
+     */
+    private updateAllConditions(): void {
+        const rules = this.formGroup.value.rules;
+        const allConditions: any[] = [];
+        const conditionIndexMap: { ruleIndex: number, conditionIndex: number }[] = [];
+
+        // Collecter toutes les conditions de toutes les règles avec leur mapping
+        rules.forEach((ruleData: any, ruleIndex: number) => {
+            ruleData.conditions.forEach((conditionData: any, conditionIndex: number) => {
+                allConditions.push(conditionData);
+                conditionIndexMap.push({ ruleIndex, conditionIndex });
+            });
+        });
+
+      console.log("All conditions to update:", allConditions);
+
+        if (allConditions.length === 0) {
+            this.updateAllRules([]);
+            return;
+        }
+
+        const updatedConditionIds: string[] = [];
+        let completedConditions = 0;
+
+        allConditions.forEach((conditionData: any, index: number) => {
+            const conditionToUpdate = this.buildConditionPayload(conditionData);
+            const field = this.fields.find(f => f.id === conditionData.field);
+            const conditionType = field?.type || FieldType.NUMBER;
+
+            // Obtenir les conditions existantes pour trouver les IDs
+            const originalRule = this.data.rules?.[conditionIndexMap[index].ruleIndex];
+            const originalCondition = originalRule?.conditions?.[conditionIndexMap[index].conditionIndex];
+
+            if (originalCondition?.id && this.isExistingCondition(originalCondition.id)) {
+                // Mettre à jour une condition existante
+                console.log(`Updating condition ${index + 1}:`, conditionToUpdate);
+
+                const updateConditionObservable = conditionType === FieldType.NUMBER
+                    ? this._conditionService.updateNumericalCondition(originalCondition.id, conditionToUpdate)
+                    : this._conditionService.updateSelectFieldCondition(originalCondition.id, conditionToUpdate);
+
+                updateConditionObservable.subscribe({
+                    next: (updatedCondition: any) => {
+                        console.log(`Condition ${index + 1} updated:`, updatedCondition);
+                        updatedConditionIds[index] = updatedCondition.id || originalCondition.id;
+                        completedConditions++;
+
+                        if (completedConditions === allConditions.length) {
+                            this.updateAllRules(updatedConditionIds, conditionIndexMap);
+                        }
+                    },
+                    error: (error: any) => {
+                        console.error(`Error updating condition ${index + 1}:`, error);
+                        this.handleSubmissionError('form.errors.submission');
+                    }
+                });
+            } else {
+                // Créer une nouvelle condition
+                console.log(`Creating new condition ${index + 1}:`, conditionToUpdate);
+
+                const createConditionObservable = conditionType === FieldType.NUMBER
+                    ? this._conditionService.createNumericalCondition(conditionToUpdate)
+                    : this._conditionService.createSelectFieldCondition(conditionToUpdate);
+
+                createConditionObservable.subscribe({
+                    next: (createdCondition: any) => {
+                        console.log(`New condition ${index + 1} created:`, createdCondition);
+                        updatedConditionIds[index] = createdCondition.id;
+                        completedConditions++;
+
+                        if (completedConditions === allConditions.length) {
+                            this.updateAllRules(updatedConditionIds, conditionIndexMap);
+                        }
+                    },
+                    error: (error: any) => {
+                        console.error(`Error creating new condition ${index + 1}:`, error);
+                        this.handleSubmissionError('form.errors.submission');
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Vérifie si une condition existe déjà
+     */
+    private isExistingCondition(conditionId: string): boolean {
+        if (!this.data.rules) return false;
+
+        for (const rule of this.data.rules) {
+            if (rule.conditions) {
+                for (const condition of rule.conditions) {
+                    if (condition.id === conditionId) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Étape 2: Mettre à jour toutes les règles avec les IDs des conditions
+     */
+    private updateAllRules(conditionIds: string[], conditionIndexMap?: { ruleIndex: number, conditionIndex: number }[]): void {
+        const rules = this.formGroup.value.rules;
+        const updatedRuleIds: string[] = [];
+        let completedRules = 0;
+
+        if (rules.length === 0) {
+            this.updateVariableCondition([]);
+            return;
+        }
+
+        rules.forEach((ruleData: any, ruleIndex: number) => {
+            const ruleToUpdate = this.buildRulePayload(ruleData, ruleIndex, conditionIds, conditionIndexMap);
+            const originalRule = this.data.rules?.[ruleIndex];
+
+            if (originalRule?.id && this.isExistingRule(originalRule.id)) {
+                // Mettre à jour une règle existante
+                console.log(`Updating rule ${ruleIndex + 1}:`, ruleToUpdate);
+
+                this._ruleService.update(originalRule.id, ruleToUpdate as any).subscribe({
+                    next: (updatedRule: Rule) => {
+                        console.log(`Rule ${ruleIndex + 1} updated:`, updatedRule);
+                        updatedRuleIds[ruleIndex] = updatedRule.id || originalRule.id;
+                        completedRules++;
+
+                        if (completedRules === rules.length) {
+                            this.updateVariableCondition(updatedRuleIds);
+                        }
+                    },
+                    error: (error: any) => {
+                        console.error(`Error updating rule ${ruleIndex + 1}:`, error);
+                        this.handleSubmissionError('form.errors.submission');
+                    }
+                });
+            } else {
+                // Créer une nouvelle règle
+                console.log(`Creating new rule ${ruleIndex + 1}:`, ruleToUpdate);
+
+                this._ruleService.create(ruleToUpdate as any).subscribe({
+                    next: (createdRule: Rule) => {
+                        console.log(`New rule ${ruleIndex + 1} created:`, createdRule);
+                        updatedRuleIds[ruleIndex] = createdRule.id;
+                        completedRules++;
+
+                        if (completedRules === rules.length) {
+                            this.updateVariableCondition(updatedRuleIds);
+                        }
+                    },
+                    error: (error: any) => {
+                        console.error(`Error creating new rule ${ruleIndex + 1}:`, error);
+                        this.handleSubmissionError('form.errors.submission');
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Vérifie si une règle existe déjà
+     */
+    private isExistingRule(ruleId: string): boolean {
+        if (!this.data.rules) return false;
+
+        return this.data.rules.some(rule => rule.id === ruleId);
+    }
+
+    /**
+     * Étape 3: Mettre à jour la variable condition avec les IDs des règles
+     */
+    private updateVariableCondition(ruleIds: string[]): void {
+        const variableConditionData = this.buildVariableConditionUpdatePayload(ruleIds);
+
+        console.log("Updating variable condition:", variableConditionData);
+
+        this._variableConditionService.update(this.data.id, variableConditionData as any).subscribe({
+            next: (updatedVariableCondition: VariableCondition) => {
+                console.log("Variable condition updated:", updatedVariableCondition);
+                this.onSubmissionSuccess();
+            },
+            error: (error: any) => {
+                console.error("Error updating variable condition:", error);
+                this.handleSubmissionError('form.errors.submission');
+            }
+        });
+    }
+
+    /**
+     * Construit le payload pour la mise à jour de la variable condition
+     */
+    private buildVariableConditionUpdatePayload(ruleIds: string[]): any {
+        return {
+            id: this.data.id,
+            label: this.formGroup.value.label,
+            description: this.formGroup.value.description,
+            variableName: this.formGroup.value.variableName,
+            toReturn: this.formGroup.value.toReturn,
+            branch: this.formGroup.value.branch,
+            managementEntity: this.managementEntity?.id,
+            product: this.data.product,
+            ruleIds: ruleIds
+        };
+    }
+
+    /**
+     * ========== LOGIQUE DE CRÉATION ==========
+     */
 
     /**
      * Étape 1: Créer toutes les conditions de toutes les règles
@@ -254,12 +548,12 @@ export class VariableConditionFormComponent implements OnInit {
         allConditions.forEach((conditionData: any, index: number) => {
             const conditionToCreate = this.buildConditionPayload(conditionData);
             const field = this.fields.find(f => f.id === conditionData.field);
-            const conditionType = field?.type || 'NUMBER';
+            const conditionType = field?.type || FieldType.NUMBER;
 
             console.log(`Creating condition ${index + 1}:`, conditionToCreate);
 
             // Utiliser les méthodes du service selon le type de condition
-            const createConditionObservable = conditionType === 'NUMBER' 
+            const createConditionObservable = conditionType === FieldType.NUMBER
                 ? this._conditionService.createNumericalCondition(conditionToCreate)
                 : this._conditionService.createSelectFieldCondition(conditionToCreate);
 
@@ -268,7 +562,7 @@ export class VariableConditionFormComponent implements OnInit {
                     console.log(`Condition ${index + 1} created:`, createdCondition);
                     createdConditionIds[index] = createdCondition.id;
                     completedConditions++;
-                    
+
                     if (completedConditions === allConditions.length) {
                         // Toutes les conditions sont créées, passer à l'étape 2
                         this.createAllRules(createdConditionIds, conditionIndexMap);
@@ -287,15 +581,15 @@ export class VariableConditionFormComponent implements OnInit {
      */
     private buildConditionPayload(conditionData: any): any {
         const field = this.fields.find(f => f.id === conditionData.field);
-        const conditionType = field?.type || 'NUMBER';
+        const conditionType = field?.type || FieldType.NUMBER;
 
-        if (conditionType === 'SELECT') {
+        if (conditionType === FieldType.SELECT) {
             return {
                 value: conditionData.value,
                 fieldId: conditionData.field,
                 operator: conditionData.operator
             };
-        } else if (conditionType === 'NUMBER') {
+        } else if (conditionType === FieldType.NUMBER) {
             return {
                 fieldId: conditionData.field,
                 numericOperator: conditionData.operator,
@@ -342,7 +636,7 @@ export class VariableConditionFormComponent implements OnInit {
                     console.log(`Rule ${ruleIndex + 1} created:`, createdRule);
                     createdRuleIds[ruleIndex] = createdRule.id;
                     completedRules++;
-                    
+
                     if (completedRules === rules.length) {
                         // Toutes les règles sont créées, passer à l'étape 3
                         this.createVariableCondition(createdRuleIds);
@@ -360,9 +654,9 @@ export class VariableConditionFormComponent implements OnInit {
      * Construit le payload pour la création d'une règle
      */
     private buildRulePayload(
-        ruleData: any, 
-        ruleIndex: number, 
-        conditionIds: string[], 
+        ruleData: any,
+        ruleIndex: number,
+        conditionIds: string[],
         conditionIndexMap?: { ruleIndex: number, conditionIndex: number }[]
     ): any {
         // Collecter les IDs des conditions pour cette règle
@@ -452,4 +746,6 @@ export class VariableConditionFormComponent implements OnInit {
       onCancel(): void {
           this.dialogRef.close(false);
       }
-  }
+
+  protected readonly FieldType = FieldType;
+}

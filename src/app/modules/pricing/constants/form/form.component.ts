@@ -8,6 +8,7 @@ import { ConstantService } from '@core/services/pricing/constant/constant.servic
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import { Cons } from 'rxjs';
+import { FormMode } from '@shared/enum/form.enum';
 
 @Component({
     selector: 'app-coverage-reference-edit',
@@ -18,8 +19,7 @@ export class ConstantFormComponent implements OnInit {
       formGroup!: FormGroup;
       message = '';
       managementEntity: ManagementEntity | undefined;
-
-      mode: 'create' | 'edit' = 'create';
+      mode: FormMode = FormMode.CREATE;
 
       constructor(
           private fb: FormBuilder,
@@ -34,7 +34,7 @@ export class ConstantFormComponent implements OnInit {
     ngOnInit(): void {
 
         this.mode = (this.data as any).mode;
-        if (this.mode == 'edit') {
+        if (this.mode == FormMode.EDIT) {
             this.dialogRef.updateSize('600px', 'auto');
         } else {
             // this.data = {} as Constant;
@@ -68,10 +68,10 @@ export class ConstantFormComponent implements OnInit {
 
         console.log("Submitting form data:", formData);
 
-        if (this.mode === 'edit') {
-            this._constantService.update(formData, this.data.id).subscribe({
+        (this.mode === FormMode.EDIT ? this._constantService.update(formData, this.data.id) : this._constantService.create(formData))
+            .subscribe({
                 next: () => {
-                    const successMessage = this.mode === 'edit'
+                    const successMessage = this.mode === FormMode.EDIT
                         ? 'form.success.update'
                         : 'form.success.creation';
 
@@ -91,32 +91,7 @@ export class ConstantFormComponent implements OnInit {
                     this.formGroup.enable();
                 }
             });
-        } else {
-            this._constantService.create(formData).subscribe({
-                next: () => {
-                    const successMessage = this.mode === 'edit'
-                        ? 'form.success.update'
-                        : 'form.success.creation';
 
-                    this.snackBar.open(
-                        this.translocoService.translate(successMessage),
-                        undefined,
-                        { duration: 3000, panelClass: 'snackbar-success' }
-                    );
-                    this.dialogRef.close(true);
-                },
-                error: () => {
-                    this.snackBar.open(
-                        this.translocoService.translate('form.errors.submission'),
-                        undefined,
-                        { duration: 3000, panelClass: 'snackbar-error' }
-                    );
-                    this.formGroup.enable();
-                }
-            });
-        }
-
-        
     }
 
       onCancel(): void {

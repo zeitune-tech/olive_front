@@ -18,6 +18,7 @@ import { VariableItemResponse, VariableItemService } from "@core/services/pricin
 import { ProductService } from "@core/services/settings/product/product.service";
 import { Subject, takeUntil } from "rxjs";
 import { NumericFieldFormComponent } from "../../field/numeric-form/form.component";
+import {VariableConditionFormComponent} from "../../variable-condition/form/form.component";
 
 export interface Variable {
     id: number;
@@ -77,20 +78,14 @@ export class PricingNewComponent implements OnInit, OnDestroy {
     // Initialiser les variables avec le service VariableItemService
     this._variableItemService.getAll()
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe({
-        next: (data: VariableItemResponse[]) => {
-          this.variables = data || [];
-        },
-        error: (error) => {
-          console.error('Error loading variables:', error);
-        }
-      });
+      .subscribe();
 
     this._variableItemService.variableItems$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
         next: (data: VariableItemResponse[]) => {
           this.variables = data;
+          console.log('Variable items loaded:', this.variables);
         },
         error: (error) => {
           console.error('Error in variableItems$ subscription:', error);
@@ -209,7 +204,7 @@ export class PricingNewComponent implements OnInit, OnDestroy {
       });
   }
 
-  onAddNewVariable(variable: "CONSTANT" | "FIELD"): void {
+  onAddNewVariable(variable: "CONSTANT" | "FIELD" | "VARIABLE_CONDITION"): void {
     if (!this.selectedBranch) {
         this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
         return;
@@ -226,7 +221,8 @@ export class PricingNewComponent implements OnInit, OnDestroy {
             disableClose: true,
             data: {
                 mode: 'create',
-                product: this.selectedProduct?.id
+                product: this.selectedProduct!.id,
+                branch: this.selectedBranch!.id
             }
 
         }).afterClosed().subscribe((result) => {
@@ -243,11 +239,28 @@ export class PricingNewComponent implements OnInit, OnDestroy {
             disableClose: true,
             data: {
                 mode: 'create',
-                product: this.selectedProduct?.id,
+                product: this.selectedProduct!.id,
+                branch: this.selectedBranch!.id
             }
         }).afterClosed().subscribe((result) => {
             if (result) {
                 // Recharger les variables après ajout d'un champ
+                this.loadVariables();
+            }
+        });
+    }
+    else if (variable === "VARIABLE_CONDITION") {
+        this._dialog.open(VariableConditionFormComponent, {
+            width: '600px',
+            disableClose: true,
+            data: {
+                mode: 'create',
+                product: this.selectedProduct!.id,
+                branch: this.selectedBranch!.id
+            }
+        }).afterClosed().subscribe((result) => {
+            if (result) {
+                // Recharger les variables après ajout d'une condition variable
                 this.loadVariables();
             }
         });

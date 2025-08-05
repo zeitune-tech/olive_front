@@ -25,9 +25,14 @@ export interface SelectField {
   options: any;
 }
 
+export enum FieldType {
+  NUMBER = 'NUMBER',
+  SELECT = 'SELECT',
+}
+
 export class Field extends VariableItem {
 
-    type: "NUMBER" | "SELECT";
+    type: FieldType;
     options: SelectFieldOptions | null;
     // value: SelectFieldOptionValue | number | null;
 
@@ -37,7 +42,7 @@ export class Field extends VariableItem {
      */
     constructor(response: any) {
         super(response);
-        this.type = response?.type ?? "NUMBER";
+        this.type = response?.type ?? FieldType.NUMBER; // Default to NUMBER if not specified
         this.options = response?.options ? new SelectFieldOptions(response.options) : null;
         // this.value = response?.value ? 0 : null;
     }

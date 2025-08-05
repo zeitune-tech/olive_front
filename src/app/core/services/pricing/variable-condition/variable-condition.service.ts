@@ -53,4 +53,15 @@ export class VariableConditionService {
         );
     }
 
+    update(id: string, variableCondition: VariableCondition): Observable<VariableCondition> {
+        return this._httpClient.put<VariableCondition>(`${this.baseUrl}/${id}`, variableCondition)
+        .pipe(
+            tap((response: VariableCondition) => {
+                this.variableCondition = response;
+                return response;
+            }),
+            catchError(() => of({} as VariableCondition))
+        );
+    }
+
 }

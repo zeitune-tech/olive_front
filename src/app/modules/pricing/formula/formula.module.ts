@@ -4,9 +4,8 @@ import { RouterModule } from "@angular/router";
 import { routes } from "./formula.routing";
 import { SharedModule } from "@shared/shared.module";
 import { MatInputModule } from "@angular/material/input";
-import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { PricingFormulaListComponent } from "./list/list.component";
+import {FormulaListComponent} from "./list/list.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -19,7 +18,6 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
-import { FormulaEditComponent } from "./edit/edit.component";
 import { LayoutService } from "./layout.service";
 import { FormulaService } from "@core/services/pricing/formula/formula.service";
 import { ConstantService } from "@core/services/pricing/constant/constant.service";
@@ -30,8 +28,7 @@ import { VariableItemService } from "@core/services/pricing/variable-item/variab
 @NgModule({
     declarations: [
         PricingNewComponent,
-        PricingFormulaListComponent,
-        FormulaEditComponent
+        FormulaListComponent
     ],
     imports: [
         RouterModule.forChild(routes),

@@ -9,7 +9,7 @@ import { Condition, NumericalCondition, SelectFieldCondition } from "./condition
 export class ConditionService {
 
   selectBaseUrl = environment.pricing_url + '/select-field-conditions';
-  numericBaseUrl = environment.pricing_url + '/numerical-conditions';
+  numericBaseUrl = environment.pricing_url + '/numeric-conditions';
 
   private _condition: ReplaySubject<Condition> = new ReplaySubject<Condition>(1);
   private _conditionList: ReplaySubject<Condition[]> = new ReplaySubject<Condition[]>(1);
@@ -75,6 +75,40 @@ export class ConditionService {
         }),
         catchError((error) => {
           console.error('Error creating select field condition:', error);
+          throw error;
+        })
+      );
+  }
+
+  /**
+   * Met à jour une condition numérique
+   */
+  updateNumericalCondition(id: string, conditionData: any): Observable<any> {
+    return this._httpClient.put<any>(`${this.numericBaseUrl}/${id}`, conditionData)
+      .pipe(
+        tap((response: any) => {
+          console.log('Numerical condition updated:', response);
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error updating numerical condition:', error);
+          throw error;
+        })
+      );
+  }
+
+  /**
+   * Met à jour une condition de champ de sélection
+   */
+  updateSelectFieldCondition(id: string, conditionData: any): Observable<any> {
+    return this._httpClient.put<any>(`${this.selectBaseUrl}/${id}`, conditionData)
+      .pipe(
+        tap((response: any) => {
+          console.log('Select field condition updated:', response);
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error updating select field condition:', error);
           throw error;
         })
       );

@@ -1,3 +1,4 @@
+import {Condition} from "@core/services/pricing/variable-condition/conditions/condition.interface";
 
 export class Rule {
     /**
@@ -8,7 +9,7 @@ export class Rule {
     label: string;
     name: string;
     value: number;
-    conditions: any[]; // Assuming conditions is an array of objects
+    conditions: Condition[]; // Assuming conditions is an array of objects
     managementEntity?: string; // Optional property for management entity
 
     /**

@@ -19,6 +19,11 @@ import { TableModule } from "@lhacksrt/components/table/table.module";
 import { VariableConditionListComponent } from "./list/list.component";
 import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
 import { VariableConditionFormComponent } from "./form/form.component";
+import { VariableConditionFormRefactoredComponent } from "./form/variable-condition-form-refactored.component";
+import { VariableItemInfoComponent } from "./components/variable-item-info/variable-item-info.component";
+import { RuleFormComponent } from "./components/rule-form/rule-form.component";
+import { ConditionFormComponent } from "./components/condition-form/condition-form.component";
+import { RulesListComponent } from "./components/rules-list/rules-list.component";
 import { FieldService } from "@core/services/pricing/field/field.service";
 import { RuleService } from "@core/services/pricing/variable-condition/rule/rule.service";
 import { ConditionService } from "@core/services/pricing/variable-condition/conditions/condition.service";
@@ -26,7 +31,12 @@ import { ConditionService } from "@core/services/pricing/variable-condition/cond
 @NgModule({
     declarations: [
         VariableConditionListComponent,
-        VariableConditionFormComponent
+        VariableConditionFormComponent,
+        VariableConditionFormRefactoredComponent,
+        VariableItemInfoComponent,
+        RuleFormComponent,
+        ConditionFormComponent,
+        RulesListComponent
     ],
     imports: [
         RouterModule.forChild(routes),

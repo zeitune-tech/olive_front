@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Constant } from '@core/services/pricing/constant/constant.interface';
-import { ConstantService } from '@core/services/pricing/constant/constant.service';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
-import { Cons } from 'rxjs';
-import { NumericField, SelectField } from '@core/services/pricing/field/field.interface';
+import {FieldType, NumericField} from '@core/services/pricing/field/field.interface';
 import {FieldService} from "@core/services/pricing/field/field.service";
+import { FormMode } from '@shared/enum/form.enum';
+
+
 
 @Component({
     selector: 'app-numeric-form',
@@ -20,8 +20,7 @@ export class NumericFieldFormComponent implements OnInit {
       formGroup!: FormGroup;
       message = '';
       managementEntity: ManagementEntity | undefined;
-
-      mode: 'create' | 'edit' = 'create';
+      mode: FormMode = FormMode.CREATE;
 
       constructor(
           private fb: FormBuilder,
@@ -36,7 +35,7 @@ export class NumericFieldFormComponent implements OnInit {
     ngOnInit(): void {
 
         this.mode = (this.data as any).mode;
-        if (this.mode == 'edit') {
+        if (this.mode == FormMode.EDIT) {
             this.dialogRef.updateSize('600px', 'auto');
         } else {
             // this.data = {} as Constant;
@@ -64,16 +63,15 @@ export class NumericFieldFormComponent implements OnInit {
         const formData = {
             ...this.formGroup.value,
             managementEntity: this.managementEntity?.id,
-            product: this.data.product,
+            // product: this.data.product,
             branch: this.data.branch,
-            type: 'NUMBER',
+            type: FieldType.NUMBER, // Assuming this is a numeric field
+            
         };
 
-        console.log("Submitting form data:", formData);
-
-        this._fieldService.create(formData).subscribe({
+        ((this.mode as FormMode) === FormMode.EDIT ? this._fieldService.update(formData, this.data.id) : this._fieldService.create(formData)).subscribe({
             next: () => {
-                const successMessage = this.mode === 'edit'
+                const successMessage = this.mode === FormMode.EDIT
                     ? 'form.success.update'
                     : 'form.success.creation';
 
@@ -95,7 +93,7 @@ export class NumericFieldFormComponent implements OnInit {
         });
     }
 
-      onCancel(): void {
-          this.dialogRef.close(false);
-      }
-  }
+    onCancel(): void {
+        this.dialogRef.close(false);
+    }
+}

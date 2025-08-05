@@ -5,7 +5,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
-import { SelectField } from '@core/services/pricing/field/field.interface';
+import {FieldType, SelectField} from '@core/services/pricing/field/field.interface';
 import {SelectFieldOptions} from "@core/services/pricing/field/select-field-options/select-field-options.interface";
 import {FieldService} from "@core/services/pricing/field/field.service";
 import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options/select-field-options.service";
@@ -71,7 +71,7 @@ export class SelectFieldFormComponent implements OnInit {
             managementEntity: this.managementEntity!.id,
             product: this.data.product,
             branch: this.data.branch,
-            type: 'SELECT',
+            type: FieldType.SELECT,
         };
 
         console.log("Submitting form data:", formData);

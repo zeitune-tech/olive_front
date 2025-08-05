@@ -45,7 +45,7 @@ export const defaultPrincingNavigation: NavigationItem[] = [
             link: '/pricing/fields/select-options/list',
             // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
           },
-          
+
         ]
       },
       {
@@ -70,11 +70,28 @@ export const defaultPrincingNavigation: NavigationItem[] = [
   {
     id: 'pricing',
     title: 'sidebar.pricing.formula',
-    type: 'basic',
+    type: 'collapsable',
     icon: 'fluent:people-team',
     link: '/pricing/formula',
     // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
-    children: []
+    children: [
+      {
+        id: 'pricing-formula-create',
+        title: 'sidebar.pricing.formula_create',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/pricing/formula/create',
+        // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
+      },
+      {
+        id: 'pricing-formula',
+        title: 'sidebar.pricing.formula_list',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/pricing/formula/list',
+        // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
+      },
+    ]
   },
 ];
 export const compactPrincingNavigation: NavigationItem[] = [];

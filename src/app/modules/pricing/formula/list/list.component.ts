@@ -1,5 +1,5 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { UntypedFormControl } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
@@ -14,125 +14,129 @@ import { ProductService } from "@core/services/settings/product/product.service"
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { LayoutService } from "../layout.service";
-import { Router } from "@angular/router";
-import { TranslocoService } from "@jsverse/transloco";
-import { FormulaEditComponent } from "../edit/edit.component";
+import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import {Branch} from "@core/services/settings/branch/branch.interface";
+import {BranchService} from "@core/services/settings/branch/branch.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
+import { Formula } from "@core/services/pricing/formula/formula.interface";
+import { FormulaService } from "@core/services/pricing/formula/formula.service";
 
 @Component({
-    selector: "app-products-list",
+    selector: "app-constant-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class PricingFormulaListComponent implements OnInit {
-
+export class FormulaListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Product>;
+    tableOptions!: TableOptions<Formula>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
+    branches: Branch[] = [];
 
-    dataSource = new MatTableDataSource<Product>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<Formula>([]); // Ajoute les données réelles ici
 
-        constructor(
+    constructor(
+        private _formulaService: FormulaService,
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _managementEntityService: ManagementEntityService,
-        private _layoutService: LayoutService,
-        private _tanslateService: TranslocoService,
-        private _router: Router,
-        private _dialog: MatDialog
+        private _branchService: BranchService,
+        private _dialog: MatDialog,
+        private _snackBar: MatSnackBar
     ) {
-        this._productService.products$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: Product[]) => {
-                this.data = data;
-                this.dataSource.data = data;
-            });
-
-        this._managementEntityService.entity$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data: ManagementEntity) => {
-                this.managementEntity = data;
-            });
     }
 
-    
-    data: Product[] = [];
+    data: Formula[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    selection = new SelectionModel<Product>(true, []);
+    selection = new SelectionModel<Formula>(true, []);
     searchInputControl: UntypedFormControl = new UntypedFormControl();
-
     managementEntity: ManagementEntity = new ManagementEntity({});
 
-
-
-
     ngOnInit(): void {
-        // Initialisation de la configuration de la table
-        this.tableOptions = {
-            title: '',
-            columns: [
-                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
-                { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true, cssClasses: ['min-w-32']},
-                {
-                    label: 'entities.product.table.custom_fields.risk', property: 'minRisk', type: 'collapse', visible: true, collapseOptions: [
-                        { label: 'entities.product.table.custom_fields.min', property: 'minRisk', type: 'text', visible: true },
-                        { label: 'entities.product.table.custom_fields.max', property: 'maxRisk', type: 'text', visible: true },
-                    ]
-                },
-                { label: 'entities.product.table.custom_fields.minCoverage', property: 'minimumGuaranteeNumber', type: 'text', visible: true, cssClasses: ['text-sm'] },
-                { label: 'entities.product.table.custom_fields.fleet', property: 'fleet', type: 'text', visible: true },
-                { label: 'entities.product.fields.productionRegistry', property: 'productionRegistry', type: 'button', visible: true}
-            ],
-            pageSize: 8,
-            pageSizeOptions: [5, 6, 8],
-            actions: [],
-            renderItem: (element: Product, property: keyof Product) => {
-                if (property === 'branch') {
-                    return element.branch?.name ?? '--';
-                } else if (property === 'fleet') {
-                    return element.fleet ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
-                } else if (property === 'hasReduction') {
-                    return element.hasReduction ? this._tanslateService.translate('enums.yes') : this._tanslateService.translate('enums.no');
-                } else if (property === 'category') {
-                    return element.branch?.category?.name ?? '--';
-                }
+      this._productService.getAll()
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: Product[]) => {
+          this.products = data || [];
+        });
 
-                if (property === 'name') {
-                    const display = element.name;
-                    if (element.description && element.description.trim() !== '') {
-                        return `${display} - ${element.description}`;
-                    }
-                    return display;
-                }
+      this._productService.products$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: Product[]) => {
+          this.products = data;
+        });
 
-                if (property === 'visibility') {
-                    let provider = element.owner?.name || '--';
-                    if (provider.length > 20) {
-                        provider = provider.substring(0, 20) + '...';
-                    }
-                    if (element.visibility === 'PRIVATE') {
-                        return this._tanslateService.translate('enums.productVisibility.PRIVATE');
-                    }else  {
-                        return this._tanslateService.translate('enums.productVisibility.PUBLIC', { provider: provider });
-                    }
-                }
+      this._formulaService.getAll()
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe();
 
-                return element[property] ?? '--';
-            },
-        };
+      this._managementEntityService.entity$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: ManagementEntity) => {
+          this.managementEntity = data;
+        });
 
-        // Construction des lignes d’en-tête
-        this.buildHeaderRows();
+      this._branchService.branches$.subscribe(branches => {
+        this.branches = branches;
+      });
+
+      // Configuration du contrôle de recherche
+      this.searchCtrl.valueChanges
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(value => {
+          this.applyFilter(value);
+        });
+
+      // Charger les données des constantes
+      this._formulaService.formulas$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((data: Formula[]) => {
+          this.data = data;
+          this.dataSource.data = data;
+          // Appliquer le filtre actuel après le chargement des données
+          if (this.searchCtrl.value) {
+            this.applyFilter(this.searchCtrl.value);
+          }
+        });
+
+      // Initialisation de la configuration de la table
+      this.tableOptions = {
+          title: '',
+          columns: [
+            { label: 'entities.constant.fields.label', property: 'label', type: 'text', visible: true },
+            { label: 'entities.constant.fields.description', property: 'description', type: 'text', visible: true },
+            { label: 'entities.constant.fields.variableName', property: 'variableName', type: 'text', visible: true },
+            { label: 'entities.constant.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
+            { label: 'entities.constant.fields.branch', property: 'branch', type: 'text', visible: true },
+            { label: 'entities.constant.fields.product', property: 'product', type: 'text', visible: true },
+          ],
+          pageSize: 8,
+          pageSizeOptions: [5, 6, 8],
+          actions: [],
+          renderItem: (element: Formula, property: keyof Formula) => {
+            if (property === 'toReturn') {
+                return element.toReturn ? 'Oui' : 'Non';
+            }
+            if (property === 'branch') {
+                  return this.branches.find(b => b.id === element.branch)?.name ?? '--';
+            }
+            if (property === 'product') {
+                return this.products.find(p => p.id === element.product)?.name ?? '--';
+            }
+            return element[property] ?? '--';
+          },
+      };
+
+      // Construction des lignes d’en-tête
+      this.buildHeaderRows();
     }
 
     buildHeaderRows(): void {
@@ -150,7 +154,7 @@ export class PricingFormulaListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });
@@ -160,11 +164,36 @@ export class PricingFormulaListComponent implements OnInit {
         this.visibleColumns.push('actions');
     }
 
-
     ngAfterViewInit() {
         if (this.dataSource) {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+
+            // Configuration du filtre personnalisé
+            this.dataSource.filterPredicate = (data: Formula, filter: string) => {
+                const searchText = filter.toLowerCase();
+
+                // Recherche dans les propriétés de base
+                const basicSearch = (
+                    (data.label?.toLowerCase() || '').includes(searchText) ||
+                    (data.description?.toLowerCase() || '').includes(searchText) ||
+                    (data.variableName?.toLowerCase() || '').includes(searchText)
+                );
+
+                // Recherche dans le nom de la branche
+                const branchName = this.branches.find(b => b.id === data.branch)?.name?.toLowerCase() || '';
+                const branchSearch = branchName.includes(searchText);
+
+                // Recherche dans le nom du produit
+                const productName = this.products.find(p => p.id === data.product)?.name?.toLowerCase() || '';
+                const productSearch = productName.includes(searchText);
+
+                // Recherche dans la valeur booléenne toReturn
+                const toReturnText = data.toReturn ? 'oui' : 'non';
+                const toReturnSearch = toReturnText.includes(searchText);
+
+                return basicSearch || branchSearch || productSearch || toReturnSearch;
+            };
         }
     }
 
@@ -175,46 +204,212 @@ export class PricingFormulaListComponent implements OnInit {
     }
 
     /**
-        * Edit Product Product
-        */
-    onEdit(product: Product): void {
-        this._dialog.open(FormulaEditComponent, {
-            data: product,
-            width: '600px',
-            disableClose: true,
-        }).afterClosed().subscribe((result) => {
-            if (result) {
-                this._productService.getAll().subscribe();
-            }
-        })
-    }
+     * Applique un filtre de recherche sur les données du tableau
+     */
+    applyFilter(filterValue: string): void {
+        filterValue = filterValue.trim().toLowerCase();
+        this.dataSource.filter = filterValue;
 
-
-    onView(product: Product): void {
-        this._layoutService.setSelectedProduct(product);
-        //this._router.navigate(['/administration/products/list']);
-    }
-
-    onButtonClick(product: Product, column: string): void {
-        if (column === 'productionRegistry') {
-            alert('Production Registry button clicked for product: ' + product.name);
+        if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
         }
     }
 
-    hasPermission(product: Product): boolean {
-        let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-        if (!hasPerm) {
-            return false;
-        } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-            return true;
-        } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-            return true;
-        } else
-            return false;
+    /**
+     * Efface le filtre de recherche
+     */
+    clearFilter(): void {
+        this.searchCtrl.setValue('');
+        this.dataSource.filter = '';
     }
 
+  selectedBranch: Branch|undefined;
+  openBranchSelection() {
+    this._dialog.open(SelectDialogComponent, {
+      width: '700px',
+      data: {
+        displayField: "name",
+        items: this.branches,
+        title: "branch-selection.title"
+      }
+    }).afterClosed().subscribe((branch: Branch) => {
+      if (branch) {
+        this.selectedBranch = branch;
+        // Filtrer les produits par branche sélectionnée
+        this._productService.getByBranchOrAll(branch.id)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((products: Product[]) => {
+            this.products = products || [];
+            // Réinitialiser la sélection de produit si elle n'existe plus dans la nouvelle liste
+            if (this.selectedProduct && !this.products.find(p => p.id === this.selectedProduct?.id)) {
+              this.selectedProduct = undefined;
+            }
+          });
+        // Recharger les constantes pour la branche sélectionnée
+        this._formulaService.formulas$.subscribe({
+          next: (data: Formula[]) => {
+            this.data = data;
+            this.dataSource.data = data;
+            // Réappliquer le filtre après le chargement des données
+            if (this.searchCtrl.value) {
+              this.applyFilter(this.searchCtrl.value);
+            }
+          },
+          error: (error) => {
+            console.error('Error fetching constant data:', error);
+          }
+        });
+      }
+    })
+  }
 
-    trackByProperty(index: number, column: TableColumn<Product>) {
-        return column.property;
+  clearBranchSelection(): void {
+    this.selectedBranch = undefined;
+    this.selectedProduct = undefined;
+    // Recharger tous les produits
+    this._productService.getAll()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((products: Product[]) => {
+        this.products = products || [];
+        // Réappliquer le filtre après le chargement des produits
+        if (this.searchCtrl.value) {
+          this.applyFilter(this.searchCtrl.value);
+        }
+      });
+  }
+
+  products: Product[] = []
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  selectedProduct: Product|undefined;
+
+  openSelection() {
+      this._dialog.open(SelectDialogComponent, {
+          width: '700px',
+          data: {
+              displayField: "name",
+              items: this.products,
+              title: "product-selection.title"
+          }
+      }).afterClosed().subscribe((product: Product) => {
+          if (product) {
+              this.selectedProduct = product;
+              this.dataSource.paginator = this.paginator;
+
+          }
+      })
+  }
+
+  onAdd(): void {
+
+    if (!this.selectedBranch) {
+      this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
+      return;
     }
+
+    if (!this.selectedProduct) {
+      this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
+      return;
+    }
+
+    // this._dialog.open(FormulaFormComponent, {
+    //     width: '600px',
+    //     disableClose: true,
+    //     data: {
+    //         mode: 'create',
+    //         product: this.selectedProduct?.id,
+    //         branch: this.selectedBranch?.id
+    //     }
+    //
+    // }).afterClosed().subscribe((result) => {
+    //     if (result) {
+    //         this._formulaService.getAll().subscribe(() => {
+    //             // Réappliquer le filtre après le rechargement des données
+    //             if (this.searchCtrl.value) {
+    //                 this.applyFilter(this.searchCtrl.value);
+    //             }
+    //         });
+    //     }
+    // });
+  }
+
+  onDelete(constant: Formula): void {
+    this._dialog.open(ConfirmDeleteComponent, {
+        width: '400px',
+        data: {
+            title: 'entities.constant.delete.title',
+            message: 'entities.constant.delete.message',
+            confirmButtonText: 'actions.delete',
+            cancelButtonText: 'actions.cancel'
+        }
+    }).afterClosed().subscribe((confirmed) => {
+        if (confirmed) {
+            this._formulaService.delete(constant.id).subscribe({
+                next: () => {
+                    this._snackBar.open('entities.constant.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
+                    this._formulaService.getAll().subscribe(() => {
+                        // Réappliquer le filtre après le rechargement des données
+                        if (this.searchCtrl.value) {
+                            this.applyFilter(this.searchCtrl.value);
+                        }
+                    });
+                },
+                error: () => {
+                    this._snackBar.open('entities.constant.delete.error', '', { duration: 3000, panelClass: 'snackbar-error' });
+                }
+            });
+        }
+    });
+
+  }
+
+  /**
+  * Edit Formula
+  */
+  onEdit(constant: Formula): void {
+      // this._dialog.open(FormulaFormComponent, {
+      //     width: '600px',
+      //     disableClose: true,
+      //     data: {
+      //         mode: 'edit',
+      //         ...constant
+      //     }
+      // }).afterClosed().subscribe((result) => {
+      //     if (result) {
+      //         this._formulaService.getAll().subscribe(() => {
+      //             // Réappliquer le filtre après le rechargement des données
+      //             if (this.searchCtrl.value) {
+      //                 this.applyFilter(this.searchCtrl.value);
+      //             }
+      //         });
+      //     }
+      // });
+  }
+
+
+  onView(constant: Formula): void {
+      //this._router.navigate(['/administration/products/list']);
+  }
+
+  onButtonClick(product: Product, column: string): void {
+      if (column === 'productionRegistry') {
+          alert('Production Registry button clicked for product: ' + product.name);
+      }
+  }
+
+  hasPermission(product: Product): boolean {
+      let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
+      if (!hasPerm) {
+          return false;
+      } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
+          return true;
+      } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
+          return true;
+      } else
+          return false;
+  }
+
+
+  trackByProperty(index: number, column: TableColumn<Formula>) {
+      return column.property;
+  }
 }

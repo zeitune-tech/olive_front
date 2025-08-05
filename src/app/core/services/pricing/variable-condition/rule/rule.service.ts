@@ -53,4 +53,15 @@ export class RuleService {
         );
     }
 
+    update(id: string, rule: Rule): Observable<Rule> {
+        return this._httpClient.put<Rule>(`${this.baseUrl}/${id}`, rule)
+        .pipe(
+            tap((response: Rule) => {
+                this.rule = response;
+                return response;
+            }),
+            catchError(() => of({} as Rule))
+        );
+    }
+
 }

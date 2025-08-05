@@ -144,7 +144,7 @@
                                         }
                                     </div>
 
-                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                                         <!-- Sélection du Field -->
                                         <mat-form-field appearance="outline">
                                             <mat-label>{{ t('entities.condition.fields.field') }}</mat-label>
@@ -176,7 +176,7 @@
                                         </mat-form-field>
 
                                         <!-- Valeur (pour SelectField ou NumericField) -->
-                                        @if (getFieldType(conditionControl.get('field')?.value) === 'SELECT') {
+                                        @if (getFieldType(conditionControl.get('field')?.value) === FieldType.SELECT) {
                                             <mat-form-field appearance="outline">
                                                 <mat-label>{{ t('entities.condition.fields.value') }}</mat-label>
                                                 <mat-select formControlName="value" required>
@@ -190,7 +190,7 @@
                                                     {{ t('form.errors.required') }}
                                                 </mat-error>
                                             </mat-form-field>
-                                        } @else if (getFieldType(conditionControl.get('field')?.value) === 'NUMBER') {
+                                        } @else if (getFieldType(conditionControl.get('field')?.value) === FieldType.NUMBER) {
                                             <!-- Valeur pour NumericField -->
                                             <mat-form-field appearance="outline">
                                                 <mat-label>{{ t('entities.condition.fields.value') }}</mat-label>

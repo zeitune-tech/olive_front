@@ -33,6 +33,6 @@ export class Condition {
     constructor(response: any) {
         this.id = response?.id ?? '';
         this.type = response?.type ?? '';
-        this.field = response?.field ?? null; // Assuming field can be either NumericField or SelectField
+        this.field = response?.field ?? response?.numericField; // Assuming field can be either NumericField or SelectField
     }
 }
