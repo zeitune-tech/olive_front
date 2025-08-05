@@ -1938,6 +1938,8 @@
     "pricing": {
       "title": "Tarification",
       "formula": "Formule",
+      "formula_create": "Créer une formule",
+      "formula_list": "Liste des formules",
       "variable_condition": "Variables conditionnées",
       "field": "Champs",
       "field_list": "Liste des champs",
