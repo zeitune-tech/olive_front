@@ -46,13 +46,7 @@ export class VariableConditionFormComponent implements OnInit {
     ngOnInit(): void {
 
         this.mode = (this.data as any).mode;
-        if (this.mode == 'edit') {
-            this.dialogRef.updateSize('800px', 'auto');
-        } else if (this.mode == 'view') {
-            this.dialogRef.updateSize('800px', 'auto');
-        } else {
-            this.dialogRef.updateSize('800px', 'auto');
-        }
+        this.dialogRef.updateSize('800px', 'auto');
 
         this._managementEntityService.entity$.subscribe((entity) => {
             this.managementEntity = entity;
@@ -136,7 +130,7 @@ export class VariableConditionFormComponent implements OnInit {
             id: [rule?.id || ''],
             label: [rule?.label || '', Validators.required],
             name: [rule?.name || '', Validators.required],
-            value: [rule?.value || 0, [Validators.required, Validators.min(0)]],
+            value: [rule?.value || 0, [Validators.required, Validators.min(-1)]],
             conditions: this.fb.array(rule?.conditions?.length ? rule.conditions.map(condition => this.createConditionFormGroup(condition)) : [this.createConditionFormGroup()])
         });
     }
@@ -190,9 +184,22 @@ export class VariableConditionFormComponent implements OnInit {
 
     removeCondition(ruleIndex: number, conditionIndex: number): void {
         const conditionsArray = this.getConditionsFormArray(ruleIndex);
-        if (conditionsArray.length > 1) {
-            conditionsArray.removeAt(conditionIndex);
+        
+        // Ne pas permettre la suppression s'il n'y a qu'une seule condition
+        if (conditionsArray.length <= 1) {
+            this.snackBar.open(
+                this.translocoService.translate('form.errors.lastCondition'),
+                undefined,
+                { duration: 3000, panelClass: 'snackbar-warning' }
+            );
+            return;
         }
+        
+        // Supprimer la condition du FormArray
+        conditionsArray.removeAt(conditionIndex);
+        
+        // Marquer le formulaire comme modifié pour déclencher la validation
+        this.formGroup.markAsDirty();
     }
 
     onFieldSelectionChange(ruleIndex: number, conditionIndex: number, fieldId: string): void {
