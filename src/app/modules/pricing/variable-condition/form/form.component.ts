@@ -356,9 +356,18 @@ export class VariableConditionFormComponent implements OnInit {
                 updateConditionObservable.subscribe({
                     next: (updatedCondition: any) => {
                         console.log(`Condition ${index + 1} updated:`, updatedCondition);
-                        updatedConditionIds[index] = updatedCondition.id || originalCondition.id;
+                        // Si la mise à jour retourne null, on garde l'ID original
+                        if (!updatedCondition && originalCondition?.id) {
+                            updatedConditionIds[index] = originalCondition.id;
+                        } else if (updatedCondition?.id) {
+                            updatedConditionIds[index] = updatedCondition.id;
+                        } else {
+                            console.error(`No valid ID found for condition ${index + 1}`);
+                            this.handleSubmissionError('form.errors.submission');
+                            return;
+                        }
+                        
                         completedConditions++;
-
                         if (completedConditions === allConditions.length) {
                             this.updateAllRules(updatedConditionIds, conditionIndexMap);
                         }
