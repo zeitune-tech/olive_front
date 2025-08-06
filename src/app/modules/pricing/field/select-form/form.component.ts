@@ -1,14 +1,17 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslocoService } from '@jsverse/transloco';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
-import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {TranslocoService} from '@jsverse/transloco';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ManagementEntityService} from '@core/services/administration/management-entity/management-entity.service';
+import {ManagementEntity} from '@core/services/administration/management-entity/management-entity.interface';
 import {FieldType, SelectField} from '@core/services/pricing/field/field.interface';
 import {SelectFieldOptions} from "@core/services/pricing/field/select-field-options/select-field-options.interface";
 import {FieldService} from "@core/services/pricing/field/field.service";
-import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options/select-field-options.service";
+import {
+  SelectFieldOptionsService
+} from "@core/services/pricing/field/select-field-options/select-field-options.service";
+import {FormMode} from "@shared/enum/form.enum";
 
 @Component({
     selector: 'app-select-form',
@@ -21,7 +24,7 @@ export class SelectFieldFormComponent implements OnInit {
       managementEntity: ManagementEntity | undefined;
       options:SelectFieldOptions[] = []
 
-      mode: 'create' | 'edit' = 'create';
+      mode:FormMode = FormMode.CREATE;
 
       constructor(
           private fb: FormBuilder,
@@ -39,7 +42,7 @@ export class SelectFieldFormComponent implements OnInit {
       this._selectFieldOptionsService.getAll().subscribe();
 
       this.mode = (this.data as any).mode;
-        if (this.mode == 'edit') {
+        if (this.mode == FormMode.EDIT) {
             this.dialogRef.updateSize('600px', 'auto');
         } else {
             // this.data = {} as Constant;
@@ -52,13 +55,36 @@ export class SelectFieldFormComponent implements OnInit {
 
         this._selectFieldOptionsService.selectFieldOptionsList$.subscribe((options) => {this.options = options;});
 
-        this.formGroup = this.fb.group({
-              label: [this.data.label || '', Validators.required],
-              description: [this.data.description || '', Validators.required],
-              variableName: [this.data.variableName || '', Validators.required],
-              toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
-              options: [this.data.options || [], Validators.required],
-        });
+        switch (this.mode) {
+            case FormMode.CREATE:
+              this.formGroup = this.fb.group({
+                label: [this.data.label || '', Validators.required],
+                description: [this.data.description || '', Validators.required],
+                variableName: [this.data.variableName || '', Validators.required],
+                toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
+                options: [this.data.options || [], Validators.required],
+              });
+                break;
+            case FormMode.EDIT:
+              this.formGroup = this.fb.group({
+                label: [this.data.label || '', Validators.required],
+                description: [this.data.description || '', Validators.required],
+                variableName: [this.data.variableName || '', Validators.required],
+                toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
+                options: [this.data.options.id || [], Validators.required],
+              });
+              break;
+            default:
+              this.formGroup = this.fb.group({
+                label: ['', Validators.required],
+                description: ['', Validators.required],
+                variableName: ['', Validators.required],
+                toReturn: [false, Validators.required],
+                options: [[], Validators.required],
+              });
+              break;
+        }
+
     }
 
     onSubmit(): void {
@@ -75,10 +101,14 @@ export class SelectFieldFormComponent implements OnInit {
         };
 
         console.log("Submitting form data:", formData);
+        console.log("data", this.data);
 
-        this._fieldService.create(formData).subscribe({
+      (this.mode == FormMode.EDIT ?
+          (this._fieldService.update(formData, this.data.id))
+          : (this._fieldService.create(formData))
+      ).subscribe({
             next: () => {
-                const successMessage = this.mode === 'edit'
+                const successMessage = this.mode === FormMode.EDIT
                     ? 'form.success.update'
                     : 'form.success.creation';
 

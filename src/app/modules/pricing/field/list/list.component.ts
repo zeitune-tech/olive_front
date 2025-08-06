@@ -311,7 +311,6 @@ export class FieldListComponent implements OnInit {
                 });
             }
         });
-
   }
 
   /**
@@ -334,15 +333,17 @@ export class FieldListComponent implements OnInit {
                   });
               }
           });
-      } else if (field.type === FieldType.SELECT) {
+      }
+    else if (field.type === FieldType.SELECT) {
           this._dialog.open(SelectFieldFormComponent, {
               width: '600px',
               disableClose: true,
               data: {
                 ...field,
                 mode: 'edit',
-                product: this.selectedProduct,
-                branch: this.selectedBranch
+                product: this.selectedProduct!.id,
+                branch: this.selectedBranch!.id,
+                id: field!.id
               }
           }).afterClosed().subscribe((result) => {
               if (result) {

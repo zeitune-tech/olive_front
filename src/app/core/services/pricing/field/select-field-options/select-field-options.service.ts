@@ -67,4 +67,15 @@ export class SelectFieldOptionsService {
         );
     }
 
+    delete(uuid: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this.baseUrl}/${uuid}`)
+        .pipe(
+            tap(() => {
+                this.selectFieldOptionsList$.pipe(
+                );
+            }),
+            catchError(() => of())
+        );
+    }
+
 }

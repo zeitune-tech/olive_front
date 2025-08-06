@@ -21,6 +21,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options/select-field-options.service";
 import {SelectFieldOptions} from "@core/services/pricing/field/select-field-options/select-field-options.interface";
 import {SelectFieldOptionsFormComponent} from "../form/form.component";
+import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-constant-list",
@@ -277,7 +278,33 @@ export class SelectFieldOptionsListComponent implements OnInit, AfterViewInit, O
 
 
 
-    onDelete(constant: SelectFieldOptions): void {
+    onDelete(selectFieldOptions: SelectFieldOptions): void {
+      this._dialog.open(ConfirmDeleteComponent, {
+        width: '400px',
+        data: {
+          title: 'entities.constant.delete.title',
+          message: 'entities.constant.delete.message',
+          confirmButtonText: 'actions.delete',
+          cancelButtonText: 'actions.cancel'
+        }
+      }).afterClosed().subscribe((confirmed) => {
+        if (confirmed) {
+          this._selectFieldOptionsService.delete(selectFieldOptions.id).subscribe({
+            next: () => {
+              this._snackBar.open('entities.field.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
+              this._selectFieldOptionsService.getAll().subscribe(() => {
+                // Réappliquer le filtre après le rechargement des données
+                if (this.searchCtrl.value) {
+                  // this.applyFilter(this.searchCtrl.value);
+                }
+              });
+            },
+            error: () => {
+              this._snackBar.open('entities.constant.delete.error', '', { duration: 3000, panelClass: 'snackbar-error' });
+            }
+          });
+        }
+      });
     }
 
     /**

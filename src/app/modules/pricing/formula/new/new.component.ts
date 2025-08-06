@@ -71,41 +71,34 @@ export class PricingNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Initialisation du service de branche
+    console.log('Checking resolver data availability...');
+    
+    // Les données sont déjà chargées par le resolver, on peut directement s'abonner aux observables
     this._branchService.branches$.subscribe(branches => {
       this.branches = branches;
+      console.log('Branches loaded from resolver:', branches);
     });
-
-    // Initialiser les produits
-    this._productService.getAll()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Product[]) => {
-        this.products = data || [];
-      });
 
     this._productService.products$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: Product[]) => {
         this.products = data;
+        console.log('Products loaded from resolver:', data);
       });
 
     this._managementEntityService.entity$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: ManagementEntity) => {
         this.managementEntity = data;
+        console.log('Management entity loaded from resolver:', data);
       });
-
-    // Initialiser les variables avec le service VariableItemService
-    this._variableItemService.getAll()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe();
 
     this._variableItemService.variableItems$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe({
         next: (data: VariableItemResponse[]) => {
           this.variables = data;
-          console.log('Variable items loaded:', this.variables);
+          console.log('Variable items loaded from resolver:', data);
         },
         error: (error) => {
           console.error('Error in variableItems$ subscription:', error);

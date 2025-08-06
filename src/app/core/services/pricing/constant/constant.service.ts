@@ -1,7 +1,7 @@
 import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { Constant } from "./constant.interface";
 import { environment } from "@env/environment";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 @Injectable()
@@ -64,15 +64,13 @@ export class ConstantService {
         );
     }
 
-    delete(id: string): Observable<void> {
-        return this._httpClient.delete<void>(`${this.baseUrl}/${id}`)
-        .pipe(
-            tap(() => {
-                this.constant = {} as Constant;
-                return;
-            }),
-            catchError(() => of())
-        );
+    delete(id: string): Observable<String> {
+        return this._httpClient.delete<String>(`${this.baseUrl}/${id}`)
+          .pipe(
+            catchError((error: HttpErrorResponse) =>
+              error.message
+            )
+          );
     }
 
 }
