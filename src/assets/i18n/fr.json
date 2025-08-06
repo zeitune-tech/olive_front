@@ -1504,9 +1504,7 @@
           "add_variable_condition": "Ajouter une variable conditionnée"
         }
       }
-    }
-
-  },
+    },
   "auth": {
     "sign_in": {
       "title": "Se connecter",
@@ -1835,7 +1833,6 @@
       "previous": "Précédent",
       "remove": "Supprimer",
       "clear": "Effacer",
-      "addIncompatible": "Ajouter / Modifier une incompatibilité"
       "addIncompatible": "Ajouter / Modifier une incompatibilité",
       "loadTransportData": "Charger les données",
       "addAttribute": "Ajouter une caractéristique",
@@ -1965,17 +1962,6 @@
     },
     "princing": {
       "title": "Module Tarification",
-<<<<<<< HEAD
-      "description": "Gérer les tarifs."
-    },
-    "sinisters": {
-      "title": "Module Sinistres",
-      "description": "Gérer les sinistres."
-    },
-    "cessions": {
-      "title": "Module Cessions / Rétrocessions",
-      "description": "Gérer les cessions et les rétrocessions."
-=======
       "description": "Gestion des éléments de tarification et calcul des primes.",
       "features": {
         "formula": "Formules",
@@ -1991,7 +1977,6 @@
         "conditions": "Conditions",
         "conditions_description": "Gestion des conditions de tarification et règles métier."
       }
->>>>>>> dev
     }
   },
   "user": {
