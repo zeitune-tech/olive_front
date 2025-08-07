@@ -21,6 +21,7 @@ import { VariableConditionFormComponent } from "../form/form.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { VariableCondition } from "@core/services/pricing/variable-condition/variable-condition.interface";
 import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
+import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-delete.component";
 
 @Component({
     selector: "app-variable-condition-list",
@@ -277,6 +278,32 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
 
 
     onDelete(VariableCondition: VariableCondition): void {
+      this._dialog.open(ConfirmDeleteComponent, {
+        width: '400px',
+        data: {
+          title: 'entities.constant.delete.title',
+          message: 'entities.constant.delete.message',
+          confirmButtonText: 'actions.delete',
+          cancelButtonText: 'actions.cancel'
+        }
+      }).afterClosed().subscribe((confirmed) => {
+        if (confirmed) {
+          this._VariableConditionService.delete(VariableCondition.id).subscribe({
+            next: () => {
+              this._snackBar.open('entities.constant.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
+              this._VariableConditionService.getAll().subscribe(() => {
+                // Réappliquer le filtre après le rechargement des données
+                if (this.searchCtrl.value) {
+                  //this.applyFilter(this.searchCtrl.value);
+                }
+              });
+            },
+            error: () => {
+              this._snackBar.open('entities.constant.delete.error', '', { duration: 3000, panelClass: 'snackbar-error' });
+            }
+          });
+        }
+      });
     }
 
     /**

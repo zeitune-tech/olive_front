@@ -48,7 +48,7 @@ export class SelectFieldOptionValueFormComponent implements OnInit {
         this.formGroup = this.fb.group({
               label: [this.data.label || '', Validators.required],
               name: [this.data.name || '', Validators.required],
-              group: [this.data.group || '', Validators.required],
+              group: [this.data.group || 'DEFAULT', Validators.required],
         });
 
     }

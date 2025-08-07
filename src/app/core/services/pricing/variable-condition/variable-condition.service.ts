@@ -1,6 +1,6 @@
 import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { environment } from "@env/environment";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { VariableCondition } from "./variable-condition.interface";
 
@@ -61,6 +61,15 @@ export class VariableConditionService {
                 return response;
             }),
             catchError(() => of({} as VariableCondition))
+        );
+    }
+
+    delete(id: string): Observable<String> {
+      return this._httpClient.delete<String>(`${this.baseUrl}/${id}`)
+        .pipe(
+          catchError((error: HttpErrorResponse) =>
+            error.message
+          )
         );
     }
 

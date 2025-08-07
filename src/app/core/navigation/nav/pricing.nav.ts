@@ -6,10 +6,10 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 export const defaultPrincingNavigation: NavigationItem[] = [
   {
     id: 'exploitation',
-    title: 'sidebar.pricing.exploitation',
+    title: 'sidebar.pricing.production',
     type: 'collapsable',
     icon: 'fluent:people-team',
-    link: '/pricing/exploitation/constants',
+    link: '/pricing/production',
     // permission: PERMISSIONS.VIEW_PRICING_CONSTANTS,
     children: [
       {
