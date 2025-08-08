@@ -10,7 +10,7 @@ import { PointOfSale } from '@core/services/administration/point-of-sale/point-o
     selector: 'app-contributor-edit',
     templateUrl: './edit.component.html'
 })
-export class ContributorEditComponent implements OnInit {
+export class ContributorFormComponent implements OnInit {
 
     formGroup!: FormGroup;
     message: string = '';
@@ -19,40 +19,97 @@ export class ContributorEditComponent implements OnInit {
         { value: ContributorLevel.POINT_OF_SALE, label: 'entities.contributor.options.level.POINT_OF_SALE' }
     ];
     pointsOfSale: PointOfSale[] = [];
+    contributorTypes: { id: string, label: string }[] = [];
+    mode: 'create' | 'edit' = 'create';
 
     constructor(
         private fb: FormBuilder,
-        private dialogRef: MatDialogRef<ContributorEditComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: Contributor,
+        private dialogRef: MatDialogRef<ContributorFormComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: {
+            mode: 'create' | 'edit';
+            contributor: Contributor;
+        },
         private contributorService: ContributorService,
         private pointOfSaleService: PointOfSaleService
     ) {
+
+        this.mode = data.mode;
+
         this.formGroup = this.fb.group({
-            firstname: [data.firstname || '', Validators.required],
-            lastname: [data.lastname || '', Validators.required],
-            email: [data.email || '', [Validators.email]],
-            gsm: [data.gsm || ''],
-            level: [data.level || ContributorLevel.COMPANY, Validators.required],
-            pointOfSale: [data.managementEntity || null, this.validatePointOfSale()]
+            id: [data.contributor?.id || ''],
+            firstname: [data.contributor?.firstname || '', Validators.required],
+            lastname: [data.contributor?.lastname || '', Validators.required],
+            email: [data.contributor?.email || '', [Validators.email]],
+            phone: [data.contributor?.phone || ''],
+            level: [data.contributor?.level || ContributorLevel.COMPANY, Validators.required],
+            pointOfSale: [data.contributor?.managementEntity || '', this.validatePointOfSale()],
+            contributorTypeId: [data.contributor?.contributorType?.id || '', Validators.required]
+        });
+
+        this.contributorService.contributorTypes$.subscribe((types) => {
+            this.contributorTypes = types;
+        });
+
+        this.pointOfSaleService.pointsOfSale$.subscribe((points) => {
+            this.pointsOfSale = points;
         });
     }
 
     ngOnInit(): void {
-        this.pointOfSaleService.pointsOfSale$.subscribe((points: PointOfSale[]) => {
-            this.pointsOfSale = points;
-        });
 
-        this.formGroup.get('level')?.valueChanges.subscribe(level => {
-            if (level === ContributorLevel.COMPANY) {
-                this.formGroup.get('pointOfSale')?.disable();
-            } else {
-                this.formGroup.get('pointOfSale')?.enable();
+        // this.formGroup.get('level')?.valueChanges.subscribe(level => {
+        //     if (level === ContributorLevel.COMPANY) {
+        //         this.formGroup.get('pointOfSale')?.disable();
+        //     } else {
+        //         this.formGroup.get('pointOfSale')?.enable();
+        //     }
+        // });
+
+        // if (this.formGroup.get('level')?.value === ContributorLevel.COMPANY) {
+        //     this.formGroup.get('pointOfSale')?.disable();
+        // }
+    }
+
+    onCreate(): void {
+        if (this.formGroup.invalid) return;
+        this.formGroup.disable();
+
+        const newContributor: any = {
+            ...this.formGroup.value,
+        };
+
+        console.log('Creating contributor:', newContributor);
+
+        this.contributorService.create(newContributor).subscribe({
+            next: () => {
+                this.message = 'message.success';
+                this.dialogRef.close(true);
+            },
+            error: () => {
+                this.message = 'message.error';
+                this.formGroup.enable();
             }
         });
+    }
 
-        if (this.formGroup.get('level')?.value === ContributorLevel.COMPANY) {
-            this.formGroup.get('pointOfSale')?.disable();
-        }
+    onUpdate(): void {
+        if (this.formGroup.invalid) return;
+        this.formGroup.disable();
+
+        const updatedContributor: any = {
+            ...this.formGroup.value,
+        };
+
+        this.contributorService.update(updatedContributor.id, updatedContributor).subscribe({
+            next: () => {
+                this.message = 'message.success';
+                this.dialogRef.close(true);
+            },
+            error: () => {
+                this.message = 'message.error';
+                this.formGroup.enable();
+            }
+        });
     }
 
     validatePointOfSale(): ValidatorFn {
@@ -67,22 +124,11 @@ export class ContributorEditComponent implements OnInit {
     }
 
     onSubmit(): void {
-        if (this.formGroup.invalid) return;
-
-        this.formGroup.disable();
-
-        const updatedContributor = { ...this.data, ...this.formGroup.value };
-
-        this.contributorService.update(updatedContributor).subscribe({
-            next: () => {
-                this.message = 'message.success';
-                this.dialogRef.close(true);
-            },
-            error: () => {
-                this.message = 'message.error';
-                this.formGroup.enable();
-            }
-        });
+        if (this.mode === 'create') {
+            this.onCreate();
+        } else {
+            this.onUpdate();
+        }
     }
 
     onCancel(): void {

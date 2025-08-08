@@ -6,7 +6,7 @@ import { PricingNewComponent } from "./new/new.component";
 export const routes: Routes = [
 
     {
-        path: 'new',
+        path: '',
         canActivate: [],
         canActivateChild: [],
         data: {

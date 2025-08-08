@@ -1,0 +1,154 @@
+<div class="w-[21cm] h-[29.7cm] mx-auto p-6 bg-white relative overflow-hidden shadow-md print:shadow-none print:m-0">
+  <!-- Watermarks -->
+  <div *ngFor="let i of [].constructor(20); let idx = index"
+       class="absolute text-2xl text-gray-300 opacity-10 font-bold rotate-45 z-0 pointer-events-none"
+       [ngStyle]="{
+          top: (10 + (idx % 10) * 8) + '%',
+          left: (idx % 2 === 0 ? 10 : 60) + '%'
+        }">
+    POOL TPV
+  </div>
+
+  <!-- Car Watermark -->
+  <div class="absolute bottom-20 right-12 w-[300px] h-[200px] opacity-10 z-0 bg-no-repeat bg-center bg-contain pointer-events-none"
+       style="background-image: url('data:image/svg+xml,...');">
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 flex flex-col gap-2 h-full">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex items-center gap-4">
+        <div class="w-32 h-20 bg-no-repeat bg-center bg-contain"
+             style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-bsVF9QpXKXZtebPV5anShNXfroSvhr.png')"></div>
+        <div class="text-blue-900 font-bold text-base">
+          <div>POOL TPV Assurances</div>
+          <div class="text-sm font-normal">77 1000000 / (+221) 338643600<br>pooltpvsngmail.com</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title & Vehicle Info -->
+    <div class="flex justify-between mb-6">
+      <div class="bg-blue-900 text-white px-8 py-4 text-center">
+        <h1 class="text-lg font-bold leading-snug">ATTESTATION D'ASSURANCE<br>AUTOMOBILE</h1>
+      </div>
+      <div class="bg-gray-200 grid grid-cols-3 gap-4 items-center px-4">
+        <div>
+          <div class="text-sm">N° IMM.</div>
+          <div class="text-base font-bold">{{ immatriculation }}</div>
+          <div class="text-sm">GENRE</div>
+          <div class="text-sm font-bold">{{ genre }}</div>
+        </div>
+        <div>
+          <div class="text-sm">MARQUE</div>
+          <div class="text-base font-bold">{{ marque }}</div>
+        </div>
+        <div class="w-20 h-20 bg-no-repeat bg-center bg-contain rounded"
+             style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sans%20titre-jIvFLo7y23n3NGVvAAkPGyxNLDKt0Y.png')">
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-3 gap-6 flex-1">
+      <!-- Left Column -->
+      <div class="col-span-2 flex flex-col gap-4">
+        <!-- Assurance Box -->
+        <div class="border-[3px] border-yellow-400 rounded p-4 flex items-center gap-4">
+          <div class="w-24 h-16 bg-no-repeat bg-center bg-contain rounded"
+               style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-fCkwcC9hQyg2aZLA7MwhPeoe5lwEG5.png')">
+          </div>
+          <div class="text-sm">
+            <div>77 1000000 / (+221) 33 000 00 00</div>
+            <div class="text-blue-900">contactamsa-assurances.com</div>
+          </div>
+        </div>
+
+        <!-- Vehicle Details -->
+        <div class="text-sm leading-relaxed">
+          <div class="font-bold mb-2">SOUSCRIPTEUR<br>{{ assure }}</div>
+          <div><strong>VÉHICULE</strong></div>
+          <div>Modèle : <strong>{{ modele }}</strong></div>
+          <div>N° de police : <span class="font-bold">{{ policeNumber }}</span></div>
+          <div>Valable du :</div>
+          <div class="grid grid-cols-2 gap-2 my-2">
+            <div><strong>{{ dateDebut }}</strong></div>
+            <div>au : <strong>{{ dateFin }}</strong></div>
+          </div>
+          <div class="bg-yellow-400 text-blue-900 p-4 rounded text-center text-xl font-bold my-4">
+            N° attestation :<br>{{ attestationNumber }}
+          </div>
+          <div>Clé de sécurité :<br><strong>{{ cleSecurite }}</strong></div>
+          <div>Catégorie(s) :<br><strong>{{ categorie }}</strong></div>
+          <div>Nombre de place : <strong>{{ nombrePlace }}</strong></div>
+          <div>Puissance fiscale : <strong>{{ puissanceFiscale }}</strong></div>
+        </div>
+      </div>
+
+      <!-- Right Column: Ticket -->
+      <div class="flex flex-col border-2 border-dashed border-gray-300 text-[10px] font-mono max-w-xs shadow">
+        <div class="text-center border-b border-dashed p-2">
+          <div class="font-bold text-xs">ATTESTATION D'ASSURANCE</div>
+          <div>2024-07-22 14:58</div>
+          <div class="text-gray-500">POOL TPV - AMSA</div>
+        </div>
+        <div class="p-2">
+          <div class="flex justify-between border-b border-dotted pb-1 mb-1">
+            <span>N° Police:</span><span>{{ policeNumber }}</span>
+          </div>
+          <div class="flex justify-between border-b border-dotted pb-1 mb-1">
+            <span>N° Attestation:</span><span>{{ attestationNumber }}</span>
+          </div>
+          <div class="flex justify-between border-b border-dotted pb-1 mb-1">
+            <span>Immatriculation:</span><span>{{ immatriculation }}</span>
+          </div>
+          <div class="flex justify-between border-b border-dotted pb-1 mb-1">
+            <span>Véhicule:</span><span>{{ marque }} {{ modele }}</span>
+          </div>
+          <div class="flex justify-between border-b border-dotted pb-1 mb-1">
+            <span>Assuré:</span><span>{{ assure }}</span>
+          </div>
+          <div class="flex justify-between border-t border-dashed pt-2 mt-2 font-bold">
+            <span>Validité:</span><span>{{ dateDebut }} - {{ dateFin.split(' ')[0] }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Expire le:</span><span>{{ dateFin }}</span>
+          </div>
+          <div class="flex flex-col gap-1 my-2">
+            <div class="bg-yellow-400 text-blue-900 p-1 text-center font-bold">POLICE: {{ policeNumber }}</div>
+            <div class="bg-yellow-400 text-blue-900 p-1 text-center font-bold">ATTESTATION: {{ attestationNumber }}</div>
+          </div>
+        </div>
+        <div class="border-t border-dashed p-2 text-center">
+          <div class="w-16 h-16 mx-auto mb-2 border border-black bg-no-repeat bg-center bg-contain"
+               style="background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sans%20titre-jIvFLo7y23n3NGVvAAkPGyxNLDKt0Y.png')"></div>
+          <div>
+            <strong>{{ immatriculation }}</strong><br>
+            Expire: {{ dateFin }}<br>
+            <span class="text-[8px]">Clé: {{ cleSecurite }}</span>
+          </div>
+        </div>
+        <div class="text-center text-[8px] bg-gray-100 p-2 border-t border-dashed">
+          <div>MERCI DE VOTRE CONFIANCE</div>
+          <div>AMSA ASSURANCES</div>
+          <div>+221 78 173 40 40</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="border-t-4 border-black mt-auto pt-6 text-center text-sm leading-relaxed">
+      <div class="font-bold mb-2">
+        Cette attestation certifie que le véhicule désigné ci-dessus est garanti par un contrat d'assurance en cours de validité...
+      </div>
+      <div>
+        AMSA Assurances - POOL TPV<br>
+        Siège : 43, Avenue Hassan II, Dakar, B.P. 225 Dakar<br>
+        Tél : +221 33 839 36 00 / Fax : +221 33 839 36 01<br>
+        Email : contact-snamsaassurances.com<br>
+        Urgences : +221 78 173 40 40
+      </div>
+    </div>
+  </div>
+</div>

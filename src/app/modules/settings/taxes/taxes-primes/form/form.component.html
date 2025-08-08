@@ -9,7 +9,7 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.name') }}</mat-label>
-                    <input matInput formControlName="name" required />
+                    <input matInput formControlName="name" />
                     <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
@@ -17,7 +17,7 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.taxType') }}</mat-label>
-                    <mat-select formControlName="taxTypeId" required>
+                    <mat-select formControlName="taxTypeId">
                         <mat-option *ngFor="let tax of taxesType" [value]="tax.id">
                             {{ tax.name }}
                         </mat-option>
@@ -29,7 +29,7 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.product') }}</mat-label>
-                    <mat-select formControlName="productId" required>
+                    <mat-select formControlName="productId">
                         <mat-option *ngFor="let product of products" [value]="product.id">
                             {{ product.name }}
                         </mat-option>
@@ -41,7 +41,7 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.coverage') }}</mat-label>
-                    <mat-select formControlName="coverageId" required>
+                    <mat-select formControlName="coverageId">
                         <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
                             {{ coverage.reference.designation }}
                         </mat-option>
@@ -53,7 +53,7 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.dateEffective') }}</mat-label>
-                    <input matInput formControlName="dateEffective" type="date" required />
+                    <input matInput formControlName="dateEffective" type="date" />
                     <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
@@ -61,7 +61,7 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax.fields.isFlatRate') }}</mat-label>
-                    <mat-select formControlName="isFlatRate" required>
+                    <mat-select formControlName="isFlatRate">
                         <mat-option [value]="true">{{ t('form.fields.yes') }}</mat-option>
                         <mat-option [value]="false">{{ t('form.fields.no') }}</mat-option>
                     </mat-select>

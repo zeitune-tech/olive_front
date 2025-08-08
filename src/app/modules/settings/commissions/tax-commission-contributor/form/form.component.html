@@ -9,7 +9,7 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax-commission.fields.dateEffective') }}</mat-label>
-                    <input matInput type="date" formControlName="dateEffective" required>
+                    <input matInput type="date" formControlName="dateEffective">
                     <mat-error *ngIf="formGroup.get('dateEffective')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
@@ -18,31 +18,28 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax-commission.fields.product') }}</mat-label>
-                    <mat-select formControlName="product" required>
+                    <mat-select formControlName="productId">
                         <mat-option *ngFor="let product of products" [value]="product.id">
                             {{ product.name }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formGroup.get('product')?.hasError('required')">
+                    <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax-commission.fields.contributorType') }}</mat-label>
-                    <mat-select formControlName="typeContributor" required>
+                    <mat-select formControlName="typeContributorId">
                         <mat-option *ngFor="let type of contributorTypes" [value]="type.value">
                             {{ type.label }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formGroup.get('type')?.hasError('required')">
-                        {{ t('form.errors.required') }}
-                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax-commission.fields.contributor') }}</mat-label>
-                    <mat-select formControlName="contributor" required>
+                    <mat-select formControlName="contributorId">
                         <mat-option *ngFor="let contributor of contributors" [value]="contributor.id">
                             {{ contributor.firstname }} {{ contributor.lastname }}
                         </mat-option>
@@ -54,12 +51,23 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.tax-commission.fields.rate') }}</mat-label>
-                    <input matInput type="number" formControlName="rate" required>
+                    <input matInput type="number" formControlName="rate">
                     <mat-error *ngIf="formGroup.get('rate')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                     <mat-error *ngIf="formGroup.get('rate')?.hasError('min')">
                         {{ t('form.errors.min', { value: 0 }) }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.tax-commission.fields.toWithhold') }}</mat-label>
+                    <mat-select formControlName="toWithhold">
+                        <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+                        <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('toWithhold')?.hasError('required')">
+                        {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>
 

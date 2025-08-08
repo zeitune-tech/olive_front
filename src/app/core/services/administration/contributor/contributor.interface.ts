@@ -1,3 +1,5 @@
+import { ManagementEntity } from "../management-entity/management-entity.interface";
+
 export const  ContributorLevel = {
     COMPANY : 'COMPANY',
     POINT_OF_SALE : 'POINT_OF_SALE',
@@ -20,19 +22,19 @@ export class Contributor {
     firstname: string;
     lastname: string;
     email: string;
-    gsm: string;
+    phone: string;
     level: typeof ContributorLevel[keyof typeof ContributorLevel];
     contributorType: ContributorType
-    managementEntity: string;
+    managementEntity: ManagementEntity;
 
     constructor(data: any) {
         this.id = data.id || '';
         this.firstname = data.firstname || '';
         this.lastname = data.lastname || '';
         this.email = data.email || '';
-        this.gsm = data.gsm || '';
+        this.phone = data.gsm || '';
         this.level = data.level || ContributorLevel.COMPANY; // Valeur par défaut à adapter
-        this.managementEntity = data.managementEntity || '';
+        this.managementEntity = data.managementEntity ? new ManagementEntity(data.managementEntity) : new ManagementEntity({});
         this.contributorType = data.contributorType ? new ContributorType(data.contributorType) : new ContributorType({});
     }
 }

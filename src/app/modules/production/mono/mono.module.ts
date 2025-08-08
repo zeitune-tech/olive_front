@@ -26,6 +26,10 @@ import { RiskComponent } from "./new-business/risk/risk.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { VehicleAttributesComponent } from "./new-business/extra/extra.component";
 import { VehicleCoveragesComponent } from "./new-business/coverages/coverage.component";
+import { ProductionListComponent } from "./list/list.component";
+import { PreviewComponent } from "./new-business/preview/preview.component";
+import { ContractSummaryComponent } from "./new-business/contract-summary/contract-summary.component";
+import { AttestationAutoComponent } from "./new-business/attestation-auto/attestation-auto.component";
 
 @NgModule({
     declarations: [
@@ -36,7 +40,11 @@ import { VehicleCoveragesComponent } from "./new-business/coverages/coverage.com
         AdvancedOptionsComponent,
         RiskComponent,
         VehicleAttributesComponent,
-        VehicleCoveragesComponent
+        VehicleCoveragesComponent,
+        ProductionListComponent,
+        PreviewComponent,
+        ContractSummaryComponent,
+        AttestationAutoComponent
     ],
     imports: [
         RouterModule.forChild(routes),

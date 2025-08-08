@@ -9,6 +9,7 @@
                 {{ t('entities.commission.form.prime-view.title') }}
             }
         </h2>
+
         
     </div>
     <mat-divider></mat-divider>
@@ -20,48 +21,48 @@
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.commission.fields.product') }}</mat-label>
-                    <mat-select formControlName="product" >
+                    <mat-select formControlName="productId" >
                         <mat-option *ngFor="let product of products" [value]="product.id">
                             {{ product.name }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formGroup.get('product')?.hasError('required')">
+                    <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.commission.fields.coverage') }}</mat-label>
-                    <mat-select formControlName="coverage" >
+                    <mat-select formControlName="coverageId" >
                         <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
                             {{ coverage.reference.designation }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
+                    <mat-error *ngIf="formGroup.get('coverageId')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.commission.fields.typePointOfSale') }}</mat-label>
-                    <mat-select formControlName="typePointOfSale" >
+                    <mat-select formControlName="pointOfSaleType" >
                         <mat-option *ngFor="let type of typesPointOfSale" [value]="type.value">
                             {{ type.label }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formGroup.get('type')?.hasError('required')">
+                    <mat-error *ngIf="formGroup.get('pointOfSaleType')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="w-full" appearance="outline">
                     <mat-label>{{ t('entities.commission.fields.pointOfSale') }}</mat-label>
-                    <mat-select formControlName="pointOfSale" >
+                    <mat-select formControlName="pointOfSaleId" >
                         <mat-option *ngFor="let pointOfSale of pointsOfSale" [value]="pointOfSale.id">
                             {{ pointOfSale.name }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="formGroup.get('type')?.hasError('required')">
+                    <mat-error *ngIf="formGroup.get('pointOfSaleId')?.hasError('required')">
                         {{ t('form.errors.required') }}
                     </mat-error>
                 </mat-form-field>

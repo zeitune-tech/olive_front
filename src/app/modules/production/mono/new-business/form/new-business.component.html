@@ -13,7 +13,7 @@
         <!-- Step 1: Contract Info -->
         <mat-step [stepControl]="formStepOne">
             <ng-template matStepLabel>{{ t('entities.policy.steps.producer') }}</ng-template>
-            <producer-form  (next)="onStepOneNext($event)"></producer-form>
+            <producer-form (next)="onStepOneNext($event)"></producer-form>
         </mat-step>
 
         <!-- Step 2: Insured -->
@@ -24,24 +24,25 @@
 
         <!-- Step 3: Advanced Options -->
         <mat-step [stepControl]="formStepThree">
-            <ng-template matStepLabel>{{ t('entities.policy.steps.advanced') }}</ng-template>
-            <advanced-options-form (next)="onStepThreeNext($event)"></advanced-options-form>
+            <ng-template matStepLabel>{{ t('entities.policy.steps.vehicle') }}</ng-template>
+            <risk-form (next)="onStepThreeNext($event)"></risk-form>
         </mat-step>
+
 
         <!-- Step 4: Vehicle -->
-        <mat-step [stepControl]="formStepThree">
-            <ng-template matStepLabel>{{ t('entities.policy.steps.vehicle') }}</ng-template>
-            <risk-form (next)="onStepFourNext($event)"></risk-form>
+        <mat-step [stepControl]="formStepFour">
+            <ng-template matStepLabel>{{ t('entities.policy.steps.advanced') }}</ng-template>
+            <advanced-options-form (next)="onStepFourNext($event)"></advanced-options-form>
         </mat-step>
 
-         <!-- Step 5: Vehicle -->
-        <mat-step [stepControl]="formStepThree">
+        <!-- Step 5: Vehicle -->
+        <mat-step [stepControl]="formStepFive">
             <ng-template matStepLabel>{{ t('entities.policy.steps.extra') }}</ng-template>
             <vehicle-attributes-form (next)="onStepFiveNext($event)"></vehicle-attributes-form>
         </mat-step>
 
         <!-- Step 6: Coverages -->
-        <mat-step [stepControl]="formStepFour">
+        <mat-step [stepControl]="formStepSix">
             <ng-template matStepLabel>{{ t('entities.policy.steps.coverages') }}</ng-template>
             <vehicle-coverages-form (next)="onStepSixNext($event)"></vehicle-coverages-form>
         </mat-step>
@@ -55,16 +56,39 @@
         <!-- Step 6: Summary -->
         <mat-step>
             <ng-template matStepLabel>{{ t('entities.policy.steps.summary') }}</ng-template>
-            <!-- <policy-summary [policyData]="{
-        ...formStepOne?.value,
-        insured: formStepTwo?.value,
-        vehicle: formStepThree?.value,
-        coverages: formStepFour?.value.coverages,
-        premiums: formStepFive?.value
-      }"></policy-summary> -->
+            <div class="space-y-6">
+                <!-- 1. Résumé -->
+                <contract-summary [formStepOne]="formStepOne" [formStepTwo]="formStepTwo"
+                    [formStepThree]="formStepThree" [formStepFour]="formStepFour" [formStepFive]="formStepFive"></contract-summary>
+
+                <!-- 2. Boutons -->
+                <div class="flex gap-4">
+                    <button (click)="currentView = 'contract'" class="px-4 py-2 rounded border"
+                        [class.bg-blue-600]="currentView === 'contract'"
+                        [class.text-white]="currentView === 'contract'">
+                        Voir Document de Contrat
+                    </button>
+                    <button (click)="currentView = 'attestation'" class="px-4 py-2 rounded border"
+                        [class.bg-blue-600]="currentView === 'attestation'"
+                        [class.text-white]="currentView === 'attestation'">
+                        Voir Attestation Automobile
+                    </button>
+                </div>
+
+                <!-- 3. Affichage du document -->
+                <div class="mt-6">
+                    <contract-preview *ngIf="currentView === 'contract'" [formStepOne]="formStepOne"
+                        [formStepTwo]="formStepTwo" [formStepThree]="formStepThree"
+                        ></contract-preview>
+
+                    <attestation-auto *ngIf="currentView === 'attestation'" ></attestation-auto>
+                </div>
+            </div>
+
+
 
             <div class="flex justify-end gap-4 mt-4">
-                <button mat-button matStepperPrevious>{{ t('form.actions.back') }}</button>
+                <!-- <button mat-button matStepperPrevious>{{ t('form.actions.back') }}</button> -->
                 <button mat-flat-button color="primary" (click)="submit()">{{ t('form.actions.save') }}</button>
             </div>
         </mat-step>

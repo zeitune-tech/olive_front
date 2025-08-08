@@ -10,7 +10,7 @@ import { RequestMetadata } from '../../common.interface';
 export class TaxCommissionsContributorService {
 
 
-	baseUrl = environment.settings_url + '/commission-taxes';
+	baseUrl = environment.settings_url + '/tax-commissions/contributors';
 
 	private _commissionTax = new ReplaySubject<TaxCommissionsContributor>(1);
 	private _commissionTaxes = new ReplaySubject<TaxCommissionsContributor[]>(1);

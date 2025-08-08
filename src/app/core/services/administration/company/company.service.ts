@@ -83,7 +83,7 @@ export class CompanyService {
     }
 
     getMyCompany(): Observable<Company> {
-        return this._httpClient.get<Company>(`${this.baseUrl}/mine`)
+        return this._httpClient.get<Company>(`${this.baseUrl}`)
         .pipe(
             tap((company) => {
                 this.myCompany = company;

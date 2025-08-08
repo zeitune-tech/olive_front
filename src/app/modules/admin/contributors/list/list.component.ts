@@ -11,8 +11,9 @@ import { TranslocoService } from "@jsverse/transloco";
 import { animations } from "@lhacksrt/animations";
 import { TableColumn, TableOptions } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { ContributorEditComponent } from "../edit/edit.component";
+import { ContributorFormComponent } from "../edit/edit.component";
 import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
+import { AccountComponent } from "../account/account.component";
 
 @Component({
     selector: "app-contributors-list",
@@ -29,7 +30,8 @@ export class ContributorsListComponent {
             { label: 'entities.contributor.fields.firstname', property: 'firstname', type: 'text', visible: true },
             { label: 'entities.contributor.fields.lastname', property: 'lastname', type: 'text', visible: true },
             { label: 'entities.contributor.fields.email', property: 'email', type: 'text', visible: true },
-            { label: 'entities.contributor.fields.gsm', property: 'gsm', type: 'text', visible: true },
+            { label: 'entities.contributor.fields.contributorType', property: 'contributorType', type: 'text', visible: true },
+            { label: 'entities.contributor.fields.phone', property: 'phone', type: 'text', visible: true },
             { label: 'entities.contributor.fields.level', property: 'level', type: 'text', visible: true },
             { label: 'entities.contributor.fields.pointOfSale', property: 'managementEntity', type: 'text', visible: true },
         ],
@@ -38,6 +40,7 @@ export class ContributorsListComponent {
         actions: [],
         renderItem: (element: Contributor, property: keyof Contributor) => {
             if (property === 'level') {
+                
                 return this._translateService.translate(`entities.contributor.options.level.${element[property]}`);
             }
 
@@ -47,6 +50,10 @@ export class ContributorsListComponent {
                 } else {
                     return '-';
                 }
+            }
+
+            if (property === 'contributorType') {
+                return element.contributorType ? element.contributorType.label : '-';
             }
 
             return element[property];
@@ -92,11 +99,29 @@ export class ContributorsListComponent {
         this._unsubscribeAll.complete();
     }
 
+    onCreate(): void {
+        const dialogRef = this._dialog.open(ContributorFormComponent, {
+            width: '600px',
+            data: {
+                mode: 'create',
+                contributor: {} as Contributor
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // this._contributorService.refreshContributors();
+            }
+        });
+    }
+
     onEdit(element: Contributor): void {
        
-        const dialogRef = this._dialog.open(ContributorEditComponent, {
+        const dialogRef = this._dialog.open(ContributorFormComponent, {
             width: '600px',
-            data: element
+            data: {
+                mode: 'edit',
+                contributor: element
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -105,7 +130,13 @@ export class ContributorsListComponent {
         });
     }
     onView(element: Contributor): void {
-        // Implement view logic here
+        this._dialog.open(AccountComponent, {
+            width: '600px',
+            data: {
+                contributor: element
+            }
+        });
+
     }
 
     onDelete(element: Contributor): void {
