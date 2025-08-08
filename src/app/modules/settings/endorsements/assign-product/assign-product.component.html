@@ -1,6 +1,5 @@
 <div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t">
   <h2 mat-dialog-title>{{ t('entities.endorsment.product_assignment.title') || 'Assigner des produits' }}</h2>
-  <mat-divider></mat-divider>
 
   <mat-dialog-content class="py-4">
     <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>

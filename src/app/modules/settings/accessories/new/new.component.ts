@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '@core/services/settings/product/product.interface';
 import { ProductService } from '@core/services/settings/product/product.service';
 import { AccessoryService } from '@core/services/settings/accessory/accessory.service';
@@ -12,10 +12,8 @@ import { EndorsementService } from '@core/services/settings/endorsement/endorsem
   templateUrl: './new.component.html'
 })
 export class AccessoryNewComponent implements OnInit {
-  formGroup!: UntypedFormGroup;
+  formGroup!: FormGroup;
   message: string = '';
-
-  
 
   endorsements: Endorsment[] = [];
   products: Product[] = [];
@@ -36,11 +34,11 @@ export class AccessoryNewComponent implements OnInit {
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
       dateEffective: [null],
-      actType: [null, Validators.required],
+      actType: [null, [Validators.required]],
       accessoryRisk: [null],
-      accessoryPolice: [null],
-      productId: [null, Validators.required],
-      day: [null, Validators.required],
+      accessoryAmount: [null],
+      productId: [null, [Validators.required]],
+      day: [null, [Validators.required, Validators.min(1), Validators.max(31)]],
       hour: [0, [Validators.required, Validators.min(0), Validators.max(23)]],
       minute: [0, [Validators.required, Validators.min(0), Validators.max(59)]],
     });
@@ -56,7 +54,6 @@ export class AccessoryNewComponent implements OnInit {
       this.filterEndorsements();
     });
 
-
     this._layoutService.selectedAccessory$.subscribe((accessoire: any) => {
       if (accessoire) {
         this.editMode = true;
@@ -66,7 +63,7 @@ export class AccessoryNewComponent implements OnInit {
           dateEffective: accessoire.dateEffective,
           actType: accessoire.endorsement ? accessoire.endorsement.id : null,
           accessoryRisk: accessoire.accessoryRisk,
-          accessoryPolice: accessoire.accessoryPolice,
+          accessoryAmount: accessoire.accessoryAmount,
           productId: accessoire.product ? accessoire.product.id : null,
         };
 
@@ -80,13 +77,12 @@ export class AccessoryNewComponent implements OnInit {
         this.formGroup.patchValue(patch);
       }
     });
-
   }
 
   filterEndorsements(): void {
     if (this.selectedProductId != null) {
       this.filteredEndorsements = this.endorsements.filter(e =>
-        e.product.some(p => p.id === this.selectedProductId)
+        e.product?.some(p => p.id === this.selectedProductId)
       );
     } else {
       this.filteredEndorsements = [];
@@ -103,50 +99,50 @@ export class AccessoryNewComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.formGroup.valid) {
-      const formValues = this.formGroup.value;
+    if (!this.formGroup.valid) {
+      console.warn('Formulaire invalide');
+      this.message = 'message.invalid';
+      return;
+    }
 
-    // Créer une date complète à partir de jour + heure + minute
+    const formValues = this.formGroup.value;
     const date: Date = new Date(formValues.day);
     date.setHours(formValues.hour);
     date.setMinutes(formValues.minute);
 
-    // Créer le payload final avec effectiveDate calculé
     const data = {
       ...formValues,
       effectiveDate: date
     };
 
-    // Supprimer les champs intermédiaires du payload si nécessaire
     delete data.day;
     delete data.hour;
     delete data.minute;
 
-      if (this.editMode && this.accessoryId) {
-        this._accessoryService.update(this.accessoryId, data).subscribe({
-          next: () => {
-            this.message = 'message.success';
-            this._layoutService.clearSelectedAccessory();
-          },
-          error: (error) => {
-            this.message = 'message.error';
-            console.error(error);
-          }
-        });
-      } else if (this.editMode && !this.accessoryId) {
-        this.message = 'message.error';
-        console.error('Accessory ID is required for update operation.');
-      } else {
-        this._accessoryService.create(data).subscribe({
-          next: () => {
-            this.message = 'message.success';
-          },
-          error: (error) => {
-            this.message = 'message.error';
-            console.error(error);
-          }
-        });
-      }
+    if (this.editMode && this.accessoryId) {
+      this._accessoryService.update(this.accessoryId, data).subscribe({
+        next: () => {
+          this.message = 'message.success';
+          this._layoutService.clearSelectedAccessory();
+        },
+        error: (error) => {
+          this.message = 'message.error';
+          console.error(error);
+        }
+      });
+    } else if (!this.editMode) {
+      this._accessoryService.create(data).subscribe({
+        next: () => {
+          this.message = 'message.success';
+        },
+        error: (error) => {
+          this.message = 'message.error';
+          console.error(error);
+        }
+      });
+    } else {
+      this.message = 'message.error';
+      console.error('Accessory ID is requis pour mise à jour');
     }
   }
 }

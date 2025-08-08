@@ -5,89 +5,53 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 
 export const defaultAttestationNavigation: NavigationItem[] = [
     {
-        id: 'stock',
-        title: 'sidebar.attestations.title',
+        id: 'stock-central',
+        title: 'sidebar.attestations.stock-central.title',
         type: 'basic',
         icon: 'fluent:people-team',
-        link: '/attestations/stock',
-        permission: PERMISSIONS.VIEW_ATTESTATIONS,
+        link: '/attestations/stock-central',
+        // permission: PERMISSIONS.VIEW_STOCK_CENTRAL
     },
     {
-        id: 'market-level-organization',
-        title: 'sidebar.attestation_demands.new',
+        id: 'gestion-commandes',
+        title: 'sidebar.attestations.commandes.title',
         type: 'basic',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.CREATE_ATTESTATIONS_DEMANDS_TO_MARKET_LEVEL_ORGANIZATION,
-        link: '/attestations/market-level-organization',
+        link: '/attestations/commandes',
+        // permission: PERMISSIONS.VIEW_COMMANDES
     },
     {
-        id: 'companies',
-        title: 'sidebar.companies.title',
-        type: 'collapsable',
-        icon: 'fluent:people-team',
-        permission: PERMISSIONS.DELIVER_ATTESTATIONS_TO_COMPANY,
-        link: '/attestations/compagnies?allow-demand=true',
-        children: [
-            {
-                id: 'companies-list',
-                title: 'sidebar.attestations.list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/attestations/companies/list',
-                permission: PERMISSIONS.DELIVER_ATTESTATIONS_TO_COMPANY,
-            },
-            {
-                id: 'revoked',
-                title: 'sidebar.attestations.revoked',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/attestations/companies/revoked',
-                permission: PERMISSIONS.DELIVER_ATTESTATIONS_TO_COMPANY,
-            },
-        ]
-    },
-    
-    {
-        id: 'attestation-demands',
-        title: 'sidebar.attestation_demands.title',
+        id: 'attribution-compagnies',
+        title: 'sidebar.attestations.attributionCompagnies.title',
         type: 'basic',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.VIEW_ATTESTATIONS_DEMANDS,
-        link: '/attestations/demands/points-of-sale',
+        link: '/attestations/attribution-compagnies',
+        // permission: PERMISSIONS.VIEW_ATTRIBUTION_COMPAGNIES
     },
     {
-        id: 'points-of-sale',
-        title: 'sidebar.attestation_points_of_sale.title',
-        type: 'collapsable',
+        id: 'attribution-points-vente',
+        title: 'sidebar.attestations.attributionPointsVente.title',
+        type: 'basic',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.DELIVER_ATTESTATIONS_TO_POINTS_OF_SALE,
-        children: [
-            {
-                id: 'points-of-sale-list',
-                title: 'sidebar.attestation_points_of_sale.list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/attestations/points-of-sale/list',
-                permission: PERMISSIONS.DELIVER_ATTESTATIONS_TO_POINTS_OF_SALE
-            },
-            {
-                id: 'points-of-sale-broker',
-                title: 'sidebar.attestation_points_of_sale.broker',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/attestations/points-of-sale/broker',
-                permission: PERMISSIONS.DELIVER_ATTESTATIONS_TO_POINTS_OF_SALE
-            },
-            {
-                id: 'revoked',
-                title: 'sidebar.attestations.revoked',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/attestations/companies/revoked',
-                permission: PERMISSIONS.VIEW_ATTESTATIONS,
-            },
-        ]
+        link: '/attestations/attribution-points-vente',
+        // permission: PERMISSIONS.VIEW_ATTRIBUTION_PDV
     },
+    {
+        id: 'retrait-stocks-pdv',
+        title: 'sidebar.attestations.retraitStocksPDV.title',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/attestations/retrait-stocks',
+        // permission: PERMISSIONS.VIEW_RETRAIT_STOCKS
+    },
+    {
+        id: 'suivi-attestations',
+        title: 'sidebar.attestations.suiviAttestations.title',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/attestations/suivi',
+        // permission: PERMISSIONS.VIEW_SUIVI_ATTESTATIONS
+    }
 
 ];
 export const compactAttestationNavigation: NavigationItem[] = [
@@ -97,41 +61,54 @@ export const compactAttestationNavigation: NavigationItem[] = [
         type: 'collapsable',
         icon: 'fluent:people-team',
         link: '/attestations/dashboard',
-        permission: PERMISSIONS.VIEW_ATTESTATIONS,
-        children: []
+        // permission: PERMISSIONS.VIEW_ATTESTATIONS
     },
     {
-        id: 'market-level-organization',
-        title: 'sidebar.market_level_organization.title',
+        id: 'stock-central',
+        title: 'sidebar.attestations.stock-central.title',
         type: 'basic',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.CREATE_ATTESTATIONS_DEMANDS_TO_MARKET_LEVEL_ORGANIZATION,
-        link: '/attestations/market-level-organization/list',
+        link: '/attestations/stock-central',
+        // permission: PERMISSIONS.VIEW_STOCK_CENTRAL
     },
     {
-        id: 'companies',
-        title: 'sidebar.companies.title',
+        id: 'gestion-commandes',
+        title: 'sidebar.attestations.commandes.title',
         type: 'basic',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.CREATE_ATTESTATIONS_DEMANDS_TO_COMPANY,
-        link: '/attestations/market-level-organization/list',
+        link: '/attestations/commandes',
+        // permission: PERMISSIONS.VIEW_COMMANDES
     },
     {
-        id: 'companies-deliver',
-        title: 'sidebar.companies.title',
+        id: 'attribution-compagnies',
+        title: 'sidebar.attestations.attributionCompagnies.title',
         type: 'basic',
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.DELIVER_ATTESTATIONS_TO_COMPANY,
-        link: '/attestations/market-level-organization/list',
+        link: '/attestations/attribution-compagnies',
+        // permission: PERMISSIONS.VIEW_ATTRIBUTION_COMPAGNIES
     },
     {
-        id: 'points-of-sale',
-        title: 'sidebar.points_of_sale.title',
-        type: 'collapsable',
+        id: 'attribution-points-vente',
+        title: 'sidebar.attestations.attributionPointsVente.title',
+        type: 'basic',                
         icon: 'fluent:people-team',
-        permission: PERMISSIONS.DELIVER_ATTESTATIONS_TO_POINTS_OF_SALE,
-        children: [
-            
-        ]
+        link: '/attestations/attribution-points-vente',
+        // permission: PERMISSIONS.VIEW_ATTRIBUTION_PDV
     },
+    {
+        id: 'retrait-stocks-pdv',
+        title: 'sidebar.attestations.retraitStocksPDV.title',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/attestations/retrait-stocks',
+        // permission: PERMISSIONS.VIEW_RETRAIT_STOCKS
+    },
+    {
+        id: 'suivi-attestations',
+        title: 'sidebar.attestations.suiviAttestations.title',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/attestations/suivi',
+        // permission: PERMISSIONS.VIEW_SUIVI_ATTESTATIONS
+    }
 ];

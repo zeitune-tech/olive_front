@@ -20,46 +20,54 @@ export class AssignProductComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<AssignProductComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { endorsmentId: string },
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      endorsmentId: string;
+      assignedProducts?: Product[]; // 👈 nouvelle propriété
+    },
     private productService: ProductService,
     private fb: FormBuilder
   ) {}
 
-  
+  ngOnInit(): void {
+    const alreadyAssignedIds = new Set(this.data.assignedProducts?.map(p => p.id) ?? []);
 
-    ngOnInit(): void {
-        this.productService.getAll().subscribe({
-            next: (products: Product[]) => {
-                this.products = products;
-                this.dataSource.data = products;
-            },
-            error: err => {
-                console.error('Erreur lors du chargement des produits', err);
-            }
-        });
-    }
+    this.productService.getAll().subscribe({
+      next: (products: Product[]) => {
+        this.products = products;
+        this.dataSource.data = products;
 
-    isAllSelected(): boolean {
+        // Pré-sélectionner les produits déjà liés
+        const preselected = products.filter(p => alreadyAssignedIds.has(p.id));
+        this.selection = new SelectionModel<Product>(true, preselected);
+      },
+      error: err => {
+        console.error('Erreur lors du chargement des produits', err);
+      }
+    });
+  }
+
+  isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
-    }
+  }
 
-    masterToggle(): void {
+  masterToggle(): void {
     this.isAllSelected()
-        ? this.selection.clear()
-        : this.dataSource.data.forEach(row => this.selection.select(row));
-    }
+      ? this.selection.clear()
+      : this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 
-    toggleSelection(row: Product): void {
+  toggleSelection(row: Product): void {
     this.selection.toggle(row);
-    }
+  }
 
-    onAssign(): void {
+  onAssign(): void {
     this.dialogRef.close(this.selection.selected);
-    }
+  }
 
-    onCancel(): void {
+  onCancel(): void {
     this.dialogRef.close();
-    }
+  }
 }

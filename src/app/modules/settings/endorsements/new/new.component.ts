@@ -23,11 +23,16 @@ export class EndorsementNewComponent implements OnInit {
 	 */
 
 	natures = [
-		{ value: 'NEW_BUSINESS', label: 'entities.endorsment.options.nature.NEW_BUSINESS' },
-		{ value: 'MODIFICATION', label: 'entities.endorsment.options.nature.MODIFICATION' },
-		{ value: 'SUSPENSION', label: 'entities.endorsment.options.nature.SUSPENSION' },
-		{ value: 'REINSTATEMENT', label: 'entities.endorsment.options.nature.REINSTATEMENT' }
+		{ value: 'MODIFICATION',                 label: 'entities.endorsment.options.nature.MODIFICATION' }, // modification standard
+		{ value: 'RENEWAL',                      label: 'entities.endorsment.options.nature.RENEWAL' },               // renouvellement
+		{ value: 'SUSPENSION',                   label: 'entities.endorsment.options.nature.SUSPENSION' },            // suspension
+		{ value: 'REINSTATEMENT_WITH_DISCOUNT',  label: 'entities.endorsment.options.nature.REINSTATEMENT_WITH_DISCOUNT' }, // remise en vigueur avec ristourne
+		{ value: 'REINSTATEMENT',                label: 'entities.endorsment.options.nature.REINSTATEMENT' },         // remise en vigueur normale
+		{ value: 'CANCELLATION',                 label: 'entities.endorsment.options.nature.CANCELLATION' },           // résiliation
+		{ value: 'RETRACT',                      label: 'entities.endorsment.options.nature.RETRACT' },                // retrait
+		{ value: 'INCORPORATION',                label: 'entities.endorsment.options.nature.INCORPORATION' },          // incorporation
 	];
+
 
 
 	products: Product[] = [];

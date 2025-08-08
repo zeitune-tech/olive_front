@@ -17,6 +17,7 @@ import { EndorsementService } from "@core/services/settings/endorsement/endorsem
 import { EndorsementNewComponent } from "../new/new.component";
 import { MatDialog } from "@angular/material/dialog";
 import { AssignProductComponent } from "../assign-product/assign-product.component";
+import { Product } from "@core/services/settings/product/product.interface";
 
 @Component({
     selector: "app-closures-list",
@@ -95,22 +96,27 @@ export class EndorsementListComponent {
     }
 
     assignProduct(item: Endorsment): void {
-        this._dialog.open(AssignProductComponent, {
-            width: '600px',
-            data: { endorsmentId: item.id }
-        }).afterClosed().subscribe((selectedProducts: string[]) => {
-            if (selectedProducts && selectedProducts.length) {
-                this._endorsmentService.assignProducts(item.id, selectedProducts).subscribe({
-                    next: () => {
-                    console.log('Produits assignés avec succès');
-                    },
-                    error: (err) => {
-                    console.error('Erreur lors de l’assignation :', err);
-                    }
-                });
-            }
+        this._endorsmentService.get(item.id).subscribe(fullEndorsement => {
+            this._dialog.open(AssignProductComponent, {
+                width: '600px',
+                data: {
+                    endorsmentId: fullEndorsement.id,
+                    assignedProducts: fullEndorsement.product ?? []
+                }
+            }).afterClosed().subscribe((selectedProducts: Product[]) => {
+                const productIds = selectedProducts?.map(p => typeof p === 'string' ? p : p.id) ?? [];
+                if (productIds.length) {
+                    this._endorsmentService.assignProducts(fullEndorsement.id, productIds).subscribe({
+                        next: () => console.log('Produits assignés avec succès'),
+                        error: (err) => console.error('Erreur lors de l’assignation :', err)
+                    });
+                }
+            });
         });
     }
+
+    
+
 
     onDelete(endorsement: Endorsment): void {}
 

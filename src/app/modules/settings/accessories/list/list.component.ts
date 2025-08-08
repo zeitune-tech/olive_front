@@ -32,7 +32,7 @@ export class AccessoriesListComponent {
             { label: 'entities.accessory.fields.actType', property: 'actType', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.product', property: 'product', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.accessoryRisk', property: 'accessoryRisk', visible: true, type: 'text' },
-            { label: 'entities.accessory.fields.accessoryPolice', property: 'accessoryPolice', visible: true, type: 'text' },
+            { label: 'entities.accessory.fields.accessoryPolice', property: 'accessoryAmount', visible: true, type: 'text' },
             { label: 'entities.accessory.fields.effectiveDate', property: 'effectiveDate', visible: true, type: 'text' }
         ],
         imageOptions: {
