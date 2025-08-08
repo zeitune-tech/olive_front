@@ -16,14 +16,20 @@
                 {{t('product-selection.change')}}
             </button>
         </div>
+
+        <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
+            <span>{{selectedProduct.name || t('form.actions.change-attestation-title')}}</span>
+            <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openAttestationSelection()">
+                {{t('form.actions.change-attestation')}}
+            </button>
+        </div>
     </div>
 
     <!-- Search -->
     <div class="flex flex-col md:flex-row items-center gap-4 justify-between">
         <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300 h-full">
             <mat-icon [svgIcon]="'fluent:search'"></mat-icon>
-            <input class="form-input" type="text" [placeholder]="t('form.fields.search')"
-                [formControl]="searchCtrl">
+            <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [formControl]="searchCtrl">
         </div>
 
         <div class="flex items-center gap-2">
@@ -36,19 +42,20 @@
     <div class="overflow-auto">
         <!-- Table -->
         <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
-        
+
             <!-- Text Columns -->
             @let columns = tableOptions.columns;
             <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
                 <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-                    <th *matHeaderCellDef class="uppercase min-w-32" mat-header-cell mat-sort-header>{{ t(column.label) }}</th>
-                    <td *matCellDef="let row"  [ngClass]="column.cssClasses" mat-cell>
+                    <th *matHeaderCellDef class="uppercase min-w-32" mat-header-cell mat-sort-header>{{ t(column.label)
+                        }}</th>
+                    <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
                         {{ tableOptions.renderItem(row, column.property) }}
                     </td>
                 </ng-container>
             </ng-container>
 
-            
+
             <!-- Action Column -->
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="uppercase text-center border-l">
@@ -60,11 +67,9 @@
                 </td>
             </ng-container>
 
-                    
+
             <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: visibleColumns;"
-                @fadeInBottom
-                class="trans-ease-out cursor-pointer"
+            <tr *matRowDef="let row; columns: visibleColumns;" @fadeInBottom class="trans-ease-out cursor-pointer"
                 mat-row>
             </tr>
 
@@ -80,6 +85,6 @@
 
     @let pageSizeOptions = tableOptions.pageSizeOptions;
     @let pageSize = tableOptions.pageSize;
-    <mat-paginator class="rounded-b-md border-t" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
+    <mat-paginator class="rounded-b-md border-t" [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="pageSize"></mat-paginator>
 </div>
-
