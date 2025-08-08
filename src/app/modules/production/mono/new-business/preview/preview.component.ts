@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { Company } from '@core/services/administration/company/company.interface';
-import { CompanyService } from '@core/services/administration/company/company.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { Subject, takeUntil } from 'rxjs';

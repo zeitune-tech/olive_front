@@ -12,6 +12,10 @@ import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
 import { CompanyAttestationsNewComponent } from "../new/new.component";
+import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import { MarketLevelOrganizationAttestations } from "@core/services/attestations/market-level-organization-attestations/market-level-organization-attestation.interface";
+import { LotAttestationsService } from "@core/services/attestations/lot-attestation/lot-attestation.service";
+import { LotAttestation } from "@core/services/attestations/lot-attestation/lot-attestation.interface";
 
 @Component({
     selector: "app-companies-attestations",
@@ -79,7 +83,7 @@ export class CompaniesAttestationsComponent {
 
         ],
         renderItem: (element: CompanyAttestations, property: keyof CompanyAttestations) => {
-          
+
             return element[property];
         },
     };
@@ -96,10 +100,21 @@ export class CompaniesAttestationsComponent {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _lotAttestationService: CompanyAttestationsService,
+        private _attestationService: LotAttestationsService,
         private _dialog: MatDialog
     ) { }
 
+    attestations!: LotAttestation[];
+    selectedAttestation!: LotAttestation;
+
     ngOnInit(): void {
+        this._attestationService.lotAttestations$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: LotAttestation[]) => {
+                this.attestations = data;
+                this.selectedAttestation 
+            });
+
         this._lotAttestationService.companyAttestations$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data: CompanyAttestations[]) => {
@@ -138,6 +153,22 @@ export class CompaniesAttestationsComponent {
                 this._lotAttestationService.create(response).subscribe();
             }
         });
+    }
+
+
+    openAttestationSelection(): void {
+        this._dialog.open(SelectDialogComponent, {
+            data: {
+                title: 'Select Attestation',
+                items: this.attestations,
+                displayField: 'prefix',
+            }
+        }).afterClosed().subscribe((selectedAttestation: any) => {
+            if (selectedAttestation) {
+                this.selectedProduct = selectedAttestation;
+                // this._lotAttestationService.setSelectedProduct(selectedAttestation);
+            }
+        })
     }
 
     get visibleColumns() {

@@ -8,6 +8,7 @@ export const environment = {
   settings_url: "https://dev.adminolive.zeitune.tech/settings/app",
   attestations_url: "https://dev.adminolive.zeitune.tech/app",
   insured_url: "https://dev.adminolive.zeitune.tech/app",
+  pricing_url: "https://dev.pricingolive.zeitune.tech/pricing",
   production: false
 };
 

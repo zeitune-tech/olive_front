@@ -88,39 +88,7 @@ export class LotAttestationsListComponent {
             return element[property];
         },
     };
-    data: LotAttestation[] = [
-        // Example data, replace with actual data from service
-        {
-            id: '1',
-            managementEntity: 'Pool TPV',
-            product: 'TPV',
-            prefix: 'AA4',
-            pileStart: 100,
-            pileEnd: 200,
-            quantity: 1250,
-            stock: 341,
-            status: 'active',
-            startDate: new Date("2023-01-01"),
-            endDate: new Date("2023-12-31"),
-            createdAt: new Date(),
-            updatedAt: new Date()
-        },
-        {
-            id: '2',
-            managementEntity: 'Pool TPV',
-            product: 'TPV',
-            prefix: 'AA5',
-            pileStart: 300,
-            pileEnd: 400,
-            quantity: 1500,
-            stock: 120,
-            status: 'inactive',
-            startDate: new Date("2023-02-01"),
-            endDate: new Date("2023-11-30"),
-            createdAt: new Date(),
-            updatedAt: new Date()
-        }
-    ];
+    data: LotAttestation[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -137,16 +105,17 @@ export class LotAttestationsListComponent {
     ) { }
 
     ngOnInit(): void {
-        // this._lotAttestationService.lotAttestations$
-        //     .pipe(takeUntil(this._unsubscribeAll))
-        //     .subscribe((data: LotAttestation[]) => {
-        //         // this.data = data;
-        //         // this.dataSource.data = data;
-        //         // this._changeDetectorRef.detectChanges();
-        //     });
+
 
         this.dataSource = new MatTableDataSource<LotAttestation>(this.data);
         this.dataSource.paginator = this.paginator;
+
+                this._lotAttestationService.lotAttestations$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((data: LotAttestation[]) => {
+                this.data = data;
+                this.dataSource.data = data;
+            });
     }
 
     ngAfterViewInit() {
