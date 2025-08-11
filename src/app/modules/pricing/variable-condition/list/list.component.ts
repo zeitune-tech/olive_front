@@ -257,7 +257,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
           data: {
               mode: 'create',
               product: this.selectedProduct?.id,
-              branch: this.selectedBranch?.id
+              branch: this.selectedBranch?.id,
           }
 
       }).afterClosed().subscribe((result) => {

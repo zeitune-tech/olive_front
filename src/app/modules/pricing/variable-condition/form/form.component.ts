@@ -21,7 +21,7 @@ export class VariableConditionFormComponent implements OnInit {
 
       formGroup!: FormGroup;
       message = '';
-      managementEntity: ManagementEntity | undefined;
+      managementEntity: ManagementEntity = new ManagementEntity({});
       fields: Field[] = [];
       availableOperators: { [key: string]: string[] } = {
           'SELECT_FIELD': ['EQUALS', 'NOT_EQUALS'],
@@ -38,7 +38,7 @@ export class VariableConditionFormComponent implements OnInit {
           private _ruleService: RuleService,
           private _conditionService: ConditionService,
           private _fieldService: FieldService,
-          private translocoService: TranslocoService,
+          private _translocoService: TranslocoService,
           private snackBar: MatSnackBar,
           private _managementEntityService: ManagementEntityService
       ) {}
@@ -185,7 +185,10 @@ export class VariableConditionFormComponent implements OnInit {
             return `${field.variableName} ${operatorKey} ${valueStr}`;
         });
 
-        return `If (${conditionDescriptions.join(' AND ')}) then ${ruleValue}`;
+        const if_name = this._translocoService.translate("form.variableCondition.if");
+        const and_name = this._translocoService.translate("form.variableCondition.and");
+        const then_name = this._translocoService.translate("form.variableCondition.then");
+        return `${if_name} (${conditionDescriptions.join(` ${and_name} `)}) ${and_name} ${ruleValue}`;
     }
 
     /**
@@ -381,7 +384,7 @@ export class VariableConditionFormComponent implements OnInit {
         // Ne pas permettre la suppression s'il n'y a qu'une seule condition
         if (conditionsArray.length <= 1) {
             this.snackBar.open(
-                this.translocoService.translate('form.errors.lastCondition'),
+                this._translocoService.translate('form.errors.lastCondition'),
                 undefined,
                 { duration: 3000, panelClass: 'snackbar-warning' }
             );
@@ -489,7 +492,7 @@ export class VariableConditionFormComponent implements OnInit {
         console.log("Starting form submission");
         const formData = {
             ...this.formGroup.getRawValue(),
-            managementEntity: this.managementEntity?.id,
+            managementEntity: this.managementEntity!.id,
             product: this.data.product,
         };
 
@@ -974,7 +977,7 @@ export class VariableConditionFormComponent implements OnInit {
      */
     private handleSubmissionError(errorMessage: string): void {
         this.snackBar.open(
-            this.translocoService.translate(errorMessage),
+            this._translocoService.translate(errorMessage),
             undefined,
             { duration: 3000, panelClass: 'snackbar-error' }
         );
@@ -987,7 +990,7 @@ export class VariableConditionFormComponent implements OnInit {
             : 'form.success.creation';
 
         this.snackBar.open(
-            this.translocoService.translate(successMessage),
+            this._translocoService.translate(successMessage),
             undefined,
             { duration: 3000, panelClass: 'snackbar-success' }
         );
