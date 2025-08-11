@@ -95,27 +95,50 @@ export class EndorsementListComponent {
         this._unsubscribeAll.complete();
     }
 
+    // assignProduct(item: Endorsment): void {
+    //     this._endorsmentService.get(item.id).subscribe(fullEndorsement => {
+    //         this._dialog.open(AssignProductComponent, {
+    //             width: '600px',
+    //             data: {
+    //                 endorsmentId: fullEndorsement.id,
+    //                 assignedProducts: fullEndorsement.product ?? []
+    //             }
+    //         }).afterClosed().subscribe((selectedProducts: Product[]) => {
+    //             const productIds = selectedProducts?.map(p => typeof p === 'string' ? p : p.id) ?? [];
+    //             if (productIds.length) {
+    //                 this._endorsmentService.assignProducts(fullEndorsement.id, productIds).subscribe({
+    //                     next: () => console.log('Produits assignés avec succès'),
+    //                     error: (err) => console.error('Erreur lors de l’assignation :', err)
+    //                 });
+    //             }
+    //         });
+    //     });
+    // }
+
     assignProduct(item: Endorsment): void {
         this._endorsmentService.get(item.id).subscribe(fullEndorsement => {
+            const onlyFleet = ['RETRACT', 'INCORPORATION'].includes(fullEndorsement.nature);
+
             this._dialog.open(AssignProductComponent, {
-                width: '600px',
-                data: {
-                    endorsmentId: fullEndorsement.id,
-                    assignedProducts: fullEndorsement.product ?? []
-                }
+            width: '600px',
+            data: {
+                endorsmentId: fullEndorsement.id,
+                assignedProducts: fullEndorsement.product ?? [],
+                onlyFleetProducts: onlyFleet,            // 👈 on passe le flag
+                nature: fullEndorsement.nature          // (optionnel, si tu veux l’afficher)
+            }
             }).afterClosed().subscribe((selectedProducts: Product[]) => {
-                const productIds = selectedProducts?.map(p => typeof p === 'string' ? p : p.id) ?? [];
-                if (productIds.length) {
-                    this._endorsmentService.assignProducts(fullEndorsement.id, productIds).subscribe({
-                        next: () => console.log('Produits assignés avec succès'),
-                        error: (err) => console.error('Erreur lors de l’assignation :', err)
-                    });
-                }
+            const productIds = selectedProducts?.map(p => typeof p === 'string' ? p : p.id) ?? [];
+            if (productIds.length) {
+                this._endorsmentService.assignProducts(fullEndorsement.id, productIds).subscribe({
+                next: () => console.log('Produits assignés avec succès'),
+                error: (err) => console.error('Erreur lors de l’assignation :', err)
+                });
+            }
             });
         });
     }
 
-    
 
 
     onDelete(endorsement: Endorsment): void {}

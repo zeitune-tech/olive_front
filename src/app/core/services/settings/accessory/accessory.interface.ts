@@ -7,7 +7,7 @@ export class Accessory {
   actType: Endorsment;
   accessoryAmount: number;
   accessoryRisk: number;
-  day: number;
+  day: Date;
   hour: number;
   minute: number;
   effectiveDate?: string;
@@ -21,7 +21,7 @@ export class Accessory {
     this.accessoryRisk = data.accessoryRisk || 0;
     this.accessoryAmount = data.accessoryAmount || 0;
     this.product = data.product || '';
-    this.day = data.day || 0;
+    this.day = data.day || new Date();
     this.hour = data.hour || 0;
     this.minute = data.minute || 0;
     this.effectiveDate = `${this.day} ${this.hour.toString().padStart(2, '0')}:${this.minute.toString().padStart(2, '0')}`;

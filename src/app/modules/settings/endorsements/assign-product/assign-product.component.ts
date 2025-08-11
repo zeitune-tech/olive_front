@@ -14,7 +14,7 @@ export class AssignProductComponent implements OnInit {
   products: Product[] = [];
   selectedProducts: string[] = [];
   form!: FormGroup;
-  displayedColumns: string[] = ['checkbox', 'name', 'description'];
+  displayedColumns: string[] = ['checkbox', 'name', 'description', 'fleet'];
   dataSource = new MatTableDataSource<Product>([]);
   selection = new SelectionModel<Product>(true, []);
 
@@ -23,7 +23,9 @@ export class AssignProductComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: {
       endorsmentId: string;
-      assignedProducts?: Product[]; // 👈 nouvelle propriété
+      assignedProducts?: Product[];
+      onlyFleetProducts?: boolean;   // 👈 flag reçu
+      nature?: string;               // optionnel
     },
     private productService: ProductService,
     private fb: FormBuilder
@@ -34,11 +36,16 @@ export class AssignProductComponent implements OnInit {
 
     this.productService.getAll().subscribe({
       next: (products: Product[]) => {
-        this.products = products;
-        this.dataSource.data = products;
+        // 👇 filtre flotte si demandé
+        const filtered = this.data.onlyFleetProducts
+          ? products.filter(p => !!p.fleet)
+          : products;
 
-        // Pré-sélectionner les produits déjà liés
-        const preselected = products.filter(p => alreadyAssignedIds.has(p.id));
+        this.products = filtered;
+        this.dataSource.data = filtered;
+
+        // Pré-sélectionner ceux déjà liés (après filtrage)
+        const preselected = filtered.filter(p => alreadyAssignedIds.has(p.id));
         this.selection = new SelectionModel<Product>(true, preselected);
       },
       error: err => {
