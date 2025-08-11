@@ -1662,7 +1662,8 @@
           "add_variable_condition": "Ajouter une variable conditionnée"
         }
       }
-    },
+    }
+  },
   "auth": {
     "sign_in": {
       "title": "Se connecter",
@@ -1733,7 +1734,6 @@
       "back_to": "Retour à",
       "sign_in": "Se connecter"
     }
-  }
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
