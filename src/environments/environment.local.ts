@@ -2,17 +2,6 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  auth_url: "https://dev.adminolive.zeitune.tech/auth",
-  administration_url: "https://dev.adminolive.zeitune.tech/admin/app",
-  settings_url: "https://dev.adminolive.zeitune.tech/settings/app",
-  attestations_url: "https://dev.adminolive.zeitune.tech/app",
-  insured_url: "https://dev.adminolive.zeitune.tech/app",
-  pricing_url: "https://dev.pricingolive.zeitune.tech/pricing",
-  production: false
-};
-
-
 // export const environment = {
 //   auth_url: "https://dev.adminolive.zeitune.tech/auth",
 //   administration_url: "https://dev.adminolive.zeitune.tech/admin/app",
