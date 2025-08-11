@@ -7,6 +7,16 @@
 // UUID product,
 // UUID coverage,
 
+export enum TypeOfVariable {
+  CONSTANT = "CONSTANT",                // Constant variable
+  NUMERIC_FIELD = "NUMERIC_FIELD",            // Numeric variable
+  SELECT_FIELD = "SELECT_FIELD",       // Select field variable
+  VARIABLE_CONDITION = "VARIABLE_CONDITION",       // Variable condition
+  FORMULA = "FORMULA",                  // Formula variable
+  CHARACTERISTIC = "CHARACTERISTIC",             // Characteristic variable
+}
+
+
 export class VariableItem {
     id: string;
     label: string;
@@ -16,6 +26,7 @@ export class VariableItem {
     managementEntity: string;
     product: string;
     branch: string;
+    typeOfVariable?: TypeOfVariable
 
     constructor(entity: any) {
         this.id = entity?.id ?? '';
@@ -26,5 +37,6 @@ export class VariableItem {
         this.managementEntity = entity?.managementEntity ?? '';
         this.product = entity?.product ?? '';
         this.branch = entity?.branch ?? '';
+        this.typeOfVariable = entity?.type; // Default to CONSTANT if not provided
     }
 }

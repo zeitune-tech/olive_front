@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
-import { PricingNewComponent } from "./new/new.component";
 import {FormulaListComponent} from "./list/list.component";
+import {FormulaNewComponent} from "./new/new.component";
 
 export const routes: Routes = [
   {
@@ -11,7 +11,7 @@ export const routes: Routes = [
       data: {
           // permission: PERMISSIONS.CREATE_PRICING_FORMULA
       },
-      component: PricingNewComponent
+      component: FormulaNewComponent
   },
   {
        path: 'list',

@@ -26,8 +26,8 @@ export interface SelectField {
 }
 
 export enum FieldType {
-  NUMBER = 'NUMBER',
-  SELECT = 'SELECT',
+  NUMBER = 'NUMERIC_FIELD',
+  SELECT = 'SELECT_FIELD',
 }
 
 export class Field extends VariableItem {

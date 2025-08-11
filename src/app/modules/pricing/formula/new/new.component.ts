@@ -24,6 +24,14 @@ import {FormMode} from "@shared/enum/form.enum";
 import {TranslocoService} from "@jsverse/transloco";
 import {ManagementEntityService} from "@core/services/administration/management-entity/management-entity.service";
 import {ManagementEntity} from "@core/services/administration/management-entity/management-entity.interface";
+import {Coverage} from "@core/services/settings/coverage/coverage.interface";
+import {CoverageService} from "@core/services/settings/coverage/coverage.service";
+import {FieldService} from "@core/services/pricing/field/field.service";
+import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
+import {Constant} from "@core/services/pricing/constant/constant.interface";
+import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.interface";
+import {NumericField} from "@core/services/pricing/field/field.interface";
+import {TypeOfVariable} from "@core/services/pricing/variable-item/variable-item.interface";
 
 export interface Variable {
     id: number;
@@ -32,16 +40,16 @@ export interface Variable {
 }
 
 @Component({
-    selector: 'pricing-new',
+    selector: 'app-formula-new',
     templateUrl: './new.component.html',
 })
-export class PricingNewComponent implements OnInit, OnDestroy {
+export class FormulaNewComponent implements OnInit, OnDestroy {
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   formGroup!: UntypedFormGroup;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  dataSource = new MatTableDataSource<CommissionPointOfSale>([]); // Ajoute les données réelles ici
+  dataSource = new MatTableDataSource<Formula>([]); // Ajoute les données réelles ici
 
   selectedBranch: Branch | undefined;
   branches: Branch[] = [];
@@ -56,56 +64,69 @@ export class PricingNewComponent implements OnInit, OnDestroy {
       private _dialog: MatDialog,
       private _branchService: BranchService,
       private _constantService: ConstantService,
+      private _fieldService: FieldService,
+      private _variableConditionService: VariableConditionService,
       private _variableItemService: VariableItemService,
+      private _formulaService: FormulaService,
       private _productService: ProductService,
       private _snackBar: MatSnackBar,
-      private _formulaService: FormulaService,
       private translocoService: TranslocoService,
       private snackBar: MatSnackBar,
       private _managementEntityService: ManagementEntityService,
-
+      private _coverageService: CoverageService,
       // private dialogRef: MatDialogRef<PricingNewComponent>,
-
   ) {
 
   }
 
-  ngOnInit() {
+  loadDatas () {
     console.log('Checking resolver data availability...');
-    
+
     // Les données sont déjà chargées par le resolver, on peut directement s'abonner aux observables
     this._branchService.branches$.subscribe(branches => {
       this.branches = branches;
-      console.log('Branches loaded from resolver:', branches);
     });
 
     this._productService.products$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: Product[]) => {
         this.products = data;
-        console.log('Products loaded from resolver:', data);
       });
 
     this._managementEntityService.entity$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: ManagementEntity) => {
         this.managementEntity = data;
-        console.log('Management entity loaded from resolver:', data);
       });
 
-    this._variableItemService.variableItems$
+    // this._variableItemService.variableItems$
+    //   .pipe(takeUntil(this._unsubscribeAll))
+    //   .subscribe({
+    //     next: (data: VariableItemResponse[]) => {
+    //       this.variables = data;
+    //       console.log(this.variables);
+    //     },
+    //     error: (error) => {
+    //       console.error('Error in variableItems$ subscription:', error);
+    //     }
+    //   });
+
+    this._coverageService.coverages$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe({
-        next: (data: VariableItemResponse[]) => {
-          this.variables = data;
-          console.log('Variable items loaded from resolver:', data);
-        },
-        error: (error) => {
-          console.error('Error in variableItems$ subscription:', error);
-        }
+      .subscribe((data: Coverage[]) => {
+        this.coverages = data;
       });
 
+    // Recharger les variables initialement
+    this._constantService.getAll().subscribe()
+    this._fieldService.getAll().subscribe();
+    this._variableConditionService.getAll().subscribe();
+    this._formulaService.getAll().subscribe();
 
+  }
+
+  ngOnInit() {
+    this.loadDatas();
     this.formGroup = this._formBuilder.group({
         name: [''],
         description: [''],
@@ -123,8 +144,12 @@ export class PricingNewComponent implements OnInit, OnDestroy {
 
   searchTerm = '';
 
-  variables: VariableItemResponse[] = [];
+  constantList: Constant[] = [];
+  numericFieldList: NumericField[] = [];
+  variableConditionList: VariableCondition[] = [];
+  formulaList: Formula[] = [];
 
+  variables: (Constant | NumericField | VariableCondition | Formula)[] = [];
   append(value: string) {
     this.formula += value;
     this.formGroup.get('formula')?.setValue(this.formula);
@@ -140,8 +165,31 @@ export class PricingNewComponent implements OnInit, OnDestroy {
     this.formGroup.get('formula')?.setValue(this.formula);
   }
 
+  removeLast() {
 
-  filteredVariables() {
+    if (this.formula.length === 0) {
+      return;
+    }
+    // Supprimer le dernier est une variable
+    const lastVariableMatch = this.formula.match(/{{\w+}}$/);
+    if (lastVariableMatch) {
+      const lastVariable = lastVariableMatch[0];
+      this.formula = this.formula.slice(0, -lastVariable.length);
+      this.formGroup.get('formula')?.setValue(this.formula);
+      return;
+    }
+
+    this.formula = this.formula.slice(0, -1);
+    this.formGroup.get('formula')?.setValue(this.formula);
+
+  }
+
+  removeVariable(variable: VariableItemResponse) {
+    this.formula = this.formula.replace(`{{${variable.variableName}}}`, '');
+    this.formGroup.get('formula')?.setValue(this.formula);
+  }
+
+  filteredVariables(): any[] {
     if (!this.searchTerm) {
       return this.variables;
     }
@@ -150,6 +198,11 @@ export class PricingNewComponent implements OnInit, OnDestroy {
       v.label.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
       v.variableName.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+  }
+
+
+  getVariablesByType(type: TypeOfVariable) {
+    return this.filteredVariables().filter(variable => variable?.type === type);
   }
 
   onSubmit() {
@@ -236,18 +289,73 @@ export class PricingNewComponent implements OnInit, OnDestroy {
     })
   }
 
+  coverages: Coverage[] = []
+  selectedCoverage: Coverage|undefined;
+
+  openCoverageSelection() {
+    this._dialog.open(SelectDialogComponent, {
+      width: '700px',
+      data: {
+        displayField: "name",
+        items: this.coverages,
+        title: "coverage-selection.title"
+      }
+    }).afterClosed().subscribe((coverage: Coverage) => {
+      if (coverage) {
+        this.selectedCoverage = coverage;
+        this.dataSource.paginator = this.paginator;
+      }
+    })
+  }
+
   loadVariables(): void {
     // Recharger les variables selon la sélection actuelle
-    this._variableItemService.getAll()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe({
-        next: (data: VariableItemResponse[]) => {
-          this.variables = data || [];
-        },
-        error: (error) => {
-          console.error('Error reloading variables:', error);
-        }
-      });
+    // this._variableItemService.getAll()
+    //   .pipe(takeUntil(this._unsubscribeAll))
+    //   .subscribe({
+    //     next: (data: VariableItemResponse[]) => {
+    //       this.variables = data || [];
+    //     },
+    //     error: (error) => {
+    //       console.error('Error reloading variables:', error);
+    //     }
+    //   });
+
+    // Recharger les constantes, champs numériques, conditions variables et formules
+
+    this._constantService.constants$.subscribe(
+      (constants) => {
+        this.constantList = constants;
+      }
+    )
+
+    this._fieldService.getNumericFields().subscribe(
+      (fields) => {
+        this.numericFieldList = fields;
+      }
+    )
+
+    this._variableConditionService.variableConditions$.subscribe(
+      (conditions) => {
+        this.variableConditionList = conditions;
+      }
+    )
+
+    this._formulaService.formulas$.subscribe(
+      (formulas) => {
+        this.formulaList = formulas;
+      }
+    )
+
+    // Combiner toutes les variables
+    this.variables = [
+      ...this.constantList,
+      ...this.numericFieldList,
+      ...this.variableConditionList,
+      ...this.formulaList
+    ];
+
+    console.log(this.variables);
   }
 
   onAddNewVariable(variable: "CONSTANT" | "FIELD" | "VARIABLE_CONDITION"): void {
@@ -321,4 +429,6 @@ export class PricingNewComponent implements OnInit, OnDestroy {
     this.formGroup.reset();
     this.formula = '';
   }
+
+  protected readonly TypeOfVariable = TypeOfVariable;
 }

@@ -85,6 +85,26 @@ export class SelectFieldFormComponent implements OnInit {
               break;
         }
 
+        // Surveiller les changements de valeur du champ label
+        this.formGroup.get('label')?.valueChanges.subscribe(value => {
+            if (!value) return;
+
+            const variableName = value
+                .toUpperCase()
+                .replace(/[^A-Z0-9]+/g, '_')
+                .replace(/^_+|_+$/g, '');
+
+            const descriptionPrefix = `Un champ de sélection (${variableName}) pour`;
+            const description = `${descriptionPrefix} ${(this.formGroup.get('description')?.value as string || '').replace(/Un champ de sélection \([^\)]+\) pour /g, '')}`;
+
+            this.formGroup.patchValue({
+                variableName: variableName,
+                description: description
+            });
+
+            this.formGroup.get('variableName')?.markAsTouched();
+            this.formGroup.get('description')?.markAsTouched();
+        });
     }
 
     onSubmit(): void {
@@ -93,7 +113,7 @@ export class SelectFieldFormComponent implements OnInit {
         this.formGroup.disable();
 
         const formData = {
-            ...this.formGroup.value,
+            ...this.formGroup.getRawValue(), // Utiliser getRawValue() au lieu de value
             managementEntity: this.managementEntity!.id,
             product: this.data.product,
             branch: this.data.branch,

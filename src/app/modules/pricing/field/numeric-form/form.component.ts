@@ -53,6 +53,26 @@ export class NumericFieldFormComponent implements OnInit {
               toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
         });
 
+        // Surveiller les changements de valeur du champ label
+        this.formGroup.get('label')?.valueChanges.subscribe(value => {
+            if (!value) return;
+
+            const variableName = value
+                .toUpperCase()
+                .replace(/[^A-Z0-9]+/g, '_')
+                .replace(/^_+|_+$/g, '');
+
+            const descriptionPrefix = `Un champ numérique (${variableName}) pour`;
+            const description = `${descriptionPrefix} ${(this.formGroup.get('description')?.value as string || '').replace(/Un champ numérique \([^\)]+\) pour /g, '')}`;
+
+            this.formGroup.patchValue({
+                variableName: variableName,
+                description: description
+            });
+
+            this.formGroup.get('variableName')?.markAsTouched();
+            this.formGroup.get('description')?.markAsTouched();
+        });
     }
 
     onSubmit(): void {
@@ -61,12 +81,12 @@ export class NumericFieldFormComponent implements OnInit {
         this.formGroup.disable();
 
         const formData = {
-            ...this.formGroup.value,
+            ...this.formGroup.getRawValue(), // Utiliser getRawValue() au lieu de value
             managementEntity: this.managementEntity?.id,
-            // product: this.data.product,
+            product: this.data.product,
             branch: this.data.branch,
             type: FieldType.NUMBER, // Assuming this is a numeric field
-            
+
         };
 
         ((this.mode as FormMode) === FormMode.EDIT ? this._fieldService.update(formData, this.data.id) : this._fieldService.create(formData)).subscribe({

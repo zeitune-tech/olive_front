@@ -810,9 +810,9 @@
       },
 
       "fields": {
-       "name": "Nom de l'exonération",
-       "taxes": "Taxes exonérées",
-       "dateEffective": "Date d'effet",
+        "name": "Nom de l'exonération",
+        "taxes": "Taxes exonérées",
+        "dateEffective": "Date d'effet",
         "product": "Produit"
       },
       "options": {
@@ -1049,7 +1049,7 @@
         "table": {
           "title": "Formules de tarification",
           "description": "Liste des formules de calcul des primes",
-          "empty_state": "Aucune formule de tarification trouvée."
+          "empty_state": "Aucune formule de tarification trouvée"
         },
         "fields": {
           "name": "Nom de la formule",
@@ -1064,6 +1064,10 @@
           "numbers": "Chiffres",
           "operators": "Opérateurs",
           "variables": "Variables",
+          "constants": "Constantes",
+          "numeric-fields": "Champs numériques",
+          "variable-conditions": "Variables conditionnées",
+          "formulas": "Formules",
           "add_new_variable": {
             "title": "Ajouter une nouvelle variable",
             "add_constant": "Ajouter une constante",
@@ -1626,30 +1630,25 @@
       }
     },
     "formula": {
-      "label": "Formule de tarification",
-      "description": "Définition des formules de calcul des primes.",
-      "form": {
-        "title": "Formule de tarification",
-        "subtitle": "Créer ou modifier une formule de tarification"
-      },
       "table": {
         "title": "Formules de tarification",
         "description": "Liste des formules de calcul des primes",
-        "empty_state": "Aucune formule de tarification trouvée."
+        "empty_state": "Aucune formule de tarification trouvée"
       },
-      "fields": {
-        "name": "Nom de la formule",
-        "description": "Description",
-        "expression": "Expression",
-        "product": "Produit",
-        "managementEntity": "Entité de gestion",
-        "actions": "Actions"
+      "form": {
+        "title": "Créer une formule de tarification",
+        "subtitle": "Définissez une nouvelle formule de calcul",
+        "remove-last": "Supprimer le dernier"
       },
       "sections": {
         "symbols": "Symboles",
         "numbers": "Chiffres",
         "operators": "Opérateurs",
         "variables": "Variables",
+        "constants": "Constantes",
+        "numeric-fields": "Champs numériques",
+        "variable-conditions": "Variables conditionnées",
+        "formulas": "Formules",
         "add_new_variable": {
           "title": "Ajouter une nouvelle variable",
           "add_constant": "Ajouter une constante",
@@ -1657,12 +1656,6 @@
           "add_variable_condition": "Ajouter une variable conditionnée"
         }
       }
-    },
-    "branch-selection": {
-      "not-select-error-title": "Veuillez d'abord sélectionner une branche"
-    },
-    "product-selection": {
-      "not-select-error-title": "Veuillez d'abord sélectionner un produit"
     }
 
   },

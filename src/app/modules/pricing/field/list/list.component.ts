@@ -341,9 +341,6 @@ export class FieldListComponent implements OnInit {
               data: {
                 ...field,
                 mode: 'edit',
-                product: this.selectedProduct!.id,
-                branch: this.selectedBranch!.id,
-                id: field!.id
               }
           }).afterClosed().subscribe((result) => {
               if (result) {

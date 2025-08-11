@@ -1,5 +1,4 @@
 import { NgModule } from "@angular/core";
-import { PricingNewComponent } from "./new/new.component";
 import { RouterModule } from "@angular/router";
 import { routes } from "./formula.routing";
 import { SharedModule } from "@shared/shared.module";
@@ -24,10 +23,12 @@ import { ConstantService } from "@core/services/pricing/constant/constant.servic
 import { FieldService } from "@core/services/pricing/field/field.service";
 import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options/select-field-options.service";
 import { VariableItemService } from "@core/services/pricing/variable-item/variable-item.service";
+import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
+import {FormulaNewComponent} from "./new/new.component";
 
 @NgModule({
     declarations: [
-        PricingNewComponent,
+        FormulaNewComponent,
         FormulaListComponent
     ],
     imports: [
@@ -52,10 +53,11 @@ import { VariableItemService } from "@core/services/pricing/variable-item/variab
     providers: [
         LayoutService,
         FormulaService,
+        VariableConditionService,
         ConstantService,
         FieldService,
         SelectFieldOptionsService,
-        VariableItemService
+        VariableItemService,
     ]
 })
 export class FormulaModule {
