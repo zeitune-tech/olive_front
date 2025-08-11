@@ -5,6 +5,8 @@ export interface NumericalCondition {
     value: number;
     numericField: NumericField; // Replace with actual type if available
     operator: "LESS_THAN" | "GREATER_THAN" | "EQUALS" | "NOT_EQUALS" | "GREATER_OR_EQUAL" | "LESS_OR_EQUAL";
+    minValue: number;
+    maxValue: number;
 }
 
 export interface SelectFieldCondition {
