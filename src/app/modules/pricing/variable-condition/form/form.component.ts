@@ -200,6 +200,9 @@ export class VariableConditionFormComponent implements OnInit {
         }
 
         const conditionParts = conditions.map((condition: any) => {
+            const conditionGroup = rule.get('conditions').controls.find((c: any) =>
+                c.get('field').value === condition.field
+            );
             const field = this.fields.find(f => f.id === condition.field);
             if (!field) return '';
 
@@ -207,20 +210,21 @@ export class VariableConditionFormComponent implements OnInit {
             if (field.type === FieldType.SELECT) {
                 valueStr = condition.value;
             } else if (field.type === FieldType.NUMBER) {
-                if (condition.value) {
-                    valueStr = condition.value;
-                } else if (condition.minValue && condition.maxValue) {
-                    valueStr = `${condition.minValue}_${condition.maxValue}`;
-                } else if (condition.minValue) {
-                    valueStr = `MIN_${condition.minValue}`;
-                } else if (condition.maxValue) {
-                    valueStr = `MAX_${condition.maxValue}`;
+                const rawValue = conditionGroup.get('value').value;
+                const rawMinValue = conditionGroup.get('minValue').getRawValue();
+                const rawMaxValue = conditionGroup.get('maxValue').getRawValue();
+
+                if (rawValue) {
+                    valueStr = rawValue;
+                } else if (rawMinValue && rawMaxValue) {
+                    valueStr = `${rawMinValue}_${rawMaxValue}`;
+                } else if (rawMinValue) {
+                    valueStr = `MIN_${rawMinValue}`;
+                } else if (rawMaxValue) {
+                    valueStr = `MAX_${rawMaxValue}`;
                 }
             }
-
-            // Utilisation du variableName au lieu du label
-            const fieldVariableName = field.variableName || field.label.toUpperCase().replace(/[^A-Z0-9]+/g, '_');
-            return `${fieldVariableName}_${condition.operator}_${valueStr}`;
+            return `${field.variableName}_${valueStr}`;
         });
 
         return `RULE_${conditionParts.join('_AND_')}_${ruleValue}`;
