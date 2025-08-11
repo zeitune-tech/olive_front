@@ -21,7 +21,6 @@ export class VariableConditionFormComponent implements OnInit {
 
       formGroup!: FormGroup;
       message = '';
-      managementEntity: ManagementEntity = new ManagementEntity({});
       fields: Field[] = [];
       availableOperators: { [key: string]: string[] } = {
           'SELECT_FIELD': ['EQUALS', 'NOT_EQUALS'],
@@ -47,10 +46,6 @@ export class VariableConditionFormComponent implements OnInit {
         this.mode = (this.data as any).mode;
         this.dialogRef.updateSize('800px', 'auto');
 
-        this._managementEntityService.entity$.subscribe((entity) => {
-            this.managementEntity = entity;
-        });
-
         // Charger les champs disponibles
         this._fieldService.getAll().subscribe((fields) => {
             this.fields = fields;
@@ -65,7 +60,7 @@ export class VariableConditionFormComponent implements OnInit {
             // Section VariableItem
             label: [this.data.label || '', Validators.required],
             description: [this.data.description || '', Validators.required],
-            variableName: [this.data.variableName || '', Validators.required],
+            variableName: [{value: this.data.variableName || '', disabled: true},  Validators.required],
             toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
             branch: [this.data.branch || '', Validators.required],
             // Section Rules
@@ -492,7 +487,6 @@ export class VariableConditionFormComponent implements OnInit {
         console.log("Starting form submission");
         const formData = {
             ...this.formGroup.getRawValue(),
-            managementEntity: this.managementEntity!.id,
             product: this.data.product,
         };
 
@@ -740,7 +734,6 @@ export class VariableConditionFormComponent implements OnInit {
             variableName: formData.variableName,
             toReturn: formData.toReturn,
             branch: formData.branch,
-            managementEntity: this.managementEntity?.id,
             product: this.data.product,
             ruleIds: ruleIds
         };
@@ -926,7 +919,6 @@ export class VariableConditionFormComponent implements OnInit {
             name: ruleData.name,
             value: ruleData.value,
             conditions: ruleConditionIds,
-            managementEntity: this.managementEntity?.id,
             branch: rawFormData.branch
         };
     }
@@ -966,7 +958,6 @@ export class VariableConditionFormComponent implements OnInit {
             variableName: formData.variableName,
             toReturn: formData.toReturn,
             branch: formData.branch,
-            managementEntity: this.managementEntity?.id,
             product: this.data.product,
             ruleIds: ruleIds
         };

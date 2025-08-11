@@ -33,7 +33,7 @@
 
                     <mat-form-field class="w-full" appearance="outline">
                         <mat-label>{{ t('entities.variable-condition.fields.variableName') }}</mat-label>
-                        <input matInput formControlName="variableName" required>
+                        <input matInput formControlName="variableName" required [disabled]="true">
                         <mat-error *ngIf="formGroup.get('variableName')?.hasError('required')">
                             {{ t('form.errors.required') }}
                         </mat-error>

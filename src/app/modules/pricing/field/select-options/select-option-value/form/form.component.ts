@@ -47,9 +47,27 @@ export class SelectFieldOptionValueFormComponent implements OnInit {
 
         this.formGroup = this.fb.group({
               label: [this.data.label || '', Validators.required],
-              name: [this.data.name || '', Validators.required],
+              name: [{value: this.data.name || '', disabled: true}, Validators.required],
               group: [this.data.group || 'DEFAULT', Validators.required],
         });
+
+      // Surveiller les changements de valeur du champ label
+      this.formGroup.get('label')?.valueChanges.subscribe(value => {
+        if (!value) return;
+
+        const variableName = value
+          .toUpperCase()
+          .replace(/[^A-Z0-9]+/g, '_')
+          .replace(/^_+|_+$/g, '');
+
+        // Utiliser patchValue au lieu de setValue pour mettre à jour plusieurs champs
+        this.formGroup.patchValue({
+          name: variableName,
+        });
+
+        // Marquer les champs comme touchés pour déclencher la validation
+        this.formGroup.get('name')?.markAsTouched();
+      });
 
     }
 
@@ -59,8 +77,7 @@ export class SelectFieldOptionValueFormComponent implements OnInit {
         this.formGroup.disable();
 
         const formData = {
-            ...this.formGroup.value,
-            managementEntity: this.managementEntity?.id,
+            ...this.formGroup.getRawValue(), // Utiliser getRawValue() au lieu de value pour obtenir les valeurs même si le form est disabled
             branch: (this.data as any)?.branch  || '',
         };
 

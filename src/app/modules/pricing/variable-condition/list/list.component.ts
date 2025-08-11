@@ -182,8 +182,8 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     this._unsubscribeAll.complete();
   }
 
-  selectedBranch: Branch|undefined;
 
+  selectedBranch: Branch|undefined;
   clearBranchSelection(): void {
     this.selectedBranch = undefined;
     this.selectedProduct = undefined;
@@ -194,7 +194,6 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         this.products = products || [];
       });
   }
-
   openBranchSelection() {
       this._dialog.open(SelectDialogComponent, {
           width: '700px',
@@ -220,9 +219,9 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
       })
   }
 
+
   products: Product[] = []
   selectedProduct: Product|undefined;
-
   openProductSelection() {
       this._dialog.open(SelectDialogComponent, {
           width: '700px',
@@ -237,6 +236,24 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
               this.dataSource.paginator = this.paginator;
           }
       })
+  }
+
+  coverages: Coverage[] = []
+  selectedCoverage: Coverage|undefined;
+  openCoverageSelection() {
+    this._dialog.open(SelectDialogComponent, {
+      width: '700px',
+      data: {
+        displayField: "name",
+        items: this.coverages,
+        title: "coverage-selection.title"
+      }
+    }).afterClosed().subscribe((coverage: Coverage) => {
+      if (coverage) {
+        this.selectedCoverage = coverage;
+        this.dataSource.paginator = this.paginator;
+      }
+    })
   }
 
   onAdd(): void {

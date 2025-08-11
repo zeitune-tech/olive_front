@@ -48,7 +48,7 @@ export class ConstantFormComponent implements OnInit {
     this.formGroup = this.fb.group({
       label: [this.data.label || '', Validators.required],
       description: [this.data.description || '', Validators.required],
-      variableName: [this.data.variableName || '', Validators.required],
+      variableName: [{value: this.data.variableName || '', disabled: true}, Validators.required],
       toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
       branch: [this.data.branch || '', Validators.required],
       value: [this.data.value || '', Validators.required],

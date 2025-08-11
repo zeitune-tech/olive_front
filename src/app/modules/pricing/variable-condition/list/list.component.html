@@ -34,6 +34,15 @@
                     </button>
                 </div>
             }
+
+          @if (selectedBranch && selectedProduct) {
+            <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
+              <span>{{ selectedCoverage?.nature || t('coverage-selection.title') }}</span>
+              <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openCoverageSelection()">
+                {{ t('coverage-selection.change') }}
+              </button>
+            </div>
+          }
         </div>
 
     </div>

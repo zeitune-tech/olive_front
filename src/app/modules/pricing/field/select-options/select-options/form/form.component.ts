@@ -62,11 +62,34 @@ export class SelectFieldOptionsFormComponent implements OnInit {
         // Initialiser le formulaire avec les valeurs par défaut
         this.formGroup = this.fb.group({
               label: [this.data.label || '', Validators.required],
-              name: [this.data.name || '', Validators.required],
+              name: [{value: this.data.name || '', disabled: true}, Validators.required],
               description: [this.data.description || '', Validators.required],
               possibilities: [[], Validators.required], // Initialiser avec un tableau vide
               // value: [this.data.value || '', Validators.required],
         });
+
+      // Surveiller les changements de valeur du champ label
+      this.formGroup.get('label')?.valueChanges.subscribe(value => {
+        if (!value) return;
+
+        const name = value
+          .toUpperCase()
+          .replace(/[^A-Z0-9]+/g, '_')
+          .replace(/^_+|_+$/g, '');
+
+        const descriptionPrefix = `Une liste d'options (${name}) pour`;
+        const description = `${descriptionPrefix} ${(this.formGroup.get('description')?.value as string).replace(/Une liste d'options \([^\)]+\) pour /g, "")}`;
+
+        // Utiliser patchValue au lieu de setValue pour mettre à jour plusieurs champs
+        this.formGroup.patchValue({
+          name: name,
+          description: description
+        });
+
+        // Marquer les champs comme touchés pour déclencher la validation
+        this.formGroup.get('variableName')?.markAsTouched();
+        this.formGroup.get('description')?.markAsTouched();
+      });
 
     }
 
@@ -76,12 +99,12 @@ export class SelectFieldOptionsFormComponent implements OnInit {
     private initializePossibilities(): void {
         if (this.data.possibilities && this.mode === 'edit') {
             let selectedIds: string[] = [];
-            
+
             // Si this.data.possibilities est un tableau d'objets SelectFieldOptionValue
             if (Array.isArray(this.data.possibilities)) {
                 selectedIds = this.data.possibilities.map((item: SelectFieldOptionValue) => item.id);
             }
-            
+
             // Mettre à jour le FormControl avec les IDs sélectionnés
             this.formGroup.patchValue({
                 possibilities: selectedIds
@@ -95,9 +118,9 @@ export class SelectFieldOptionsFormComponent implements OnInit {
         this.formGroup.disable();
 
         const formData = {
-            ...this.formGroup.value,
-            managementEntity: this.managementEntity!.id,
+            ...this.formGroup.getRawValue(), // Utiliser getRawValue() pour obtenir les valeurs même si le form est disabled
             branch: (this.data as any)!.branch,
+            product: (this.data as any)!.product,
         };
 
         // Ajouter l'ID pour le mode édition
