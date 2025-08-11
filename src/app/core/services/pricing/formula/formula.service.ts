@@ -53,4 +53,26 @@ export class FormulaService {
         );
     }
 
+    update(formula: Formula, uuid: string): Observable<Formula> {
+        return this._httpClient.put<Formula>(`${this.baseUrl}/${uuid}`, formula)
+        .pipe(
+            tap((response: Formula) => {
+                this.formula = response;
+                return response;
+            }),
+            catchError(() => of({} as Formula))
+        );
+    }
+
+    delete(uuid: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this.baseUrl}/${uuid}`)
+        .pipe(
+            tap(() => {
+                this.formula = {} as Formula; // Reset the current formula
+                return;
+            }),
+            catchError(() => of())
+        );
+    }
+
 }

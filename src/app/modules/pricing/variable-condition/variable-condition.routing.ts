@@ -1,18 +1,25 @@
-  import { Routes } from "@angular/router";
+import {Routes} from "@angular/router";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
-  import {VariableConditionListComponent} from "./list/list.component";
+import {VariableConditionListComponent} from "./list/list.component";
 
 export const routes: Routes = [
 
     {
-        path: '',
+        path: 'list',
         canActivate: [],
         canActivateChild: [],
         data: {
             // permission: PERMISSIONS.CREATE_PRICING_FORMULA
         },
-        // component: null
       component: VariableConditionListComponent
     },
-
+    // {
+    //   path: 'rules',
+    //   canActivate: [],
+    //   canActivateChild: [],
+    //   data: {
+    //       // permission: PERMISSIONS.CREATE_PRICING_FORMULA
+    //   },
+    //   loadChildren: () => import('./rule/rule.module').then(m => m.RuleModule)
+    // }
 ]

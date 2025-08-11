@@ -22,7 +22,7 @@ export class NavigationService {
         {
             compact: compactAdministrationNavigation,
             default: defaultAdministrationNavigation,
-        }, 
+        },
         {
             compact: compactSettingsNavigation,
             default: defaultSettingsNavigation
@@ -61,7 +61,7 @@ export class NavigationService {
 
         const module = localStorage.getItem("module") || "";
         this.currentNav = this.getNavigation(module);
-        
+
 
         this._router.events
         .pipe(
@@ -71,7 +71,6 @@ export class NavigationService {
             this._layoutService.setNavigation(this.fillChildren(this.currentNav));
         });
     }
-
 
     private checkPermissions(navigation: NavigationItem[]): NavigationItem[] {
         navigation.forEach(item => {
@@ -88,7 +87,6 @@ export class NavigationService {
         });
         return navigation;
     }
-
 
     public getNavigation(module: string): Navigation {
 

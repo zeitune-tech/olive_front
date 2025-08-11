@@ -1,7 +1,6 @@
 import { Routes } from "@angular/router";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
 import {FieldListComponent} from "./list/list.component";
-import {SelectFieldOptionsListComponent} from "./select-options/list/list.component";
 
 export const routes: Routes = [
     {
@@ -14,13 +13,14 @@ export const routes: Routes = [
       component: FieldListComponent
     },
     {
-        path: 'select-options',
-        canActivate: [],
-        canActivateChild: [],
-        data: {
-            // permission: PERMISSIONS.CREATE_PRICING_CONSTANT
-        },
-        component: SelectFieldOptionsListComponent
-    }
+      path: 'select-options',
+      canActivate: [],
+      canActivateChild: [],
+      data: {
+        // permission: PERMISSIONS.CREATE_PRICING_CONSTANT
+      },
+      loadChildren: () => import('./select-options/select-options.module').then(m => m.SelectOptionsModule),
+    },
+
 
 ]

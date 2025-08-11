@@ -1,3 +1,4 @@
+import {Condition} from "@core/services/pricing/variable-condition/conditions/condition.interface";
 
 export class Rule {
     /**
@@ -8,7 +9,8 @@ export class Rule {
     label: string;
     name: string;
     value: number;
-    conditions: any[]; // Assuming conditions is an array of objects
+    conditions: Condition[]; // Assuming conditions is an array of objects
+    managementEntity?: string; // Optional property for management entity
 
     /**
      * Rule constructor
@@ -20,5 +22,6 @@ export class Rule {
         this.name = response?.name ?? '';
         this.value = response?.value ?? 0;
         this.conditions = response?.conditions ? response.conditions.map((condition: any) => condition) : [];
+        this.managementEntity = response?.managementEntity ?? '';
     }
 }

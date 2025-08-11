@@ -139,6 +139,9 @@ const routes: Routes = [
                 data: {
                     // permission: PERMISSIONS.VIEW_PRICING_FORMULA
                 },
+                resolve: {
+                    pricingData: () => import('./modules/pricing/pricing.resolver').then(m => m.PricingResolver)
+                },
                 loadChildren: () => import('./modules/pricing/pricing.module').then(m => m.PricingModule)
             },
 

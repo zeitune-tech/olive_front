@@ -821,9 +821,9 @@
       },
 
       "fields": {
-       "name": "Nom de l'exonération",
-       "taxes": "Taxes exonérées",
-       "dateEffective": "Date d'effet",
+        "name": "Nom de l'exonération",
+        "taxes": "Taxes exonérées",
+        "dateEffective": "Date d'effet",
         "product": "Produit"
       },
       "options": {
@@ -1159,7 +1159,7 @@
         "table": {
           "title": "Formules de tarification",
           "description": "Liste des formules de calcul des primes",
-          "empty_state": "Aucune formule de tarification trouvée."
+          "empty_state": "Aucune formule de tarification trouvée"
         },
         "fields": {
           "name": "Nom de la formule",
@@ -1174,6 +1174,10 @@
           "numbers": "Chiffres",
           "operators": "Opérateurs",
           "variables": "Variables",
+          "constants": "Constantes",
+          "numeric-fields": "Champs numériques",
+          "variable-conditions": "Variables conditionnées",
+          "formulas": "Formules",
           "add_new_variable": {
             "title": "Ajouter une nouvelle variable",
             "add_constant": "Ajouter une constante",
@@ -1186,21 +1190,58 @@
         "label": "Variables conditionnées",
         "description": "Définition des conditions applicables aux variables de tarification.",
         "form": {
-          "title": "Variables conditionnées",
-          "subtitle": "Créer ou modifier une condition de variable"
+          "create": {
+            "title": "Créer une variable conditionnée"
+          },
+          "edit": {
+            "title": "Modifier une variable conditionnée"
+          },
+          "view": {
+            "title": "Consulter une variable conditionnée"
+          }
         },
         "table": {
           "title": "Variables conditionnées",
           "description": "Liste des conditions de variables",
           "empty_state": "Aucune condition de variable trouvée."
         },
+        "sections": {
+          "variable-item-infos": "Informations de la Variable",
+          "rules": "Règles"
+        },
         "fields": {
-          "name": "Nom de la condition",
+          "label": "Libellé",
           "description": "Description",
+          "variableName": "Nom de variable",
+          "toReturn": "À retourner",
+          "branch": "Branche",
+          "product": "Produit",
           "variable": "Variable",
           "operator": "Opérateur",
           "value": "Valeur",
+          "min": "Minimum",
+          "max": "Maximum",
+          "field": "Champ",
+          "rule-value": "Valeur de retour",
           "actions": "Actions"
+        },
+        "options": {
+          "toReturn": {
+            "true": "Oui",
+            "false": "Non"
+          }
+        },
+        "operators": {
+          "equals": "Égal à",
+          "not-equals": "Différent de",
+          "greater-than": "Supérieur à",
+          "less-than": "Inférieur à",
+          "greater-or-equal": "Supérieur ou égal à",
+          "less-or-equal": "Inférieur ou égal à"
+        },
+        "errors": {
+          "numeric-condition-required": "Au moins une valeur (valeur, minimum ou maximum) doit être renseignée pour les champs numériques",
+          "min-greater-than-max": "La valeur minimum ne peut pas être supérieure à la valeur maximum"
         }
       },
       "field": {
@@ -1216,7 +1257,9 @@
           "empty_state": "Aucun champ de tarification trouvé."
         },
         "fields": {
+          "branch": "Branche",
           "name": "Nom du champ",
+          "product": "Produit",
           "label": "Libellé",
           "description": "Description",
           "variableName": "Nom de variable",
@@ -1359,6 +1402,113 @@
         "description": "Créer une nouvelle caractéristique de tarification."
       }
     },
+    "variable-condition": {
+      "label": "Variable conditionnée",
+      "description": "Gestion des variables conditionnées pour la tarification.",
+      "form": {
+        "create": {
+          "title": "Créer une variable conditionnée"
+        },
+        "edit": {
+          "title": "Modifier la variable conditionnée"
+        },
+        "view": {
+          "title": "Détails de la variable conditionnée"
+        }
+      },
+      "table": {
+        "title": "Variables conditionnées",
+        "description": "Liste des variables conditionnées pour la tarification",
+        "empty_state": "Aucune variable conditionnée trouvée."
+      },
+      "fields": {
+        "label": "Libellé",
+        "description": "Description",
+        "variableName": "Nom de la variable",
+        "toReturn": "À retourner",
+        "branch": "Branche",
+        "product": "Produit",
+        "ruleValue": "Valeur de règle",
+        "field": "Champ",
+        "operator": "Opérateur",
+        "value": "Valeur",
+        "min": "Minimum",
+        "max": "Maximum",
+        "actions": "Actions"
+      },
+      "options": {
+        "toReturn": {
+          "true": "Oui",
+          "false": "Non"
+        }
+      },
+      "sections": {
+        "variable-item-info": "Informations de la variable",
+        "variable-item-infos": "Informations de la variable",
+        "rules": "Règles"
+      },
+      "field-types": {
+        "numeric": "Numérique",
+        "select": "Sélection",
+        "numeric-indicator": "*Numérique",
+        "select-indicator": "*Sélection",
+        "SELECT": "Sélection",
+        "NUMBER": "Numérique"
+      },
+      "errors": {
+        "numeric-condition-required": "Une condition numérique est requise (valeur, min ou max)",
+        "min-greater-than-max": "La valeur minimum ne peut pas être supérieure à la valeur maximum"
+      }
+    },
+    "rule": {
+      "title": "Règle",
+      "fields": {
+        "label": "Libellé",
+        "name": "Nom",
+        "value": "Valeur"
+      }
+    },
+    "condition": {
+      "title": "Condition",
+      "fields": {
+        "field": "Champ",
+        "operator": "Opérateur",
+        "value": "Valeur",
+        "minValue": "Valeur minimale",
+        "maxValue": "Valeur maximale"
+      },
+      "operators": {
+        "eq": "Égal à",
+        "ne": "Différent de",
+        "gt": "Supérieur à",
+        "gte": "Supérieur ou égal à",
+        "lt": "Inférieur à",
+        "lte": "Inférieur ou égal à",
+        "in": "Dans",
+        "nin": "Pas dans",
+        "between": "Entre",
+        "exists": "Existe",
+        "not_exists": "N'existe pas",
+        "equal": "Égal à",
+        "different": "Différent de",
+        "less_than": "Inférieur à",
+        "greater_than": "Supérieur à",
+        "less_or_equal": "Inférieur ou égal à",
+        "greater_or_equal": "Supérieur ou égal à",
+        "EQUALS": "Égal à",
+        "NOT_EQUALS": "Différent de",
+        "LESS_THAN": "Inférieur à",
+        "GREATER_THAN": "Supérieur à",
+        "LESS_OR_EQUAL": "Inférieur ou égal à",
+        "GREATER_OR_EQUAL": "Supérieur ou égal à"
+      },
+      "hints": {
+        "optional-if-minmax": "Optionnel si min/max sont définis"
+      },
+      "errors": {
+        "numeric-field-required": "Une valeur, min ou max est requise pour les champs numériques"
+      }
+    },
     "constant": {
       "label": "Constante de tarification",
       "description": "Constantes utilisées dans les calculs de tarification.",
@@ -1385,8 +1535,11 @@
         "description": "Description",
         "variableName": "Nom de variable",
         "toReturn": "À retourner",
+        "branch": "Branche",
+        "product": "Produit",
         "managementEntityId": "Entité de gestion",
         "productId": "Produit",
+        "branchId": "Branche",
         "coverageId": "Garantie",
         "value": "Valeur",
         "actions": "Actions"
@@ -1426,6 +1579,8 @@
         "toReturn": "À retourner",
         "managementEntityId": "Entité de gestion",
         "productId": "Produit",
+        "product": "Produit",
+        "branch": "Branche",
         "coverageId": "Garantie",
         "type": "Type de champ",
         "selectFieldOptions": "Options de sélection",
@@ -1445,12 +1600,82 @@
         }
       }
     },
+    "numeric-field": {
+      "label": "Champ numérique",
+      "description": "Champs numériques utilisés dans les calculs de tarification.",
+      "form": {
+        "title": "Champ numérique",
+        "subtitle": "Créer ou modifier un champ numérique",
+        "create": {
+          "title": "Créer un champ numérique"
+        },
+        "edit": {
+          "title": "Modifier le champ numérique"
+        },
+        "view": {
+          "title": "Détails du champ numérique"
+        }
+      },
+      "table": {
+        "title": "Champs numériques",
+        "description": "Liste des champs numériques de tarification",
+        "empty_state": "Aucun champ numérique trouvé."
+      },
+      "fields": {
+        "label": "Libellé",
+        "description": "Description",
+        "variableName": "Nom de variable",
+        "toReturn": "À retourner",
+        "coverageId": "Garantie",
+        "value": "Valeur",
+        "actions": "Actions"
+      }
+    },
+    "select-field": {
+      "label": "Champ de sélection",
+      "description": "Champs de sélection utilisés dans les calculs de tarification.",
+      "form": {
+        "title": "Champ de sélection",
+        "subtitle": "Créer ou modifier un champ de sélection",
+        "create": {
+          "title": "Créer un champ de sélection"
+        },
+        "edit": {
+          "title": "Modifier le champ de sélection"
+        },
+        "view": {
+          "title": "Détails du champ de sélection"
+        }
+      },
+      "table": {
+        "title": "Champs de sélection",
+        "description": "Liste des champs de sélection de tarification",
+        "empty_state": "Aucun champ de sélection trouvé."
+      },
+      "fields": {
+        "label": "Libellé",
+        "description": "Description",
+        "variableName": "Nom de variable",
+        "toReturn": "À retourner",
+        "options": "Options de sélection",
+        "actions": "Actions"
+      }
+    },
     "select-field-options": {
       "label": "Options de champs de sélection",
       "description": "Options disponibles pour les champs de type sélection.",
       "form": {
         "title": "Options de champ",
-        "subtitle": "Créer ou modifier des options de sélection"
+        "subtitle": "Créer ou modifier des options de sélection",
+        "create": {
+          "title": "Créer une liste des options de champ"
+        },
+        "edit": {
+          "title": "Modifier l'option de champ"
+        },
+        "view": {
+          "title": "Détails de l'option de champ"
+        }
       },
       "table": {
         "title": "Options de champs de sélection",
@@ -1463,6 +1688,7 @@
         "name": "Nom",
         "description": "Description",
         "possibilities": "Possibilités",
+        "group": "Groupe",
         "actions": "Actions"
       },
       "options": {
@@ -1472,31 +1698,67 @@
         }
       }
     },
-    "formula": {
-      "label": "Formule de tarification",
-      "description": "Définition des formules de calcul des primes.",
+    "select-field-option-value": {
+      "label": "Valeurs des options de champs",
+      "description": "Valeurs disponibles pour les options de champs de sélection.",
       "form": {
-        "title": "Formule de tarification",
-        "subtitle": "Créer ou modifier une formule de tarification"
+        "title": "Valeur d'option de champ",
+        "subtitle": "Créer ou modifier une valeur d'option",
+        "create": {
+          "title": "Créer une valeur d'option"
+        },
+        "edit": {
+          "title": "Modifier la valeur d'option"
+        },
+        "view": {
+          "title": "Détails de la valeur d'option"
+        }
       },
+      "table": {
+        "title": "Valeurs des options de champs",
+        "description": "Liste des valeurs configurées pour les options de champs",
+        "empty_state": "Aucune valeur d'option trouvée."
+      },
+      "fields": {
+        "id": "Identifiant",
+        "label": "Libellé",
+        "name": "Nom",
+        "group": "Groupe",
+        "actions": "Actions"
+      },
+      "options": {
+        "status": {
+          "active": "Actif",
+          "inactive": "Inactif"
+        }
+      },
+      "delete": {
+        "title": "Supprimer la valeur d'option",
+        "message": "Êtes-vous sûr de vouloir supprimer cette valeur d'option de champ ?",
+        "success": "Valeur d'option supprimée avec succès",
+        "error": "Erreur lors de la suppression de la valeur d'option"
+      }
+    },
+    "formula": {
       "table": {
         "title": "Formules de tarification",
         "description": "Liste des formules de calcul des primes",
-        "empty_state": "Aucune formule de tarification trouvée."
+        "empty_state": "Aucune formule de tarification trouvée"
       },
-      "fields": {
-        "name": "Nom de la formule",
-        "description": "Description",
-        "expression": "Expression",
-        "product": "Produit",
-        "managementEntity": "Entité de gestion",
-        "actions": "Actions"
+      "form": {
+        "title": "Créer une formule de tarification",
+        "subtitle": "Définissez une nouvelle formule de calcul",
+        "remove-last": "Supprimer le dernier"
       },
       "sections": {
         "symbols": "Symboles",
         "numbers": "Chiffres",
         "operators": "Opérateurs",
         "variables": "Variables",
+        "constants": "Constantes",
+        "numeric-fields": "Champs numériques",
+        "variable-conditions": "Variables conditionnées",
+        "formulas": "Formules",
         "add_new_variable": {
           "title": "Ajouter une nouvelle variable",
           "add_constant": "Ajouter une constante",
@@ -1777,10 +2039,14 @@
     "pricing": {
       "title": "Tarification",
       "formula": "Formule",
+      "formula_create": "Créer une formule",
+      "formula_list": "Liste des formules",
       "variable_condition": "Variables conditionnées",
       "field": "Champs",
       "field_list": "Liste des champs",
+      "select_field": "Champs de sélection",
       "select_field_option": "Options de champs de sélection",
+      "select_field_option_value": "Valeurs des options de champs de sélection",
       "constants": "Constantes",
       "conditions": "Conditions",
       "condition_list": "Liste des conditions",
@@ -1811,7 +2077,33 @@
       "inferieurToFrom": "Cette valeur doit être supérieure à la précédente.",
       "inferieurTo0": "Cette valeur doit être positive.",
       "invalid_phone": "Invalide",
-      "submission": "Erreur lors de la soumission du formulaire"
+      "submission": "Erreur lors de la soumission du formulaire",
+      "unexpected": "Une erreur inattendue s'est produite",
+      "client": "Erreur: {{message}}",
+      "badRequest": "Données invalides. Veuillez vérifier les informations saisies.",
+      "unauthorized": "Non autorisé. Veuillez vous reconnecter.",
+      "forbidden": "Accès interdit. Vous n'avez pas les permissions nécessaires.",
+      "notFound": "Ressource non trouvée.",
+      "conflict": "Conflit. Cette ressource existe déjà ou est en cours d'utilisation.",
+      "unprocessableEntity": "Données non valides. Veuillez corriger les erreurs.",
+      "serverError": "Erreur interne du serveur. Veuillez réessayer plus tard.",
+      "httpError": "Erreur {{status}}: {{message}}"
+    },
+    "validation": {
+      "nameRequired": "Le nom est requis",
+      "labelRequired": "Le libellé est requis",
+      "nameMaxLength": "Le nom ne peut pas dépasser {{max}} caractères",
+      "labelMaxLength": "Le libellé ne peut pas dépasser {{max}} caractères",
+      "idRequired": "L'ID de la valeur d'option est requis",
+      "idRequiredForDeletion": "L'ID de la valeur d'option est requis pour la suppression",
+      "errors": "Erreurs de validation: {{errors}}"
+    },
+    "operations": {
+      "create": "Création de la valeur d'option",
+      "getAll": "Récupération des valeurs d'options",
+      "getById": "Récupération de la valeur d'option",
+      "update": "Mise à jour de la valeur d'option",
+      "delete": "Suppression de la valeur d'option"
     },
     "options": {
       "yes": "Oui",
@@ -1821,9 +2113,12 @@
     },
     "actions": {
       "add": "Ajouter",
+      "add-rule": "Ajouter une règle",
+      "add-condition": "Ajouter une condition",
       "save": "Enregistrer",
       "cancel": "Annuler",
       "edit": "Modifier",
+      "view": "Voir",
       "delete": "Supprimer",
       "deleteTitle": "Supprimer l'élément",
       "deleteMessage": "Êtes-vous sûr de vouloir supprimer cet élément ?",
@@ -1843,6 +2138,16 @@
       "removeInsured": "Supprimer l'assuré",
       "addCoverage": "Ajouter une garantie",
       "removeCoverage": "Supprimer la garantie"
+    },
+    "numeric-field": {
+      "actions": {
+        "add": "Ajouter un champ numérique"
+      }
+    },
+    "select-field": {
+      "actions": {
+        "add": "Ajouter un champ de sélection"
+      }
     },
     "success": {
       "title": "Succès",
@@ -2082,7 +2387,8 @@
     "title": "Sélectionner un produit",
     "description": "Sélectionnez le produit que vous souhaitez gérer.",
     "no-products": "Aucun produit pour l'instant",
-    "change": "Changer de produit"
+    "change": "Changer de produit",
+    "not-select-error-title": "Veuillez d'abord sélectionner un produit"
   },
   "Common": {
     "search": {
@@ -2109,13 +2415,19 @@
   },
   "branch-selection": {
     "title": "Sélectionner une branche",
-    "change": "Changer de branche"
+    "change": "Changer de branche",
+    "clear": "Réinitialiser la sélection",
+    "not-select-error-title": "Veuillez d'abord sélectionner une branche"
   },
   "message": {
     "success": "Opération réussie",
     "error": "Une erreur s'est produite",
     "warning": "Avertissement",
     "info": "Information"
+  },
+  "actions": {
+    "add-rule": "Ajouter une règle",
+    "add-condition": "Ajouter une condition"
   },
   "action_button": {
     "create": "Créer",

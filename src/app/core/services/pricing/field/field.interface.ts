@@ -1,5 +1,5 @@
 import {VariableItem} from "@core/services/pricing/variable-item/variable-item.interface";
-import { SelectFieldOptions } from "./select-field-options.interface";
+import { SelectFieldOptions } from "./select-field-options/select-field-options.interface";
 
 // Interfaces pour les DTOs
 export interface NumericField {
@@ -10,7 +10,7 @@ export interface NumericField {
   toReturn: boolean;
   managementEntity: string;
   product: string;
-  coverage: string;
+  branch: string;
 }
 
 export interface SelectField {
@@ -21,14 +21,18 @@ export interface SelectField {
   toReturn: boolean;
   managementEntity: string;
   product: string;
-  coverage: string;
+  branch: string;
   options: any;
 }
 
+export enum FieldType {
+  NUMBER = 'NUMERIC_FIELD',
+  SELECT = 'SELECT_FIELD',
+}
 
 export class Field extends VariableItem {
 
-    type: "NUMBER" | "SELECT";
+    type: FieldType;
     options: SelectFieldOptions | null;
     // value: SelectFieldOptionValue | number | null;
 
@@ -38,7 +42,7 @@ export class Field extends VariableItem {
      */
     constructor(response: any) {
         super(response);
-        this.type = response?.type ?? "NUMBER";
+        this.type = response?.type ?? FieldType.NUMBER; // Default to NUMBER if not specified
         this.options = response?.options ? new SelectFieldOptions(response.options) : null;
         // this.value = response?.value ? 0 : null;
     }

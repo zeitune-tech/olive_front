@@ -6,7 +6,7 @@ import { RouterModule } from "@angular/router";
 import { routes } from "./field.routing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { MatDialogModule } from "@angular/material/dialog";
+import { MatDialogActions, MatDialogModule } from "@angular/material/dialog";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
@@ -19,15 +19,16 @@ import { TableModule } from "@lhacksrt/components/table/table.module";
 import { LayoutService } from "./layout.service";
 import { FieldService } from "@core/services/pricing/field/field.service";
 import { FieldListComponent } from "./list/list.component";
-import {SelectFieldOptionsListComponent} from "./select-options/list/list.component";
-import { FieldFormComponent } from "./form/form.component";
-import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options.service";
+import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options/select-field-options.service";
+import { NumericFieldFormComponent } from "./numeric-form/form.component";
+import { SelectFieldFormComponent } from "./select-form/form.component";
+import { SelectFieldOptionValueService } from "@core/services/pricing/field/select-field-option-value/select-field-option-value.service";
 
 @NgModule({
     declarations: [
         FieldListComponent,
-        SelectFieldOptionsListComponent,
-        FieldFormComponent
+        NumericFieldFormComponent,
+        SelectFieldFormComponent,
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -41,17 +42,21 @@ import { SelectFieldOptionsService } from "@core/services/pricing/field/select-f
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
-        MatDividerModule,
         ReactiveFormsModule,
         SharedModule,
         TableModule,
         MatProgressSpinnerModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatDialogActions,
+        MatFormFieldModule
     ],
     exports: [],
     providers: [
         LayoutService,
         FieldService,
-        SelectFieldOptionsService
+        SelectFieldOptionsService,
+        SelectFieldOptionValueService
     ]
 })
 export class FieldModule {

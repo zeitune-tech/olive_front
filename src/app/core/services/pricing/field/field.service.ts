@@ -1,8 +1,9 @@
 import { catchError, Observable, of, ReplaySubject, tap, forkJoin, map } from "rxjs";
-import {Field, NumericField, SelectField} from "./field.interface";
+import {Field, FieldType, NumericField, SelectField} from "./field.interface";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import {Constant} from "@core/services/pricing/constant/constant.interface";
 
 
 @Injectable()
@@ -35,7 +36,7 @@ export class FieldService {
     ) {}
 
     create(field: Field): Observable<Field> {
-        const baseUrl = field.type === 'NUMBER' ? this.numericBaseUrl : this.selectBaseUrl;
+        const baseUrl = field.type === FieldType.NUMBER ? this.numericBaseUrl : this.selectBaseUrl;
         return this._httpClient.post<Field>(`${baseUrl}`, field)
         .pipe(
             tap((response: Field) => {
@@ -73,7 +74,7 @@ export class FieldService {
                 const mappedNumericFields = numericFields.map(numericField =>
                     new Field({
                         ...numericField,
-                        type: 'NUMBER',
+                        type: FieldType.NUMBER,
                         options: null
                     })
                 );
@@ -82,7 +83,7 @@ export class FieldService {
                 const mappedSelectFields = selectFields.map(selectField =>
                     new Field({
                         ...selectField,
-                        type: 'SELECT',
+                        type: FieldType.SELECT,
                         options: selectField.options
                     })
                 );
@@ -112,7 +113,7 @@ export class FieldService {
                 const fields = (response?.content || []).map(numericField =>
                     new Field({
                         ...numericField,
-                        type: 'NUMBER',
+                        type: FieldType.NUMBER,
                         options: null
                     })
                 );
@@ -132,13 +133,47 @@ export class FieldService {
                 const fields = (response?.content || []).map(selectField =>
                     new Field({
                         ...selectField,
-                        type: 'SELECT',
+                        type: FieldType.SELECT,
                         options: selectField.options
                     })
                 );
                 return fields;
             }),
             catchError(() => of([]))
+        );
+    }
+
+    //delete
+    delete(field: Field, id: string): Observable<void> {
+        const baseUrl = field.type === FieldType.NUMBER ? this.numericBaseUrl : this.selectBaseUrl;
+        return this._httpClient.delete<void>(`${baseUrl}/${id}`)
+        .pipe(
+            tap(() => {
+                // Mettre à jour le subject après la suppression
+                this.fields$.pipe(
+                    map(fields => fields.filter(field => field.id !== id))
+                ).subscribe(updatedFields => this.fields = updatedFields);
+            }),
+            catchError(() => of())
+        );
+    }
+
+    update(field: Field, id: string): Observable<Field> {
+        const baseUrl = field.type === FieldType.NUMBER ? this.numericBaseUrl : this.selectBaseUrl;
+        return this._httpClient.put<Field>(`${baseUrl}/${id}`, field)
+        .pipe(
+          tap((updatedField: Field) => {
+            // this.fields$.pipe(
+            //   map(fields => fields.map(f => f.id === id ? updatedField : f))
+            // ).subscribe(updatedFields => this.fields = updatedFields);
+
+            // Recharger toute la liste  s'assurer de la cohérence
+            this.getAll().subscribe();
+
+            // Mettre à jour le champ individuel
+            this.field = new Field({...updatedField, type: field.type});
+          }),
+          catchError(() => of(field))
         );
     }
 }

@@ -2,7 +2,7 @@ import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import {Rule} from "@core/services/pricing/variable-condition/rule/rule.interface";
+import { Rule } from "./rule.interface";
 
 @Injectable()
 export class RuleService {
@@ -50,6 +50,17 @@ export class RuleService {
                 return response;
             }),
             catchError(() => of([]))
+        );
+    }
+
+    update(id: string, rule: Rule): Observable<Rule> {
+        return this._httpClient.put<Rule>(`${this.baseUrl}/${id}`, rule)
+        .pipe(
+            tap((response: Rule) => {
+                this.rule = response;
+                return response;
+            }),
+            catchError(() => of({} as Rule))
         );
     }
 
