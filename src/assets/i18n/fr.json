@@ -1733,6 +1733,7 @@
       "back_to": "Retour à",
       "sign_in": "Se connecter"
     }
+  }
   },
   "sidebar": {
     "dashboard": "Tableau de bord",
@@ -2355,4 +2356,4 @@
     "unblock": "Débloquer"
   }
 }
-}
+
