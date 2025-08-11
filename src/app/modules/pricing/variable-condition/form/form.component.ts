@@ -256,7 +256,7 @@ export class VariableConditionFormComponent implements OnInit {
                 value: rule?.name || 'NEW_RULE',
                 disabled: true
             }],
-            value: [rule?.value || 0, [Validators.required, Validators.min(-1)]],
+            value: [rule?.value || 0, [Validators.required]],
             conditions: this.fb.array(rule?.conditions?.length
                 ? rule.conditions.map(condition => this.createConditionFormGroup(condition))
                 : [this.createConditionFormGroup()])
