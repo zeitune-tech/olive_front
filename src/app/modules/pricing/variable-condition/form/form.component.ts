@@ -24,8 +24,18 @@ export class VariableConditionFormComponent implements OnInit {
       managementEntity: ManagementEntity | undefined;
       fields: Field[] = [];
       availableOperators: { [key: string]: string[] } = {
-          'SELECT': ['EQUALS', 'NOT_EQUALS'],
-          'NUMBER': ['EQUALS', 'NOT_EQUALS', 'LESS_THAN', 'GREATER_THAN', 'LESS_OR_EQUAL', 'GREATER_OR_EQUAL']
+          'SELECT_FIELD': ['eq', 'neq'],
+          'NUMERIC_FIELD': ['eq', 'neq', 'lt', 'gt', 'lte', 'gte']
+      };
+
+      // Mapping des opérateurs pour l'affichage
+      operatorTranslationKeys = {
+          'eq': 'EQUALS',
+          'neq': 'NOT_EQUALS',
+          'lt': 'LESS_THAN',
+          'gt': 'GREATER_THAN',
+          'lte': 'LESS_OR_EQUAL',
+          'gte': 'GREATER_OR_EQUAL'
       };
 
       mode: 'create' | 'edit' | 'view' = 'create';
@@ -184,7 +194,7 @@ export class VariableConditionFormComponent implements OnInit {
 
     removeCondition(ruleIndex: number, conditionIndex: number): void {
         const conditionsArray = this.getConditionsFormArray(ruleIndex);
-        
+
         // Ne pas permettre la suppression s'il n'y a qu'une seule condition
         if (conditionsArray.length <= 1) {
             this.snackBar.open(
@@ -194,10 +204,10 @@ export class VariableConditionFormComponent implements OnInit {
             );
             return;
         }
-        
+
         // Supprimer la condition du FormArray
         conditionsArray.removeAt(conditionIndex);
-        
+
         // Marquer le formulaire comme modifié pour déclencher la validation
         this.formGroup.markAsDirty();
     }
@@ -366,7 +376,7 @@ export class VariableConditionFormComponent implements OnInit {
                             this.handleSubmissionError('form.errors.submission');
                             return;
                         }
-                        
+
                         completedConditions++;
                         if (completedConditions === allConditions.length) {
                             this.updateAllRules(updatedConditionIds, conditionIndexMap);
