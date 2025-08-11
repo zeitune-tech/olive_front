@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { RequestMetadata } from "@core/services/common.interface";
-import { environment } from "@env/environment";
-import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
+import { environment } from "src/environments/environment.local";
+import { catchError, forkJoin, Observable, of, ReplaySubject, tap } from "rxjs";
 import { Endorsment } from "./endorsement.interface";
 import { Injectable } from "@angular/core";
 
@@ -71,7 +71,19 @@ export class EndorsementService {
         );        
     }
 
-    assignProducts(endorsementId: string, productIds: string[]): Observable<any> {
-        return this._httpClient.post(`${this.baseUrl}/${endorsementId}/products`, { productIds });
+    assignProducts(endorsementId: string, productIds: string[]): Observable<any[]> {
+        const requests = productIds.map(productId =>
+            this._httpClient.put(`${this.baseUrl}/${endorsementId}/add-product/${productId}`, {})
+        );
+        return forkJoin(requests);
     }
+
+    removeProducts(endorsementId: string, productIds: string[]): Observable<any[]> {
+        const requests = productIds.map(productId =>
+            this._httpClient.put(`${this.baseUrl}/${endorsementId}/remove-product/${productId}`, {})
+        );
+        return forkJoin(requests);
+    }
+
+
 }

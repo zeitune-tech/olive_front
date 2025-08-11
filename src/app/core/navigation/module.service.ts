@@ -277,45 +277,66 @@ export class ModuleService {
             ],
             features: [
                 {
-                    name: "attestations",
-                    title: "modules.attestations.features.attestations",
-                    description: "modules.attestations.features.attestations_description",
-                    icon: "production_quantity_limits",
-                    route: "/attestations",
+                    name: "stock-central",
+                    title: "sidebar.attestations.stock-central.title",
+                    description: "sidebar.attestations.stock-central.description",
+                    icon: "inventory_2",
+                    route: "/attestations/stock-central",
                     permissions: [
-                        PERMISSIONS.VIEW_ATTESTATIONS,
+                        //PERMISSIONS.VIEW_STOCK_CENTRAL,
                     ]
                 },
                 {
-                    name: "attestations_demands",
-                    title: "modules.attestations.features.attestations_demands",
-                    description: "modules.attestations.features.attestations_demands_description",
-                    icon: "production_quantity_limits",
-                    route: "/attestations-demands",
+                    name: "commandes",
+                    title: "sidebar.attestations.commandes.title",
+                    description: "sidebar.attestations.commandes.description",
+                    icon: "assignment",
+                    route: "/attestations/commandes",
                     permissions: [
-                        PERMISSIONS.VIEW_ATTESTATIONS_DEMANDS,
+                        //PERMISSIONS.VIEW_COMMANDES,
                     ]
                 },
                 {
-                    name: "market_level_organization",
-                    title: "modules.attestations.features.market_level_organization",
-                    description: "modules.attestations.features.market_level_organization_description",
-                    icon: "production_quantity_limits",
-                    route: "/attestations/market-level-organization",
+                    name: "attribution-compagnies",
+                    title: "sidebar.attestations.attributionCompagnies.title",
+                    description: "sidebar.attestations.attributionCompagnies.description",
+                    icon: "corporate_fare",
+                    route: "/attestations/attribution-compagnies",
                     permissions: [
-                        PERMISSIONS.CREATE_ATTESTATIONS_DEMANDS_TO_MARKET_LEVEL_ORGANIZATION,
+                        //PERMISSIONS.VIEW_ATTRIBUTION_COMPAGNIES,
                     ]
                 },
                 {
-                    name: "companies",
-                    title: "modules.attestations.features.companies",
-                    description: "modules.attestations.features.companies_demands_description",
-                    icon: "production_quantity_limits",
-                    route: "/attestations/companies-demands",
+                    name: "attribution-points-vente",
+                    title: "sidebar.attestations.attributionPointsVente.title",
+                    description: "sidebar.attestations.attributionPointsVente.description",
+                    icon: "storefront",
+                    route: "/attestations/attribution-points-vente",
                     permissions: [
-                        PERMISSIONS.CREATE_ATTESTATIONS_DEMANDS_TO_COMPANY,
+                        //PERMISSIONS.VIEW_ATTRIBUTION_PDV,
+                    ]
+                },
+                {
+                    name: "retrait-stocks-pdv",
+                    title: "sidebar.attestations.retraitStocksPDV.title",
+                    description: "sidebar.attestations.retraitStocksPDV.description",
+                    icon: "local_shipping",
+                    route: "/attestations/retrait-stocks",
+                    permissions: [
+                        //PERMISSIONS.VIEW_RETRAIT_STOCKS,
+                    ]
+                },
+                {
+                    name: "suivi-attestations",
+                    title: "sidebar.attestations.suiviAttestations.title",
+                    description: "sidebar.attestations.suiviAttestations.description",
+                    icon: "fact_check",
+                    route: "/attestations/suivi",
+                    permissions: [
+                        //PERMISSIONS.VIEW_SUIVI_ATTESTATIONS,
                     ]
                 }
+
             ]
         },
         {
@@ -383,8 +404,8 @@ export class ModuleService {
         },
         {
             name: "cessions-retrocessions",
-            title: "modules.cessions_retrocessions.title",
-            description: "modules.cessions_retrocessions.description",
+            title: "modules.cessions.title",
+            description: "modules.cessions.description",
             icon: "assets/images/modules/cession_retrocession.png",
             route: "/cessions-retrocessions",
             permissions: [

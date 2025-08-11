@@ -26,7 +26,7 @@
         <mat-form-field class="w-full" appearance="outline">
           <mat-label>{{ t('entities.accessory.fields.actType') }}</mat-label>
           <mat-select formControlName="actType">
-            <mat-option *ngFor="let endorsement of filteredEndorsements" [value]="endorsement.id">
+            <mat-option *ngFor="let endorsement of filteredEndorsements" [value]="endorsement.name">
               {{ endorsement.name }}
             </mat-option>
           </mat-select>
@@ -41,7 +41,7 @@
         <!-- Accessory Police -->
         <mat-form-field class="w-full" appearance="outline">
           <mat-label>{{ t('entities.accessory.fields.accessoryPolice') }}</mat-label>
-          <input matInput type="number" formControlName="accessoryPolice" />
+          <input matInput type="number" formControlName="accessoryAmount" />
         </mat-form-field>
 
         <!-- Date Effective -->

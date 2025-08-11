@@ -1,6 +1,5 @@
 <div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t">
   <h2 mat-dialog-title>{{ t('entities.endorsment.product_assignment.title') || 'Assigner des produits' }}</h2>
-  <mat-divider></mat-divider>
 
   <mat-dialog-content class="py-4">
     <table [dataSource]="dataSource" class="w-full rounded-md bg-card" mat-table matSort>
@@ -35,12 +34,18 @@
         <td mat-cell *matCellDef="let product">{{ product.description }}</td>
       </ng-container>
 
+      <!-- Flotte -->
+      <ng-container matColumnDef="fleet">
+        <th mat-header-cell *matHeaderCellDef class="uppercase" mat-sort-header>Flotte ?</th>
+        <td mat-cell *matCellDef="let product">{{ product.fleet ? t('form.options.yes') : t('form.options.no') }}</td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="cursor-pointer"></tr>
 
       <!-- No Data -->
       <tr *matNoDataRow>
-        <td colspan="3" class="text-center py-4">{{ t('common.no_data') || 'Aucun produit disponible' }}</td>
+        <td colspan="4" class="text-center py-4">{{ t('common.no_data') || 'Aucun produit disponible' }}</td>
       </tr>
     </table>
 

@@ -27,10 +27,10 @@ export class DurationRateListComponent {
     tableOptions: TableOptions<DurationRate> = {
         title: '',
         columns: [
-            { label: 'entities.duration_rate.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
-            { label: 'entities.duration_rate.fields.duration', property: 'duration', type: 'text', visible: true },
             { label: 'entities.duration_rate.fields.rate', property: 'rate', type: 'text', visible: true },
+            { label: 'entities.duration_rate.fields.duration', property: 'duration', type: 'text', visible: true },
             { label: 'entities.duration_rate.fields.product', property: 'product', type: 'text', visible: true },   
+            { label: 'entities.duration_rate.fields.dateEffective', property: 'dateEffective', type: 'text', visible: true },
         ],
         imageOptions: {
             label: 'closure.columns.logo',

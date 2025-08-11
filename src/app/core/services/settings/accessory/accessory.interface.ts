@@ -3,15 +3,15 @@ import { Endorsment } from "../endorsement/endorsement.interface";
 
 export class Accessory {
   id: string;
-  dateEffective: string;
+  dateEffective: Date;
   actType: Endorsment;
+  accessoryAmount: number;
   accessoryRisk: number;
-  accessoryPolice: number;
-  product: Product;
-  day: string;
+  day: Date;
   hour: number;
   minute: number;
   effectiveDate?: string;
+  product: Product;
   managementEntity: string;
 
   constructor(data: any) {
@@ -19,9 +19,9 @@ export class Accessory {
     this.dateEffective = data.dateEffective || '';
     this.actType = data.actType || '';
     this.accessoryRisk = data.accessoryRisk || 0;
-    this.accessoryPolice = data.accessoryPolice || 0;
+    this.accessoryAmount = data.accessoryAmount || 0;
     this.product = data.product || '';
-    this.day = data.day || '';
+    this.day = data.day || new Date();
     this.hour = data.hour || 0;
     this.minute = data.minute || 0;
     this.effectiveDate = `${this.day} ${this.hour.toString().padStart(2, '0')}:${this.minute.toString().padStart(2, '0')}`;
