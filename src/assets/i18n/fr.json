@@ -154,7 +154,6 @@
           "OPTIONAL": "Facultative",
           "MANDATORY": "Obligatoire",
           "RECOMMANDED": "Recommandée"
-
         }
       }
     },
@@ -246,7 +245,7 @@
         "empty_state": "Aucun produit trouvé",
         "custom_fields": {
           "risk": "Risque",
-          "min":"min",
+          "min": "min",
           "max": "max",
           "minCoverage": "Min. garanties",
           "fleet": "Flotte ?"
@@ -632,7 +631,6 @@
           "MODIFICATION": "Modification standard",
           "SUSPENSION": "Arrêt de couverture",
           "REINSTATEMENT": "Reconduction"
-
         },
         "accessoryType": {
           "RISQUES": "Risques",
@@ -1693,8 +1691,8 @@
       },
       "options": {
         "status": {
-          "active": "Actif",
-          "inactive": "Inactif"
+          "ACTIVE": "Actif",
+          "INACTIVE": "Inactif"
         }
       }
     },
