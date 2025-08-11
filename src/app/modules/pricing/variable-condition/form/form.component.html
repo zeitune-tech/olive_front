@@ -178,7 +178,8 @@
                                             <!-- Valeur pour NumericField -->
                                             <mat-form-field appearance="outline">
                                                 <mat-label>{{ t('entities.condition.fields.value') }}</mat-label>
-                                                <input matInput type="number" formControlName="value">
+                                                <input matInput type="number" formControlName="value"
+                                                       (change)="onNumericValueChange(ruleIndex, conditionIndex)">
                                                 <mat-hint>{{ t('entities.condition.hints.optional-if-minmax') }}</mat-hint>
                                                 <mat-error *ngIf="conditionControl.hasError('numericFieldRequired')">
                                                     {{ t('entities.condition.errors.numeric-field-required') }}
@@ -188,13 +189,15 @@
                                             <!-- Valeur Min -->
                                             <mat-form-field appearance="outline">
                                                 <mat-label>{{ t('entities.condition.fields.minValue') }}</mat-label>
-                                                <input matInput type="number" formControlName="minValue">
+                                                <input matInput type="number" formControlName="minValue"
+                                                       (change)="onMinMaxValueChange(ruleIndex, conditionIndex)">
                                             </mat-form-field>
 
                                             <!-- Valeur Max -->
                                             <mat-form-field appearance="outline">
                                                 <mat-label>{{ t('entities.condition.fields.maxValue') }}</mat-label>
-                                                <input matInput type="number" formControlName="maxValue">
+                                                <input matInput type="number" formControlName="maxValue"
+                                                       (change)="onMinMaxValueChange(ruleIndex, conditionIndex)">
                                             </mat-form-field>
                                         }
                                     </div>

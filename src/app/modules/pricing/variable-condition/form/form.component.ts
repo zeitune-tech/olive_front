@@ -271,6 +271,44 @@ export class VariableConditionFormComponent implements OnInit {
         return group;
     }
 
+    onNumericValueChange(ruleIndex: number, conditionIndex: number): void {
+        const conditionGroup = this.getConditionsFormArray(ruleIndex).at(conditionIndex) as FormGroup;
+        const value = conditionGroup.get('value')?.value;
+
+        if (value !== null && value !== '') {
+            // Si une valeur est renseignée, désactiver min/max
+            conditionGroup.get('minValue')?.disable();
+            conditionGroup.get('maxValue')?.disable();
+            // Réinitialiser les valeurs
+            conditionGroup.patchValue({
+                minValue: '',
+                maxValue: ''
+            });
+        } else {
+            // Si la valeur est vide, activer min/max
+            conditionGroup.get('minValue')?.enable();
+            conditionGroup.get('maxValue')?.enable();
+        }
+    }
+
+    onMinMaxValueChange(ruleIndex: number, conditionIndex: number): void {
+        const conditionGroup = this.getConditionsFormArray(ruleIndex).at(conditionIndex) as FormGroup;
+        const minValue = conditionGroup.get('minValue')?.value;
+        const maxValue = conditionGroup.get('maxValue')?.value;
+
+        if ((minValue !== null && minValue !== '') || (maxValue !== null && maxValue !== '')) {
+            // Si min ou max est renseigné, désactiver value
+            conditionGroup.get('value')?.disable();
+            // Réinitialiser la valeur
+            conditionGroup.patchValue({
+                value: ''
+            });
+        } else {
+            // Si min et max sont vides, activer value
+            conditionGroup.get('value')?.enable();
+        }
+    }
+
     createConditionFormGroup(condition?: any): FormGroup {
         // Pour les champs SELECT, la valeur peut être un objet SelectFieldOptionValue ou un ID string
         let valueToSet = '';
@@ -287,13 +325,25 @@ export class VariableConditionFormComponent implements OnInit {
             }
         }
 
-        return this.fb.group({
+        const group = this.fb.group({
             field: [condition?.field?.id || '', Validators.required],
             operator: [condition?.operator || '', Validators.required],
             value: [valueToSet],
             minValue: [condition?.minValue || ''],
             maxValue: [condition?.maxValue || '']
         });
+
+        // Si une valeur initiale est définie, désactiver min/max
+        if (valueToSet) {
+            group.get('minValue')?.disable();
+            group.get('maxValue')?.disable();
+        }
+        // Si min ou max est défini, désactiver value
+        else if (condition?.minValue || condition?.maxValue) {
+            group.get('value')?.disable();
+        }
+
+        return group;
     }
 
     get rulesFormArray(): FormArray {
