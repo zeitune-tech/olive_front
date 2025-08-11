@@ -79,7 +79,7 @@
                         <div class="flex justify-between items-center mb-3">
                             <h4 class="font-medium text-gray-600">
                                 <mat-icon class="mr-2 text-orange-500">fact_check</mat-icon>
-                                {{ t('entities.rule.title') }} {{ ruleIndex + 1 }}
+                                {{ ruleControl.get('label')?.value }}
                             </h4>
                             @if (rulesFormArray.length > 1) {
                                 <button type="button" mat-icon-button color="warn" (click)="removeRule(ruleIndex)" class="delete-button">
@@ -88,23 +88,7 @@
                             }
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                            <mat-form-field appearance="outline">
-                                <mat-label>{{ t('entities.rule.fields.label') }}</mat-label>
-                                <input matInput formControlName="label" required>
-                                <mat-error *ngIf="ruleControl.get('label')?.hasError('required')">
-                                    {{ t('form.errors.required') }}
-                                </mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="outline">
-                                <mat-label>{{ t('entities.rule.fields.name') }}</mat-label>
-                                <input matInput formControlName="name" required>
-                                <mat-error *ngIf="ruleControl.get('name')?.hasError('required')">
-                                    {{ t('form.errors.required') }}
-                                </mat-error>
-                            </mat-form-field>
-
+                        <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
                             <mat-form-field appearance="outline">
                                 <mat-label>{{ t('entities.rule.fields.value') }}</mat-label>
                                 <input matInput type="number" formControlName="value" required>

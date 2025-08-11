@@ -44,7 +44,6 @@ export class VariableConditionFormComponent implements OnInit {
       ) {}
 
     ngOnInit(): void {
-
         this.mode = (this.data as any).mode;
         this.dialogRef.updateSize('800px', 'auto');
 
@@ -57,6 +56,11 @@ export class VariableConditionFormComponent implements OnInit {
             this.fields = fields;
         });
 
+        // Initialisation du formulaire
+        const initialRules = this.data.rules?.length
+            ? this.data.rules.map((rule, index) => this.createRuleFormGroup(rule, index))
+            : [this.createRuleFormGroup(undefined, 0)];
+
         this.formGroup = this.fb.group({
             // Section VariableItem
             label: [this.data.label || '', Validators.required],
@@ -64,9 +68,29 @@ export class VariableConditionFormComponent implements OnInit {
             variableName: [this.data.variableName || '', Validators.required],
             toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
             branch: [this.data.branch || '', Validators.required],
-
             // Section Rules
-            rules: this.fb.array(this.data.rules?.length ? this.data.rules.map(rule => this.createRuleFormGroup(rule)) : [this.createRuleFormGroup()])
+            rules: this.fb.array(initialRules)
+        });
+
+        // Surveiller les changements de valeur du champ label
+        this.formGroup.get('label')?.valueChanges.subscribe(value => {
+            if (!value) return;
+
+            const variableName = value
+                .toUpperCase()
+                .replace(/[^A-Z0-9]+/g, '_')
+                .replace(/^_+|_+$/g, '');
+
+            const descriptionPrefix = `Une condition variable (${variableName}) pour`;
+            const description = `${descriptionPrefix} ${(this.formGroup.get('description')?.value as string).replace(/Une condition variable \([^)]+\) pour /g, "")}`;
+
+            this.formGroup.patchValue({
+                variableName: variableName,
+                description: description
+            });
+
+            this.formGroup.get('variableName')?.markAsTouched();
+            this.formGroup.get('description')?.markAsTouched();
         });
 
         // Initialiser les validateurs pour les conditions existantes en mode édition
@@ -125,14 +149,126 @@ export class VariableConditionFormComponent implements OnInit {
         conditionGroup.updateValueAndValidity();
     }
 
-    createRuleFormGroup(rule?: Rule): FormGroup {
-        return this.fb.group({
-            id: [rule?.id || ''],
-            label: [rule?.label || '', Validators.required],
-            name: [rule?.name || '', Validators.required],
-            value: [rule?.value || 0, [Validators.required, Validators.min(-1)]],
-            conditions: this.fb.array(rule?.conditions?.length ? rule.conditions.map(condition => this.createConditionFormGroup(condition)) : [this.createConditionFormGroup()])
+    /**
+     * Génère le libellé d'une règle en fonction de ses conditions et de sa valeur
+     */
+    private generateRuleLabel(rule: any): string {
+        const conditions = rule.get('conditions')?.value || [];
+        const ruleValue = rule.get('value')?.value;
+
+        if (!conditions.length) {
+            return `Rule (${ruleValue})`;
+        }
+
+        const conditionDescriptions = conditions.map((condition: any) => {
+            const field = this.fields.find(f => f.id === condition.field);
+            if (!field) return '';
+
+            const operatorKey = condition.operator;
+            let valueStr = '';
+
+            if (field.type === FieldType.SELECT) {
+                const option = field.options?.possibilities?.find((opt: any) => opt.id === condition.value);
+                valueStr = option ? option.label : condition.value;
+            } else if (field.type === FieldType.NUMBER) {
+                if (condition.value) {
+                    valueStr = condition.value;
+                } else if (condition.minValue && condition.maxValue) {
+                    valueStr = `${condition.minValue}-${condition.maxValue}`;
+                } else if (condition.minValue) {
+                    valueStr = `>=${condition.minValue}`;
+                } else if (condition.maxValue) {
+                    valueStr = `<=${condition.maxValue}`;
+                }
+            }
+
+            return `${field.variableName} ${operatorKey} ${valueStr}`;
         });
+
+        return `If (${conditionDescriptions.join(' AND ')}) then ${ruleValue}`;
+    }
+
+    /**
+     * Génère le nom technique d'une règle
+     */
+    private generateRuleName(rule: any): string {
+        const conditions = rule.get('conditions')?.value || [];
+        const ruleValue = rule.get('value')?.value;
+
+        if (!conditions.length) {
+            return `RULE_DEFAULT_${ruleValue}`;
+        }
+
+        const conditionParts = conditions.map((condition: any) => {
+            const field = this.fields.find(f => f.id === condition.field);
+            if (!field) return '';
+
+            let valueStr = '';
+            if (field.type === FieldType.SELECT) {
+                valueStr = condition.value;
+            } else if (field.type === FieldType.NUMBER) {
+                if (condition.value) {
+                    valueStr = condition.value;
+                } else if (condition.minValue && condition.maxValue) {
+                    valueStr = `${condition.minValue}_${condition.maxValue}`;
+                } else if (condition.minValue) {
+                    valueStr = `MIN_${condition.minValue}`;
+                } else if (condition.maxValue) {
+                    valueStr = `MAX_${condition.maxValue}`;
+                }
+            }
+
+            // Utilisation du variableName au lieu du label
+            const fieldVariableName = field.variableName || field.label.toUpperCase().replace(/[^A-Z0-9]+/g, '_');
+            return `${fieldVariableName}_${condition.operator}_${valueStr}`;
+        });
+
+        return `RULE_${conditionParts.join('_AND_')}_${ruleValue}`;
+    }
+
+    /**
+     * Met à jour les libellés et noms des règles
+     */
+    private updateRuleLabelsAndNames(): void {
+        this.rulesFormArray.controls.forEach(ruleControl => {
+            const newLabel = this.generateRuleLabel(ruleControl);
+            const newName = this.generateRuleName(ruleControl);
+
+            ruleControl.patchValue({
+                label: newLabel,
+                name: newName
+            }, { emitEvent: false });
+        });
+    }
+
+    createRuleFormGroup(rule?: Rule, index?: number): FormGroup {
+        const group = this.fb.group({
+            id: [rule?.id || ''],
+            label: [{
+                value: rule?.label || 'New Rule',
+                disabled: true
+            }],
+            name: [{
+                value: rule?.name || 'NEW_RULE',
+                disabled: true
+            }],
+            value: [rule?.value || 0, [Validators.required, Validators.min(-1)]],
+            conditions: this.fb.array(rule?.conditions?.length
+                ? rule.conditions.map(condition => this.createConditionFormGroup(condition))
+                : [this.createConditionFormGroup()])
+        });
+
+        // Observer les changements des conditions et de la valeur
+        const conditionsArray = group.get('conditions') as FormArray;
+        conditionsArray.valueChanges.subscribe(() => {
+            this.updateRuleLabelsAndNames();
+        });
+
+        group.get('value')?.valueChanges.subscribe(() => {
+            this.updateRuleLabelsAndNames();
+        });
+
+        return group;
     }
 
     createConditionFormGroup(condition?: any): FormGroup {
@@ -169,12 +305,15 @@ export class VariableConditionFormComponent implements OnInit {
     }
 
     addRule(): void {
-        this.rulesFormArray.push(this.createRuleFormGroup());
+        const newRule = this.createRuleFormGroup();
+        this.rulesFormArray.push(newRule);
+        this.updateRuleLabelsAndNames();
     }
 
     removeRule(index: number): void {
-        if (this.rulesFormArray.length > 1) {
+        if (this.rulesFormArray?.length > 1) {
             this.rulesFormArray.removeAt(index);
+            this.updateRuleLabelsAndNames();
         }
     }
 
@@ -265,11 +404,8 @@ export class VariableConditionFormComponent implements OnInit {
         return null;
     }
 
-    updateNumericFieldValidators(conditionGroup: FormGroup): void {
-        // Cette méthode n'est plus nécessaire car la validation est gérée par numericFieldValidator
-    }
-
     getAvailableOperators(fieldId: string): string[] {
+        if (this.isReadOnly()) return [];
         const field = this.fields.find(f => f.id === fieldId);
         if (!field) return [];
         return this.availableOperators[field.type] || [];
@@ -281,11 +417,12 @@ export class VariableConditionFormComponent implements OnInit {
     }
 
     getSelectFieldOptions(fieldId: string): any[] {
+        if (this.isReadOnly()) return [];
         const field = this.fields.find(f => f.id === fieldId);
         if (field?.type === FieldType.SELECT && field.options) {
             return field.options.possibilities || [];
         }
-        return[];
+        return [];
     }
 
     isReadOnly(): boolean {
@@ -295,6 +432,14 @@ export class VariableConditionFormComponent implements OnInit {
     onSubmit(): void {
         if (this.formGroup.invalid || this.mode === 'view') return;
 
+        console.log("Starting form submission");
+        const formData = {
+            ...this.formGroup.getRawValue(),
+            managementEntity: this.managementEntity?.id,
+            product: this.data.product,
+        };
+
+        console.log("Form data before submission:", formData);
         this.formGroup.disable();
 
         if (this.mode === 'edit') {
@@ -314,16 +459,25 @@ export class VariableConditionFormComponent implements OnInit {
      * Étape 1: Mettre à jour toutes les conditions de toutes les règles
      */
     private updateAllConditions(): void {
-        const rules = this.formGroup.value.rules;
+        const formData = this.formGroup.getRawValue();
+        const rules = formData.rules;
+        if (!rules || !Array.isArray(rules)) {
+            console.error('No rules found in form data');
+            this.handleSubmissionError('form.errors.submission');
+            return;
+        }
+
         const allConditions: any[] = [];
         const conditionIndexMap: { ruleIndex: number, conditionIndex: number }[] = [];
 
         // Collecter toutes les conditions de toutes les règles avec leur mapping
         rules.forEach((ruleData: any, ruleIndex: number) => {
-            ruleData.conditions.forEach((conditionData: any, conditionIndex: number) => {
-                allConditions.push(conditionData);
-                conditionIndexMap.push({ ruleIndex, conditionIndex });
-            });
+            if (ruleData.conditions) {
+                ruleData.conditions.forEach((conditionData: any, conditionIndex: number) => {
+                    allConditions.push(conditionData);
+                    conditionIndexMap.push({ ruleIndex, conditionIndex });
+                });
+            }
         });
 
       console.log("All conditions to update:", allConditions);
@@ -426,7 +580,14 @@ export class VariableConditionFormComponent implements OnInit {
      * Étape 2: Mettre à jour toutes les règles avec les IDs des conditions
      */
     private updateAllRules(conditionIds: string[], conditionIndexMap?: { ruleIndex: number, conditionIndex: number }[]): void {
-        const rules = this.formGroup.value.rules;
+        const formData = this.formGroup.getRawValue();
+        const rules = formData.rules;
+        if (!rules || !Array.isArray(rules)) {
+            console.error('No rules found in form data');
+            this.handleSubmissionError('form.errors.submission');
+            return;
+        }
+
         const updatedRuleIds: string[] = [];
         let completedRules = 0;
 
@@ -514,13 +675,14 @@ export class VariableConditionFormComponent implements OnInit {
      * Construit le payload pour la mise à jour de la variable condition
      */
     private buildVariableConditionUpdatePayload(ruleIds: string[]): any {
+        const formData = this.formGroup.getRawValue();
         return {
             id: this.data.id,
-            label: this.formGroup.value.label,
-            description: this.formGroup.value.description,
-            variableName: this.formGroup.value.variableName,
-            toReturn: this.formGroup.value.toReturn,
-            branch: this.formGroup.value.branch,
+            label: formData.label,
+            description: formData.description,
+            variableName: formData.variableName,
+            toReturn: formData.toReturn,
+            branch: formData.branch,
             managementEntity: this.managementEntity?.id,
             product: this.data.product,
             ruleIds: ruleIds
@@ -541,16 +703,25 @@ export class VariableConditionFormComponent implements OnInit {
      * Les conditions sont créées en premier car les règles ont besoin de leurs IDs
      */
     private createAllConditions(): void {
-        const rules = this.formGroup.value.rules;
+        const formData = this.formGroup.getRawValue();
+        const rules = formData.rules;
+        if (!rules || !Array.isArray(rules)) {
+            console.error('No rules found in form data');
+            this.handleSubmissionError('form.errors.submission');
+            return;
+        }
+
         const allConditions: any[] = [];
         const conditionIndexMap: { ruleIndex: number, conditionIndex: number }[] = [];
 
         // Collecter toutes les conditions de toutes les règles avec leur mapping
         rules.forEach((ruleData: any, ruleIndex: number) => {
-            ruleData.conditions.forEach((conditionData: any, conditionIndex: number) => {
-                allConditions.push(conditionData);
-                conditionIndexMap.push({ ruleIndex, conditionIndex });
-            });
+            if (ruleData.conditions) {
+                ruleData.conditions.forEach((conditionData: any, conditionIndex: number) => {
+                    allConditions.push(conditionData);
+                    conditionIndexMap.push({ ruleIndex, conditionIndex });
+                });
+            }
         });
 
         if (allConditions.length === 0) {
@@ -633,7 +804,14 @@ export class VariableConditionFormComponent implements OnInit {
      * Étape 2: Créer toutes les règles avec les IDs des conditions
      */
     private createAllRules(conditionIds: string[], conditionIndexMap?: { ruleIndex: number, conditionIndex: number }[]): void {
-        const rules = this.formGroup.value.rules;
+        const formData = this.formGroup.getRawValue();
+        const rules = formData.rules;
+        if (!rules || !Array.isArray(rules)) {
+            console.error('No rules found in form data');
+            this.handleSubmissionError('form.errors.submission');
+            return;
+        }
+
         const createdRuleIds: string[] = [];
         let completedRules = 0;
 
@@ -685,12 +863,14 @@ export class VariableConditionFormComponent implements OnInit {
             });
         }
 
+        const rawFormData = this.formGroup.getRawValue();
         return {
             label: ruleData.label,
             name: ruleData.name,
             value: ruleData.value,
             conditions: ruleConditionIds,
-            managementEntity: this.managementEntity?.id
+            managementEntity: this.managementEntity?.id,
+            branch: rawFormData.branch
         };
     }
 
@@ -722,12 +902,13 @@ export class VariableConditionFormComponent implements OnInit {
      * Construit le payload pour la création de la variable condition
      */
     private buildVariableConditionPayload(ruleIds: string[]): any {
+        const formData = this.formGroup.getRawValue();
         return {
-            label: this.formGroup.value.label,
-            description: this.formGroup.value.description,
-            variableName: this.formGroup.value.variableName,
-            toReturn: this.formGroup.value.toReturn,
-            branch: this.formGroup.value.branch,
+            label: formData.label,
+            description: formData.description,
+            variableName: formData.variableName,
+            toReturn: formData.toReturn,
+            branch: formData.branch,
             managementEntity: this.managementEntity?.id,
             product: this.data.product,
             ruleIds: ruleIds
