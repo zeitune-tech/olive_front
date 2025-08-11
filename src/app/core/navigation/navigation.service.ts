@@ -11,10 +11,12 @@ import { compactSettingsNavigation, defaultSettingsNavigation } from './nav/sett
 import { compactAttestationNavigation, defaultAttestationNavigation } from './nav/attestation.nav';
 import { compactInsuredNavigation, defaultInsuredNavigation } from './nav/insured.nav';
 import { compactProductionNavigation, defaultProductionNavigation } from './nav/production.nav';
-import { compactPrincingNavigation, defaultPrincingNavigation } from './nav/pricing.nav';
+import { compactPricingNavigation, defaultPricingNavigation } from './nav/pricing.nav';
+
 @Injectable({
     providedIn: 'root'
 })
+
 export class NavigationService {
     private destroy$ = new Subject<void>();
 
@@ -40,8 +42,8 @@ export class NavigationService {
             default: defaultProductionNavigation
         },
         {
-            compact: compactPrincingNavigation,
-            default: defaultPrincingNavigation
+            compact: compactPricingNavigation,
+            default: defaultPricingNavigation
         }
     ] as Navigation [];
 
@@ -103,7 +105,7 @@ export class NavigationService {
             case "attestations": return this.items[2];
             case "insureds": return this.items[3];
             case "productions": return this.items[4];
-            case "princing": return this.items[5];
+            case "pricing": return this.items[5];
             default : return this.items[0];
         }
     }
@@ -111,7 +113,6 @@ export class NavigationService {
     set currentNavigation (nav: Navigation) {
         this.currentNav = nav;
     }
-
 
     private fillChildren(navigation: Navigation): Navigation {
         navigation.compact.forEach((compactNavItem) => {

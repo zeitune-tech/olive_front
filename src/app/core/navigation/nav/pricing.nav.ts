@@ -3,7 +3,7 @@
 import { NavigationItem } from "@lhacksrt/components";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
 
-export const defaultPrincingNavigation: NavigationItem[] = [
+export const defaultPricingNavigation: NavigationItem[] = [
   {
     id: 'exploitation',
     title: 'sidebar.pricing.production',
@@ -114,4 +114,4 @@ export const defaultPrincingNavigation: NavigationItem[] = [
   },
 
 ];
-export const compactPrincingNavigation: NavigationItem[] = [];
+export const compactPricingNavigation: NavigationItem[] = [];
