@@ -24,18 +24,8 @@ export class VariableConditionFormComponent implements OnInit {
       managementEntity: ManagementEntity | undefined;
       fields: Field[] = [];
       availableOperators: { [key: string]: string[] } = {
-          'SELECT_FIELD': ['eq', 'neq'],
-          'NUMERIC_FIELD': ['eq', 'neq', 'lt', 'gt', 'lte', 'gte']
-      };
-
-      // Mapping des opérateurs pour l'affichage
-      operatorTranslationKeys = {
-          'eq': 'EQUALS',
-          'neq': 'NOT_EQUALS',
-          'lt': 'LESS_THAN',
-          'gt': 'GREATER_THAN',
-          'lte': 'LESS_OR_EQUAL',
-          'gte': 'GREATER_OR_EQUAL'
+          'SELECT_FIELD': ['EQUALS', 'NOT_EQUALS'],
+          'NUMERIC_FIELD': ['EQUALS', 'NOT_EQUALS', 'LESS_THAN', 'GREATER_THAN', 'LESS_OR_EQUAL', 'GREATER_OR_EQUAL']
       };
 
       mode: 'create' | 'edit' | 'view' = 'create';
