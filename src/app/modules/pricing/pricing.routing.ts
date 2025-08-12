@@ -38,6 +38,15 @@ export const routes: Routes = [
     },
     loadChildren: () => import('./formula/formula.module').then(m => m.FormulaModule)
   },
+  {
+    path: 'production/pricing-type',
+    canActivate: [],
+    canActivateChild: [],
+    data: {
+      // permission: PERMISSIONS.VIEW_PRICING_FORMULA
+    },
+    loadChildren: () => import('./pricing-type/pricing-type.module').then(m => m.PricingTypeModule)
+  },
 
 ]
 
