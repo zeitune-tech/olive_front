@@ -79,6 +79,18 @@ export class CoverageService {
         );
     }
 
+    // /products/{productUuid}
+    getByProduct(productUuid: string): Observable<Coverage[]> {
+        return this._httpClient.get<Coverage[]>(`${this.baseUrl}/products/${productUuid}`)
+        .pipe(
+            tap((response : Coverage[]) => {
+                this.coverages = response;
+                return response;
+            }),
+            catchError(() => of([] as Coverage[]))
+        );
+    }
+
     update(id: string, coverage: any): Observable<Coverage> {
         return this._httpClient.put<Coverage>(`${this.baseUrl}/${id}`, coverage)
         .pipe(

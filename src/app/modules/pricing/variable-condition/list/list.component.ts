@@ -51,6 +51,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
       private _managementEntityService: ManagementEntityService,
       private _branchService: BranchService,
       private _productService: ProductService,
+      private _coverageService: CoverageService,
       private _dialog: MatDialog,
       private _snackBar: MatSnackBar
   ) {
@@ -234,6 +235,16 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
           if (product) {
               this.selectedProduct = product;
               this.dataSource.paginator = this.paginator;
+              // Recuperer les couvertures associées au produit sélectionné
+              this._coverageService.getByProduct(product.id)
+                  .pipe(takeUntil(this._unsubscribeAll))
+                  .subscribe((coverages: Coverage[]) => {
+                      this.coverages = coverages || [];
+                      // Réinitialiser la sélection de couverture si elle n'existe plus dans la nouvelle liste
+                      if (this.selectedCoverage && !this.coverages.find(c => c.id === this.selectedCoverage?.id)) {
+                          this.selectedCoverage = undefined;
+                      }
+                  });
           }
       })
   }
@@ -241,10 +252,11 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
   coverages: Coverage[] = []
   selectedCoverage: Coverage|undefined;
   openCoverageSelection() {
+    console.log(this.coverages)
     this._dialog.open(SelectDialogComponent, {
       width: '700px',
       data: {
-        displayField: "name",
+        displayField: "nature",
         items: this.coverages,
         title: "coverage-selection.title"
       }
