@@ -55,6 +55,19 @@ export class DurationRateListComponent {
                 return element.product ? element.product.name : '-';
             }
 
+            if (property === 'rate') {
+                return element.rate != null ? `${element.rate}%` : '-';
+            }
+
+            if (property === 'dateEffective') {
+                if (!element.dateEffective) return '-';
+                const date = new Date(element.dateEffective);
+                const dd = String(date.getDate()).padStart(2, '0');
+                const mm = String(date.getMonth() + 1).padStart(2, '0');
+                const yyyy = date.getFullYear();
+                return `${dd}/${mm}/${yyyy}`;
+            }
+            
             return element[property];
         },
     };
