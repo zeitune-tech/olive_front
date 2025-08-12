@@ -25,30 +25,32 @@ import { SelectFieldOptionsService } from "@core/services/pricing/field/select-f
 import { VariableItemService } from "@core/services/pricing/variable-item/variable-item.service";
 import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
 import {FormulaNewComponent} from "./new/new.component";
+import {PricingSharedModule} from "../shared/pricing-shared.module";
 
 @NgModule({
     declarations: [
         FormulaNewComponent,
         FormulaListComponent
     ],
-    imports: [
-        RouterModule.forChild(routes),
-        MatIconModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatMenuModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDividerModule,
-        ReactiveFormsModule,
-        SharedModule,
-        TableModule,
-        MatProgressSpinnerModule,
-    ],
+  imports: [
+    RouterModule.forChild(routes),
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDividerModule,
+    ReactiveFormsModule,
+    SharedModule,
+    TableModule,
+    MatProgressSpinnerModule,
+    PricingSharedModule,
+  ],
     exports: [],
     providers: [
         LayoutService,

@@ -6,6 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { SelectionService } from "./services/selection.service";
 import { SharedModule } from "@shared/shared.module";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -16,7 +17,7 @@ import { SharedModule } from "@shared/shared.module";
       SharedModule,
       MatButtonModule,
       MatIconModule,
-      MatTooltipModule
+      MatTooltipModule,
     ],
     exports: [
       PricingSelectionHeaderComponent

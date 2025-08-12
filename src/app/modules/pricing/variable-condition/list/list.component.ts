@@ -238,8 +238,9 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         disableClose: true,
         data: {
           mode: 'create',
-          product: this.selectedProduct?.id,
-          branch: this.selectedBranch?.id,
+          product: this.selectedProduct!.id,
+          branch: this.selectedBranch!.id,
+          coverage: this.selectedCoverage!.id
         }
 
       }).afterClosed().subscribe((result) => {
