@@ -1933,7 +1933,18 @@
       "new_condition": "Nouvelle condition",
       "caracteristics": "Caractéristiques",
       "caracteristic_list": "Liste des caractéristiques",
-      "new_caracteristic": "Nouvelle caractéristique"
+      "new_caracteristic": "Nouvelle caractéristique",
+      "production": {
+        "title": "Production",
+        "description": "Gestion de la production et des tarifs",
+        "parameters": "Paramétrage",
+        "pricing": "Tarification",
+        "pricing_type": "Types de tarification"
+      },
+      "sinister": {
+        "title": "Sinistres",
+        "description": "Gestion de la tarification des sinistres"
+      }
     },
     "attestations": {
       "stock-central": {
@@ -2042,7 +2053,7 @@
       "removeVehicle": "Supprimer le véhicule",
       "addInsured": "Ajouter un assuré",
       "removeInsured": "Supprimer l'assuré",
-      "addCoverage": "Ajouter une garantie",
+      "addCoverage": "Ajouter un garantie",
       "removeCoverage": "Supprimer la garantie"
     },
     "numeric-field": {

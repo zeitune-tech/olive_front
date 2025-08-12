@@ -5,8 +5,8 @@ import { PERMISSIONS } from "@core/permissions/permissions.data";
 
 export const defaultPricingNavigation: NavigationItem[] = [
   {
-    id: 'exploitation',
-    title: 'sidebar.pricing.production',
+    id: 'production',
+    title: 'sidebar.pricing.production.title',
     type: 'collapsable',
     icon: 'fluent:people-team',
     link: '/pricing/production',
@@ -113,7 +113,7 @@ export const defaultPricingNavigation: NavigationItem[] = [
       },
       {
         id: 'pricing',
-        title: 'sidebar.production.pricing',
+        title: 'sidebar.pricing.production.pricing',
         type: 'collapsable',
         icon: 'fluent:people-team',
         link: '/pricing/production/pricing',
@@ -134,10 +134,10 @@ export const defaultPricingNavigation: NavigationItem[] = [
   },
   {
     id: 'sinister',
-    title: 'sidebar.pricing.sinister',
-    type: 'basic',
+    title: 'sidebar.pricing.sinister.title',
+    type: 'collapsable',
     icon: 'fluent:people-team',
-    link: '/pricing/sinister/constants',
+    link: '/pricing/sinister',
     // permission: PERMISSIONS.VIEW_PRICING_CONSTANTS,
     children: []
   },
