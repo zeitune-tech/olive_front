@@ -53,12 +53,12 @@ export class AccessoriesListComponent {
                 return element.actType?.name;
             }
 
-            if (property === 'effectiveDate') {
-                const day = element.day || '';
-                const hour = element.hour?.toString().padStart(2, '0') || '00';
-                const minute = element.minute?.toString().padStart(2, '0') || '00';
+            if (property === 'dateEffective') {
+                return this.formatDateDMY(element.dateEffective);
+            }
 
-                return day ? `${day} ${hour}:${minute}` : '';
+            if (property === 'effectiveDate') {
+                return this.formatDayHourMinute(element.day, element.hour, element.minute);
             }
             
             return element[property];
@@ -134,5 +134,28 @@ export class AccessoriesListComponent {
 
     trackByProperty(index: number, column: TableColumn<Accessory>) {
         return column.property;
+    }
+
+    // ---------- helpers format ----------
+    private pad2(n: number | undefined): string {
+        return String(n ?? 0).padStart(2, '0');
+    }
+
+    private toDate(value: any): Date | null {
+        if (!value) return null;
+        const d = value instanceof Date ? value : new Date(value);
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    private formatDateDMY(value: any): string {
+        const d = this.toDate(value);
+        if (!d) return '';
+        return `${this.pad2(d.getDate())}/${this.pad2(d.getMonth() + 1)}/${d.getFullYear()}`;
+    }
+
+    private formatDayHourMinute(day: any, hour?: number, minute?: number): string {
+        const d = this.toDate(day);
+        if (!d) return '';
+        return `le ${this.pad2(d.getDate())}/${this.pad2(d.getMonth() + 1)}/${d.getFullYear()} à ${this.pad2(hour)}:${this.pad2(minute)}`;
     }
 }
