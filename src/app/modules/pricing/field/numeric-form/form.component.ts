@@ -49,7 +49,7 @@ export class NumericFieldFormComponent implements OnInit {
         this.formGroup = this.fb.group({
               label: [this.data.label || '', Validators.required],
               description: [this.data.description || '', Validators.required],
-              variableName: [this.data.variableName || '', Validators.required],
+              variableName: [{ value: this.data.variableName || '', disabled: true }, Validators.required],
               toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
         });
 
@@ -82,7 +82,6 @@ export class NumericFieldFormComponent implements OnInit {
 
         const formData = {
             ...this.formGroup.getRawValue(), // Utiliser getRawValue() au lieu de value
-            managementEntity: this.managementEntity?.id,
             product: this.data.product,
             branch: this.data.branch,
             type: FieldType.NUMBER, // Assuming this is a numeric field
