@@ -1,39 +1,37 @@
-import { SelectionModel } from "@angular/cdk/collections";
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { UntypedFormControl } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { PERMISSIONS } from "@core/permissions/permissions.data";
-import { PermissionsService } from "@core/permissions/permissions.service";
-import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
-import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
-import { Product } from "@core/services/settings/product/product.interface";
-import { ProductService } from "@core/services/settings/product/product.service";
-import { animations } from "@lhacksrt/animations";
-import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
-import { Subject, takeUntil } from "rxjs";
-import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
+import {SelectionModel} from "@angular/cdk/collections";
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {UntypedFormControl} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
+import {PERMISSIONS} from "@core/permissions/permissions.data";
+import {PermissionsService} from "@core/permissions/permissions.service";
+import {ManagementEntityService} from "@core/services/administration/management-entity/management-entity.service";
+import {Product} from "@core/services/settings/product/product.interface";
+import {ProductService} from "@core/services/settings/product/product.service";
+import {animations} from "@lhacksrt/animations";
+import {TableColumn, TableOptions} from "@lhacksrt/components/table/table.interface";
+import {Subject, takeUntil} from "rxjs";
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
-import { VariableConditionFormComponent } from "../form/form.component";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { VariableCondition } from "@core/services/pricing/variable-condition/variable-condition.interface";
-import { VariableConditionService } from "@core/services/pricing/variable-condition/variable-condition.service";
+import {VariableConditionFormComponent} from "../form/form.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.interface";
+import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
 import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-delete.component";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
+import {SelectionService} from "../../shared/services/selection.service";
 
 @Component({
-    selector: "app-variable-condition-list",
-    templateUrl: "./list.component.html",
-    animations: animations
+  selector: "app-variable-condition-list",
+  templateUrl: "./list.component.html",
+  animations: animations
 })
 export class VariableConditionListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-
   tableOptions!: TableOptions<VariableCondition>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
@@ -41,21 +39,30 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
   groupHeader: string[] = [];
   subHeader: string[] = [];
   visibleColumns: string[] = [];
-  branches: Branch[] = [];
 
   dataSource = new MatTableDataSource<VariableCondition>([]); // Ajoute les données réelles ici
 
   constructor(
-      private _VariableConditionService: VariableConditionService,
-      private _permissionService: PermissionsService,
-      private _managementEntityService: ManagementEntityService,
-      private _branchService: BranchService,
-      private _productService: ProductService,
-      private _coverageService: CoverageService,
-      private _dialog: MatDialog,
-      private _snackBar: MatSnackBar
+    private _variableConditionService: VariableConditionService,
+    private _permissionService: PermissionsService,
+    private _managementEntityService: ManagementEntityService,
+    private _branchService: BranchService,
+    private _productService: ProductService,
+    private _coverageService: CoverageService,
+    private _selectionService: SelectionService,
+    private _dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {
   }
+
+  branches: Branch[] = [];
+  selectedBranch: Branch | undefined;
+
+  products: Product[] = []
+  selectedProduct: Product | undefined;
+
+  coverages: Coverage[] = []
+  selectedCoverage: Coverage | undefined;
 
   data: VariableCondition[] = [];
 
@@ -65,49 +72,65 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
   selection = new SelectionModel<VariableCondition>(true, []);
   searchInputControl: UntypedFormControl = new UntypedFormControl();
 
-  managementEntity: ManagementEntity = new ManagementEntity({});
-
   loadValues() {
+    // Initialiser les branches
+    this._branchService.branches$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data: Branch[]) => {
+        this.branches = data || [];
+      });
+
     // Initialiser les produits
-    this._productService.getAll()
+    this._productService.products$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: Product[]) => {
         this.products = data || [];
       });
 
-    this._productService.products$
+    // S'abonner aux changements de sélection
+    this._selectionService.selectedBranch$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Product[]) => {
-        this.products = data;
+      .subscribe(branch => {
+        this.selectedBranch = branch;
+        if (branch) {
+          this._productService.getByBranchOrAll(branch.id)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe();
+        }
       });
 
-    this._VariableConditionService.getAll()
+    this._selectionService.selectedProduct$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(product => {
+        this.selectedProduct = product;
+        if (product) {
+          this._coverageService.getByProduct(product.id)
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((coverages: Coverage[]) => {
+              this.coverages = coverages || [];
+            });
+        }
+      });
+
+    this._selectionService.selectedCoverage$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(coverage => {
+        this.selectedCoverage = coverage;
+      });
+
+    this._variableConditionService.getAll()
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: any) => {
         this.data = data?.content || [];
         this.dataSource.data = data?.content || [];
-        console.log('VariableConditions loaded:', data);
       });
 
-    this._VariableConditionService.variableConditions$
+    this._variableConditionService.variableConditions$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: VariableCondition[]) => {
         this.data = data;
         this.dataSource.data = data;
       });
-
-    this._managementEntityService.entity$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: ManagementEntity) => {
-        this.managementEntity = data;
-      });
-
-    this._branchService.branches$.subscribe(branches => {
-      this.branches = branches;
-    });
-
-
-
   }
 
   buildHeaderRows(): void {
@@ -139,32 +162,36 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     this.loadValues();
     // Initialisation de la configuration de la table
     this.tableOptions = {
-        title: '',
-        columns: [
-            { label: 'entities.variable-condition.fields.label', property: 'label', type: 'text', visible: true },
-            { label: 'entities.variable-condition.fields.description', property: 'description', type: 'text', visible: true },
-            { label: 'entities.variable-condition.fields.variableName', property: 'variableName', type: 'text', visible: true },
-            { label: 'entities.variable-condition.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
-            { label: 'entities.variable-condition.fields.branch', property: 'branch', type: 'text', visible: true },
-            { label: 'entities.variable-condition.fields.product', property: 'product', type: 'text', visible: true },
-        ],
-        pageSize: 8,
-        pageSizeOptions: [5, 6, 8],
-        actions: [
-        ],
-        renderItem: (element: VariableCondition, property: keyof VariableCondition) => {
-            if (property === 'toReturn') {
-                return element.toReturn ? 'Oui' : 'Non';
-            }
-            if (property === 'branch') {
-                return this.branches.find(b => b.id === element.branch)?.name ?? '--';
-            }
-            if (property === 'product') {
-                return this.products.find(p => p.id === element.product)?.name ?? '--';
-            }
-            //   return element.branch ? element.branch.name : '--';
-            return element[property] ?? '--';
+      title: '',
+      columns: [
+        {label: 'entities.variable-condition.fields.label', property: 'label', type: 'text', visible: true},
+        {label: 'entities.variable-condition.fields.description', property: 'description', type: 'text', visible: true},
+        {
+          label: 'entities.variable-condition.fields.variableName',
+          property: 'variableName',
+          type: 'text',
+          visible: true
         },
+        {label: 'entities.variable-condition.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
+        {label: 'entities.variable-condition.fields.branch', property: 'branch', type: 'text', visible: true},
+        {label: 'entities.variable-condition.fields.product', property: 'product', type: 'text', visible: true},
+      ],
+      pageSize: 8,
+      pageSizeOptions: [5, 6, 8],
+      actions: [],
+      renderItem: (element: VariableCondition, property: keyof VariableCondition) => {
+        if (property === 'toReturn') {
+          return element.toReturn ? 'Oui' : 'Non';
+        }
+        if (property === 'branch') {
+          return this.branches.find(b => b.id === element.branch)?.name ?? '--';
+        }
+        if (property === 'product') {
+          return this.products.find(p => p.id === element.product)?.name ?? '--';
+        }
+        //   return element.branch ? element.branch.name : '--';
+        return element[property] ?? '--';
+      },
     };
     // Construction des lignes d’en-tête
     this.buildHeaderRows();
@@ -183,117 +210,44 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     this._unsubscribeAll.complete();
   }
 
-
-  selectedBranch: Branch|undefined;
-  clearBranchSelection(): void {
-    this.selectedBranch = undefined;
-    this.selectedProduct = undefined;
-    // Recharger tous les produits
-    this._productService.getAll()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((products: Product[]) => {
-        this.products = products || [];
-      });
-  }
-  openBranchSelection() {
-      this._dialog.open(SelectDialogComponent, {
-          width: '700px',
-          data: {
-              displayField: "name",
-              items: this.branches,
-              title: "branch-selection.title"
-          }
-      }).afterClosed().subscribe((branch: Branch) => {
-          if (branch) {
-              this.selectedBranch = branch;
-              // Filtrer les produits par branche sélectionnée
-              this._productService.getByBranchOrAll(branch.id)
-                  .pipe(takeUntil(this._unsubscribeAll))
-                  .subscribe((products: Product[]) => {
-                      this.products = products || [];
-                      // Réinitialiser la sélection de produit si elle n'existe plus dans la nouvelle liste
-                      if (this.selectedProduct && !this.products.find(p => p.id === this.selectedProduct?.id)) {
-                          this.selectedProduct = undefined;
-                      }
-                  });
-          }
-      })
-  }
-
-
-  products: Product[] = []
-  selectedProduct: Product|undefined;
-  openProductSelection() {
-      this._dialog.open(SelectDialogComponent, {
-          width: '700px',
-          data: {
-              displayField: "name",
-              items: this.products,
-              title: "product-selection.title"
-          }
-      }).afterClosed().subscribe((product: Product) => {
-          if (product) {
-              this.selectedProduct = product;
-              this.dataSource.paginator = this.paginator;
-              // Recuperer les couvertures associées au produit sélectionné
-              this._coverageService.getByProduct(product.id)
-                  .pipe(takeUntil(this._unsubscribeAll))
-                  .subscribe((coverages: Coverage[]) => {
-                      this.coverages = coverages || [];
-                      // Réinitialiser la sélection de couverture si elle n'existe plus dans la nouvelle liste
-                      if (this.selectedCoverage && !this.coverages.find(c => c.id === this.selectedCoverage?.id)) {
-                          this.selectedCoverage = undefined;
-                      }
-                  });
-          }
-      })
-  }
-
-  coverages: Coverage[] = []
-  selectedCoverage: Coverage|undefined;
-  openCoverageSelection() {
-    console.log(this.coverages)
-    this._dialog.open(SelectDialogComponent, {
-      width: '700px',
-      data: {
-        displayField: "nature",
-        items: this.coverages,
-        title: "coverage-selection.title"
+  doIfHasAllSelections(
+    action: () => void
+  ): any {
+    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product', 'coverage']);
+    if (!hasAllSelections.value) {
+      switch (hasAllSelections.missing[0]) {
+        case 'branch':
+          this._snackBar.open("entities.selection.branch.incomplete", "close", {duration: 3000});
+          break;
+        case 'product':
+          this._snackBar.open("entities.selection.product.incomplete", "close", {duration: 3000});
+          break;
+        case 'coverage':
+          this._snackBar.open("entities.selection.coverage.incomplete", "close", {duration: 3000});
+          break;
       }
-    }).afterClosed().subscribe((coverage: Coverage) => {
-      if (coverage) {
-        this.selectedCoverage = coverage;
-        this.dataSource.paginator = this.paginator;
-      }
-    })
+      return;
+    }
+    action();
   }
 
   onAdd(): void {
-
-      if (!this.selectedBranch) {
-          this._snackBar.open("entities.branch-selection.not-select-error-title", "close", { duration: 3000 });
-          return;
-      }
-
-      if (!this.selectedProduct) {
-          this._snackBar.open("entities.product-selection.not-select-error-title", "", { duration: 3000 });
-          return;
-      }
-
+    this.doIfHasAllSelections(() => {
       this._dialog.open(VariableConditionFormComponent, {
-          width: '800px',
-          disableClose: true,
-          data: {
-              mode: 'create',
-              product: this.selectedProduct?.id,
-              branch: this.selectedBranch?.id,
-          }
+        width: '800px',
+        disableClose: true,
+        data: {
+          mode: 'create',
+          product: this.selectedProduct?.id,
+          branch: this.selectedBranch?.id,
+        }
 
       }).afterClosed().subscribe((result) => {
-          if (result) {
-              this._VariableConditionService.getAll().subscribe();
-          }
+        if (result) {
+          this._variableConditionService.getAll().subscribe();
+        }
       });
+    });
   }
 
   onDelete(VariableCondition: VariableCondition): void {
@@ -307,10 +261,13 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
       }
     }).afterClosed().subscribe((confirmed) => {
       if (confirmed) {
-        this._VariableConditionService.delete(VariableCondition.id).subscribe({
+        this._variableConditionService.delete(VariableCondition.id).subscribe({
           next: () => {
-            this._snackBar.open('entities.constant.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
-            this._VariableConditionService.getAll().subscribe(() => {
+            this._snackBar.open('entities.constant.delete.success', '', {
+              duration: 3000,
+              panelClass: 'snackbar-success'
+            });
+            this._variableConditionService.getAll().subscribe(() => {
               // Réappliquer le filtre après le rechargement des données
               if (this.searchCtrl.value) {
                 //this.applyFilter(this.searchCtrl.value);
@@ -318,7 +275,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
             });
           },
           error: () => {
-            this._snackBar.open('entities.constant.delete.error', '', { duration: 3000, panelClass: 'snackbar-error' });
+            this._snackBar.open('entities.constant.delete.error', '', {duration: 3000, panelClass: 'snackbar-error'});
           }
         });
       }
@@ -329,51 +286,51 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
    * Edit VariableCondition
    */
   onEdit(VariableCondition: VariableCondition): void {
-      this._dialog.open(VariableConditionFormComponent, {
-          width: '800px',
-          disableClose: true,
-          data: {
-              mode: 'edit',
-              ...VariableCondition
-          }
-      }).afterClosed().subscribe((result) => {
-          if (result) {
-              this._VariableConditionService.getAll().subscribe();
-          }
-      });
+    this._dialog.open(VariableConditionFormComponent, {
+      width: '800px',
+      disableClose: true,
+      data: {
+        mode: 'edit',
+        ...VariableCondition
+      }
+    }).afterClosed().subscribe((result) => {
+      if (result) {
+        this._variableConditionService.getAll().subscribe();
+      }
+    });
   }
 
   onView(variableCondition: VariableCondition): void {
-      // Ouvrir le formulaire en mode lecture seule pour voir les détails
-      this._dialog.open(VariableConditionFormComponent, {
-          width: '800px',
-          disableClose: false,
-          data: {
-              mode: 'view',
-              ...variableCondition
-          }
-      });
+    // Ouvrir le formulaire en mode lecture seule pour voir les détails
+    this._dialog.open(VariableConditionFormComponent, {
+      width: '800px',
+      disableClose: false,
+      data: {
+        mode: 'view',
+        ...variableCondition
+      }
+    });
   }
 
   onButtonClick(product: Product, column: string): void {
-      if (column === 'productionRegistry') {
-          alert('Production Registry button clicked for product: ' + product.name);
-      }
+    if (column === 'productionRegistry') {
+      alert('Production Registry button clicked for product: ' + product.name);
+    }
   }
 
-  hasPermission(product: Product): boolean {
-      let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-      if (!hasPerm) {
-          return false;
-      } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-          return true;
-      } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-          return true;
-      } else
-          return false;
-  }
+  // hasPermission(product: Product): boolean {
+  //     let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
+  //     if (!hasPerm) {
+  //         return false;
+  //     } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
+  //         return true;
+  //     } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
+  //         return true;
+  //     } else
+  //         return false;
+  // }
 
   trackByProperty(index: number, column: TableColumn<VariableCondition>) {
-      return column.property;
+    return column.property;
   }
 }
