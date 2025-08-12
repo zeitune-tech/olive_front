@@ -22,6 +22,7 @@ import { VariableConditionFormComponent } from "./form/form.component";
 import { FieldService } from "@core/services/pricing/field/field.service";
 import { RuleService } from "@core/services/pricing/variable-condition/rule/rule.service";
 import { ConditionService } from "@core/services/pricing/variable-condition/conditions/condition.service";
+import {PricingSharedModule} from "../shared/pricing-shared.module";
 
 @NgModule({
     declarations: [
@@ -30,24 +31,22 @@ import { ConditionService } from "@core/services/pricing/variable-condition/cond
     ],
     imports: [
         RouterModule.forChild(routes),
-        MatIconModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatMenuModule,
-        MatTooltipModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDividerModule,
-        ReactiveFormsModule,
         SharedModule,
-        TableModule,
-        MatProgressSpinnerModule,
-        MatDividerModule,
+        MatButtonModule,
         MatDialogModule,
-        MatDialogActions
+        MatDividerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSelectModule,
+        MatTableModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        TableModule,
+        PricingSharedModule
     ],
     exports: [],
     providers: [

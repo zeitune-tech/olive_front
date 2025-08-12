@@ -8,45 +8,43 @@ import { MatTableDataSource } from "@angular/material/table";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
 import { PermissionsService } from "@core/permissions/permissions.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
-import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 import { Product } from "@core/services/settings/product/product.interface";
 import { ProductService } from "@core/services/settings/product/product.service";
 import { animations } from "@lhacksrt/animations";
 import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.interface";
 import { Subject, takeUntil } from "rxjs";
-import { SelectDialogComponent } from "@shared/components/select-dialog/select-dialog.component";
-import { Constant } from "@core/services/pricing/constant/constant.interface";
 import { ConstantService } from "@core/services/pricing/constant/constant.service";
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
-import { ConstantFormComponent } from "../form/form.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 import {SelectionService} from "../../shared/services/selection.service";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
-import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.interface";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
+import {PricingTypeFormComponent} from "../form/form.component";
+import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
+import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
 
 @Component({
     selector: "app-constant-list",
     templateUrl: "./list.component.html",
     animations: animations
 })
-export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    tableOptions!: TableOptions<Constant>;
+    tableOptions!: TableOptions<PricingType>;
 
     // Pour les mat-header-row
     groupHeader: string[] = [];
     subHeader: string[] = [];
     visibleColumns: string[] = [];
 
-    dataSource = new MatTableDataSource<Constant>([]); // Ajoute les données réelles ici
+    dataSource = new MatTableDataSource<PricingType>([]); // Ajoute les données réelles ici
 
     constructor(
-        private _constantService: ConstantService,
+        private _pricingTypeService: PricingTypeService,
         private _productService: ProductService,
         private _permissionService: PermissionsService,
         private _coverageService: CoverageService,
@@ -64,18 +62,18 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedProduct: Product|undefined;
   coverages: Coverage[] = [];
   selectedCoverage: Coverage|undefined;
-  data: Constant[] = [];
+  data: PricingType[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  selection = new SelectionModel<Constant>(true, []);
+  selection = new SelectionModel<PricingType>(true, []);
   searchInputControl: UntypedFormControl = new UntypedFormControl();
   managementEntity: ManagementEntity = new ManagementEntity({});
 
 
   doResolve () {
-    this._constantService.getAll()
+    this._pricingTypeService.getAll()
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe();
   }
@@ -166,9 +164,9 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
     // Charger les données des constantes
-    this._constantService.constants$
+    this._pricingTypeService.pricingTypes$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Constant[]) => {
+      .subscribe((data: PricingType[]) => {
         this.data = data;
         this.dataSource.data = data;
         // Appliquer le filtre actuel après le chargement des données
@@ -181,21 +179,15 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tableOptions = {
         title: '',
         columns: [
-          { label: 'entities.constant.fields.label', property: 'label', type: 'text', visible: true },
-          { label: 'entities.constant.fields.description', property: 'description', type: 'text', visible: true },
-          { label: 'entities.constant.fields.variableName', property: 'variableName', type: 'text', visible: true },
-          { label: 'entities.constant.fields.toReturn', property: 'toReturn', type: 'text', visible: true },
-          { label: 'entities.constant.fields.branch', property: 'branch', type: 'text', visible: true },
-          { label: 'entities.constant.fields.product', property: 'product', type: 'text', visible: true },
-          { label: 'entities.constant.fields.value', property: 'value', type: 'text', visible: true },
+          { label: 'entities.pricing-type.fields.name', property: 'name', type: 'text', visible: true },
+          { label: 'entities.pricing-type.fields.description', property: 'description', type: 'text', visible: true },
+          { label: 'entities.pricing-type.fields.branch', property: 'branch', type: 'text', visible: true },
+          { label: 'entities.pricing-type.fields.product', property: 'product', type: 'text', visible: true },
         ],
         pageSize: 8,
         pageSizeOptions: [5, 6, 8],
         actions: [],
-        renderItem: (element: Constant, property: keyof Constant) => {
-          if (property === 'toReturn') {
-              return element.toReturn ? 'Oui' : 'Non';
-          }
+        renderItem: (element: PricingType, property: keyof PricingType) => {
           if (property === 'branch') {
                 return this.branches.find(b => b.id === element.branch)?.name ?? '--';
           }
@@ -216,15 +208,15 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
             this.dataSource.sort = this.sort;
 
             // Configuration du filtre personnalisé
-            this.dataSource.filterPredicate = (data: Constant, filter: string) => {
+            this.dataSource.filterPredicate = (data: PricingType, filter: string) => {
                 const searchText = filter.toLowerCase();
 
                 // Recherche dans les propriétés de base
                 const basicSearch = (
-                    (data.label?.toLowerCase() || '').includes(searchText) ||
+                    (data.name?.toLowerCase() || '').includes(searchText) ||
                     (data.description?.toLowerCase() || '').includes(searchText) ||
-                    (data.variableName?.toLowerCase() || '').includes(searchText) ||
-                    (data.value?.toString().toLowerCase() || '').includes(searchText)
+                    (data.product?.toLowerCase() || '').includes(searchText)
+                    // (data.value?.toString().toLowerCase() || '').includes(searchText)
                 );
 
                 // Recherche dans le nom de la branche
@@ -235,11 +227,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
                 const productName = this.products.find(p => p.id === data.product)?.name?.toLowerCase() || '';
                 const productSearch = productName.includes(searchText);
 
-                // Recherche dans la valeur booléenne toReturn
-                const toReturnText = data.toReturn ? 'oui' : 'non';
-                const toReturnSearch = toReturnText.includes(searchText);
-
-                return basicSearch || branchSearch || productSearch || toReturnSearch;
+                return basicSearch || branchSearch || productSearch;
             };
         }
     }
@@ -294,7 +282,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   onAdd(): void {
 
     this.doIfHasAllSelections(() => {
-      this._dialog.open(ConstantFormComponent, {
+      this._dialog.open(PricingTypeFormComponent, {
         width: '600px',
         disableClose: true,
         data: {
@@ -304,7 +292,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }).afterClosed().subscribe((result) => {
         if (result) {
-          this._constantService.getAll().subscribe(() => {
+          this._pricingTypeService.getAll().subscribe(() => {
             // Réappliquer le filtre après le rechargement des données
             if (this.searchCtrl.value) {
               this.applyFilter(this.searchCtrl.value);
@@ -316,29 +304,41 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  onDelete(constant: Constant): void {
+  onDelete(pricingType: PricingType): void {
     this._dialog.open(ConfirmDeleteComponent, {
         width: '400px',
         data: {
-            title: 'entities.constant.delete.title',
-            message: 'entities.constant.delete.message',
+            title: 'entities.pricing-type.delete.title',
+            message: 'entities.pricing-type.delete.message',
             confirmButtonText: 'actions.delete',
             cancelButtonText: 'actions.cancel'
         }
     }).afterClosed().subscribe((confirmed) => {
         if (confirmed) {
-            this._constantService.delete(constant.id).subscribe({
+            this._pricingTypeService.delete(pricingType.id).subscribe({
                 next: () => {
-                    this._snackBar.open('entities.constant.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
-                    this._constantService.getAll().subscribe(() => {
-                        // Réappliquer le filtre après le rechargement des données
-                        if (this.searchCtrl.value) {
-                            this.applyFilter(this.searchCtrl.value);
-                        }
-                    });
+                    this._snackBar.open('entities.pricing-type.delete.success', '', { duration: 3000, panelClass: 'snackbar-success' });
+                    // Recharger les données après la suppression
+                    this._pricingTypeService.pricingTypes$
+                      .pipe()
+                      .subscribe((data: PricingType[]) => {
+                          this.data = data;
+                          this.dataSource.data = data;
+                          // Appliquer le filtre actuel après le rechargement des données
+                          if (this.searchCtrl.value) {
+                              this.applyFilter(this.searchCtrl.value);
+                          }
+                      });
+
+                    // this._pricingTypeService.getAll().subscribe(() => {
+                    //     // Réappliquer le filtre après le rechargement des données
+                    //     if (this.searchCtrl.value) {
+                    //         this.applyFilter(this.searchCtrl.value);
+                    //     }
+                    // });
                 },
                 error: () => {
-                    this._snackBar.open('entities.constant.delete.error', '', { duration: 3000, panelClass: 'snackbar-error' });
+                    this._snackBar.open('entities.pricing-type.delete.error', '', { duration: 3000, panelClass: 'snackbar-error' });
                 }
             });
         }
@@ -349,17 +349,17 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
   * Edit Constant
   */
-  onEdit(constant: Constant): void {
-      this._dialog.open(ConstantFormComponent, {
+  onEdit(pricingType: PricingType): void {
+      this._dialog.open(PricingTypeFormComponent, {
           width: '600px',
           disableClose: true,
           data: {
               mode: 'edit',
-              ...constant
+              ...pricingType
           }
       }).afterClosed().subscribe((result) => {
           if (result) {
-              this._constantService.getAll().subscribe(() => {
+              this._pricingTypeService.getAll().subscribe(() => {
                   // Réappliquer le filtre après le rechargement des données
                   if (this.searchCtrl.value) {
                       this.applyFilter(this.searchCtrl.value);
@@ -370,7 +370,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  onView(constant: Constant): void {
+  onView(constant: PricingType): void {
       //this._router.navigate(['/administration/products/list']);
   }
 
@@ -393,7 +393,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  trackByProperty(index: number, column: TableColumn<Constant>) {
+  trackByProperty(index: number, column: TableColumn<PricingType>) {
       return column.property;
   }
 }

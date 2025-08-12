@@ -1918,11 +1918,11 @@
     },
     "pricing": {
       "title": "Tarification",
-      "formula": "Formule",
+      "formula": "Rubriques / Formules",
       "formula_create": "Créer une formule",
-      "formula_list": "Liste des formules",
+      "formula_list": "Liste des rubriques / formules",
       "variable_condition": "Variables conditionnées",
-      "field": "Champs",
+      "field": "Charactéristiques",
       "field_list": "Liste des champs",
       "select_field": "Champs de sélection",
       "select_field_option": "Options de champs de sélection",
@@ -1933,7 +1933,18 @@
       "new_condition": "Nouvelle condition",
       "caracteristics": "Caractéristiques",
       "caracteristic_list": "Liste des caractéristiques",
-      "new_caracteristic": "Nouvelle caractéristique"
+      "new_caracteristic": "Nouvelle caractéristique",
+      "production": {
+        "title": "Production",
+        "description": "Gestion de la production et des tarifs",
+        "parameters": "Paramétrage",
+        "pricing": "Tarification",
+        "pricing_type": "Types de tarification"
+      },
+      "sinister": {
+        "title": "Sinistres",
+        "description": "Gestion de la tarification des sinistres"
+      }
     },
     "attestations": {
       "stock-central": {
@@ -2042,7 +2053,7 @@
       "removeVehicle": "Supprimer le véhicule",
       "addInsured": "Ajouter un assuré",
       "removeInsured": "Supprimer l'assuré",
-      "addCoverage": "Ajouter une garantie",
+      "addCoverage": "Ajouter un garantie",
       "removeCoverage": "Supprimer la garantie"
     },
     "numeric-field": {

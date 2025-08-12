@@ -3,7 +3,7 @@ import {SharedModule} from "@shared/shared.module";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {RouterModule} from "@angular/router";
-import {routes} from "./constants.routing";
+import {routes} from "./pricing-type.routing";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -17,19 +17,16 @@ import {MatTableModule} from "@angular/material/table";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {TableModule} from "@lhacksrt/components/table/table.module";
 import {LayoutService} from "./layout.service";
-import {ConstantListComponent} from "./list/list.component";
 import {ConstantService} from "@core/services/pricing/constant/constant.service";
-import {Constant} from "@core/services/pricing/constant/constant.interface";
-import {ConstantFormComponent} from "./form/form.component";
-import {
-  PricingSelectionHeaderComponent
-} from "../shared/components/selection-header/pricing-selection-header.component";
 import {PricingSharedModule} from "../shared/pricing-shared.module";
+import {PricingTypeFormComponent} from "./form/form.component";
+import {PricingTypeListComponent} from "./list/list.component";
+import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
 
 @NgModule({
   declarations: [
-    ConstantListComponent,
-    ConstantFormComponent,
+    PricingTypeListComponent,
+    PricingTypeFormComponent,
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -54,10 +51,10 @@ import {PricingSharedModule} from "../shared/pricing-shared.module";
   exports: [],
   providers: [
     LayoutService,
-    ConstantService
+    PricingTypeService
   ]
 })
-export class ConstantsModule {
+export class PricingTypeModule {
   constructor() {
     // Module initialization logic can go here
   }

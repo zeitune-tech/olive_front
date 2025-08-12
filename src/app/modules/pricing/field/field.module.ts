@@ -23,6 +23,7 @@ import { SelectFieldOptionsService } from "@core/services/pricing/field/select-f
 import { NumericFieldFormComponent } from "./numeric-form/form.component";
 import { SelectFieldFormComponent } from "./select-form/form.component";
 import { SelectFieldOptionValueService } from "@core/services/pricing/field/select-field-option-value/select-field-option-value.service";
+import {PricingSharedModule} from "../shared/pricing-shared.module";
 
 @NgModule({
     declarations: [
@@ -49,7 +50,8 @@ import { SelectFieldOptionValueService } from "@core/services/pricing/field/sele
         MatDividerModule,
         MatDialogModule,
         MatDialogActions,
-        MatFormFieldModule
+        MatFormFieldModule,
+        PricingSharedModule
     ],
     exports: [],
     providers: [

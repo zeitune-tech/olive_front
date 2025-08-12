@@ -2,9 +2,11 @@ import {VariableItem} from "@core/services/pricing/variable-item/variable-item.i
 import { Rule } from "./rule/rule.interface";
 
 export class VariableCondition extends VariableItem {
+
     /**
      * Properties of the variable condition
      */
+    coverage: string;
     rules: Rule[];
 
     /**
@@ -14,5 +16,6 @@ export class VariableCondition extends VariableItem {
     constructor(response: any) {
         super(response);
         this.rules = response?.rules ?? [];
+        this.coverage = response?.coverage ?? '';
     }
 }

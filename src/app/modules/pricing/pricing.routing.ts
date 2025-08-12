@@ -2,59 +2,51 @@ import { Routes } from "@angular/router";
 import { PERMISSIONS } from "@core/permissions/permissions.data";
 
 export const routes: Routes = [
-    {
-        path: 'formula',
-        canActivate: [],
-        canActivateChild: [],
-        data: {
-            // permission: PERMISSIONS.VIEW_PRICING_FORMULA
-        },
-        loadChildren: () => import('./formula/formula.module').then(m => m.FormulaModule)
+  {
+    path: 'production/parameters/constants',
+    canActivate: [],
+    canActivateChild: [],
+    data: {
+      // permission: PERMISSIONS.VIEW_PRICING_CONSTANTS
     },
-    {
-      path: 'variable-conditions',
-      canActivate: [],
-      canActivateChild: [],
-      data: {
-        // permission: PERMISSIONS.VIEW_PRICING_FORMULA
-      },
-      loadChildren: () => import('./variable-condition/variable-condition.module').then(m => m.VariableConditionModule)
+    loadChildren: () => import('./constants/constants.module').then(m => m.ConstantsModule)
+  },
+  {
+    path: 'production/parameters/fields',
+    canActivate: [],
+    canActivateChild: [],
+    data: {
+      // permission: PERMISSIONS.VIEW_PRICING_FORMULA
     },
-    {
-      path: 'fields',
-      canActivate: [],
-      canActivateChild: [],
-      data: {
-        // permission: PERMISSIONS.VIEW_PRICING_FORMULA
-      },
-      loadChildren: () => import('./field/field.module').then(m => m.FieldModule)
+    loadChildren: () => import('./field/field.module').then(m => m.FieldModule)
+  },
+  {
+    path: 'production/parameters/variable-conditions',
+    canActivate: [],
+    canActivateChild: [],
+    data: {
+      // permission: PERMISSIONS.VIEW_PRICING_FORMULA
     },
-    {
-        path: 'constants',
-        canActivate: [],
-        canActivateChild: [],
-        data: {
-            // permission: PERMISSIONS.VIEW_PRICING_CONSTANTS
-        },
-        loadChildren: () => import('./constants/constants.module').then(m => m.ConstantsModule)
+    loadChildren: () => import('./variable-condition/variable-condition.module').then(m => m.VariableConditionModule)
+  },
+  {
+    path: 'production/parameters/formula',
+    canActivate: [],
+    canActivateChild: [],
+    data: {
+      // permission: PERMISSIONS.VIEW_PRICING_FORMULA
     },
-    // {
-    //     path: 'caracteristics',
-    //     canActivate: [],
-    //     canActivateChild: [],
-    //     data: {
-    //         // permission: PERMISSIONS.VIEW_PRICING_CARACTERISTICS
-    //     },
-    //     loadChildren: () => import('./caracteristics/caracteristics.module').then(m => m.CaracteristicsModule)
-    // },
-    // {
-    //     path: 'conditions',
-    //     canActivate: [],
-    //     canActivateChild: [],
-    //     data: {
-    //         // permission: PERMISSIONS.VIEW_PRICING_CONDITIONS
-    //     },
-    //     loadChildren: () => import('./conditions/conditions.module').then(m => m.VariableConditionModule)
-    // }
+    loadChildren: () => import('./formula/formula.module').then(m => m.FormulaModule)
+  },
+  {
+    path: 'production/pricing-type',
+    canActivate: [],
+    canActivateChild: [],
+    data: {
+      // permission: PERMISSIONS.VIEW_PRICING_FORMULA
+    },
+    loadChildren: () => import('./pricing-type/pricing-type.module').then(m => m.PricingTypeModule)
+  },
+
 ]
 

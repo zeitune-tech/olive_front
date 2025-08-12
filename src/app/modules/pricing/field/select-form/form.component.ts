@@ -60,7 +60,7 @@ export class SelectFieldFormComponent implements OnInit {
               this.formGroup = this.fb.group({
                 label: [this.data.label || '', Validators.required],
                 description: [this.data.description || '', Validators.required],
-                variableName: [this.data.variableName || '', Validators.required],
+                variableName: [{ value: this.data.variableName || '', disabled: true }, Validators.required],
                 toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
                 options: [this.data.options || [], Validators.required],
               });
@@ -69,7 +69,7 @@ export class SelectFieldFormComponent implements OnInit {
               this.formGroup = this.fb.group({
                 label: [this.data.label || '', Validators.required],
                 description: [this.data.description || '', Validators.required],
-                variableName: [this.data.variableName || '', Validators.required],
+                variableName: [{ value: this.data.variableName || '', disabled: true }, Validators.required],
                 toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
                 options: [this.data.options.id || [], Validators.required],
               });
@@ -78,7 +78,7 @@ export class SelectFieldFormComponent implements OnInit {
               this.formGroup = this.fb.group({
                 label: ['', Validators.required],
                 description: ['', Validators.required],
-                variableName: ['', Validators.required],
+                variableName: [{ value: '', disabled: true }, Validators.required],
                 toReturn: [false, Validators.required],
                 options: [[], Validators.required],
               });

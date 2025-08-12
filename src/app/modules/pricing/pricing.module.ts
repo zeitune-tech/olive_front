@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { routes } from "./pricing.routing";
-import {MatDialogModule} from "@angular/material/dialog";
+import {PricingSelectionHeaderComponent} from "./shared/components/selection-header/pricing-selection-header.component";
+import {SelectionService} from "./shared/services/selection.service";
 
 @NgModule({
     declarations: [
@@ -10,7 +11,8 @@ import {MatDialogModule} from "@angular/material/dialog";
         RouterModule.forChild(routes),
     ],
     exports: [],
-    providers: []
+    providers: [
+    ]
 })
 
 export class PricingModule {
