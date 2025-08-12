@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Product } from '@core/services/settings/product/product.interface';
 import { ProductService } from '@core/services/settings/product/product.service';
 import { AccessoryService } from '@core/services/settings/accessory/accessory.service';
 import { LayoutService } from '../layout.service';
 import { Endorsment } from '@core/services/settings/endorsement/endorsement.interface';
 import { EndorsementService } from '@core/services/settings/endorsement/endorsement.service';
+import { Accessory } from '@core/services/settings/accessory/accessory.interface';
 
 @Component({
   selector: 'app-accessory-new',
@@ -13,15 +14,15 @@ import { EndorsementService } from '@core/services/settings/endorsement/endorsem
 })
 export class AccessoryNewComponent implements OnInit {
   formGroup!: FormGroup;
-  message: string = '';
+  message = '';
 
   endorsements: Endorsment[] = [];
   products: Product[] = [];
   selectedProductId: string | null = null;
   filteredEndorsements: Endorsment[] = [];
-  editMode: boolean = false;
+  editMode = false;
   accessoryId: string | null = null;
-  isFormReady: boolean = false;
+  isFormReady = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -33,50 +34,75 @@ export class AccessoryNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this._formBuilder.group({
-      dateEffective: [null],
-      actType: [null, [Validators.required]],
-      accessoryRisk: [null],
-      accessoryAmount: [null],
+      // LocalDate côté back → on stocke des Date JS et on normalise juste avant envoi
+      dateEffective: [null, [Validators.required]],
+      day: [null, [Validators.required, this.dayNotInPastValidator]],
+
+      // UUIDs
       productId: [null, [Validators.required]],
-      day: [new Date(), [Validators.required]],
+      actType: [null, [Validators.required]], // UUID de l’Endorsement
+
+      // montants / temps
+      accessoryRisk: [null, [Validators.required]],
+      accessoryAmount: [null, [Validators.required]],
       hour: [0, [Validators.required, Validators.min(0), Validators.max(23)]],
       minute: [0, [Validators.required, Validators.min(0), Validators.max(59)]],
     });
 
     this.isFormReady = true;
 
-    this._productService.products$.subscribe((products: Product[]) => {
-      this.products = products;
-    });
+    this._productService.products$.subscribe((products) => (this.products = products));
 
-    this._endorsementService.endorsements$.subscribe((endorsements: Endorsment[]) => {
+    this._endorsementService.endorsements$.subscribe((endorsements) => {
       this.endorsements = endorsements;
       this.filterEndorsements();
     });
 
+    // Mode édition : pré-remplir depuis l’accessoire sélectionné
     this._layoutService.selectedAccessory$.subscribe((accessoire: any) => {
-      if (accessoire) {
-        this.editMode = true;
-        this.accessoryId = accessoire.id;
+      if (!accessoire) return;
 
-        const patch: any = {
-          dateEffective: accessoire.dateEffective,
-          actType: accessoire.endorsement ? accessoire.endorsement.id : null,
-          accessoryRisk: accessoire.accessoryRisk,
-          accessoryAmount: accessoire.accessoryAmount,
-          productId: accessoire.product ? accessoire.product.id : null,
-        };
+      this.editMode = true;
+      this.accessoryId = accessoire.id;
 
-        if (accessoire.effectiveDate) {
-          const date = new Date(accessoire.effectiveDate);
-          patch.day = date;
-          patch.hour = date.getHours();
-          patch.minute = date.getMinutes();
-        }
+      const patch: any = {
+        dateEffective: accessoire.dateEffective ? new Date(accessoire.dateEffective) : null,
+        // actType est un Endorsment côté interface -> on prend son id à renvoyer
+        actType: accessoire.actType ? accessoire.actType.id : null,
+        accessoryRisk: accessoire.accessoryRisk,
+        accessoryAmount: accessoire.accessoryAmount,
+        productId: accessoire.product ? accessoire.product.id : null,
+        day: accessoire.day ? new Date(accessoire.day) : new Date(),
+        hour: typeof accessoire.hour === 'number' ? accessoire.hour : 0,
+        minute: typeof accessoire.minute === 'number' ? accessoire.minute : 0
+      };
 
-        this.formGroup.patchValue(patch);
-      }
+      this.formGroup.patchValue(patch);
+
+      // pour filtrer les avenants liés à ce produit
+      this.selectedProductId = patch.productId;
+      this.filterEndorsements();
     });
+  }
+
+  // ===== Helpers =====
+
+  private dayNotInPastValidator = (ctrl: AbstractControl): ValidationErrors | null => {
+    const value = ctrl.value as Date | null;
+    if (!value) return null;
+    const onlyDate = new Date(value.getFullYear(), value.getMonth(), value.getDate());
+    const now = new Date();
+    const todayOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return onlyDate < todayOnly ? { dayPast: true } : null;
+  };
+
+  private toISODate(d: Date | string | null | undefined): string {
+    if (!d) return '';
+    const date = d instanceof Date ? d : new Date(d);
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${dd}`; // yyyy-MM-dd pour LocalDate (back)
   }
 
   filterEndorsements(): void {
@@ -84,8 +110,14 @@ export class AccessoryNewComponent implements OnInit {
       this.filteredEndorsements = this.endorsements.filter(e =>
         e.product?.some(p => p.id === this.selectedProductId)
       );
+      // si l’actType actuel (endorsement.id) n’est plus valide après filtrage → reset
+      const current = this.formGroup.value.actType;
+      if (current && !this.filteredEndorsements.some(e => e.id === current)) {
+        this.formGroup.patchValue({ actType: null });
+      }
     } else {
       this.filteredEndorsements = [];
+      this.formGroup.patchValue({ actType: null });
     }
   }
 
@@ -98,51 +130,52 @@ export class AccessoryNewComponent implements OnInit {
     return item.id;
   }
 
+  // ===== Submit =====
+
   onSubmit(): void {
     if (!this.formGroup.valid) {
-      console.warn('Formulaire invalide');
       this.message = 'message.invalid';
       return;
     }
 
-    const formValues = this.formGroup.value;
-    const date: Date = new Date(formValues.day);
-    date.setHours(formValues.hour);
-    date.setMinutes(formValues.minute);
-
-    const data = {
-      ...formValues,
-      effectiveDate: date
+    // On prend directement les valeurs du formulaire,
+    // on normalise UNIQUEMENT les 2 dates pour LocalDate côté back.
+    const v = this.formGroup.value;
+    const body = {
+      ...v,
+      dateEffective: this.toISODate(v.dateEffective),
+      day: this.toISODate(v.day)
     };
 
-    delete data.day;
-    delete data.hour;
-    delete data.minute;
+    const request$ = this.editMode && this.accessoryId
+      ? this._accessoryService.update(this.accessoryId, body as unknown as Accessory)
+      : this._accessoryService.create(body as unknown as Accessory);
 
-    if (this.editMode && this.accessoryId) {
-      this._accessoryService.update(this.accessoryId, data).subscribe({
-        next: () => {
-          this.message = 'message.success';
+    request$.subscribe({
+      next: () => {
+        this.message = 'message.success';
+        if (this.editMode) {
           this._layoutService.clearSelectedAccessory();
-        },
-        error: (error) => {
-          this.message = 'message.error';
-          console.error(error);
+        } else {
+          // reset du formulaire après création
+          this.formGroup.reset({
+            dateEffective: null,
+            day: null,
+            hour: 0,
+            minute: 0,
+            productId: null,
+            actType: null,
+            accessoryAmount: null,
+            accessoryRisk: null
+          });
+          this.selectedProductId = null;
+          this.filteredEndorsements = [];
         }
-      });
-    } else if (!this.editMode) {
-      this._accessoryService.create(data).subscribe({
-        next: () => {
-          this.message = 'message.success';
-        },
-        error: (error) => {
-          this.message = 'message.error';
-          console.error(error);
-        }
-      });
-    } else {
-      this.message = 'message.error';
-      console.error('Accessory ID is requis pour mise à jour');
-    }
+      },
+      error: (error) => {
+        this.message = 'message.error';
+        console.error(error);
+      }
+    });
   }
 }
