@@ -2341,8 +2341,11 @@
   "branch-selection": {
     "title": "Sélectionner une branche",
     "change": "Changer de branche",
-    "clear": "Réinitialiser la sélection",
-    "not-select-error-title": "Veuillez d'abord sélectionner une branche"
+    "clear": "Effacer la sélection"
+  },
+  "coverage-selection": {
+    "title": "Sélectionner une garantie",
+    "change": "Changer de garantie"
   },
   "message": {
     "success": "Opération réussie",
