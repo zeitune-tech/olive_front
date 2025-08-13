@@ -7,6 +7,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { SelectionService } from "./services/selection.service";
 import { SharedModule } from "@shared/shared.module";
 import {MatDialogModule} from "@angular/material/dialog";
+import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import {MatDialogModule} from "@angular/material/dialog";
       PricingSelectionHeaderComponent
     ],
     providers: [
-      SelectionService
+      SelectionService,
+      PricingTypeService,
     ]
 })
 

@@ -1,18 +1,20 @@
 <div class="flex items-center gap-2" *transloco="let t">
-    <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
-        <span>{{ selectedBranch?.name || t('branch-selection.title') }}</span>
-        <button mat-button class="ml-4 bg-primary-600 text-white rounded-lg" (click)="openBranchSelection()">
-            {{ t('branch-selection.change') }}
-        </button>
-        @if (selectedBranch) {
-            <button mat-icon-button class="ml-2 text-red-500" (click)="clearBranchSelection()"
-                    [matTooltip]="t('branch-selection.clear')">
-                <mat-icon>close</mat-icon>
+    @if (selectionTypes.includes('branch')) {
+        <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
+            <span>{{ selectedBranch?.name || t('branch-selection.title') }}</span>
+            <button mat-button class="ml-4 bg-primary-600 text-white rounded-lg" (click)="openBranchSelection()">
+                {{ t('branch-selection.change') }}
             </button>
-        }
-    </div>
+            @if (selectedBranch) {
+                <button mat-icon-button class="ml-2 text-red-500" (click)="clearBranchSelection()"
+                        [matTooltip]="t('branch-selection.clear')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            }
+        </div>
+    }
 
-    @if (selectedBranch) {
+    @if (selectedBranch && selectionTypes.includes('product')) {
         <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
             <span>{{ selectedProduct?.name || t('product-selection.title') }}</span>
             <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openProductSelection()">
@@ -21,11 +23,11 @@
         </div>
     }
 
-    @if (selectedBranch && selectedProduct) {
+    @if (selectedBranch && selectedProduct && selectionTypes.includes('pricingType')) {
         <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
-            <span>{{ selectedCoverage?.nature || t('coverage-selection.title') }}</span>
-            <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openCoverageSelection()">
-                {{ t('coverage-selection.change') }}
+            <span>{{ selectedPricingType?.name || t('pricing-type-selection.title') }}</span>
+            <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openPricingTypeSelection()">
+                {{ t('pricing-type-selection.change') }}
             </button>
         </div>
     }

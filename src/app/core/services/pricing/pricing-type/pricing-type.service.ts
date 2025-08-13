@@ -79,4 +79,16 @@ export class PricingTypeService {
     );
   }
 
+  // /product/{productId}
+  getByProduct(id: string) {
+    return this._httpClient.get<PricingType[]>(`${this.baseUrl}/product/${id}`)
+        .pipe(
+            tap((response: any) => {
+                this.pricingTypes = response?.map((item: PricingType) => item);
+                return response;
+            }),
+            catchError(() => of([]))
+        );
+
+  }
 }

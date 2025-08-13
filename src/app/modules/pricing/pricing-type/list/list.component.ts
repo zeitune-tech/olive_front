@@ -61,7 +61,6 @@ export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestro
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   selectedProduct: Product|undefined;
   coverages: Coverage[] = [];
-  selectedCoverage: Coverage|undefined;
   data: PricingType[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -118,11 +117,11 @@ export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestro
         }
       });
 
-    this._selectionService.selectedCoverage$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(coverage => {
-        this.selectedCoverage = coverage;
-      });
+    // this._selectionService.selectedPricingType$
+    //   .pipe(takeUntil(this._unsubscribeAll))
+    //   .subscribe(pricingType => {
+    //     this.selectedPricingType = pricingType;
+    //   });
   }
 
   buildHeaderRows(): void {
@@ -261,7 +260,7 @@ export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestro
   doIfHasAllSelections(
     action: () => void
   ) : any {
-    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product', 'coverage']);
+    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product']);
     if (!hasAllSelections.value) {
       switch (hasAllSelections.missing[0]) {
         case 'branch':
@@ -269,9 +268,6 @@ export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestro
           break;
         case 'product':
           this._snackBar.open("entities.selection.product.incomplete", "close", {duration: 3000});
-          break;
-        case 'coverage':
-          this._snackBar.open("entities.selection.coverage.incomplete", "close", {duration: 3000});
           break;
       }
       return;

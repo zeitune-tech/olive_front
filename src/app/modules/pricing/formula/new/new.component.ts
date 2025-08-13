@@ -27,6 +27,7 @@ import {VariableCondition} from "@core/services/pricing/variable-condition/varia
 import {NumericField} from "@core/services/pricing/field/field.interface";
 import {TypeOfVariable} from "@core/services/pricing/variable-item/variable-item.interface";
 import {SelectionService} from "../../shared/services/selection.service";
+import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
 
 @Component({
     selector: 'app-formula-new',
@@ -45,7 +46,7 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
   selectedProduct: Product | undefined;
   products: Product[] = [];
   coverages: Coverage[] = []
-  selectedCoverage: Coverage|undefined;
+  selectedPricingType: PricingType|undefined;
 
   managementEntity: ManagementEntity = new ManagementEntity({});
 
@@ -114,10 +115,10 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
         }
       });
 
-    this._selectionService.selectedCoverage$
+    this._selectionService.selectedPricingType$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(coverage => {
-        this.selectedCoverage = coverage;
+      .subscribe(pricingType => {
+        this.selectedPricingType = pricingType;
       });
   }
 

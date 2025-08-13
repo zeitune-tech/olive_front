@@ -26,6 +26,7 @@ import {SelectionService} from "../../shared/services/selection.service";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.interface";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
+import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
 
 @Component({
     selector: "app-constant-list",
@@ -63,7 +64,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   selectedProduct: Product|undefined;
   coverages: Coverage[] = [];
-  selectedCoverage: Coverage|undefined;
+  selectedPricingType: PricingType|undefined;
   data: Constant[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -120,10 +121,10 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
 
-    this._selectionService.selectedCoverage$
+    this._selectionService.selectedPricingType$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(coverage => {
-        this.selectedCoverage = coverage;
+      .subscribe(pricingType => {
+        this.selectedPricingType = pricingType;
       });
   }
 
@@ -273,7 +274,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   doIfHasAllSelections(
     action: () => void
   ) : any {
-    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product', 'coverage']);
+    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product', 'pricingType']);
     if (!hasAllSelections.value) {
       switch (hasAllSelections.missing[0]) {
         case 'branch':
@@ -282,7 +283,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         case 'product':
           this._snackBar.open("entities.selection.product.incomplete", "close", {duration: 3000});
           break;
-        case 'coverage':
+        case 'pricingType':
           this._snackBar.open("entities.selection.coverage.incomplete", "close", {duration: 3000});
           break;
       }

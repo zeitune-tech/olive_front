@@ -23,6 +23,7 @@ import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
 import {SelectionService} from "../../shared/services/selection.service";
+import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
 
 @Component({
   selector: "app-variable-condition-list",
@@ -62,7 +63,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
   selectedProduct: Product | undefined;
 
   coverages: Coverage[] = []
-  selectedCoverage: Coverage | undefined;
+  selectedPricingType: PricingType | undefined;
 
   data: VariableCondition[] = [];
 
@@ -112,10 +113,10 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         }
       });
 
-    this._selectionService.selectedCoverage$
+    this._selectionService.selectedPricingType$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(coverage => {
-        this.selectedCoverage = coverage;
+      .subscribe(pricingType => {
+        this.selectedPricingType = pricingType;
       });
 
     this._variableConditionService.getAll()
@@ -213,7 +214,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
   doIfHasAllSelections(
     action: () => void
   ): any {
-    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product', 'coverage']);
+    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product', 'pricingType']);
     if (!hasAllSelections.value) {
       switch (hasAllSelections.missing[0]) {
         case 'branch':
@@ -222,8 +223,8 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         case 'product':
           this._snackBar.open("entities.selection.product.incomplete", "close", {duration: 3000});
           break;
-        case 'coverage':
-          this._snackBar.open("entities.selection.coverage.incomplete", "close", {duration: 3000});
+        case 'pricingType':
+          this._snackBar.open("entities.selection.pricingType.incomplete", "close", {duration: 3000});
           break;
       }
       return;
@@ -240,7 +241,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
           mode: 'create',
           product: this.selectedProduct!.id,
           branch: this.selectedBranch!.id,
-          coverage: this.selectedCoverage!.id
+          pricingType: this.selectedPricingType!.id
         }
 
       }).afterClosed().subscribe((result) => {

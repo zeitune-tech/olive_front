@@ -26,6 +26,7 @@ import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {SelectionService} from "../../shared/services/selection.service";
+import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
 
 @Component({
   selector: "app-field-list",
@@ -63,7 +64,7 @@ export class FieldListComponent implements OnInit {
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   selectedProduct: Product | undefined;
   coverages: Coverage[] = []
-  selectedCoverage: Coverage | undefined;
+  selectedPricingType: PricingType | undefined;
   data: Field[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -118,10 +119,10 @@ export class FieldListComponent implements OnInit {
         }
       });
 
-    this._selectionService.selectedCoverage$
+    this._selectionService.selectedPricingType$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(coverage => {
-        this.selectedCoverage = coverage;
+      .subscribe(pricingType => {
+        this.selectedPricingType = pricingType;
       });
   }
 
@@ -224,7 +225,7 @@ export class FieldListComponent implements OnInit {
   doIfHasAllSelections(
     action: () => void
   ): any {
-    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product', 'coverage']);
+    const hasAllSelections = this._selectionService.hasAllSelections(['branch', 'product', 'pricingType']);
     if (!hasAllSelections.value) {
       switch (hasAllSelections.missing[0]) {
         case 'branch':
@@ -233,7 +234,7 @@ export class FieldListComponent implements OnInit {
         case 'product':
           this._snackBar.open("entities.selection.product.incomplete", "close", {duration: 3000});
           break;
-        case 'coverage':
+        case 'pricingType':
           this._snackBar.open("entities.selection.coverage.incomplete", "close", {duration: 3000});
           break;
       }
