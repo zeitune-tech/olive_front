@@ -1677,6 +1677,11 @@
         "message": "Êtes-vous sûr de vouloir supprimer ce type de tarification ?",
         "success": "Type de tarification supprimé avec succès",
         "error": "Erreur lors de la suppression du type de tarification"
+      },
+      "table": {
+        "title": "Types de tarification",
+        "description": "Liste des types de tarification",
+        "empty_state": "Aucun type de tarification trouvé"
       }
     },
     "selection": {
