@@ -1662,6 +1662,33 @@
           "add_variable_condition": "Ajouter une variable conditionnée"
         }
       }
+    },
+    "pricing-type": {
+      "label": "Type de tarification",
+      "description": "Gestion des types de tarification",
+      "fields": {
+        "name": "Nom",
+        "description": "Description",
+        "branch": "Branche",
+        "product": "Produit"
+      },
+      "delete": {
+        "title": "Supprimer le type de tarification",
+        "message": "Êtes-vous sûr de vouloir supprimer ce type de tarification ?",
+        "success": "Type de tarification supprimé avec succès",
+        "error": "Erreur lors de la suppression du type de tarification"
+      }
+    },
+    "selection": {
+      "branch": {
+        "incomplete": "Veuillez d'abord sélectionner une branche"
+      },
+      "product": {
+        "incomplete": "Veuillez d'abord sélectionner un produit"
+      },
+      "coverage": {
+        "incomplete": "Veuillez d'abord sélectionner une garantie"
+      }
     }
   },
   "auth": {
