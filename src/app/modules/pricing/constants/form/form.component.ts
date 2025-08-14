@@ -7,8 +7,10 @@ import { Constant } from '@core/services/pricing/constant/constant.interface';
 import { ConstantService } from '@core/services/pricing/constant/constant.service';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
-import { Cons } from 'rxjs';
+import {Cons, Subject, takeUntil} from 'rxjs';
 import { FormMode } from '@shared/enum/form.enum';
+import {CoverageService} from "@core/services/settings/coverage/coverage.service";
+import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 
 @Component({
   selector: 'app-coverage-reference-edit',
@@ -20,6 +22,7 @@ export class ConstantFormComponent implements OnInit {
   message = '';
   managementEntity: ManagementEntity | undefined;
   mode: FormMode = FormMode.CREATE;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     private fb: FormBuilder,
@@ -28,10 +31,21 @@ export class ConstantFormComponent implements OnInit {
     private _constantService: ConstantService,
     private translocoService: TranslocoService,
     private snackBar: MatSnackBar,
-    private _managementEntityService: ManagementEntityService
+    private _managementEntityService: ManagementEntityService,
+    private _coverageService: CoverageService,
   ) {}
 
+  coverages: Coverage[] = [];
+
   ngOnInit(): void {
+
+    // Récupérer les couvertures
+    this._coverageService.getByProduct(this.data.product)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((coverages: Coverage[]) => {
+        this.coverages = coverages || [];
+        console.log("Coverages loaded:", this.coverages);
+      });
 
     this.mode = (this.data as any).mode;
     if (this.mode == FormMode.EDIT) {
@@ -46,6 +60,7 @@ export class ConstantFormComponent implements OnInit {
     });
 
     this.formGroup = this.fb.group({
+      coverage: [this.data.coverage || '', Validators.required],
       label: [this.data.label || '', Validators.required],
       description: [this.data.description || '', Validators.required],
       variableName: [{value: this.data.variableName || '', disabled: true}, Validators.required],
@@ -88,8 +103,9 @@ export class ConstantFormComponent implements OnInit {
 
     const formData = {
       ...this.formGroup.getRawValue(), // Utiliser getRawValue() au lieu de value pour obtenir les valeurs même si le form est disabled
-      managementEntity: this.managementEntity?.id,
+      branch: this.data.branch,
       product: this.data.product,
+      pricingType: this.data.pricingType,
     };
 
     console.log("Submitting form data:", formData);

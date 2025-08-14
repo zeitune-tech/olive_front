@@ -318,6 +318,8 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
       managementEntity: this.managementEntity.id,
       product: this.selectedProduct!.id ,
       branch: this.selectedBranch!.id,
+      pricingType: "TODO",
+      coverage: "TODO",
       expression: this.formula,
       variables: this.variables.filter(v => this.formula.includes(v.variableName) ).map(v => v.id) // Filtrer les variables qui doivent être retournées
     })

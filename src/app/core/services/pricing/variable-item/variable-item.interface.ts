@@ -24,8 +24,10 @@ export class VariableItem {
     variableName: string;
     toReturn: boolean;
     managementEntity: string;
-    product: string;
     branch: string;
+    product: string;
+    pricingType: string;
+    coverage: string;
     typeOfVariable?: TypeOfVariable
 
     constructor(entity: any) {
@@ -35,8 +37,10 @@ export class VariableItem {
         this.variableName = entity?.variableName ?? '';
         this.toReturn = entity?.toReturn ?? false;
         this.managementEntity = entity?.managementEntity ?? '';
-        this.product = entity?.product ?? '';
         this.branch = entity?.branch ?? '';
+        this.product = entity?.product ?? '';
+        this.pricingType = entity?.pricingType ?? '';
+        this.coverage = entity?.coverage ?? '';
         this.typeOfVariable = entity?.type; // Default to CONSTANT if not provided
     }
 }

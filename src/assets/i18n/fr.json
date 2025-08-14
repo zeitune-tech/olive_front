@@ -1433,10 +1433,8 @@
         "toReturn": "À retourner",
         "branch": "Branche",
         "product": "Produit",
+        "coverage": "Garantie",
         "managementEntityId": "Entité de gestion",
-        "productId": "Produit",
-        "branchId": "Branche",
-        "coverageId": "Garantie",
         "value": "Valeur",
         "actions": "Actions"
       },
