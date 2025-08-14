@@ -671,6 +671,9 @@
           "RETRACT": "Retrait",
           "INCORPORATION": "Incorporation"
         }
+      },
+      "succession":{
+        "from": "Avenants"
       }
     },
     "commission": {
@@ -2092,7 +2095,10 @@
   "common": {
     "search": "Rechercher",
     "no_data": "Aucun résultat trouvé",
-    "no_data_description": "Aucune donnée disponible actuellement"
+    "no_data_description": "Aucune donnée disponible actuellement",
+    "select_all": "Tout sélectionner",
+    "clear": "Effacer",
+    "reset": "Réinitialiser"
   },
   "notifications": {
     "no_notifications": "Aucune notification",
@@ -2144,6 +2150,8 @@
         "closures_description": "Configurer les périodes de clôture.",
         "endorsements": "Avenants",
         "endorsements_description": "Gestion des avenants",
+        "endorsements_successions": "Succession des avenants",
+        "endorsements_successions_description": "Gestion des successions des avenants",
         "accessories": "Accessoires",
         "accessories_description": "Gestion des accessoires",
         "taxes": "Taxes",

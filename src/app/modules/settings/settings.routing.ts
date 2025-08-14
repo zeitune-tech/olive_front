@@ -84,6 +84,15 @@ export const routes: Routes = [
         loadChildren: () => import('./endorsements/endorsments.module').then(m => m.EndorsementsModule)
     },
     {
+        path: 'successions',
+        canActivate: [],
+        canActivateChild: [],
+        data: {
+            // permission: PERMISSIONS.VIEW_ENDORSEMENTS
+        },
+        loadChildren: () => import('./endorsements/endorsments.module').then(m => m.EndorsementsModule)
+    },
+    {
         path: 'commissions',
         canActivate: [],
         canActivateChild: [],

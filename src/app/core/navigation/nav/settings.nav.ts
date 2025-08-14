@@ -91,7 +91,7 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 title: 'sidebar.endorsement.succession',
                 type: 'basic',
                 icon: 'fluent:document-sync-24-regular',
-                link: '/parameters/succession-avenants',
+                link: '/parameters/endorsements/successions',
                 // permission: PERMISSIONS.VIEW_SUCCESSION_AVENANTS
             },
             {

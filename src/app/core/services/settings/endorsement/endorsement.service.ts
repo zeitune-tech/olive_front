@@ -1,9 +1,24 @@
 import { HttpClient } from "@angular/common/http";
 import { RequestMetadata } from "@core/services/common.interface";
-import { environment } from "src/environments/environment.local";
+import { environment } from "@env/environment";
 import { catchError, forkJoin, Observable, of, ReplaySubject, tap } from "rxjs";
 import { Endorsment } from "./endorsement.interface";
 import { Injectable } from "@angular/core";
+
+
+/* --------------------- Types pour la succession --------------------- */
+export type Nature =
+  | 'MODIFICATION'
+  | 'RENEWAL'
+  | 'SUSPENSION'
+  | 'REINSTATEMENT_WITH_DISCOUNT'
+  | 'REINSTATEMENT'
+  | 'CANCELLATION'
+  | 'RETRACT'
+  | 'INCORPORATION';
+
+export type SuccessionRules = Record<Nature, Nature[]>;
+
 
 @Injectable({ providedIn: 'root' })
 export class EndorsementService {
@@ -12,6 +27,10 @@ export class EndorsementService {
     private _endorsements = new ReplaySubject<Endorsment[]>(1);
     private _metadata = new ReplaySubject<RequestMetadata>(1);
     
+    // ---- Succession Rules state ----
+    private _rules = new ReplaySubject<SuccessionRules>(1);
+    get rules$(): Observable<SuccessionRules> { return this._rules.asObservable(); }
+
     set endorsement(value: Endorsment) {
         this._endorsement.next(value);
     }
@@ -85,5 +104,66 @@ export class EndorsementService {
         return forkJoin(requests);
     }
 
+    /* ==================== Succession Rules ==================== */
 
+    /** Charge les règles depuis l’API (pousse dans rules$) */
+    loadSuccessionRules(): Observable<SuccessionRules> {
+        const url = `${this.baseUrl}/succession-rules`;
+        return this._httpClient.get<SuccessionRules>(url).pipe(
+            tap((rules) => this._rules.next(this.normalizeRules(rules))),
+            catchError((err) => {
+                console.error('[EndorsementService] loadSuccessionRules error:', err);
+                const empty = {} as SuccessionRules;
+                this._rules.next(empty);
+                return of(empty);
+            })
+        );
+    }
+
+    /** Sauvegarde les règles (PUT idempotent) et met à jour le cache local */
+    saveSuccessionRules(rules: SuccessionRules): Observable<SuccessionRules> {
+        const url = `${this.baseUrl}/succession-rules`;
+        return this._httpClient.put<SuccessionRules>(url, rules).pipe(
+            tap((saved) => this._rules.next(this.normalizeRules(saved))),
+            catchError((err) => {
+                console.error('[EndorsementService] saveSuccessionRules error:', err);
+                // On renvoie ce que l’UI avait, pour ne pas casser le flux
+                return of(rules);
+            })
+        );
+    }
+
+    /** (Optionnel) Charger des règles par défaut côté serveur */
+    loadDefaultSuccessionRules(): Observable<SuccessionRules> {
+        const url = `${this.baseUrl}/succession-rules/defaults`;
+        return this._httpClient.get<SuccessionRules>(url).pipe(
+            tap((rules) => this._rules.next(this.normalizeRules(rules))),
+            catchError((err) => {
+                console.error('[EndorsementService] loadDefaultSuccessionRules error:', err);
+                const empty = {} as SuccessionRules;
+                this._rules.next(empty);
+                return of(empty);
+            })
+        );
+    }
+
+    /** Harmonise la réponse pour ne garder que les valeurs autorisées */
+    private normalizeRules(input: any): SuccessionRules {
+        const allowed: Nature[] = [
+            'MODIFICATION',
+            'RENEWAL',
+            'SUSPENSION',
+            'REINSTATEMENT_WITH_DISCOUNT',
+            'REINSTATEMENT',
+            'CANCELLATION',
+            'RETRACT',
+            'INCORPORATION'
+        ];
+        const out = {} as SuccessionRules;
+        for (const key of allowed) {
+            const arr = Array.isArray(input?.[key]) ? input[key] : [];
+            out[key] = arr.filter((v: any): v is Nature => allowed.includes(v));
+        }
+        return out;
+    }
 }
