@@ -11,6 +11,7 @@ import {Cons, Subject, takeUntil} from 'rxjs';
 import { FormMode } from '@shared/enum/form.enum';
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
+import moment from "moment";
 
 @Component({
   selector: 'app-coverage-reference-edit',
@@ -59,15 +60,30 @@ export class ConstantFormComponent implements OnInit {
       this.managementEntity = entity;
     });
 
-    this.formGroup = this.fb.group({
-      coverage: [this.data.coverage || '', Validators.required],
-      label: [this.data.label || '', Validators.required],
-      description: [this.data.description || '', Validators.required],
-      variableName: [{value: this.data.variableName || '', disabled: true}, Validators.required],
-      toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
-      branch: [this.data.branch || '', Validators.required],
-      value: [this.data.value || '', Validators.required],
-    });
+    if (this.mode === FormMode.CREATE) {
+      this.formGroup = this.fb.group({
+        coverage: [this.data.coverage || '', Validators.required],
+        label: [this.data.label || '', Validators.required],
+        description: [this.data.description || '', Validators.required],
+        variableName: [{value: this.data.variableName || '', disabled: true}, Validators.required],
+        toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
+        branch: [this.data.branch || '', Validators.required],
+        value: [this.data.value || '', Validators.required],
+      });
+
+    }else {
+      this.formGroup = this.fb.group({
+        coverage: [{value: this.data.coverage || '', disabled: true}, Validators.required],
+        label: [this.data.label || '', Validators.required],
+        description: [this.data.description || '', Validators.required],
+        variableName: [{value: this.data.variableName || '', disabled: true}, Validators.required],
+        toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
+        branch: [this.data.branch || '', Validators.required],
+        value: [this.data.value || '', Validators.required],
+      });
+
+    }
+
 
     // Surveiller les changements de valeur du champ label
     this.formGroup.get('label')?.valueChanges.subscribe(value => {

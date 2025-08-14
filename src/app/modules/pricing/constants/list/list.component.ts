@@ -76,6 +76,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
           this._productService.getByBranchOrAll(branch.id)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe();
+          this.filterPricingTypes();
         }
       });
 
@@ -89,6 +90,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
             .subscribe((coverages: Coverage[]) => {
               this.coverages = coverages || [];
             });
+          this.filterPricingTypes()
         }
       });
 
@@ -96,6 +98,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(pricingType => {
         this.selectedPricingType = pricingType;
+        this.filterPricingTypes()
       });
   }
 
@@ -147,6 +150,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.searchCtrl.value) {
           this.applyFilter(this.searchCtrl.value);
         }
+        this.filterPricingTypes()
       });
 
     // Initialisation de la configuration de la table
@@ -157,8 +161,8 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         {label: 'entities.constant.fields.description', property: 'description', type: 'text', visible: true},
         {label: 'entities.constant.fields.variableName', property: 'variableName', type: 'text', visible: true},
         {label: 'entities.constant.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
-        {label: 'entities.constant.fields.branch', property: 'branch', type: 'text', visible: false},
-        {label: 'entities.constant.fields.product', property: 'product', type: 'text', visible: false},
+        // {label: 'entities.constant.fields.branch', property: 'branch', type: 'text', visible: false},
+        // {label: 'entities.constant.fields.product', property: 'product', type: 'text', visible: false},
         {label: 'entities.constant.fields.coverage', property: 'coverage', type: 'text', visible: true},
         {label: 'entities.constant.fields.value', property: 'value', type: 'text', visible: true},
       ],
@@ -244,6 +248,31 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   clearFilter(): void {
     this.searchCtrl.setValue('');
     this.dataSource.filter = '';
+  }
+
+  filterPricingTypes(): void {
+    // Si aucune sélection n'est faite, on affiche un tableau vide
+    if (!this.selectedBranch || !this.selectedProduct) {
+      this.dataSource.data = [];
+      return;
+    }
+
+    if (this.data) {
+      let filteredData = [...this.data];
+
+      // Appliquer les filtres pour branch et product
+      filteredData = filteredData.filter(pt =>
+        pt.branch === this.selectedBranch?.id &&
+        pt.product === this.selectedProduct?.id &&
+        pt.pricingType === this.selectedPricingType?.id
+      );
+
+      this.dataSource.data = filteredData;
+
+      if (this.searchCtrl.value) {
+        this.applyFilter(this.searchCtrl.value);
+      }
+    }
   }
 
   constructor(
