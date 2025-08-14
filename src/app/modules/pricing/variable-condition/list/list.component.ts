@@ -5,7 +5,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
-import {PERMISSIONS} from "@core/permissions/permissions.data";
 import {PermissionsService} from "@core/permissions/permissions.service";
 import {ManagementEntityService} from "@core/services/administration/management-entity/management-entity.service";
 import {Product} from "@core/services/settings/product/product.interface";

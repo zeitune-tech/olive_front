@@ -164,8 +164,8 @@ export class FieldListComponent implements OnInit {
         {label: 'entities.pricing.field.fields.variableName', property: 'variableName', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
         // { label: 'entities.pricing.field.fields.managementEntityId', property: 'managementEntity', type: 'text', visible: true },
-        {label: 'entities.pricing.field.fields.branch', property: 'branch', type: 'text', visible: true},
-        {label: 'entities.pricing.field.fields.product', property: 'product', type: 'text', visible: true},
+        // {label: 'entities.pricing.field.fields.branch', property: 'branch', type: 'text', visible: true},
+        // {label: 'entities.pricing.field.fields.product', property: 'product', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.coverage', property: 'coverage', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.type', property: 'type', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.options', property: 'options', type: 'text', visible: true},
@@ -185,13 +185,12 @@ export class FieldListComponent implements OnInit {
         if (property === 'options') {
           return element.options ? element.options.label : 'Aucune option';
         }
-
-        if (property === 'branch') {
-          return this.branches.find(b => b.id === element.branch)?.name ?? '--';
-        }
-        if (property === 'product') {
-          return this.products.find(p => p.id === element.product)?.name ?? '--';
-        }
+        // if (property === 'branch') {
+        //   return this.branches.find(b => b.id === element.branch)?.name ?? '--';
+        // }
+        // if (property === 'product') {
+        //   return this.products.find(p => p.id === element.product)?.name ?? '--';
+        // }
         if (property === 'coverage') {
           return this.coverages.find(c => c.id === element.coverage)?.reference.designation ?? '--';
         }
