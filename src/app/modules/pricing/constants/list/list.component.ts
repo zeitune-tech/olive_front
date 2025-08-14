@@ -302,7 +302,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   selection = new SelectionModel<Constant>(true, []);
-  searchInputControl: UntypedFormControl = new UntypedFormControl();
+  // searchInputControl: UntypedFormControl = new UntypedFormControl();
 
   doIfHasAllSelections(
     action: () => void

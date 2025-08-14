@@ -47,7 +47,8 @@ export class FieldListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   selection = new SelectionModel<Field>(true, []);
-  searchInputControl: UntypedFormControl = new UntypedFormControl();
+  // searchInputControl: UntypedFormControl = new UntypedFormControl();
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
 
   doResolve() {
     this._fieldService.getAll()
@@ -79,6 +80,7 @@ export class FieldListComponent implements OnInit {
           this._productService.getByBranchOrAll(branch.id)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe();
+          this.filterPricingTypes()
         }
       });
 
@@ -92,6 +94,7 @@ export class FieldListComponent implements OnInit {
             .subscribe((coverages: Coverage[]) => {
               this.coverages = coverages || [];
             });
+          this.filterPricingTypes()
         }
       });
 
@@ -99,6 +102,7 @@ export class FieldListComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(pricingType => {
         this.selectedPricingType = pricingType;
+        this.filterPricingTypes()
       });
   }
 
@@ -129,6 +133,13 @@ export class FieldListComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // Configuration du contrôle de recherche
+    this.searchCtrl.valueChanges
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(value => {
+        this.applyFilter(value);
+      });
+
     this.doResolve();
     this.loadValues();
 
@@ -138,6 +149,10 @@ export class FieldListComponent implements OnInit {
       .subscribe((data: Field[]) => {
         this.data = data;
         this.dataSource.data = data;
+        if (this.searchCtrl.value) {
+          this.applyFilter(this.searchCtrl.value);
+        }
+        this.filterPricingTypes()
       });
 
     // Initialisation de la configuration de la table
@@ -201,6 +216,51 @@ export class FieldListComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
+  /**
+   * Applique un filtre de recherche sur les données du tableau
+   */
+  applyFilter(filterValue: string): void {
+    filterValue = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  /**
+   * Efface le filtre de recherche
+   */
+  clearFilter(): void {
+    this.searchCtrl.setValue('');
+    this.dataSource.filter = '';
+  }
+
+  filterPricingTypes(): void {
+    // Si aucune sélection n'est faite, on affiche un tableau vide
+    if (!this.selectedBranch || !this.selectedProduct) {
+      this.dataSource.data = [];
+      return;
+    }
+
+    if (this.data) {
+      let filteredData = [...this.data];
+
+      // Appliquer les filtres pour branch et product
+      filteredData = filteredData.filter(pt =>
+        pt.branch === this.selectedBranch?.id &&
+        pt.product === this.selectedProduct?.id &&
+        pt.pricingType === this.selectedPricingType?.id
+      );
+
+      this.dataSource.data = filteredData;
+
+      if (this.searchCtrl.value) {
+        this.applyFilter(this.searchCtrl.value);
+      }
+    }
+  }
+
   constructor(
     private _fieldService: FieldService,
     private _branchService: BranchService,
@@ -215,7 +275,6 @@ export class FieldListComponent implements OnInit {
   branches: Branch[] = [];
   selectedBranch: Branch | undefined;
   products: Product[] = []
-  searchCtrl: UntypedFormControl = new UntypedFormControl();
   selectedProduct: Product | undefined;
   coverages: Coverage[] = []
   selectedPricingType: PricingType | undefined;
@@ -261,6 +320,7 @@ export class FieldListComponent implements OnInit {
               this.data = fields || [];
             }
           );
+          this.filterPricingTypes()
         }
       });
     });
@@ -284,6 +344,7 @@ export class FieldListComponent implements OnInit {
               this.data = fields || [];
             }
           );
+          this.filterPricingTypes()
         }
       });
     });
@@ -309,6 +370,7 @@ export class FieldListComponent implements OnInit {
             this._snackBar.open('entities.constant.delete.error', '', {duration: 3000, panelClass: 'snackbar-error'});
           }
         });
+        this.filterPricingTypes()
       }
     });
   }
