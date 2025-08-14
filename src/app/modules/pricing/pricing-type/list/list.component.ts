@@ -164,7 +164,9 @@ export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestro
         if (this.searchCtrl.value) {
           this.applyFilter(this.searchCtrl.value);
         }
+        this.filterPricingTypes();
       });
+
 
     // Initialisation de la configuration de la table
     this.tableOptions = {
