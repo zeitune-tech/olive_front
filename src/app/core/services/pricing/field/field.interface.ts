@@ -9,8 +9,10 @@ export interface NumericField {
   variableName: string;
   toReturn: boolean;
   managementEntity: string;
-  product: string;
   branch: string;
+  product: string;
+  coverage: string;
+  pricingType: string;
 }
 
 export interface SelectField {
@@ -20,8 +22,10 @@ export interface SelectField {
   variableName: string;
   toReturn: boolean;
   managementEntity: string;
-  product: string;
   branch: string;
+  product: string;
+  coverage: string;
+  pricingType: string;
   options: any;
 }
 

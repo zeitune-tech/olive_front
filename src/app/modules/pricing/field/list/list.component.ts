@@ -43,33 +43,9 @@ export class FieldListComponent implements OnInit {
   groupHeader: string[] = [];
   subHeader: string[] = [];
   visibleColumns: string[] = [];
-
   dataSource = new MatTableDataSource<Field>([]); // Ajoute les données réelles ici
-
-  constructor(
-    private _fieldService: FieldService,
-    private _branchService: BranchService,
-    private _productService: ProductService,
-    private _coverageService: CoverageService,
-    private _selectionService: SelectionService,
-    private _permissionService: PermissionsService,
-    private _dialog: MatDialog,
-    private _snackBar: MatSnackBar
-  ) {
-  }
-
-  branches: Branch[] = [];
-  selectedBranch: Branch | undefined;
-  products: Product[] = []
-  searchCtrl: UntypedFormControl = new UntypedFormControl();
-  selectedProduct: Product | undefined;
-  coverages: Coverage[] = []
-  selectedPricingType: PricingType | undefined;
-  data: Field[] = [];
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   selection = new SelectionModel<Field>(true, []);
   searchInputControl: UntypedFormControl = new UntypedFormControl();
 
@@ -175,6 +151,7 @@ export class FieldListComponent implements OnInit {
         // { label: 'entities.pricing.field.fields.managementEntityId', property: 'managementEntity', type: 'text', visible: true },
         {label: 'entities.pricing.field.fields.branch', property: 'branch', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.product', property: 'product', type: 'text', visible: true},
+        {label: 'entities.pricing.field.fields.coverage', property: 'coverage', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.type', property: 'type', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.options', property: 'options', type: 'text', visible: true},
         // { label: 'entities.pricing.field.fields.value', property: 'value', type: 'text', visible: true },
@@ -200,7 +177,9 @@ export class FieldListComponent implements OnInit {
         if (property === 'product') {
           return this.products.find(p => p.id === element.product)?.name ?? '--';
         }
-
+        if (property === 'coverage') {
+          return this.coverages.find(c => c.id === element.coverage)?.reference.designation ?? '--';
+        }
         return element[property] ?? '--';
       },
     };
@@ -222,6 +201,27 @@ export class FieldListComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
+  constructor(
+    private _fieldService: FieldService,
+    private _branchService: BranchService,
+    private _productService: ProductService,
+    private _coverageService: CoverageService,
+    private _selectionService: SelectionService,
+    private _dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) {
+  }
+
+  branches: Branch[] = [];
+  selectedBranch: Branch | undefined;
+  products: Product[] = []
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  selectedProduct: Product | undefined;
+  coverages: Coverage[] = []
+  selectedPricingType: PricingType | undefined;
+  data: Field[] = [];
+
+
   doIfHasAllSelections(
     action: () => void
   ): any {
@@ -235,7 +235,7 @@ export class FieldListComponent implements OnInit {
           this._snackBar.open("entities.selection.product.incomplete", "close", {duration: 3000});
           break;
         case 'pricingType':
-          this._snackBar.open("entities.selection.coverage.incomplete", "close", {duration: 3000});
+          this._snackBar.open("entities.selection.pricingType.incomplete", "close", {duration: 3000});
           break;
       }
       return;
@@ -250,8 +250,9 @@ export class FieldListComponent implements OnInit {
         disableClose: true,
         data: {
           mode: 'create',
+          branch: this.selectedBranch!.id,
           product: this.selectedProduct!.id,
-          branch: this.selectedBranch!.id
+          pricingType: this.selectedPricingType!.id,
         }
       }).afterClosed().subscribe((result) => {
         if (result) {
@@ -272,8 +273,9 @@ export class FieldListComponent implements OnInit {
         disableClose: true,
         data: {
           mode: 'create',
+          branch: this.selectedBranch!.id,
           product: this.selectedProduct!.id,
-          branch: this.selectedBranch!.id
+          pricingType: this.selectedPricingType!.id
         }
       }).afterClosed().subscribe((result) => {
         if (result) {

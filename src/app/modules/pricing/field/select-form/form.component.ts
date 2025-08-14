@@ -12,145 +12,166 @@ import {
   SelectFieldOptionsService
 } from "@core/services/pricing/field/select-field-options/select-field-options.service";
 import {FormMode} from "@shared/enum/form.enum";
+import {CoverageService} from "@core/services/settings/coverage/coverage.service";
+import {Coverage} from "@core/services/settings/coverage/coverage.interface";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
-    selector: 'app-select-form',
-    templateUrl: './form.component.html',
+  selector: 'app-select-form',
+  templateUrl: './form.component.html',
 })
 export class SelectFieldFormComponent implements OnInit {
 
-      formGroup!: FormGroup;
-      message = '';
-      managementEntity: ManagementEntity | undefined;
-      options:SelectFieldOptions[] = []
+  formGroup!: FormGroup;
+  message = '';
+  managementEntity: ManagementEntity | undefined;
+  options: SelectFieldOptions[] = []
+  _unsubscribeAll: Subject<any> = new Subject<any>();
 
-      mode:FormMode = FormMode.CREATE;
+  mode: FormMode = FormMode.CREATE;
 
-      constructor(
-          private fb: FormBuilder,
-          private dialogRef: MatDialogRef<SelectFieldFormComponent>,
-          @Inject(MAT_DIALOG_DATA) public data: SelectField,
-          private _fieldService: FieldService,
-          private _selectFieldOptionsService: SelectFieldOptionsService,
-          private translocoService: TranslocoService,
-          private snackBar: MatSnackBar,
-          private _managementEntityService: ManagementEntityService
-      ) {}
-
-    ngOnInit(): void {
-
-      this._selectFieldOptionsService.getAll().subscribe();
-
-      this.mode = (this.data as any).mode;
-        if (this.mode == FormMode.EDIT) {
-            this.dialogRef.updateSize('600px', 'auto');
-        } else {
-            // this.data = {} as Constant;
-            this.dialogRef.updateSize('600px', 'auto');
-        }
-
-        this._managementEntityService.entity$.subscribe((entity) => {
-            this.managementEntity = entity;
-        });
-
-        this._selectFieldOptionsService.selectFieldOptionsList$.subscribe((options) => {this.options = options;});
-
-        switch (this.mode) {
-            case FormMode.CREATE:
-              this.formGroup = this.fb.group({
-                label: [this.data.label || '', Validators.required],
-                description: [this.data.description || '', Validators.required],
-                variableName: [{ value: this.data.variableName || '', disabled: true }, Validators.required],
-                toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
-                options: [this.data.options || [], Validators.required],
-              });
-                break;
-            case FormMode.EDIT:
-              this.formGroup = this.fb.group({
-                label: [this.data.label || '', Validators.required],
-                description: [this.data.description || '', Validators.required],
-                variableName: [{ value: this.data.variableName || '', disabled: true }, Validators.required],
-                toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
-                options: [this.data.options.id || [], Validators.required],
-              });
-              break;
-            default:
-              this.formGroup = this.fb.group({
-                label: ['', Validators.required],
-                description: ['', Validators.required],
-                variableName: [{ value: '', disabled: true }, Validators.required],
-                toReturn: [false, Validators.required],
-                options: [[], Validators.required],
-              });
-              break;
-        }
-
-        // Surveiller les changements de valeur du champ label
-        this.formGroup.get('label')?.valueChanges.subscribe(value => {
-            if (!value) return;
-
-            const variableName = value
-                .toUpperCase()
-                .replace(/[^A-Z0-9]+/g, '_')
-                .replace(/^_+|_+$/g, '');
-
-            const descriptionPrefix = `Un champ de sélection (${variableName}) pour`;
-            const description = `${descriptionPrefix} ${(this.formGroup.get('description')?.value as string || '').replace(/Un champ de sélection \([^\)]+\) pour /g, '')}`;
-
-            this.formGroup.patchValue({
-                variableName: variableName,
-                description: description
-            });
-
-            this.formGroup.get('variableName')?.markAsTouched();
-            this.formGroup.get('description')?.markAsTouched();
-        });
-    }
-
-    onSubmit(): void {
-        if (this.formGroup.invalid) return;
-
-        this.formGroup.disable();
-
-        const formData = {
-            ...this.formGroup.getRawValue(), // Utiliser getRawValue() au lieu de value
-            managementEntity: this.managementEntity!.id,
-            product: this.data.product,
-            branch: this.data.branch,
-            type: FieldType.SELECT,
-        };
-
-        console.log("Submitting form data:", formData);
-        console.log("data", this.data);
-
-      (this.mode == FormMode.EDIT ?
-          (this._fieldService.update(formData, this.data.id))
-          : (this._fieldService.create(formData))
-      ).subscribe({
-            next: () => {
-                const successMessage = this.mode === FormMode.EDIT
-                    ? 'form.success.update'
-                    : 'form.success.creation';
-
-                this.snackBar.open(
-                    this.translocoService.translate(successMessage),
-                    undefined,
-                    { duration: 3000, panelClass: 'snackbar-success' }
-                );
-                this.dialogRef.close(true);
-            },
-            error: () => {
-                this.snackBar.open(
-                    this.translocoService.translate('form.errors.submission'),
-                    undefined,
-                    { duration: 3000, panelClass: 'snackbar-error' }
-                );
-                this.formGroup.enable();
-            }
-        });
-    }
-
-      onCancel(): void {
-          this.dialogRef.close(false);
-      }
+  constructor(
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<SelectFieldFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: SelectField,
+    private _fieldService: FieldService,
+    private _selectFieldOptionsService: SelectFieldOptionsService,
+    private translocoService: TranslocoService,
+    private snackBar: MatSnackBar,
+    private _managementEntityService: ManagementEntityService,
+    private _coverageService: CoverageService,
+  ) {
   }
+
+  coverages: Coverage[] = [];
+
+  ngOnInit(): void {
+
+    // Récupérer les couvertures
+    this._coverageService.getByProduct(this.data.product)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((coverages: Coverage[]) => {
+        this.coverages = coverages || [];
+        console.log("Coverages loaded:", this.coverages);
+      });
+
+    this._selectFieldOptionsService.getAll().subscribe();
+
+    this.mode = (this.data as any).mode;
+    if (this.mode == FormMode.EDIT) {
+      this.dialogRef.updateSize('600px', 'auto');
+    } else {
+      // this.data = {} as Constant;
+      this.dialogRef.updateSize('600px', 'auto');
+    }
+
+    this._managementEntityService.entity$.subscribe((entity) => {
+      this.managementEntity = entity;
+    });
+
+    this._selectFieldOptionsService.selectFieldOptionsList$.subscribe((options) => {
+      this.options = options;
+    });
+
+    switch (this.mode) {
+      case FormMode.CREATE:
+        this.formGroup = this.fb.group({
+          coverage: [this.data.coverage || '', Validators.required],
+          label: [this.data.label || '', Validators.required],
+          description: [this.data.description || '', Validators.required],
+          variableName: [{value: this.data.variableName || '', disabled: true}, Validators.required],
+          toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
+          options: [this.data.options || [], Validators.required],
+        });
+        break;
+      case FormMode.EDIT:
+        this.formGroup = this.fb.group({
+          coverage: [{value: this.data.coverage || '', disabled: true}, Validators.required],
+          label: [this.data.label || '', Validators.required],
+          description: [this.data.description || '', Validators.required],
+          variableName: [{value: this.data.variableName || '', disabled: true}, Validators.required],
+          toReturn: [this.data.toReturn !== undefined ? this.data.toReturn : false, Validators.required],
+          options: [this.data.options.id || [], Validators.required],
+        });
+        break;
+      default:
+        this.formGroup = this.fb.group({
+          label: ['', Validators.required],
+          description: ['', Validators.required],
+          variableName: [{value: '', disabled: true}, Validators.required],
+          toReturn: [false, Validators.required],
+          options: [[], Validators.required],
+        });
+        break;
+    }
+
+    // Surveiller les changements de valeur du champ label
+    this.formGroup.get('label')?.valueChanges.subscribe(value => {
+      if (!value) return;
+
+      const variableName = value
+        .toUpperCase()
+        .replace(/[^A-Z0-9]+/g, '_')
+        .replace(/^_+|_+$/g, '');
+
+      const descriptionPrefix = `Un champ de sélection (${variableName}) pour`;
+      const description = `${descriptionPrefix} ${(this.formGroup.get('description')?.value as string || '').replace(/Un champ de sélection \([^\)]+\) pour /g, '')}`;
+
+      this.formGroup.patchValue({
+        variableName: variableName,
+        description: description
+      });
+
+      this.formGroup.get('variableName')?.markAsTouched();
+      this.formGroup.get('description')?.markAsTouched();
+    });
+  }
+
+  onSubmit(): void {
+    if (this.formGroup.invalid) return;
+
+    this.formGroup.disable();
+
+    const formData = {
+      ...this.formGroup.getRawValue(), // Utiliser getRawValue() au lieu de value
+      managementEntity: this.managementEntity!.id,
+      product: this.data.product,
+      branch: this.data.branch,
+      pricingType: this.data.pricingType,
+      type: FieldType.SELECT,
+    };
+
+    console.log("Submitting form data:", formData);
+    console.log("data", this.data);
+
+    (this.mode == FormMode.EDIT ?
+        (this._fieldService.update(formData, this.data.id))
+        : (this._fieldService.create(formData))
+    ).subscribe({
+      next: () => {
+        const successMessage = this.mode === FormMode.EDIT
+          ? 'form.success.update'
+          : 'form.success.creation';
+
+        this.snackBar.open(
+          this.translocoService.translate(successMessage),
+          undefined,
+          {duration: 3000, panelClass: 'snackbar-success'}
+        );
+        this.dialogRef.close(true);
+      },
+      error: () => {
+        this.snackBar.open(
+          this.translocoService.translate('form.errors.submission'),
+          undefined,
+          {duration: 3000, panelClass: 'snackbar-error'}
+        );
+        this.formGroup.enable();
+      }
+    });
+  }
+
+  onCancel(): void {
+    this.dialogRef.close(false);
+  }
+}
