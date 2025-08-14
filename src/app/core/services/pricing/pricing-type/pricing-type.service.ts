@@ -1,4 +1,4 @@
-import {catchError, Observable, of, ReplaySubject, tap} from "rxjs";
+import {catchError, Observable, of, ReplaySubject, tap, take} from "rxjs";
 import {PricingType} from "./pricing-type.model";
 import {environment} from "@env/environment";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
@@ -66,15 +66,17 @@ export class PricingTypeService {
   delete(id: string): Observable<string> {
     return this._httpClient.delete<string>(`${this.baseUrl}/${id}`).pipe(
       tap(() => {
-        this._pricingTypes.pipe().subscribe((currentList) => {
+        // Utiliser take(1) pour éviter les souscriptions multiples
+        this._pricingTypes.pipe(take(1)).subscribe(currentList => {
           if (currentList) {
-            this.pricingTypes = currentList.filter(item => item.id !== id);
+            // Mettre à jour directement le ReplaySubject sans utiliser le setter
+            this._pricingTypes.next(currentList.filter(item => item.id !== id));
           }
         });
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('Erreur lors de la suppression', error);
-        return of('Erreur de suppression'); // On retourne un observable d'erreur
+        return of('Erreur de suppression');
       })
     );
   }

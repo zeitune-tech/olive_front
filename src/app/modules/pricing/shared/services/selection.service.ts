@@ -95,6 +95,42 @@ export class SelectionService {
     this.setPricingType(undefined);
   }
 
+  // Clear all selections except for a specific list
+  clearAllExcept(selectionsToKeep: SelectionType[]): void {
+    if (!selectionsToKeep.includes('branch')) {
+      this.setBranch(undefined);
+    }
+    if (!selectionsToKeep.includes('product')) {
+      this.setProduct(undefined);
+    }
+    // if (!selectionsToKeep.includes('coverage')) {
+    //   this.setCoverage(undefined);
+    // }
+    if (!selectionsToKeep.includes('pricingType')) {
+      this.setPricingType(undefined);
+    }
+  }
+
+  // Clear a specific selection
+  clearSelection(selection: SelectionType): void {
+    switch (selection) {
+      case 'branch':
+        this.setBranch(undefined);
+        break;
+      case 'product':
+        this.setProduct(undefined);
+        break;
+      case 'pricingType':
+        this.setPricingType(undefined);
+        break;
+      // case 'coverage':
+      //   this.setCoverage(undefined);
+      //   break;
+      default:
+        console.warn(`Unknown selection type: ${selection}`);
+    }
+  }
+
   // Check if all selections are made
   hasAllSelections(selections: SelectionType[]): {
     value: boolean,

@@ -1682,6 +1682,12 @@
         "title": "Types de tarification",
         "description": "Liste des types de tarification",
         "empty_state": "Aucun type de tarification trouvé"
+      },
+      "form": {
+        "create": {
+          "title": "Créer un type de tarification",
+          "subtitle": "Définissez un nouveau type de tarification"
+        }
       }
     },
     "selection": {
@@ -2378,6 +2384,10 @@
   "coverage-selection": {
     "title": "Sélectionner une garantie",
     "change": "Changer de garantie"
+  },
+  "pricing-type-selection": {
+    "title": "Sélectionner un type de tarification",
+    "change": "Changer de type"
   },
   "message": {
     "success": "Opération réussie",

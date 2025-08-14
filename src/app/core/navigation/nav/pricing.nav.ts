@@ -13,6 +13,24 @@ export const defaultPricingNavigation: NavigationItem[] = [
     // permission: PERMISSIONS.VIEW_PRICING_CONSTANTS,
     children: [
       {
+        id: 'pricing',
+        title: 'sidebar.pricing.production.pricing',
+        type: 'collapsable',
+        icon: 'fluent:people-team',
+        link: '/pricing/production/pricing',
+        // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
+        children: [
+          {
+            id: 'pricing-type',
+            title: 'sidebar.pricing.production.pricing_type',
+            type: 'basic',
+            icon: 'fluent:people-team',
+            link: '/pricing/production/pricing-type',
+            // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
+          },
+        ]
+      },
+      {
         id: 'parameters',
         title: 'sidebar.pricing.production.parameters',
         type: 'collapsable',
@@ -111,25 +129,6 @@ export const defaultPricingNavigation: NavigationItem[] = [
           },
         ]
       },
-      {
-        id: 'pricing',
-        title: 'sidebar.pricing.production.pricing',
-        type: 'collapsable',
-        icon: 'fluent:people-team',
-        link: '/pricing/production/pricing',
-        // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
-        children: [
-          {
-            id: 'pricing-type',
-            title: 'sidebar.pricing.production.pricing_type',
-            type: 'basic',
-            icon: 'fluent:people-team',
-            link: '/pricing/production/pricing-type',
-            // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
-          },
-        ]
-      },
-
     ]
   },
   {

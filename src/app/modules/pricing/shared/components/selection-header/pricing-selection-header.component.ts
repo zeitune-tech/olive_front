@@ -12,7 +12,7 @@ import {CoverageService} from '@core/services/settings/coverage/coverage.service
 import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
 import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
 
-export type SelectionType = 'branch' | 'product' | 'pricingType';
+export type SelectionType = 'branch' | 'product' | 'pricingType' | 'coverage';
 
 @Component({
   selector: 'pricing-selection-header',
@@ -37,6 +37,7 @@ export class PricingSelectionHeaderComponent implements OnInit, OnDestroy {
     private _branchService: BranchService,
     private _productService: ProductService,
     private _pricingTypeService: PricingTypeService,
+    private _coverageService: CoverageService,
     private _dialog: MatDialog
   ) {
   }
@@ -80,9 +81,19 @@ export class PricingSelectionHeaderComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(pricingType => {
         this.selectedPricingType = pricingType;
+        if (pricingType) {
+          // this._coverageService.getByPricingType(pricingType.id)
+          //   .pipe(takeUntil(this._unsubscribeAll))
+          //   .subscribe(coverages => {
+          //     this.coverages = coverages || [];
+          //   });
+        }
       });
 
+
   }
+
+  // retrieve all selections form local storage
 
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
@@ -100,6 +111,7 @@ export class PricingSelectionHeaderComponent implements OnInit, OnDestroy {
     }).afterClosed().subscribe((branch: Branch) => {
       if (branch) {
         this._selectionService.setBranch(branch);
+        this._selectionService.clearAllExcept(['branch']);
       }
     });
   }
@@ -115,6 +127,7 @@ export class PricingSelectionHeaderComponent implements OnInit, OnDestroy {
     }).afterClosed().subscribe((product: Product) => {
       if (product) {
         this._selectionService.setProduct(product);
+        this._selectionService.clearAllExcept(['branch', 'product']);
       }
     });
   }
@@ -130,6 +143,7 @@ export class PricingSelectionHeaderComponent implements OnInit, OnDestroy {
     }).afterClosed().subscribe((pricingType: PricingType) => {
       if (pricingType) {
         this._selectionService.setPricingType(pricingType);
+        this._selectionService.clearAllExcept(['branch', 'product', 'pricingType']);
       }
     });
   }

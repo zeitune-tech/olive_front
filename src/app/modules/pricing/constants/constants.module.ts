@@ -21,9 +21,6 @@ import {ConstantListComponent} from "./list/list.component";
 import {ConstantService} from "@core/services/pricing/constant/constant.service";
 import {Constant} from "@core/services/pricing/constant/constant.interface";
 import {ConstantFormComponent} from "./form/form.component";
-import {
-  PricingSelectionHeaderComponent
-} from "../shared/components/selection-header/pricing-selection-header.component";
 import {PricingSharedModule} from "../shared/pricing-shared.module";
 
 @NgModule({
