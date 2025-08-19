@@ -242,7 +242,30 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 link: '/parameters/commissions/contributors-taxes',
             }
         ]
-    }
+    },
+  {
+    id: 'vehicle',
+    title: 'sidebar.vehicle.title',
+    type: 'collapsable',
+    icon: 'fluent:people-team',
+    permission: PERMISSIONS.VIEW_PRODUCTION_REGISTRIES,
+    children: [
+      {
+        id: 'vehicle.vehicle-usage',
+        title: 'sidebar.vehicle.vehicle-usage.title',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/parameters/vehicle/vehicle-usage',
+      },
+      {
+        id: 'vehicle.vehicle-category',
+        title: 'sidebar.vehicle.vehicle-category.title',
+        type: 'basic',
+        icon: 'fluent:people-team',
+        link: '/parameters/vehicle/vehicle-category',
+      }
+    ]
+  },
 
 ];
 
