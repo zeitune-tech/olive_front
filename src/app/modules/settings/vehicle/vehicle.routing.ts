@@ -5,7 +5,7 @@ import {VehicleUsageListComponent} from "./vehicle-usage/list/list.component";
 
 export const routes: Routes = [
   {
-    path: 'vehicle-category',
+    path: 'vehicle-categories',
     canActivate: [],
     canActivateChild: [],
     data: {
@@ -14,12 +14,22 @@ export const routes: Routes = [
     component: VehicleCategoryListComponent
   },
   {
-    path: 'vehicle-usage',
+    path: 'vehicle-usages',
     canActivate: [],
     canActivateChild: [],
     data: {
       // permission: PERMISSIONS.VIEW_PRICING_CONSTANT
     },
     component: VehicleUsageListComponent
+  },
+  {
+    path: 'vehicle-references',
+    canActivate: [],
+    canActivateChild: [],
+    data: {
+      // permission: PERMISSIONS.VIEW_PRICING_CONSTANT
+    },
+    loadChildren: () => import('./vehicle-references/vehicle-references.module').then(m => m.VehicleReferencesModule)
   }
+
 ]

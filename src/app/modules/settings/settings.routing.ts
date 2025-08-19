@@ -100,7 +100,7 @@ export const routes: Routes = [
     loadChildren: () => import('./taux-duration/duration-rate.module').then(m => m.DurationRateModule)
   },
   {
-    path: 'vehicle',
+    path: 'vehicles',
     canActivate: [],
     canActivateChild: [],
     data: {},

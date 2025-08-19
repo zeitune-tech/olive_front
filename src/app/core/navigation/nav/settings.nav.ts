@@ -244,26 +244,60 @@ export const defaultSettingsNavigation: NavigationItem[] = [
         ]
     },
   {
-    id: 'vehicle',
-    title: 'sidebar.vehicle.title',
+    id: 'vehicles',
+    title: 'sidebar.vehicles.title',
     type: 'collapsable',
     icon: 'fluent:people-team',
     permission: PERMISSIONS.VIEW_PRODUCTION_REGISTRIES,
     children: [
       {
-        id: 'vehicle.vehicle-usage',
-        title: 'sidebar.vehicle.vehicle-usage.title',
-        type: 'basic',
+        id: 'vehicles.vehicle-categories-and-usages',
+        title: 'sidebar.vehicles.vehicle-categories-and-usages.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        link: '/parameters/vehicle/vehicle-usage',
+        children: [
+          {
+            id: 'vehicles.vehicle-usages',
+            title: 'sidebar.vehicles.vehicle-usages.title',
+            type: 'basic',
+            icon: 'fluent:people-team',
+            link: '/parameters/vehicles/vehicle-usages',
+          },
+          {
+            id: 'vehicles.vehicle-categories',
+            title: 'sidebar.vehicles.vehicle-categories.title',
+            type: 'basic',
+            icon: 'fluent:people-team',
+            link: '/parameters/vehicles/vehicle-categories',
+          }
+        ]
       },
       {
-        id: 'vehicle.vehicle-category',
-        title: 'sidebar.vehicle.vehicle-category.title',
-        type: 'basic',
+        id: 'vehicles.vehicle-references',
+        title: 'sidebar.vehicles.vehicle-references.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        link: '/parameters/vehicle/vehicle-category',
-      }
+        link: '/parameters/vehicles/vehicle-references',
+        children: [
+          {
+            id: 'vehicles.vehicle-references.brands-list',
+            title: 'sidebar.vehicles.vehicle-references.brands.title',
+            type: 'basic',
+            icon: 'fluent:people-team',
+            link: '/parameters/vehicles/vehicle-references/brands',
+            // permission: PERMISSIONS.ADD_VEHICLE_REFERENCES
+          },
+          {
+            id: 'vehicles.vehicle-references.dtt-list',
+            title: 'sidebar.vehicles.vehicle-references.dtt.title',
+            type: 'basic',
+            icon: 'fluent:people-team',
+            link: '/parameters/vehicles/vehicle-references/dtt',
+            // permission: PERMISSIONS.VIEW_VEHICLE_REFERENCES
+          },
+
+        ]
+      },
     ]
   },
 
