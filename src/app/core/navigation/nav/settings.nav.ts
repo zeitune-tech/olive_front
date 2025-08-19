@@ -158,114 +158,91 @@ export const defaultSettingsNavigation: NavigationItem[] = [
         icon: 'fluent:list-24-regular',
         link: '/parameters/taxes/taxes-primes',
 
-      },
-      {
-        id: 'taxes.accessoires',
-        title: 'sidebar.taxes.accessoires.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/taxes/taxes-accessories',
-      },
-      {
-        id: 'taxes.exoneration',
-        title: 'sidebar.taxes.exoneration',
-        type: 'basic',
-        icon: 'fluent:shield-dismiss-24-regular',
-        link: '/parameters/taxes/taxes-exemption',
-        // permission: PERMISSIONS.VIEW_EXONERATION
-      },
-      {
-        id: 'taxes.timbre-dimension',
-        title: 'sidebar.taxes.timbreDimension',
-        type: 'basic',
-        icon: 'fluent:scale-24-regular',
-        link: '/parameters/taxes/dimension-stamp',
-        // permission: PERMISSIONS.VIEW_TIMBRE_DIMENSION
-      },
-      {
-        id: 'taxes.timbre-gradue',
-        title: 'sidebar.taxes.timbreGradue',
-        type: 'basic',
-        icon: 'fluent:scale-fill-24-regular',
-        link: '/parameters/taxes/graduated-stamp',
-        // permission: PERMISSIONS.VIEW_TIMBRE_GRADUE
-      }
-    ]
-  },
-  {
-    id: 'commissions',
-    title: 'sidebar.commissions.title',
-    type: 'collapsable',
-    icon: 'fluent:money-calculator-24-regular',
-    // permission: PERMISSIONS.VIEW_COMMISSIONS,
-    children: [
-      {
-        id: 'commissions.primes',
-        title: 'sidebar.commissions.primes.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/commissions/primes',
-      },
-      {
-        id: 'commissions.accessoires',
-        title: 'sidebar.commissions.accessoires.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/commissions/accessories'
-      },
-      {
-        id: 'commissions.apporteurs.primes',
-        title: 'sidebar.commissions.apporteurs.primes.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/commissions/contributors-primes',
-      },
-      {
-        id: 'commissions.apporteurs.accessoires',
-        title: 'sidebar.commissions.apporteurs.accessoires.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/commissions/contributors-accessories',
-      },
-      {
-        id: 'commissions.taxes',
-        title: 'sidebar.commissions.taxes.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/commissions/taxes',
-      },
-      {
-        id: 'commissions.apporteurs.taxes',
-        title: 'sidebar.commissions.apporteurs.taxes.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/commissions/contributors-taxes',
-      }
-    ]
-  },
-  {
-    id: 'vehicle',
-    title: 'sidebar.vehicle.title',
-    type: 'collapsable',
-    icon: 'fluent:money-calculator-24-regular',
-    // permission: PERMISSIONS.VIEW_COMMISSIONS,
-    children: [
-      {
-        id: 'usage.list',
-        title: 'sidebar.vehicle.vehicle-usage.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/vehicle/vehicle-usage',
-      },
-      {
-        id: 'category.list',
-        title: 'sidebar.vehicle.vehicle-category.title',
-        type: 'basic',
-        icon: 'fluent:list-24-regular',
-        link: '/parameters/vehicle/vehicle-category',
-      },
-    ]
-  }
+            },
+            {
+              id: 'taxes.accessoires',
+              title: 'sidebar.taxes.accessoires.title',
+              type: 'basic',
+              icon: 'fluent:list-24-regular',
+              link: '/parameters/taxes/taxes-accessories',
+            },
+            {
+              id: 'taxes.exoneration',
+              title: 'sidebar.taxes.exoneration',
+              type: 'basic',
+              icon: 'fluent:shield-dismiss-24-regular',
+              link: '/parameters/taxes/taxes-exemption',
+              // permission: PERMISSIONS.VIEW_EXONERATION
+            },
+            {
+              id: 'taxes.timbre-dimension',
+              title: 'sidebar.taxes.timbreDimension',
+              type: 'basic',
+              icon: 'fluent:scale-24-regular',
+              link: '/parameters/taxes/dimension-stamp',
+              // permission: PERMISSIONS.VIEW_TIMBRE_DIMENSION
+            },
+            {
+            id: 'taxes.timbre-gradue',
+            title: 'sidebar.taxes.timbreGradue',
+            type: 'basic',
+            icon: 'fluent:scale-fill-24-regular',
+            link: '/parameters/taxes/graduated-stamp',
+            // permission: PERMISSIONS.VIEW_TIMBRE_GRADUE
+            }
+        ]
+    },
+    {
+        id: 'commissions',
+        title: 'sidebar.commissions.title',
+        type: 'collapsable',
+        icon: 'fluent:money-calculator-24-regular',
+        // permission: PERMISSIONS.VIEW_COMMISSIONS,
+        children: [
+            {
+                id: 'commissions.primes',
+                title: 'sidebar.commissions.primes.title',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/primes',
+            },
+            {
+                id: 'commissions.accessoires',
+                title: 'sidebar.commissions.accessoires.title',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/accessories'
+            },
+            {
+                id: 'commissions.apporteurs.primes',
+                title: 'sidebar.commissions.apporteurs.primes.title',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/contributors-primes',
+            },
+            {
+                id: 'commissions.apporteurs.accessoires',
+                title: 'sidebar.commissions.apporteurs.accessoires.title',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/contributors-accessories',
+            },
+            {
+                id: 'commissions.taxes',
+                title: 'sidebar.commissions.taxes.title',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/taxes',
+            },
+            {
+                id: 'commissions.apporteurs.taxes',
+                title: 'sidebar.commissions.apporteurs.taxes.title',
+                type: 'basic',
+                icon: 'fluent:list-24-regular',
+                link: '/parameters/commissions/contributors-taxes',
+            }
+        ]
+    }
 
 ];
 

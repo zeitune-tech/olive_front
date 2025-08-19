@@ -3,7 +3,7 @@ import { RouterModule } from "@angular/router";
 import { routes } from "./endorsments.routing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
-import { MatDialogModule } from "@angular/material/dialog";
+import { MatDialogContent, MatDialogModule } from "@angular/material/dialog";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
@@ -21,12 +21,14 @@ import { EndorsementListComponent } from "./list/list.component";
 import { EndorsementNewComponent } from "./new/new.component";
 import { AssignProductComponent } from "./assign-product/assign-product.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { EndorsementSuccessionComponent } from "./endorsement-succession/endorsement-succession.component";
 
 @NgModule({
     declarations: [
         EndorsementListComponent,
         EndorsementNewComponent,
-        AssignProductComponent
+        AssignProductComponent,
+        EndorsementSuccessionComponent
     ],
 
     imports: [
@@ -37,6 +39,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
         MatMenuModule,
         MatTooltipModule,
         MatDialogModule,
+        MatDialogContent,
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
