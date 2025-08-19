@@ -1,130 +1,102 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { EndorsementService, SuccessionRules, Nature } from '@core/services/settings/endorsement/endorsement.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
+import {
+  EndorsementSuccessionService,
+  SuccessionConfig,
+  SuccessionRules,
+  SuccessionRanks,
+  Nature,
+  ALL_NATURES
+} from '@core/services/settings/endorsement/endorsement-succession.service';
 
 interface NatureItem { value: Nature; labelKey: string; }
 
 const NATURES: NatureItem[] = [
-  { value: 'MODIFICATION',                labelKey: 'entities.endorsment.options.nature.MODIFICATION' },
-  { value: 'INCORPORATION',               labelKey: 'entities.endorsment.options.nature.INCORPORATION' },
-  { value: 'RETRACT',                     labelKey: 'entities.endorsment.options.nature.RETRACT' },
-  { value: 'SUSPENSION',                  labelKey: 'entities.endorsment.options.nature.SUSPENSION' },
-  { value: 'REINSTATEMENT_WITH_DISCOUNT', labelKey: 'entities.endorsment.options.nature.REINSTATEMENT_WITH_DISCOUNT' },
-  { value: 'REINSTATEMENT',               labelKey: 'entities.endorsment.options.nature.REINSTATEMENT' },
-  { value: 'RENEWAL',                     labelKey: 'entities.endorsment.options.nature.RENEWAL' },
-  { value: 'CANCELLATION',                labelKey: 'entities.endorsment.options.nature.CANCELLATION' },
+  { value: 'NEW_BUSINESS',               labelKey: 'entities.endorsment.options.nature.NEW_BUSINESS' },
+  { value: 'MODIFICATION',               labelKey: 'entities.endorsment.options.nature.MODIFICATION' },
+  { value: 'INCORPORATION',              labelKey: 'entities.endorsment.options.nature.INCORPORATION' },
+  { value: 'RETRACT',                    labelKey: 'entities.endorsment.options.nature.RETRACT' },
+  { value: 'SUSPENSION',                 labelKey: 'entities.endorsment.options.nature.SUSPENSION' },
+  { value: 'REINSTATEMENT_WITH_DISCOUNT',labelKey: 'entities.endorsment.options.nature.REINSTATEMENT_WITH_DISCOUNT' },
+  { value: 'REINSTATEMENT',              labelKey: 'entities.endorsment.options.nature.REINSTATEMENT' },
+  { value: 'RENEWAL',                    labelKey: 'entities.endorsment.options.nature.RENEWAL' },
+  { value: 'CANCELLATION',               labelKey: 'entities.endorsment.options.nature.CANCELLATION' },
 ];
-
-// Règles par défaut (validées avec toi)
-const DEFAULT_ALLOWED_NEXT: Record<Nature, Nature[]> = {
-  MODIFICATION: ['MODIFICATION','INCORPORATION','RETRACT','SUSPENSION','RENEWAL','CANCELLATION'],
-  INCORPORATION: ['MODIFICATION','INCORPORATION','RETRACT','SUSPENSION','RENEWAL','CANCELLATION'],
-  RETRACT: ['MODIFICATION','INCORPORATION','RETRACT','SUSPENSION','RENEWAL','CANCELLATION'],
-  SUSPENSION: ['REINSTATEMENT_WITH_DISCOUNT','REINSTATEMENT','CANCELLATION'],
-  REINSTATEMENT_WITH_DISCOUNT: ['MODIFICATION','INCORPORATION','RETRACT','SUSPENSION','RENEWAL','CANCELLATION'],
-  REINSTATEMENT: ['MODIFICATION','INCORPORATION','RETRACT','SUSPENSION','RENEWAL','CANCELLATION'],
-  RENEWAL: ['MODIFICATION','INCORPORATION','RETRACT','SUSPENSION','CANCELLATION'],
-  CANCELLATION: [],
-};
 
 @Component({
   selector: 'app-endorsement-succession',
   templateUrl: './endorsement-succession.component.html'
 })
-export class EndorsementSuccessionComponent implements OnInit, OnDestroy {
-
-  @Output() rulesChange = new EventEmitter<Record<Nature, Nature[]>>();
-
-  natures = NATURES;
-  displayedColumns: (Nature | 'from')[] = ['from', ...NATURES.map(n => n.value)];
-  form!: FormGroup;
-
-  /** stockage interne: Set pour toggles rapides */
-  rules: Record<Nature, Set<Nature>> = {} as any;
-
+export class EndorsementSuccessionComponent implements OnInit {
   private _destroy$ = new Subject<void>();
 
-  constructor(
-    private fb: FormBuilder,
-    private endorsementService: EndorsementService
-  ) {}
+  // état
+  rules!: SuccessionRules;
+  ranks!: SuccessionRanks;
+
+  // ordre affiché (lié aux rangs)
+  orderedNatures: NatureItem[] = [...NATURES];
+
+  // colonnes du tableau
+  get displayedColumns(): (Nature | 'from')[] {
+    return ['from', ...this.orderedNatures.map(n => n.value)];
+  }
+
+  constructor(private service: EndorsementSuccessionService) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({});
-
-    // Charger depuis l’API et initialiser la matrice
-    this.endorsementService.loadSuccessionRules().pipe(takeUntil(this._destroy$)).subscribe();
-    this.endorsementService.rules$
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((serverRules) => {
-        const rules = this.isEmpty(serverRules) ? DEFAULT_ALLOWED_NEXT : serverRules;
-        this.applyRules(rules);
-      });
+    this.service.load().pipe(takeUntil(this._destroy$)).subscribe();
+    this.service.config$.pipe(takeUntil(this._destroy$)).subscribe((cfg: SuccessionConfig) => {
+      this.rules = cfg.rules;
+      this.ranks = cfg.ranks;
+      this.applyOrderFromRanks();
+    });
   }
 
   ngOnDestroy(): void {
-    this._destroy$.next();
-    this._destroy$.complete();
+    this._destroy$.next(); this._destroy$.complete();
   }
 
-  /** Réinitialiser aux règles par défaut (locales) */
-  resetToDefaults(): void {
-    this.applyRules(DEFAULT_ALLOWED_NEXT);
+  /* ============ Drag & Drop (rangs) ============ */
+  dropOrder(event: CdkDragDrop<NatureItem[]>): void {
+    moveItemInArray(this.orderedNatures, event.previousIndex, event.currentIndex);
+    // Recalcule des rangs consécutifs: NEW_BUSINESS doit rester 1 si tu veux le verrouiller, sinon laisse tel quel.
+    this.orderedNatures.forEach((n, idx) => {
+      this.ranks[n.value] = idx + 1; // 1..N
+    });
   }
 
-  /** Applique un objet de règles simple dans la structure Set interne */
-  private applyRules(r: Record<Nature, Nature[]>): void {
-    const next: Record<Nature, Set<Nature>> = {} as any;
-    for (const n of this.natures) {
-      next[n.value] = new Set(r[n.value] ?? []);
-    }
-    this.rules = next;
+  private applyOrderFromRanks(): void {
+    this.orderedNatures = [...NATURES].sort((a, b) => (this.ranks[a.value] ?? 999) - (this.ranks[b.value] ?? 999));
   }
 
-  /** true si l’objet de règles est vide ou non initialisé */
-  private isEmpty(r: Partial<SuccessionRules> | undefined | null): boolean {
-    if (!r) return true;
-    return this.natures.every(n => !Array.isArray((r as any)[n.value]) || (r as any)[n.value].length === 0);
-  }
-
+  /* ============ Règles ============ */
   isAllowed(from: Nature, to: Nature): boolean {
-    return this.rules[from]?.has(to) ?? false;
+    return this.rules[from]?.includes(to) ?? false;
   }
 
   toggle(from: Nature, to: Nature): void {
-    const set = this.rules[from];
-    if (set.has(to)) set.delete(to);
-    else set.add(to);
+    const set = new Set(this.rules[from] ?? []);
+    set.has(to) ? set.delete(to) : set.add(to);
+    this.rules = { ...this.rules, [from]: Array.from(set) as Nature[] };
   }
 
   allowAll(from: Nature): void {
-    const all = this.natures.map(n => n.value) as Nature[];
-    this.rules[from] = new Set(all);
+    this.rules = { ...this.rules, [from]: ALL_NATURES as Nature[] };
   }
 
   clearRow(from: Nature): void {
-    this.rules[from] = new Set();
+    this.rules = { ...this.rules, [from]: [] };
   }
 
-  /** Récupère l’objet simple { nature: Nature[] } pour l’API */
-  private getRules(): Record<Nature, Nature[]> {
-    const out: Record<Nature, Nature[]> = {} as any;
-    for (const n of this.natures) {
-      out[n.value] = Array.from(this.rules[n.value] ?? []);
-    }
-    return out;
+  /* ============ Actions globales ============ */
+  resetToDefaults(): void {
+    this.service.resetToDefaults();
   }
 
-  /** Sauvegarde côté serveur + émet l’event sortant (si utilisé par le parent) */
   save(): void {
-    const toSave = this.getRules();
-    this.endorsementService.saveSuccessionRules(toSave)
-      .pipe(takeUntil(this._destroy$))
-      .subscribe((saved) => {
-        // ré-appliquer ce que le serveur a renvoyé (normalisé)
-        this.applyRules(saved);
-        this.rulesChange.emit(saved);
-      });
+    this.service.save({ rules: this.rules, ranks: this.ranks }).pipe(takeUntil(this._destroy$)).subscribe();
   }
 }

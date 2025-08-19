@@ -99,7 +99,7 @@ export const defaultSettingsNavigation: NavigationItem[] = [
                 title: 'sidebar.endorsement.modeFonctionnement',
                 type: 'basic',
                 icon: 'fluent:settings-24-regular',
-                link: '/parameters/mode-fonctionnement-avenants',
+                link: '/parameters/endorsements/access',
                 // permission: PERMISSIONS.VIEW_MODE_FONCTIONNEMENT_AVENANTS
             },
             {

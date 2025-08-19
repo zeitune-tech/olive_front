@@ -22,13 +22,16 @@ import { EndorsementNewComponent } from "./new/new.component";
 import { AssignProductComponent } from "./assign-product/assign-product.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { EndorsementSuccessionComponent } from "./endorsement-succession/endorsement-succession.component";
+import { EndorsementAccessComponent } from "./endorsement-access/endorsement-access.component";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 @NgModule({
     declarations: [
         EndorsementListComponent,
         EndorsementNewComponent,
         AssignProductComponent,
-        EndorsementSuccessionComponent
+        EndorsementSuccessionComponent,
+        EndorsementAccessComponent
     ],
 
     imports: [
@@ -49,7 +52,8 @@ import { EndorsementSuccessionComponent } from "./endorsement-succession/endorse
         SharedModule,
         TableModule,
         MatProgressSpinnerModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        DragDropModule
     ],
     providers: [
         LayoutService

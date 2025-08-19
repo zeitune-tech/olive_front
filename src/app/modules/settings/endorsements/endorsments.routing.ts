@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { EndorsementListComponent } from "./list/list.component";
 import { EndorsementSuccessionComponent } from "./endorsement-succession/endorsement-succession.component";
+import { EndorsementAccessComponent } from "./endorsement-access/endorsement-access.component";
 
 export const routes: Routes = [
     {
@@ -15,5 +16,9 @@ export const routes: Routes = [
     {
         path: "successions",
         component: EndorsementSuccessionComponent,
+    },
+    {
+        path: "access",
+        component: EndorsementAccessComponent,
     }
 ];

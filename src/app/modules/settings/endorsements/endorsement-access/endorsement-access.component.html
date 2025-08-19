@@ -1,0 +1,79 @@
+<div class="w-full space-y-6" *transloco="let t">
+
+  <!-- Sélecteurs -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.endorsment.table.title') || 'Avenant' }}</mat-label>
+      <mat-select [value]="form.value.endorsementId" (selectionChange)="onEndorsementChange($event.value)">
+        <mat-option *ngFor="let e of endorsements" [value]="e.id">{{ e.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ t('entities.access.objects.title') || 'Objet' }}</mat-label>
+      <mat-select [value]="form.value.objectKey" (selectionChange)="onObjectChange($event.value)">
+        <mat-option *ngFor="let o of objects" [value]="o.key">{{ t(o.labelKey) }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="flex items-center justify-end gap-2">
+      <button mat-stroked-button color="primary" class="h-10" (click)="saveOne()">
+        {{ t('form.actions.apply') || 'Appliquer' }}
+      </button>
+      <button mat-raised-button color="primary" class="h-10 text-white" (click)="saveAll()">
+        {{ t('form.actions.save') || 'Enregistrer tout' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Check-list des actions -->
+  <div class="rounded-lg border p-4" *ngIf="form.value.endorsementId && form.value.objectKey">
+    <div class="font-medium mb-2">
+      {{ t('entities.access.actions.title') || 'Actions autorisées' }}
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <mat-checkbox
+        *ngFor="let a of actions"
+        [checked]="isActionChecked(a.key)"
+        (change)="toggleAction(a.key, $event.checked)">
+        {{ t(a.labelKey) }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <!-- Récapitulatif pour l’avenant sélectionné -->
+  <div class="rounded-lg border p-4" *ngIf="form.value.endorsementId">
+    <div class="font-medium mb-2">
+      {{ t('entities.access.summary.title') || 'Récapitulatif des accès (avenant sélectionné)' }}
+    </div>
+
+    <table class="min-w-full">
+      <thead>
+        <tr class="text-left text-sm text-muted-foreground">
+          <th class="py-2 px-2">{{ t('entities.access.objects.title') || 'Objet' }}</th>
+          <th class="py-2 px-2">{{ t('entities.access.actions.title') || 'Actions' }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let o of objects">
+          <td class="py-2 px-2">{{ t(o.labelKey) }}</td>
+          <td class="py-2 px-2">
+            <ng-container *ngIf="currentMatrix[o.key]?.length; else empty">
+              <span class="inline-flex flex-wrap gap-1">
+                <span
+                  *ngFor="let a of currentMatrix[o.key]"
+                  class="px-2 py-0.5 rounded-full border text-xs">
+                  {{ t('entities.access.actions.' + a) }}
+                </span>
+              </span>
+            </ng-container>
+            <ng-template #empty>
+              <span class="text-sm text-muted-foreground">—</span>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

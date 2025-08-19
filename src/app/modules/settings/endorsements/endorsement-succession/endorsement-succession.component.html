@@ -1,6 +1,7 @@
-<div class="w-full p-4 flex flex-col gap-4" *transloco="let t;" tabindex="0">
-  <!-- Titre et Description -->
-  <div class="flex flex-col mb-6">
+<div class="w-full p-4 flex flex-col gap-4" *transloco="let t" tabindex="0">
+
+  <!-- Titre / Description -->
+  <div class="flex flex-col mb-4">
     <h1 class="text-2xl md:text-4xl font-bold py-4">
       {{ t('modules.settings.features.endorsements_successions') }}
     </h1>
@@ -9,44 +10,64 @@
     </p>
   </div>
 
+  <!-- Actions -->
   <div class="flex flex-col md:flex-row items-center gap-4 justify-end">
     <div class="flex items-center gap-2">
-        <button mat-stroked-button color="primary" class="h-11" (click)="resetToDefaults()">
-          {{ t('common.reset') || 'Réinitialiser' }}
-        </button>
-        <button mat-raised-button color="primary" class="h-12 text-white" (click)="save()">
-          {{ t('form.actions.save') || 'Enregistrer' }}
-        </button>
+      <button mat-stroked-button color="primary" class="h-11" (click)="resetToDefaults()">
+        {{ t('common.reset') || 'Réinitialiser' }}
+      </button>
+      <button mat-raised-button color="primary" class="h-12 text-white" (click)="save()">
+        {{ t('form.actions.save') || 'Enregistrer' }}
+      </button>
     </div>
   </div>
 
+  <!-- Barre d’ordre (Drag & Drop) -->
+  <div class="rounded-md border p-3">
+    <div class="text-sm font-medium mb-2">
+      {{ t('entities.endorsment.succession.order') || 'Ordre (rang) des natures' }}
+    </div>
+
+    <div cdkDropList class="flex flex-wrap gap-2" (cdkDropListDropped)="dropOrder($event)">
+      <div class="px-3 py-1 rounded-full border flex items-center gap-1 cursor-move select-none"
+           *ngFor="let n of orderedNatures" cdkDrag>
+        <mat-icon class="text-base">drag_indicator</mat-icon>
+        <span>{{ t(n.labelKey) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Matrice des règles -->
   <div class="overflow-auto rounded-md border">
-    <table mat-table [dataSource]="natures" class="w-full min-w-[720px]">
+    <table mat-table [dataSource]="orderedNatures" class="w-full min-w-[720px]">
+
       <!-- Colonne FROM -->
-      <ng-container matColumnDef="from">
-        <th mat-header-cell *matHeaderCellDef class="px-3 py-2 text-left">
-          {{ t('entities.endorsment.succession.from') || 'Depuis / Vers' }}
-        </th>
-        <td mat-cell *matCellDef="let row" class="px-3 py-2">
-          <div class="flex items-center gap-2">
-            <div class="font-medium">
-              {{ t(row.labelKey) }}
-            </div>
+    <ng-container matColumnDef="from">
+      <th mat-header-cell *matHeaderCellDef class="px-3 py-2 text-left">
+        {{ t('entities.endorsment.succession.from') || 'Depuis / Vers' }}
+      </th>
+      <td mat-cell *matCellDef="let row" class="px-3 py-2">
+        <div class="flex items-center justify-between gap-4">
+          <!-- Libellé avenant -->
+          <div class="font-medium min-w-[180px]">
+            {{ t(row.labelKey) }}
+          </div>
 
-            <span class="flex-1"></span>
-
-            <button mat-button color="primary" (click)="allowAll(row.value)">
+          <!-- Boutons alignés à droite -->
+          <div class="flex gap-2 shrink-0">
+            <button mat-button color="primary" class="min-w-[120px] whitespace-nowrap" (click)="allowAll(row.value)">
               {{ t('common.select_all') || 'Tout cocher' }}
             </button>
-            <button mat-button color="warn" (click)="clearRow(row.value)">
+            <button mat-button color="warn" class="min-w-[120px] whitespace-nowrap" (click)="clearRow(row.value)">
               {{ t('common.clear') || 'Tout décocher' }}
             </button>
           </div>
-        </td>
-      </ng-container>
+        </div>
+      </td>
+    </ng-container>
 
-      <!-- Colonnes TO (toutes les natures cibles) -->
-      <ng-container *ngFor="let col of natures" [matColumnDef]="col.value">
+      <!-- Colonnes TO (dans le même ordre drag & drop) -->
+      <ng-container *ngFor="let col of orderedNatures" [matColumnDef]="col.value">
         <th mat-header-cell *matHeaderCellDef class="px-3 py-2 text-center whitespace-nowrap">
           {{ t(col.labelKey) }}
         </th>
