@@ -141,7 +141,19 @@
         "generatesCharacteristic": "Génère des caractéristiques",
         "reference": "Garanties",
         "product": "Produit",
-        "managementEntity": "Entité de gestion"
+        "managementEntity": "Entité de gestion",
+        "liability": "Responsabilité Civile",
+        "collision": "Collision",
+        "comprehensive": "Tous Risques",
+        "theft": "Vol",
+        "fire": "Incendie",
+        "vandalism": "Vandalisme",
+        "naturalDisasters": "Catastrophes Naturelles",
+        "glassBreakage": "Bris de Glace",
+        "personalAccident": "Accident Corporel",
+        "legalProtection": "Protection Juridique",
+        "roadside": "Assistance",
+        "replacementVehicle": "Véhicule de Remplacement"
       },
       "options": {
         "calculationMode": {
@@ -155,6 +167,15 @@
           "MANDATORY": "Obligatoire",
           "RECOMMANDED": "Recommandée"
         }
+      },
+
+      "title": "Garanties",
+      "deductibles": {
+        "title": "Franchises",
+        "none": "Aucune",
+        "fixed": "Fixe",
+        "percentage": "Pourcentage",
+        "amount": "Montant"
       }
     },
     "incompatible_coverage": {
@@ -963,67 +984,6 @@
         "empty_state": "Aucun timbre gradué trouvé"
       }
     },
-    "insured": {
-      "table": {
-        "title": "Assurés"
-      },
-      "form": {
-        "title": "Créer un assuré",
-        "subtitle": "Créer un nouvel assuré",
-        "description": "Remplissez les informations de l'assuré",
-        "select_label": "Sélectionner un assuré",
-        "selected_message": "Assuré sélectionné avec succès"
-      },
-      "fields": {
-        "lastName": "Nom",
-        "firstName": "Prénom",
-        "birthDate": "Date de naissance",
-        "gender": "Sexe",
-        "maritalStatus": "Situation familiale",
-        "address": "Adresse",
-        "city": "Ville",
-        "postalCode": "Code postal",
-        "email": "Adresse e-mail",
-        "phone": "Téléphone",
-        "licenseNumber": "Numéro de permis",
-        "licenseIssueDate": "Date de délivrance du permis",
-        "licenseCategory": "Catégorie de permis",
-        "registrationDate": "Date d'enregistrement",
-        "profession": "Profession",
-        "employmentStatus": "Statut professionnel"
-      }
-    },
-    "vehicle": {
-      "table": {
-        "title": "Véhicules"
-      },
-      "form": {
-        "title": "Créer un véhicule",
-        "subtitle": "Ajouter un nouveau véhicule",
-        "description": "Remplissez les informations du véhicule",
-        "select_label": "Sélectionner un véhicule",
-        "selected_message": "Véhicule sélectionné avec succès"
-      },
-      "fields": {
-        "licensePlate": "Immatriculation",
-        "brand": "Marque",
-        "model": "Modèle",
-        "fuelType": "Type de carburant",
-        "gearboxType": "Type de boîte",
-        "fiscalPower": "Puissance fiscale",
-        "realPower": "Puissance réelle",
-        "seatingCapacity": "Nombre de places",
-        "firstRegistrationDate": "Date de première mise en circulation",
-        "initialValue": "Valeur à neuf",
-        "currentValue": "Valeur actuelle",
-        "vin": "Numéro de châssis (VIN)",
-        "vehicleUsage": "Usage du véhicule",
-        "vehicleType": "Type de véhicule",
-        "mileage": "Kilométrage",
-        "usualParkingLocation": "Lieu de stationnement habituel",
-        "insured": "Assuré"
-      }
-    },
     "contract": {
       "form": {
         "title": "Nouveau contrat",
@@ -1034,7 +994,10 @@
         "productionRegistry": "Registre de production",
         "product": "Produit",
         "durationRate": "Taux de durée",
-        "startDate": "Date de début"
+        "startDate": "Date de début",
+        "pricing": "Tarification",
+        "attributeKey": "Clé d'Attribut",
+        "attributeValue": "Valeur d'Attribut"
       },
       "steps": {
         "contract_info": "Informations du contrat",
@@ -1665,6 +1628,337 @@
           "add_variable_condition": "Ajouter une variable conditionnée"
         }
       }
+    },
+    "policy": {
+      "form": {
+        "title": "Nouvelle Police d'Assurance Automobile",
+        "subtitle": "Créez une nouvelle police d'assurance automobile mono-risque"
+      },
+      "steps": {
+        "producer": "Producteur",
+        "insured": "Assuré",
+        "vehicle": "Véhicule",
+        "advanced": "Options Avancées",
+        "extra": "Attributs Véhicule",
+        "coverages": "Garanties",
+        "premiums": "Calcul de Prime",
+        "summary": "Résumé"
+      },
+      "fields": {
+        "policyNumber": "Numéro de Police",
+        "effectiveDate": "Date d'Effet",
+        "expirationDate": "Date d'Échéance",
+        "status": "Statut",
+        "branch": "Branche",
+        "contractType": "Type de Contrat",
+        "premium": "Prime",
+        "totalPremium": "Prime Totale",
+        "netPremium": "Prime Nette",
+        "taxes": "Taxes",
+        "paymentMode": "Mode de Paiement",
+        "fractionation": "Fractionnement",
+        "company": "Compagnie",
+        "pointOfSale": "Point de Vente",
+        "reference": "Référence",
+        "noteNumber": "Numéro de Note",
+        "product": "Produit",
+        "numberOfVehicles": "Nombre de Véhicules",
+        "durationRate": "Taux de Durée",
+        "startDate": "Date de Début",
+        "typeContract": "Type de Contrat",
+        "natureContract": "Nature du Contrat",
+        "createdBy": "Créé par",
+        "createdAt": "Créé le",
+        "title": "Civilité",
+        "lastName": "Nom",
+        "firstName": "Prénom",
+        "birthDate": "Date de Naissance",
+        "idType": "Type de Pièce d'Identité",
+        "idNumber": "Numéro de Pièce d'Identité",
+        "address": "Adresse",
+        "city": "Ville",
+        "email": "Email",
+        "phone": "Téléphone",
+        "mobile": "Mobile",
+        "socioProfessionalGroup": "Groupe Socio-Professionnel",
+        "profession": "Profession",
+        "activity": "Activité",
+        "quality": "Qualité",
+        "companyName": "Nom de l'Entreprise",
+        "patent": "Patente",
+        "commercialRegister": "Registre de Commerce",
+        "tariffType": "Type de Tarif",
+        "tariffLabel": "Libellé du Tarif",
+        "bonusMalusRegime": "Régime Bonus-Malus",
+        "bonusMalusCoefficient": "Coefficient Bonus-Malus",
+        "discountLabel": "Libellé de Réduction",
+        "discountAmount": "Montant de Réduction",
+        "accessoryAmount": "Montant Accessoire",
+        "stampType": "Type de Timbre",
+        "stampQuantity": "Quantité de Timbres",
+        "stampValue": "Valeur du Timbre",
+        "stampCpTg": "CP/TG",
+        "taxExemptionCode": "Code d'Exonération",
+        "taxExemptionLabel": "Libellé d'Exonération"
+      },
+      "status": {
+        "draft": "Brouillon",
+        "inValidation": "En Cours de Validation",
+        "validated": "Validée",
+        "active": "Active",
+        "suspended": "Suspendue",
+        "terminated": "Résiliée",
+        "expired": "Expirée"
+      }
+    },
+    "risk": {
+      "fields": {
+        "registrationNumber": "Numéro d'Immatriculation",
+        "orderNumber": "Numéro d'Ordre",
+        "brand": "Marque",
+        "modelType": "Type/Modèle",
+        "category": "Catégorie",
+        "registrationDate": "Date de Mise en Circulation",
+        "energyType": "Type d'Énergie",
+        "chassisNumber": "Numéro de Châssis",
+        "engineNumber": "Numéro de Moteur",
+        "bodyType": "Type de Carrosserie",
+        "turbo": "Turbo",
+        "creditDelivery": "Livraison à Crédit",
+        "withTrailer": "Avec Remorque",
+        "flammableMaterial": "Matières Inflammables",
+        "power": "Puissance",
+        "payload": "Charge Utile",
+        "cylinder": "Cylindrée",
+        "seats": "Nombre de Places",
+        "catalogValue": "Valeur Catalogue",
+        "declaredValue": "Valeur Déclarée",
+        "certificateNumber": "Numéro de Certificat"
+      }
+    },
+    "insured": {
+      "table": {
+        "title": "Assurés"
+      },
+      "form": {
+        "title": "Créer un assuré",
+        "subtitle": "Créer un nouvel assuré",
+        "description": "Remplissez les informations de l'assuré",
+        "select_label": "Sélectionner un assuré",
+        "selected_message": "Assuré sélectionné avec succès"
+      },
+      "title": "Informations de l'Assuré",
+      "fields": {
+        "clientNumber": "Numéro Client",
+        "civility": "Civilité",
+        "lastName": "Nom",
+        "firstName": "Prénom",
+        "maidenName": "Nom de Jeune Fille",
+        "birthDate": "Date de Naissance",
+        "birthPlace": "Lieu de Naissance",
+        "nationality": "Nationalité",
+        "maritalStatus": "Situation Familiale",
+        "numberOfChildren": "Nombre d'Enfants",
+        "profession": "Profession",
+        "employer": "Employeur",
+        "income": "Revenus",
+        "mainAddress": "Adresse Principale",
+        "correspondenceAddress": "Adresse de Correspondance",
+        "mobile": "Mobile",
+        "rib": "RIB",
+        "gender": "Sexe",
+        "address": "Adresse",
+        "city": "Ville",
+        "postalCode": "Code postal",
+        "email": "Adresse e-mail",
+        "phone": "Téléphone",
+        "licenseNumber": "Numéro de permis",
+        "licenseIssueDate": "Date de délivrance du permis",
+        "licenseCategory": "Catégorie de permis",
+        "registrationDate": "Date d'enregistrement",
+        "employmentStatus": "Statut professionnel"
+      },
+      "civility": {
+        "mr": "Monsieur",
+        "mrs": "Madame",
+        "miss": "Mademoiselle"
+      },
+      "maritalStatus": {
+        "single": "Célibataire",
+        "married": "Marié(e)",
+        "divorced": "Divorcé(e)",
+        "widowed": "Veuf/Veuve",
+        "pacs": "Pacsé(e)",
+        "concubinage": "Concubinage"
+      }
+    },
+    "vehicle": {
+      "table": {
+        "title": "Véhicules"
+      },
+      "form": {
+        "title": "Créer un véhicule",
+        "subtitle": "Ajouter un nouveau véhicule",
+        "description": "Remplissez les informations du véhicule",
+        "select_label": "Sélectionner un véhicule",
+        "selected_message": "Véhicule sélectionné avec succès"
+      },
+      "title": "Informations du Véhicule",
+      "fields": {
+        "registration": "Immatriculation",
+        "serialNumber": "Numéro de Série (VIN)",
+        "registrationCard": "Carte Grise",
+        "brand": "Marque",
+        "model": "Modèle",
+        "version": "Version",
+        "modelYear": "Année Modèle",
+        "firstRegistrationYear": "Année de Première Mise en Circulation",
+        "power": "Puissance",
+        "fiscalPower": "Puissance Fiscale",
+        "realPower": "Puissance Réelle",
+        "energy": "Énergie",
+        "transmission": "Transmission",
+        "numberOfSeats": "Nombre de Places",
+        "weight": "Poids",
+        "emptyWeight": "Poids à Vide",
+        "totalWeight": "Poids Total Autorisé en Charge",
+        "usage": "Usage",
+        "annualMileage": "Kilométrage Annuel",
+        "parkingLocation": "Lieu de Stationnement",
+        "marketValue": "Valeur Vénale",
+        "purchaseValue": "Valeur d'Achat",
+        "purchaseDate": "Date d'Achat",
+        "financing": "Financement",
+        "licensePlate": "Immatriculation",
+        "fuelType": "Type de carburant",
+        "gearboxType": "Type de boîte",
+        "seatingCapacity": "Nombre de places",
+        "firstRegistrationDate": "Date de première mise en circulation",
+        "initialValue": "Valeur à neuf",
+        "currentValue": "Valeur actuelle",
+        "vin": "Numéro de châssis (VIN)",
+        "vehicleUsage": "Usage du véhicule",
+        "vehicleType": "Type de véhicule",
+        "mileage": "Kilométrage",
+        "usualParkingLocation": "Lieu de stationnement habituel",
+        "insured": "Assuré"
+      },
+      "energy": {
+        "gasoline": "Essence",
+        "diesel": "Diesel",
+        "electric": "Électrique",
+        "hybrid": "Hybride",
+        "gpl": "GPL",
+        "ethanol": "Éthanol"
+      },
+      "transmission": {
+        "manual": "Manuelle",
+        "automatic": "Automatique",
+        "semiAutomatic": "Semi-Automatique"
+      },
+      "usage": {
+        "private": "Privé",
+        "professional": "Professionnel",
+        "mixed": "Mixte",
+        "commercial": "Commercial",
+        "publicTransport": "Transport Public"
+      },
+      "parkingLocation": {
+        "garage": "Garage",
+        "coveredParking": "Parking Couvert",
+        "openParking": "Parking Ouvert",
+        "street": "Rue",
+        "securedParking": "Parking Sécurisé"
+      },
+      "financing": {
+        "cash": "Comptant",
+        "credit": "Crédit",
+        "leasing": "Leasing",
+        "loa": "LOA",
+        "lld": "LLD"
+      }
+    },
+    "equipment": {
+      "title": "Équipements et Sécurité",
+      "fields": {
+        "airConditioning": "Climatisation",
+        "gps": "GPS",
+        "sunroof": "Toit Ouvrant",
+        "leatherSeats": "Sièges Cuir",
+        "alloyWheels": "Jantes Alliage",
+        "alarm": "Alarme",
+        "immobilizer": "Antidémarrage",
+        "centralLocking": "Verrouillage Centralisé",
+        "abs": "ABS",
+        "esp": "ESP",
+        "airbags": "Airbags",
+        "parkingSensors": "Capteurs de Stationnement",
+        "reversCamera": "Caméra de Recul",
+        "cruiseControl": "Régulateur de Vitesse"
+      }
+    },
+    "drivingLicense": {
+      "title": "Permis de Conduire",
+      "fields": {
+        "number": "Numéro",
+        "obtainedDate": "Date d'Obtention",
+        "expirationDate": "Date d'Expiration",
+        "categories": "Catégories",
+        "issuingCountry": "Pays d'Émission",
+        "remainingPoints": "Points Restants",
+        "suspensions": "Suspensions",
+        "valid": "Valide"
+      },
+      "categories": {
+        "a": "A - Motocyclettes",
+        "a1": "A1 - Motocyclettes légères",
+        "a2": "A2 - Motocyclettes de puissance intermédiaire",
+        "b": "B - Voitures particulières",
+        "b1": "B1 - Quadricycles lourds",
+        "be": "BE - Voitures avec remorque",
+        "c": "C - Camions",
+        "c1": "C1 - Camions légers",
+        "ce": "CE - Camions avec remorque",
+        "c1e": "C1E - Camions légers avec remorque",
+        "d": "D - Autobus",
+        "d1": "D1 - Minibus",
+        "de": "DE - Autobus avec remorque",
+        "d1e": "D1E - Minibus avec remorque"
+      }
+    },
+    "producer": {
+      "title": "Informations Producteur",
+      "fields": {
+        "code": "Code Producteur",
+        "name": "Nom",
+        "agency": "Agence",
+        "region": "Région",
+        "commission": "Commission"
+      }
+    },
+    "address": {
+      "fields": {
+        "line1": "Adresse Ligne 1",
+        "line2": "Adresse Ligne 2",
+        "postalCode": "Code Postal",
+        "city": "Ville",
+        "country": "Pays",
+        "type": "Type d'Adresse"
+      },
+      "types": {
+        "home": "Domicile",
+        "work": "Travail",
+        "correspondence": "Correspondance",
+        "billing": "Facturation"
+      }
+    },
+    "contact": {
+      "types": {
+        "phone": "Téléphone",
+        "mobile": "Mobile",
+        "fax": "Fax",
+        "email": "Email"
+      }
     }
   },
   "auth": {
@@ -1978,6 +2272,15 @@
   },
 
   "form": {
+    "messages": {
+      "loading": "Chargement en cours...",
+      "saving": "Enregistrement en cours...",
+      "saved": "Enregistré avec succès",
+      "error": "Une erreur s'est produite",
+      "noData": "Aucune donnée disponible",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+      "unsavedChanges": "Vous avez des modifications non enregistrées. Voulez-vous continuer ?"
+    },
     "fields": {
       "search": "Rechercher",
       "checkboxes": "Cases à cocher",
@@ -2016,7 +2319,19 @@
       "labelMaxLength": "Le libellé ne peut pas dépasser {{max}} caractères",
       "idRequired": "L'ID de la valeur d'option est requis",
       "idRequiredForDeletion": "L'ID de la valeur d'option est requis pour la suppression",
-      "errors": "Erreurs de validation: {{errors}}"
+      "errors": "Erreurs de validation: {{errors}}",
+      "required": "Ce champ est obligatoire",
+      "email": "Format d'email invalide",
+      "phone": "Format de téléphone invalide",
+      "date": "Format de date invalide",
+      "number": "Doit être un nombre",
+      "min": "Valeur minimale : {{min}}",
+      "max": "Valeur maximale : {{max}}",
+      "minLength": "Longueur minimale : {{min}} caractères",
+      "maxLength": "Longueur maximale : {{max}} caractères",
+      "pattern": "Format invalide",
+      "unique": "Cette valeur existe déjà",
+      "dateRange": "La date de fin doit être postérieure à la date de début"
     },
     "operations": {
       "create": "Création de la valeur d'option",
@@ -2057,7 +2372,13 @@
       "addInsured": "Ajouter un assuré",
       "removeInsured": "Supprimer l'assuré",
       "addCoverage": "Ajouter un garantie",
-      "removeCoverage": "Supprimer la garantie"
+      "removeCoverage": "Supprimer la garantie",
+      "back": "Retour",
+      "submit": "Soumettre",
+      "search": "Rechercher",
+      "reset": "Réinitialiser",
+      "validate": "Valider",
+      "calculate": "Calculer"
     },
     "numeric-field": {
       "actions": {
@@ -2330,7 +2651,18 @@
         "users": "Rechercher des utilisateurs..."
       }
     },
-    "no-data": "Aucun résultat trouvé"
+    "no-data": "Aucun résultat trouvé",
+    "yes": "Oui",
+    "no": "Non",
+    "optional": "Optionnel",
+    "required": "Obligatoire",
+    "all": "Tous",
+    "none": "Aucun",
+    "other": "Autre",
+    "unknown": "Inconnu",
+    "notSpecified": "Non spécifié",
+    "currency": "€",
+    "percentage": "%"
   },
   "entity": {
     "select": {
@@ -2361,6 +2693,16 @@
   "actions": {
     "add-rule": "Ajouter une règle",
     "add-condition": "Ajouter une condition"
+  },
+  "documents": {
+    "contract": {
+      "title": "Document de Contrat",
+      "subtitle": "Contrat d'Assurance Automobile"
+    },
+    "certificate": {
+      "title": "Attestation d'Assurance",
+      "subtitle": "Attestation d'Assurance Automobile"
+    }
   },
   "action_button": {
     "create": "Créer",
