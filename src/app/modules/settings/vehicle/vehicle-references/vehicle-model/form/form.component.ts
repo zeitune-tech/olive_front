@@ -7,16 +7,14 @@ import { ManagementEntityService } from '@core/services/administration/managemen
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import {Cons, Subject, takeUntil} from 'rxjs';
 import { FormMode } from '@shared/enum/form.enum';
-import {VehicleDTTReferential} from "@core/services/settings/vehicle/referential/dtt/vehicle-dtt-referential.model";
-import {
-  VehicleDTTReferentialService
-} from "@core/services/settings/vehicle/referential/dtt/vehicle-dtt-referential.service";
+import {VehicleModel} from "@core/services/settings/vehicle/referential/model/vehicle-model.model";
+import {VehicleModelService} from "@core/services/settings/vehicle/referential/model/vehicle-model.service";
 
 @Component({
   selector: 'app-vehicle-usage-edit',
   templateUrl: './form.component.html'
 })
-export class VehicleDTTReferentialFormComponent implements OnInit {
+export class VehicleModelFormComponent implements OnInit {
 
   formGroup!: FormGroup;
   message = '';
@@ -26,12 +24,12 @@ export class VehicleDTTReferentialFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<VehicleDTTReferentialFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: VehicleDTTReferential,
+    private dialogRef: MatDialogRef<VehicleModelFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: VehicleModel,
     private translocoService: TranslocoService,
     private snackBar: MatSnackBar,
     private _managementEntityService: ManagementEntityService,
-    private _vehicleBrandService: VehicleDTTReferentialService,
+    private _vehicleModelService: VehicleModelService,
   ) {}
 
 
@@ -39,10 +37,10 @@ export class VehicleDTTReferentialFormComponent implements OnInit {
     // Récupérer les couvertures
     this.mode = (this.data as any).mode;
     if (this.mode == FormMode.EDIT) {
-      this.dialogRef.updateSize('700px', 'auto');
+      this.dialogRef.updateSize('600px', 'auto');
     } else {
-      // this.data = {} as VehicleDTTReferential;
-      this.dialogRef.updateSize('700px', 'auto');
+      // this.data = {} as VehicleModel;
+      this.dialogRef.updateSize('600px', 'auto');
     }
 
     this._managementEntityService.entity$.subscribe((entity) => {
@@ -50,17 +48,7 @@ export class VehicleDTTReferentialFormComponent implements OnInit {
     });
 
     this.formGroup = this.fb.group({
-      name: [{value: this.data.name || '', disabled: false}, Validators.required],
-      registrationNumber: [{value: this.data.registrationNumber || '', disabled: false}, Validators.required],
-      'model.name': [{value: this.data.model.name || '', disabled: false}, Validators.required],
-      'model.motorizationType': [{value: this.data.model.motorizationType || '', disabled: false}, Validators.required],
-      'model.bodywork': [{value: this.data.model.bodywork || '', disabled: false}, Validators.required],
-      'model.placeCount': [{value: this.data.model.placeCount || '', disabled: false}, Validators.required],
-      'model.hasTurbo': [{value: this.data.model.hasTurbo || '', disabled: false}, Validators.required],
-      'model.horsepower': [{value: this.data.model.horsepower || '', disabled: false}, Validators.required],
-      'model.displacement': [{value: this.data.model.displacement || '', disabled: false}, Validators.required],
-      'model.weight': [{value: this.data.model.weight || '', disabled: false}, Validators.required],
-      'model.nature': [{value: this.data.model.nature || '', disabled: false}, Validators.required],
+      name: [this.data.name || '', Validators.required],
     });
 
   }
@@ -79,7 +67,7 @@ export class VehicleDTTReferentialFormComponent implements OnInit {
 
     console.log("Submitting form data:", formData);
 
-    (this.mode === FormMode.EDIT ? this._vehicleBrandService.update(formData, this.data.id) : this._vehicleBrandService.create(formData))
+    (this.mode === FormMode.EDIT ? this._vehicleModelService.update(formData, this.data.id) : this._vehicleModelService.create(formData))
       .subscribe({
         next: () => {
           const successMessage = this.mode === FormMode.EDIT

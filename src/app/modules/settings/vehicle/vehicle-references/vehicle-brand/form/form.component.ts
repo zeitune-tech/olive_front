@@ -9,9 +9,10 @@ import {Cons, Subject, takeUntil} from 'rxjs';
 import { FormMode } from '@shared/enum/form.enum';
 import {VehicleBrand} from "@core/services/settings/vehicle/referential/brand/vehicle-brand.model";
 import {VehicleBrandService} from "@core/services/settings/vehicle/referential/brand/vehicle-brand.service";
+import {VehicleModel} from "@core/services/settings/vehicle/referential/model/vehicle-model.model";
 
 @Component({
-  selector: 'app-vehicle-usage-edit',
+  selector: 'app-vehicle-brand-edit',
   templateUrl: './form.component.html'
 })
 export class VehicleBrandFormComponent implements OnInit {
@@ -32,8 +33,8 @@ export class VehicleBrandFormComponent implements OnInit {
     private _vehicleBrandService: VehicleBrandService,
   ) {}
 
-
   ngOnInit(): void {
+
     // Récupérer les couvertures
     this.mode = (this.data as any).mode;
     if (this.mode == FormMode.EDIT) {

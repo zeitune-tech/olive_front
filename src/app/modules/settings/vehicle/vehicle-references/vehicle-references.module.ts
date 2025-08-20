@@ -25,13 +25,18 @@ import {VehicleDTTReferentialFormComponent} from "./vehicle-dtt-referential/form
 import {
   VehicleDTTReferentialService
 } from "@core/services/settings/vehicle/referential/dtt/vehicle-dtt-referential.service";
+import {VehicleModelListComponent} from "./vehicle-model/list/list.component";
+import {VehicleModelFormComponent} from "./vehicle-model/form/form.component";
+import {VehicleModelService} from "@core/services/settings/vehicle/referential/model/vehicle-model.service";
 
 @NgModule({
   declarations: [
     VehicleBrandListComponent,
     VehicleBrandFormComponent,
     VehicleDTTReferentialListComponent,
-    VehicleDTTReferentialFormComponent
+    VehicleDTTReferentialFormComponent,
+    VehicleModelListComponent,
+    VehicleModelFormComponent
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -55,6 +60,7 @@ import {
   exports: [],
   providers: [
     VehicleBrandService,
+    VehicleModelService,
     VehicleDTTReferentialService,
   ]
 })

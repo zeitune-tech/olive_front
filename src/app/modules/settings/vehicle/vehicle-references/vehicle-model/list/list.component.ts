@@ -1,5 +1,5 @@
 import {SelectionModel} from "@angular/cdk/collections";
-import {AfterViewInit, Component, model, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {UntypedFormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {MatPaginator} from "@angular/material/paginator";
@@ -12,45 +12,42 @@ import {Product} from "@core/services/settings/product/product.interface";
 import {animations} from "@lhacksrt/animations";
 import {TableOptions, TableColumn} from "@lhacksrt/components/table/table.interface";
 import {Subject, takeUntil} from "rxjs";
-import {VehicleDTTReferentialFormComponent} from "../form/form.component";
+import {VehicleModelFormComponent} from "../form/form.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-delete.component";
-import {VehicleDTTReferential} from "@core/services/settings/vehicle/referential/dtt/vehicle-dtt-referential.model";
-import {
-  VehicleDTTReferentialService
-} from "@core/services/settings/vehicle/referential/dtt/vehicle-dtt-referential.service";
 import {VehicleModel} from "@core/services/settings/vehicle/referential/model/vehicle-model.model";
+import {VehicleModelService} from "@core/services/settings/vehicle/referential/model/vehicle-model.service";
 
 @Component({
-  selector: "app-vehicle-dtt-referential-list",
+  selector: "app-vehicle-model-list",
   templateUrl: "./list.component.html",
   animations: animations
 })
-export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class VehicleModelListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  tableOptions!: TableOptions<VehicleDTTReferential>;
+  tableOptions!: TableOptions<VehicleModel>;
 
   // Pour les mat-header-row
   groupHeader: string[] = [];
   subHeader: string[] = [];
   visibleColumns: string[] = [];
 
-  dataSource = new MatTableDataSource<VehicleDTTReferential>([]); // Ajoute les données réelles ici
+  dataSource = new MatTableDataSource<VehicleModel>([]); // Ajoute les données réelles ici
 
   doResolve() {
-    this._vehicleDTTReferential.getAll()
+    this._vehicleModelService.getAll()
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe();
   }
 
   loadValues() {
-    this._vehicleDTTReferential.vehicleDttReferentials$
+    this._vehicleModelService.vehicleModels$
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((vehicleDttReferential: VehicleDTTReferential[]) => {
-        this.dataSource.data = vehicleDttReferential;
-        this.data = vehicleDttReferential;
+      .subscribe((vehicleModels: VehicleModel[]) => {
+        this.dataSource.data = vehicleModels;
+        this.data = vehicleModels;
       });
   }
 
@@ -96,19 +93,23 @@ export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit
     this.tableOptions = {
       title: '',
       columns: [
-        {label: 'entities.vehicle-dtt-referential.fields.name', property: 'name', type: 'text', visible: true},
-        {label: 'entities.vehicle-dtt-referential.fields.model', property: 'model', type: 'text', visible: true},
-        {label: 'entities.vehicle-dtt-referential.fields.registrationNumber', property: 'registrationNumber', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.name', property: 'name', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.motorizationType', property: 'motorizationType', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.bodywork', property: 'bodywork', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.placeCount', property: 'placeCount', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.hasTurbo', property: 'hasTurbo', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.horsepower', property: 'horsepower', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.displacement', property: 'displacement', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.weight', property: 'weight', type: 'text', visible: true},
+        {label: 'entities.vehicle-model.fields.nature', property: 'nature', type: 'text', visible: true},
       ],
       pageSize: 8,
       pageSizeOptions: [5, 6, 8],
       actions: [],
-      renderItem: (element: VehicleDTTReferential, property: keyof VehicleDTTReferential) => {
-        if (property === 'model')
-            return element.model ?
-                VehicleModel.toString(element.model)
-              :
-              '--';
+      renderItem: (element: VehicleModel, property: keyof VehicleModel) => {
+        if (property === 'hasTurbo') {
+          return element.hasTurbo ? 'Oui' : 'Non';
+        }
         return element[property] ?? '--';
       },
     };
@@ -123,7 +124,7 @@ export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit
       this.dataSource.sort = this.sort;
 
       // Configuration du filtre personnalisé
-      this.dataSource.filterPredicate = (data: VehicleDTTReferential, filter: string) => {
+      this.dataSource.filterPredicate = (data: VehicleModel, filter: string) => {
         const searchText = filter.toLowerCase();
 
         return true;
@@ -157,19 +158,19 @@ export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit
     private _permissionService: PermissionsService,
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private _vehicleDTTReferential: VehicleDTTReferentialService,
+    private _vehicleModelService: VehicleModelService,
   ) {
   }
 
   managementEntity: ManagementEntity = new ManagementEntity({});
 
   searchCtrl: UntypedFormControl = new UntypedFormControl();
-  data: VehicleDTTReferential[] = [];
+  data: VehicleModel[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  selection = new SelectionModel<VehicleDTTReferential>(true, []);
+  selection = new SelectionModel<VehicleModel>(true, []);
   // searchInputControl: UntypedFormControl = new UntypedFormControl();
 
   doIfHasAllSelections(
@@ -181,7 +182,7 @@ export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit
 
   onAdd(): void {
     this.doIfHasAllSelections(() => {
-      this._dialog.open(VehicleDTTReferentialFormComponent, {
+      this._dialog.open(VehicleModelFormComponent, {
         width: '600px',
         disableClose: true,
         data: {
@@ -196,29 +197,29 @@ export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit
 
   }
 
-  onDelete(entity: VehicleDTTReferential): void {
+  onDelete(entity: VehicleModel): void {
     this._dialog.open(ConfirmDeleteComponent, {
       width: '400px',
       data: {
-        title: 'entities.vehicle-dtt-referential.delete.title',
-        message: 'entities.vehicle-dtt-referential.delete.message',
+        title: 'entities.vehicle-model.delete.title',
+        message: 'entities.vehicle-model.delete.message',
         confirmButtonText: 'actions.delete',
         cancelButtonText: 'actions.cancel'
       }
     }).afterClosed().subscribe((confirmed) => {
       if (confirmed) {
-        this._vehicleDTTReferential.delete(entity.id)
+        this._vehicleModelService.delete(entity.id)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
             this._snackBar.open(
-              ('entities.vehicle-dtt-referential.delete.success'),
+              ('entities.vehicle-model.delete.success'),
               'OK',
               {duration: 3000}
             );
             this.doResolve();
           }, error => {
             this._snackBar.open(
-              ('entities.vehicle-dtt-referential.delete.error'),
+              ('entities.vehicle-model.delete.error'),
               'OK',
               {duration: 3000}
             );
@@ -229,10 +230,10 @@ export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit
   }
 
   /**
-   * Edit VehicleDTTReferential
+   * Edit VehicleModel
    */
-  onEdit(entity: VehicleDTTReferential): void {
-    this._dialog.open(VehicleDTTReferentialFormComponent, {
+  onEdit(entity: VehicleModel): void {
+    this._dialog.open(VehicleModelFormComponent, {
       width: '600px',
       disableClose: true,
       data: {
@@ -246,21 +247,8 @@ export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit
     });
   }
 
-  onView(entity: VehicleDTTReferential): void {
+  onView(entity: VehicleModel): void {
     //this._router.navigate(['/administration/products/list']);
-    console.log("View entity:", entity);
-    this._dialog.open(VehicleDTTReferentialFormComponent, {
-      width: '600px',
-      disableClose: true,
-      data: {
-        mode: 'view',
-        ...entity
-      }
-    }).afterClosed().subscribe((result) => {
-      // if (result) {
-      //   this.doResolve()
-      // }
-    });
   }
 
   onButtonClick(product: Product, column: string): void {
@@ -282,7 +270,7 @@ export class VehicleDTTReferentialListComponent implements OnInit, AfterViewInit
   }
 
 
-  trackByProperty(index: number, column: TableColumn<VehicleDTTReferential>) {
+  trackByProperty(index: number, column: TableColumn<VehicleModel>) {
     return column.property;
   }
 }

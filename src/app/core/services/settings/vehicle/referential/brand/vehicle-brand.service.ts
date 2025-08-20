@@ -3,6 +3,7 @@ import { environment } from "@env/environment";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {VehicleBrand} from "@core/services/settings/vehicle/referential/brand/vehicle-brand.model";
+import {VehicleModel} from "@core/services/settings/vehicle/referential/model/vehicle-model.model";
 
 @Injectable()
 export class VehicleBrandService {
@@ -10,6 +11,7 @@ export class VehicleBrandService {
   baseUrl = environment.settings_url + '/vehicle-referential';
   private _vehicleBrand: ReplaySubject<VehicleBrand> = new ReplaySubject<VehicleBrand>(1);
   private _vehicleBrands: ReplaySubject<VehicleBrand[]> = new ReplaySubject<VehicleBrand[]>(1);
+  private _vehicleModels: ReplaySubject<VehicleModel[]> = new ReplaySubject<VehicleModel[]>(1);
 
   set vehicleBrand(value: VehicleBrand) {
     this._vehicleBrand.next(value);
@@ -25,6 +27,14 @@ export class VehicleBrandService {
 
   get vehicleBrands$() {
     return this._vehicleBrands.asObservable();
+  }
+
+  set vehicleModels(value: VehicleModel[]) {
+    this._vehicleModels.next(value);
+  }
+
+  get vehicleModels$() {
+    return this._vehicleModels.asObservable();
   }
 
   constructor(
@@ -73,4 +83,15 @@ export class VehicleBrandService {
       );
   }
 
+  getAllModels(id: string): Observable<VehicleModel> {
+    return this._httpClient.get<VehicleModel>(`${this.baseUrl}/brands/${id}/models`)
+      .pipe(
+        tap((response: any) => {
+          this.vehicleModels = response?.content.map((item: VehicleModel) => new VehicleModel(item));
+          return response;
+        }),
+        catchError(() => of({} as VehicleModel))
+      );
+
+  }
 }

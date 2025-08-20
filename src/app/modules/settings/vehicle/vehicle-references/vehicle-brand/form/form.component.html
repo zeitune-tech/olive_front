@@ -2,11 +2,11 @@
   <div>
     <h2 mat-dialog-title>
       @if (mode === 'create') {
-        {{ t('entities.vehicle-usage.form.create.title') }}
+        {{ t('entities.vehicle-brand.form.create.title') }}
       } @else if (mode === 'edit') {
-        {{ t('entities.vehicle-usage.form.edit.title') }}
+        {{ t('entities.vehicle-brand.form.edit.title') }}
       } @else {
-        {{ t('entities.vehicle-usage.form.view.title') }}
+        {{ t('entities.vehicle-brand.form.view.title') }}
       }
     </h2>
   </div>
@@ -16,12 +16,64 @@
     <form [formGroup]="formGroup" class="space-y-4">
       <div class="flex flex-col gap-6">
         <mat-form-field class="w-full" appearance="outline">
-          <mat-label>{{ t('entities.vehicle-usage.fields.name') }}</mat-label>
-          <input matInput formControlName="name" required>
+          <mat-label>{{ t('entities.vehicle-brand.fields.name') }}</mat-label>
+          <input matInput formControlName="name" required [readonly]="mode === 'view'">
           <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
             {{ t('form.errors.required') }}
           </mat-error>
         </mat-form-field>
+
+        @if (mode === 'view') {
+          <p>{{t('entities.vehicle-brand.fields.models')}}</p>
+          <!-- Bloc Vehicle Model -->
+          <div *ngFor="let model of this.data.models" class="border rounded-2xl p-4 space-y-4 shadow-sm bg-gray-50">
+<!--            <h3 class="text-lg font-semibold text-gray-700">-->
+<!--              {{ t('entities.vehicle-model.title') }}-->
+<!--            </h3>-->
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.vehicle-model.fields.model.name') }}</mat-label>
+                <input matInput value="{{model.name}}" required [readonly]="mode === 'view'">
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.vehicle-model.fields.model.motorizationType') }}</mat-label>
+                <input matInput value="{{model.motorizationType}}" required [readonly]="mode === 'view'">
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.vehicle-model.fields.model.bodywork') }}</mat-label>
+                <input matInput value="{{model.bodywork}}" required [readonly]="mode === 'view'">
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.vehicle-model.fields.model.placeCount') }}</mat-label>
+                <input matInput value="{{model.placeCount}}" required [readonly]="mode === 'view'">
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.vehicle-model.fields.model.horsepower') }}</mat-label>
+                <input matInput value="{{model.horsepower}}" required [readonly]="mode === 'view'">
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.vehicle-model.fields.model.displacement') }}</mat-label>
+                <input matInput value="{{model.displacement}}" required [readonly]="mode === 'view'">
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.vehicle-model.fields.model.weight') }}</mat-label>
+                <input matInput value="{{model.weight}}" required [readonly]="mode === 'view'">
+              </mat-form-field>
+
+              <mat-form-field class="w-full" appearance="outline">
+                <mat-label>{{ t('entities.vehicle-model.fields.model.nature') }}</mat-label>
+                <input matInput value="{{model.nature}}" required [readonly]="mode === 'view'">
+              </mat-form-field>
+            </div>
+          </div>
+        }
       </div>
     </form>
   </mat-dialog-content>
@@ -30,7 +82,7 @@
     <button mat-button mat-flat-button color="basic" (click)="onCancel()">
       {{ t('form.actions.cancel') }}
     </button>
-    <button mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
+    <button *ngIf="mode !== 'view'" mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
             (click)="onSubmit()">
       {{ t('form.actions.save') }}
     </button>

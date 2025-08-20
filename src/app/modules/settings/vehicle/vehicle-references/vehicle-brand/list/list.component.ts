@@ -243,7 +243,19 @@ export class VehicleBrandListComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onView(entity: VehicleBrand): void {
-    //this._router.navigate(['/administration/products/list']);
+    //this._router.navigate(['/administration/products/
+    this._dialog.open(VehicleBrandFormComponent, {
+      width: '600px',
+      disableClose: true,
+      data: {
+        mode: 'view',
+        ...entity
+      }
+    }).afterClosed().subscribe((result) => {
+      // if (result) {
+      //   this.doResolve()
+      // }
+    });
   }
 
   onButtonClick(product: Product, column: string): void {

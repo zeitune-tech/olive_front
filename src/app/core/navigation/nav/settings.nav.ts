@@ -282,10 +282,28 @@ export const defaultSettingsNavigation: NavigationItem[] = [
           {
             id: 'vehicles.vehicle-references.brands-list',
             title: 'sidebar.vehicles.vehicle-references.brands.title',
-            type: 'basic',
+            type: 'collapsable',
             icon: 'fluent:people-team',
             link: '/parameters/vehicles/vehicle-references/brands',
-            // permission: PERMISSIONS.ADD_VEHICLE_REFERENCES
+            // permission: PERMISSIONS.ADD_VEHICLE_REFERENCES,
+            children: [
+              {
+                id: 'vehicles.vehicle-references.models-list',
+                title: 'sidebar.vehicles.vehicle-references.models.list.title',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/vehicles/vehicle-references/models',
+                // permission: PERMISSIONS.ADD_VEHICLE_REFERENCES
+              },
+              {
+                id: 'vehicles.vehicle-references.brands-list',
+                title: 'sidebar.vehicles.vehicle-references.brands.list.title',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/vehicles/vehicle-references/brands',
+                // permission: PERMISSIONS.ADD_VEHICLE_REFERENCES
+              },
+            ]
           },
           {
             id: 'vehicles.vehicle-references.dtt-list',
@@ -295,7 +313,6 @@ export const defaultSettingsNavigation: NavigationItem[] = [
             link: '/parameters/vehicles/vehicle-references/dtt',
             // permission: PERMISSIONS.VIEW_VEHICLE_REFERENCES
           },
-
         ]
       },
     ]
