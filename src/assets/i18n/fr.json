@@ -1717,8 +1717,13 @@
           "title": "Détails du véhicule de référence"
         }
       },
+      "table": {
+        "title": "Référentiel DTT des véhicules",
+        "description": "Consultation du référentiel des véhicules de la Direction des Transports Terrestres",
+        "empty_state": "Aucun véhicule de référence trouvé"
+      },
       "fields": {
-        "name": "Nom",
+        "name": "Marque",
         "registrationNumber": "Numéro d'immatriculation",
         "model": "Modèle"
       }
@@ -2140,7 +2145,8 @@
       "addInsured": "Ajouter un assuré",
       "removeInsured": "Supprimer l'assuré",
       "addCoverage": "Ajouter un garantie",
-      "removeCoverage": "Supprimer la garantie"
+      "removeCoverage": "Supprimer la garantie",
+      "close": "Fermer"
     },
     "numeric-field": {
       "actions": {
