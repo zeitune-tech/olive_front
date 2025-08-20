@@ -39,7 +39,8 @@ export class SelectFieldOptionsFormComponent implements OnInit {
 
         this._selectFieldOptionValueService.getAll().subscribe();
 
-        this._selectFieldOptionValueService.selectFieldOptionValues$.subscribe((values) => {
+        this._selectFieldOptionValueService.selectFieldOptionValues$
+          .subscribe((values) => {
             this.possibilities = values;
             // Réinitialiser le champ possibilities après avoir reçu les données
             if (this.formGroup && this.mode === 'edit') {

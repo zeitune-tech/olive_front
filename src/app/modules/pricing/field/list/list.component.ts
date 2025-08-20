@@ -27,6 +27,7 @@ import {CoverageService} from "@core/services/settings/coverage/coverage.service
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {SelectionService} from "../../shared/services/selection.service";
 import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
+import {DeclarationFieldFormComponent} from "../declaration-form/form.component";
 
 @Component({
   selector: "app-field-list",
@@ -279,7 +280,6 @@ export class FieldListComponent implements OnInit {
   selectedPricingType: PricingType | undefined;
   data: Field[] = [];
 
-
   doIfHasAllSelections(
     action: () => void
   ): any {
@@ -328,6 +328,30 @@ export class FieldListComponent implements OnInit {
   onAddSelect(): void {
     this.doIfHasAllSelections(() => {
       this._dialog.open(SelectFieldFormComponent, {
+        width: '600px',
+        disableClose: true,
+        data: {
+          mode: 'create',
+          branch: this.selectedBranch!.id,
+          product: this.selectedProduct!.id,
+          pricingType: this.selectedPricingType!.id
+        }
+      }).afterClosed().subscribe((result) => {
+        if (result) {
+          this._fieldService.getAll().subscribe(
+            (fields) => {
+              this.data = fields || [];
+            }
+          );
+          this.filterPricingTypes()
+        }
+      });
+    });
+  }
+
+  onDeclaration() {
+    this.doIfHasAllSelections(() => {
+      this._dialog.open(DeclarationFieldFormComponent, {
         width: '600px',
         disableClose: true,
         data: {
@@ -436,4 +460,6 @@ export class FieldListComponent implements OnInit {
   trackByProperty(index: number, column: TableColumn<Field>) {
     return column.property;
   }
+
+
 }

@@ -41,29 +41,6 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
   visibleColumns: string[] = [];
 
   dataSource = new MatTableDataSource<VariableCondition>([]); // Ajoute les données réelles ici
-
-  constructor(
-    private _variableConditionService: VariableConditionService,
-    private _permissionService: PermissionsService,
-    private _managementEntityService: ManagementEntityService,
-    private _branchService: BranchService,
-    private _productService: ProductService,
-    private _coverageService: CoverageService,
-    private _selectionService: SelectionService,
-    private _dialog: MatDialog,
-    private _snackBar: MatSnackBar
-  ) {
-  }
-
-  branches: Branch[] = [];
-  selectedBranch: Branch | undefined;
-
-  products: Product[] = []
-  selectedProduct: Product | undefined;
-
-  coverages: Coverage[] = []
-  selectedPricingType: PricingType | undefined;
-
   data: VariableCondition[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -173,23 +150,26 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
           visible: true
         },
         {label: 'entities.variable-condition.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
-        {label: 'entities.variable-condition.fields.branch', property: 'branch', type: 'text', visible: true},
-        {label: 'entities.variable-condition.fields.product', property: 'product', type: 'text', visible: true},
+        {label: 'entities.variable-condition.fields.coverage', property: 'coverage', type: 'text', visible: true},
+        // {label: 'entities.variable-condition.fields.branch', property: 'branch', type: 'text', visible: true},
+        // {label: 'entities.variable-condition.fields.product', property: 'product', type: 'text', visible: true},
       ],
       pageSize: 8,
       pageSizeOptions: [5, 6, 8],
       actions: [],
       renderItem: (element: VariableCondition, property: keyof VariableCondition) => {
-        if (property === 'toReturn') {
-          return element.toReturn ? 'Oui' : 'Non';
-        }
-        if (property === 'branch') {
-          return this.branches.find(b => b.id === element.branch)?.name ?? '--';
-        }
-        if (property === 'product') {
-          return this.products.find(p => p.id === element.product)?.name ?? '--';
-        }
-        //   return element.branch ? element.branch.name : '--';
+        // if (property === 'toReturn') {
+        //   return element.toReturn ? 'Oui' : 'Non';
+        // }
+        // if (property === 'branch') {
+        //   return this.branches.find(b => b.id === element.branch)?.name ?? '--';
+        // }
+        // if (property === 'product') {
+        //   return this.products.find(p => p.id === element.product)?.name ?? '--';
+        // }
+        if (property === 'coverage')
+          return this.coverages.find(c => c.id === element.coverage)?.reference.designation ?? '--';
+
         return element[property] ?? '--';
       },
     };
@@ -209,6 +189,27 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
+
+  constructor(
+    private _variableConditionService: VariableConditionService,
+    private _permissionService: PermissionsService,
+    private _branchService: BranchService,
+    private _productService: ProductService,
+    private _coverageService: CoverageService,
+    private _selectionService: SelectionService,
+    private _dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) {
+  }
+
+  branches: Branch[] = [];
+  selectedBranch: Branch | undefined;
+
+  products: Product[] = []
+  selectedProduct: Product | undefined;
+
+  coverages: Coverage[] = []
+  selectedPricingType: PricingType | undefined;
 
   doIfHasAllSelections(
     action: () => void

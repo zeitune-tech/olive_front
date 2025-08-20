@@ -23,6 +23,18 @@
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
+                  <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.constant.fields.coverage') }}</mat-label>
+                    <mat-select formControlName="coverage" required>
+                      <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
+                        {{ coverage.reference.designation }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
+                      {{ t('form.errors.required') }}
+                    </mat-error>
+                  </mat-form-field>
+
                     <mat-form-field class="w-full" appearance="outline">
                         <mat-label>{{ t('entities.variable-condition.fields.label') }}</mat-label>
                         <input matInput formControlName="label" required>

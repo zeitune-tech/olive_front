@@ -2190,6 +2190,11 @@
       "removeCoverage": "Supprimer la garantie",
       "close": "Fermer"
     },
+    "field": {
+      "actions": {
+        "declaration-field": "Déclarer un nouveau champ"
+      }
+    },
     "numeric-field": {
       "actions": {
         "add": "Ajouter un champ numérique"
