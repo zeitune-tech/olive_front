@@ -1702,6 +1702,41 @@
       "coverage": {
         "incomplete": "Veuillez d'abord sélectionner une garantie"
       }
+    },
+    "vehicle-dtt-referential": {
+      "label": "Référentiel DTT des véhicules",
+      "description": "Gestion du référentiel des véhicules de la Direction des Transports Terrestres",
+      "form": {
+        "create": {
+          "title": "Créer un nouveau véhicule de référence"
+        },
+        "edit": {
+          "title": "Modifier le véhicule de référence"
+        },
+        "view": {
+          "title": "Détails du véhicule de référence"
+        }
+      },
+      "fields": {
+        "name": "Nom",
+        "registrationNumber": "Numéro d'immatriculation",
+        "model": "Modèle"
+      }
+    },
+    "vehicle-model": {
+      "title": "Modèle du véhicule",
+      "fields": {
+        "model": {
+          "name": "Nom du modèle",
+          "motorizationType": "Type de motorisation",
+          "bodywork": "Carrosserie",
+          "placeCount": "Nombre de places",
+          "horsepower": "Puissance (CV)",
+          "displacement": "Cylindrée",
+          "weight": "Poids",
+          "nature": "Nature"
+        }
+      }
     }
   },
   "auth": {
