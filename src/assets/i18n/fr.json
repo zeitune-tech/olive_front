@@ -1729,8 +1729,21 @@
       }
     },
     "vehicle-model": {
+      "table": {
+        "title": "Modèles de véhicules",
+        "description": "Liste des modèles de véhicules",
+        "empty_state": "Aucun modèle de véhicule trouvé"
+      },
       "title": "Modèle du véhicule",
       "fields": {
+        "name": "Nom du modèle",
+        "motorizationType": "Type de motorisation",
+        "bodywork": "Carrosserie",
+        "placeCount": "Nombre de places",
+        "horsepower": "Puissance (CV)",
+        "displacement": "Cylindrée",
+        "weight": "Poids",
+        "nature": "Nature",
         "model": {
           "name": "Nom du modèle",
           "motorizationType": "Type de motorisation",
@@ -1741,6 +1754,18 @@
           "weight": "Poids",
           "nature": "Nature"
         }
+      }
+    },
+    "vehicle-brand": {
+      "table": {
+        "title": "Marques de véhicules",
+        "description": "Liste des marques de véhicules",
+        "empty_state": "Aucune marque de véhicule trouvée"
+      },
+      "title": "Marque du véhicule",
+      "fields": {
+        "name": "Nom de la marque",
+        "models": "Modèles associés"
       }
     }
   },
@@ -1976,9 +2001,23 @@
         "title": "Genres des véhicules"
       },
       "vehicle-references": {
-        "title": "Références des véhicules",
+        "title": "Références",
+        "description": "Gestion des références véhicules",
+        "brands": {
+          "title": "Marques",
+          "list": {
+            "title": "Liste des marques"
+          }
+        },
+        "models": {
+          "title": "Modèles",
+          "list": {
+            "title": "Liste des modèles"
+          }
+        },
         "dtt": {
-          "title": "Référentiel DTT"
+          "title": "Référentiel DTT",
+          "description": "Référentiel Direction des Transports Terrestres"
         }
       }
     },
