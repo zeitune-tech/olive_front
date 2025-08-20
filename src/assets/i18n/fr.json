@@ -1976,7 +1976,10 @@
         "title": "Genres des véhicules"
       },
       "vehicle-references": {
-        "title": "Références des véhicules"
+        "title": "Références des véhicules",
+        "dtt": {
+          "title": "Référentiel DTT"
+        }
       }
     },
     "contributors": {
