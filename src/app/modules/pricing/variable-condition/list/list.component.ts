@@ -16,7 +16,7 @@ import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
 import {VariableConditionFormComponent} from "../form/form.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.interface";
+import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.model";
 import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
 import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-delete.component";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
@@ -49,33 +49,19 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
   selection = new SelectionModel<VariableCondition>(true, []);
   searchInputControl: UntypedFormControl = new UntypedFormControl();
 
-  loadValues() {
-    // Initialiser les branches
-    this._branchService.branches$
+  doResolve() {
+    this._variableConditionService.getAll()
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Branch[]) => {
-        this.branches = data || [];
-      });
+      .subscribe();
+  }
 
-    // Initialiser les produits
-    this._productService.products$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Product[]) => {
-        this.products = data || [];
-      });
-
+  setupSelectionService() {
     // S'abonner aux changements de sélection
     this._selectionService.selectedBranch$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(branch => {
         this.selectedBranch = branch;
-        if (branch) {
-          this._productService.getByBranchOrAll(branch.id)
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe();
-        }
       });
-
     this._selectionService.selectedProduct$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(product => {
@@ -86,27 +72,14 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
             .subscribe((coverages: Coverage[]) => {
               this.coverages = coverages || [];
             });
+          this.filterPricingTypes()
         }
       });
-
     this._selectionService.selectedPricingType$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(pricingType => {
         this.selectedPricingType = pricingType;
-      });
-
-    this._variableConditionService.getAll()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: any) => {
-        this.data = data?.content || [];
-        this.dataSource.data = data?.content || [];
-      });
-
-    this._variableConditionService.variableConditions$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: VariableCondition[]) => {
-        this.data = data;
-        this.dataSource.data = data;
+        this.filterPricingTypes()
       });
   }
 
@@ -136,7 +109,16 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
   }
 
   ngOnInit(): void {
-    this.loadValues();
+    this.doResolve();
+    this._variableConditionService.variableConditions$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((variableConditions: VariableCondition[]) => {
+        this.dataSource.data = variableConditions;
+        this.data = variableConditions;
+        this.filterPricingTypes();
+      });
+    // Mise en place de la selection
+    this.setupSelectionService();
     // Initialisation de la configuration de la table
     this.tableOptions = {
       title: '',
@@ -151,25 +133,13 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
         },
         {label: 'entities.variable-condition.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
         {label: 'entities.variable-condition.fields.coverage', property: 'coverage', type: 'text', visible: true},
-        // {label: 'entities.variable-condition.fields.branch', property: 'branch', type: 'text', visible: true},
-        // {label: 'entities.variable-condition.fields.product', property: 'product', type: 'text', visible: true},
       ],
       pageSize: 8,
       pageSizeOptions: [5, 6, 8],
       actions: [],
       renderItem: (element: VariableCondition, property: keyof VariableCondition) => {
-        // if (property === 'toReturn') {
-        //   return element.toReturn ? 'Oui' : 'Non';
-        // }
-        // if (property === 'branch') {
-        //   return this.branches.find(b => b.id === element.branch)?.name ?? '--';
-        // }
-        // if (property === 'product') {
-        //   return this.products.find(p => p.id === element.product)?.name ?? '--';
-        // }
         if (property === 'coverage')
           return this.coverages.find(c => c.id === element.coverage)?.reference.designation ?? '--';
-
         return element[property] ?? '--';
       },
     };
@@ -189,6 +159,54 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
+
+  /**
+   * Applique un filtre de recherche sur les données du tableau
+   */
+  applyFilter(filterValue: string): void {
+    filterValue = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  /**
+   * Efface le filtre de recherche
+   */
+  clearFilter(): void {
+    this.searchCtrl.setValue('');
+    this.dataSource.filter = '';
+  }
+
+  filterPricingTypes(): void {
+    // Si aucune sélection n'est faite, on affiche un tableau vide
+    if (!this.selectedBranch || !this.selectedProduct) {
+      this.dataSource.data = [];
+      return;
+    }
+
+    if (this.data) {
+      let filteredData = [...this.data];
+      console.log(filteredData)
+
+      // Appliquer les filtres pour branch et product
+      filteredData = filteredData.filter(pt =>
+        pt.branch === this.selectedBranch?.id &&
+        pt.product === this.selectedProduct?.id &&
+        pt.pricingType === this.selectedPricingType?.id
+      );
+      console.log(filteredData)
+
+      this.dataSource.data = filteredData;
+
+      if (this.searchCtrl.value) {
+        this.applyFilter(this.searchCtrl.value);
+      }
+    }
+  }
+
 
   constructor(
     private _variableConditionService: VariableConditionService,
@@ -256,8 +274,8 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
     this._dialog.open(ConfirmDeleteComponent, {
       width: '400px',
       data: {
-        title: 'entities.constant.delete.title',
-        message: 'entities.constant.delete.message',
+        title: 'entities.variable-condition.delete.title',
+        message: 'entities.variable-condition.delete.message',
         confirmButtonText: 'actions.delete',
         cancelButtonText: 'actions.cancel'
       }
@@ -265,7 +283,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
       if (confirmed) {
         this._variableConditionService.delete(VariableCondition.id).subscribe({
           next: () => {
-            this._snackBar.open('entities.constant.delete.success', '', {
+            this._snackBar.open('entities.variable-condition.delete.success', '', {
               duration: 3000,
               panelClass: 'snackbar-success'
             });
@@ -277,7 +295,7 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
             });
           },
           error: () => {
-            this._snackBar.open('entities.constant.delete.error', '', {duration: 3000, panelClass: 'snackbar-error'});
+            this._snackBar.open('entities.variable-condition.delete.error', '', {duration: 3000, panelClass: 'snackbar-error'});
           }
         });
       }

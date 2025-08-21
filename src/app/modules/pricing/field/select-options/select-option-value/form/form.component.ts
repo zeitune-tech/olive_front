@@ -6,8 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';
 import { Cons } from 'rxjs';
-import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.interface";
-import {SelectFieldOptionValueService} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.service";
+import {SelectFieldOptionValue} from "@core/services/pricing/field/select-field/select-field-option-value/select-field-option-value.model";
+import {SelectFieldOptionValueService} from "@core/services/pricing/field/select-field/select-field-option-value/select-field-option-value.service";
 
 @Component({
     selector: 'app-princing-select-field-option-value-edit',
@@ -83,7 +83,7 @@ export class SelectFieldOptionValueFormComponent implements OnInit {
 
         if (this.mode === 'edit') {
             formData['id'] = this.data.id; // Ensure the ID is included for updates
-            this._selectFieldOptionValueService.update(this.data.id, formData).subscribe({
+            this._selectFieldOptionValueService.update(formData, this.data.id).subscribe({
                 next: () => {
                     const successMessage = this.mode === 'edit'
                         ? 'form.success.update'

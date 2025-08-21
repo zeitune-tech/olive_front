@@ -1,33 +1,29 @@
 import {SelectionModel} from "@angular/cdk/collections";
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {MatDialog} from "@angular/material/dialog";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
-import {PERMISSIONS} from "@core/permissions/permissions.data";
-import {PermissionsService} from "@core/permissions/permissions.service";
-import {ManagementEntity} from "@core/services/administration/management-entity/management-entity.interface";
-import {ManagementEntityService} from "@core/services/administration/management-entity/management-entity.service";
 import {Product} from "@core/services/settings/product/product.interface";
 import {ProductService} from "@core/services/settings/product/product.service";
 import {animations} from "@lhacksrt/animations";
 import {TableOptions, TableColumn} from "@lhacksrt/components/table/table.interface";
-import {Subject, takeUntil} from "rxjs";
-import {SelectDialogComponent} from "@shared/components/select-dialog/select-dialog.component";
-import {Field, FieldType} from "@core/services/pricing/field/field.interface";
-import {FieldService} from "@core/services/pricing/field/field.service";
+import {forkJoin, Subject, takeUntil} from "rxjs";
+import {Field} from "@core/services/pricing/field/field.model";
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
 import {UntypedFormControl} from "@angular/forms";
-import {NumericFieldFormComponent} from "../numeric-form/form.component";
-import {SelectFieldFormComponent} from "../select-form/form.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-delete.component";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {SelectionService} from "../../shared/services/selection.service";
 import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
 import {DeclarationFieldFormComponent} from "../declaration-form/form.component";
+import {NumericFieldService} from "@core/services/pricing/field/numeric-field/numeric-field.service";
+import {SelectFieldService} from "@core/services/pricing/field/select-field/select-field.service";
+import {NumericField} from "@core/services/pricing/field/numeric-field/numeric-field.model";
+import {SelectField} from "@core/services/pricing/field/select-field/select-field.model";
+import {FieldType} from "@core/services/pricing/enum/field-type.enum";
 
 @Component({
   selector: "app-field-list",
@@ -37,7 +33,6 @@ import {DeclarationFieldFormComponent} from "../declaration-form/form.component"
 export class FieldListComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-
   tableOptions!: TableOptions<Field>;
 
   // Pour les mat-header-row
@@ -48,14 +43,27 @@ export class FieldListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   selection = new SelectionModel<Field>(true, []);
-  // searchInputControl: UntypedFormControl = new UntypedFormControl();
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
-  doResolve() {
-    this._fieldService.getAll()
+  data: Field[] = [];
+
+  loadFiels() {
+    // Récupérer les champs
+    forkJoin([
+      this._numericFieldService.getAll(),
+      this._selectFieldService.getAll()
+    ])
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe();
+      .subscribe(([numericFields, selectFields]) => {
+        this.data = [...numericFields, ...selectFields];
+        this.dataSource.data = [...this.data];
+        if (this.searchCtrl.value) {
+          this.applyFilter(this.searchCtrl.value);
+        }
+        this.filterPricingTypes()
+      });
   }
+
 
   loadValues() {
     // Initialiser les branches
@@ -105,6 +113,7 @@ export class FieldListComponent implements OnInit {
         this.selectedPricingType = pricingType;
         this.filterPricingTypes()
       });
+
   }
 
   buildHeaderRows(): void {
@@ -133,7 +142,6 @@ export class FieldListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     // Configuration du contrôle de recherche
     this.searchCtrl.valueChanges
       .pipe(takeUntil(this._unsubscribeAll))
@@ -141,21 +149,9 @@ export class FieldListComponent implements OnInit {
         this.applyFilter(value);
       });
 
-    this.doResolve();
     this.loadValues();
-
     // Charger les données des champs
-    this._fieldService.fields$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Field[]) => {
-        this.data = data;
-        this.dataSource.data = data;
-        if (this.searchCtrl.value) {
-          this.applyFilter(this.searchCtrl.value);
-        }
-        this.filterPricingTypes()
-      });
-
+    this.loadFiels();
     // Initialisation de la configuration de la table
     this.tableOptions = {
       title: 'entities.pricing.field.table.title',
@@ -164,14 +160,8 @@ export class FieldListComponent implements OnInit {
         {label: 'entities.pricing.field.fields.description', property: 'description', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.variableName', property: 'variableName', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
-        // { label: 'entities.pricing.field.fields.managementEntityId', property: 'managementEntity', type: 'text', visible: true },
-        // {label: 'entities.pricing.field.fields.branch', property: 'branch', type: 'text', visible: true},
-        // {label: 'entities.pricing.field.fields.product', property: 'product', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.coverage', property: 'coverage', type: 'text', visible: true},
-        {label: 'entities.pricing.field.fields.type', property: 'type', type: 'text', visible: true},
-        {label: 'entities.pricing.field.fields.options', property: 'options', type: 'text', visible: true},
-        // { label: 'entities.pricing.field.fields.value', property: 'value', type: 'text', visible: true },
-
+        {label: 'entities.pricing.field.fields.fieldType', property: 'fieldType', type: 'text', visible: true},
       ],
       pageSize: 8,
       pageSizeOptions: [5, 6, 8],
@@ -180,18 +170,9 @@ export class FieldListComponent implements OnInit {
         if (property === 'toReturn') {
           return element.toReturn ? 'Oui' : 'Non';
         }
-        if (property === 'type') {
-          return element.type === FieldType.NUMBER ? 'Numérique' : 'Sélection';
+        if (property === 'fieldType') {
+          return element.fieldType == FieldType.NUMBER ? 'Numérique' : 'Sélection';
         }
-        if (property === 'options') {
-          return element.options ? element.options.label : 'Aucune option';
-        }
-        // if (property === 'branch') {
-        //   return this.branches.find(b => b.id === element.branch)?.name ?? '--';
-        // }
-        // if (property === 'product') {
-        //   return this.products.find(p => p.id === element.product)?.name ?? '--';
-        // }
         if (property === 'coverage') {
           return this.coverages.find(c => c.id === element.coverage)?.reference.designation ?? '--';
         }
@@ -262,7 +243,8 @@ export class FieldListComponent implements OnInit {
   }
 
   constructor(
-    private _fieldService: FieldService,
+    private _numericFieldService: NumericFieldService,
+    private _selectFieldService: SelectFieldService,
     private _branchService: BranchService,
     private _productService: ProductService,
     private _coverageService: CoverageService,
@@ -278,7 +260,6 @@ export class FieldListComponent implements OnInit {
   selectedProduct: Product | undefined;
   coverages: Coverage[] = []
   selectedPricingType: PricingType | undefined;
-  data: Field[] = [];
 
   doIfHasAllSelections(
     action: () => void
@@ -301,53 +282,57 @@ export class FieldListComponent implements OnInit {
     action();
   }
 
-  onAddNumeric(): void {
-    this.doIfHasAllSelections(() => {
-      this._dialog.open(NumericFieldFormComponent, {
-        width: '600px',
-        disableClose: true,
-        data: {
-          mode: 'create',
-          branch: this.selectedBranch!.id,
-          product: this.selectedProduct!.id,
-          pricingType: this.selectedPricingType!.id,
-        }
-      }).afterClosed().subscribe((result) => {
-        if (result) {
-          this._fieldService.getAll().subscribe(
-            (fields) => {
-              this.data = fields || [];
-            }
-          );
-          this.filterPricingTypes()
-        }
-      });
-    });
-  }
-
-  onAddSelect(): void {
-    this.doIfHasAllSelections(() => {
-      this._dialog.open(SelectFieldFormComponent, {
-        width: '600px',
-        disableClose: true,
-        data: {
-          mode: 'create',
-          branch: this.selectedBranch!.id,
-          product: this.selectedProduct!.id,
-          pricingType: this.selectedPricingType!.id
-        }
-      }).afterClosed().subscribe((result) => {
-        if (result) {
-          this._fieldService.getAll().subscribe(
-            (fields) => {
-              this.data = fields || [];
-            }
-          );
-          this.filterPricingTypes()
-        }
-      });
-    });
-  }
+  // onAddNumeric(): void {
+  //   this.doIfHasAllSelections(() => {
+  //     this._dialog.open(NumericFieldFormComponent, {
+  //       width: '600px',
+  //       disableClose: true,
+  //       data: {
+  //         mode: 'create',
+  //         branch: this.selectedBranch!.id,
+  //         product: this.selectedProduct!.id,
+  //         pricingType: this.selectedPricingType!.id,
+  //       }
+  //     }).afterClosed().subscribe((result) => {
+  //       if (result) {
+  //         this._numericFieldService.getAll()
+  //           .subscribe(
+  //             (fields) => {
+  //               this.numericFields = fields || [];
+  //               this.data = [...this.numericFields, ...this.selectFields];
+  //             }
+  //           );
+  //         this.filterPricingTypes()
+  //       }
+  //     });
+  //   });
+  // }
+  //
+  // onAddSelect(): void {
+  //   this.doIfHasAllSelections(() => {
+  //     this._dialog.open(SelectFieldFormComponent, {
+  //       width: '600px',
+  //       disableClose: true,
+  //       data: {
+  //         mode: 'create',
+  //         branch: this.selectedBranch!.id,
+  //         product: this.selectedProduct!.id,
+  //         pricingType: this.selectedPricingType!.id
+  //       }
+  //     }).afterClosed().subscribe((result) => {
+  //       if (result) {
+  //         this._selectFieldService.getAll()
+  //           .subscribe(
+  //           (fields) => {
+  //             this.selectFields = fields || [];
+  //             this.data = [...this.numericFields, ...this.selectFields];
+  //           }
+  //         );
+  //         this.filterPricingTypes()
+  //       }
+  //     });
+  //   });
+  // }
 
   onDeclaration() {
     this.doIfHasAllSelections(() => {
@@ -362,11 +347,7 @@ export class FieldListComponent implements OnInit {
         }
       }).afterClosed().subscribe((result) => {
         if (result) {
-          this._fieldService.getAll().subscribe(
-            (fields) => {
-              this.data = fields || [];
-            }
-          );
+          this.loadFiels()
           this.filterPricingTypes()
         }
       });
@@ -374,64 +355,64 @@ export class FieldListComponent implements OnInit {
   }
 
   onDelete(field: Field): void {
-    this._dialog.open(ConfirmDeleteComponent, {
-      width: '400px',
-      data: {
-        title: 'entities.constant.delete.title',
-        message: 'entities.constant.delete.message',
-        confirmButtonText: 'actions.delete',
-        cancelButtonText: 'actions.cancel'
-      }
-    }).afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
-        this._fieldService.delete(field, field.id).subscribe({
-          next: () => {
-            this._snackBar.open('entities.field.delete.success', '', {duration: 3000, panelClass: 'snackbar-success'});
-            this._fieldService.getAll().subscribe();
-          },
-          error: () => {
-            this._snackBar.open('entities.constant.delete.error', '', {duration: 3000, panelClass: 'snackbar-error'});
-          }
-        });
-        this.filterPricingTypes()
-      }
-    });
+    // this._dialog.open(ConfirmDeleteComponent, {
+    //   width: '400px',
+    //   data: {
+    //     title: 'entities.constant.delete.title',
+    //     message: 'entities.constant.delete.message',
+    //     confirmButtonText: 'actions.delete',
+    //     cancelButtonText: 'actions.cancel'
+    //   }
+    // }).afterClosed().subscribe((confirmed) => {
+    //   if (confirmed) {
+    //     this._fieldService.delete(field, field.id).subscribe({
+    //       next: () => {
+    //         this._snackBar.open('entities.field.delete.success', '', {duration: 3000, panelClass: 'snackbar-success'});
+    //         this._fieldService.getAll().subscribe();
+    //       },
+    //       error: () => {
+    //         this._snackBar.open('entities.constant.delete.error', '', {duration: 3000, panelClass: 'snackbar-error'});
+    //       }
+    //     });
+    //     this.filterPricingTypes()
+    //   }
+    // });
   }
 
   /**
    * Edit Product Product
    */
   onEdit(field: Field): void {
-    if (field.type === FieldType.NUMBER) {
-      this._dialog.open(NumericFieldFormComponent, {
-        width: '600px',
-        disableClose: true,
-        data: {
-          ...field,
-          mode: 'edit',
-        }
-      }).afterClosed().subscribe((result) => {
-        if (result) {
-          this._fieldService.fields$.subscribe((fields: Field[]) => {
-            this.data = fields || [];
-            this.dataSource.data = fields || [];
-          });
-        }
-      });
-    } else if (field.type === FieldType.SELECT) {
-      this._dialog.open(SelectFieldFormComponent, {
-        width: '600px',
-        disableClose: true,
-        data: {
-          ...field,
-          mode: 'edit',
-        }
-      }).afterClosed().subscribe((result) => {
-        if (result) {
-          this._productService.getAll().subscribe();
-        }
-      });
-    }
+    // if (field.fieldType === FieldType.NUMBER) {
+    //   this._dialog.open(NumericFieldFormComponent, {
+    //     width: '600px',
+    //     disableClose: true,
+    //     data: {
+    //       ...field,
+    //       mode: 'edit',
+    //     }
+    //   }).afterClosed().subscribe((result) => {
+    //     if (result) {
+    //       this._fieldService.fields$.subscribe((fields: Field[]) => {
+    //         this.data = fields || [];
+    //         this.dataSource.data = fields || [];
+    //       });
+    //     }
+    //   });
+    // } else if (field.type === FieldType.SELECT) {
+    //   this._dialog.open(SelectFieldFormComponent, {
+    //     width: '600px',
+    //     disableClose: true,
+    //     data: {
+    //       ...field,
+    //       mode: 'edit',
+    //     }
+    //   }).afterClosed().subscribe((result) => {
+    //     if (result) {
+    //       this._productService.getAll().subscribe();
+    //     }
+    //   });
+    // }
 
   }
 
@@ -445,21 +426,7 @@ export class FieldListComponent implements OnInit {
     }
   }
 
-  // hasPermission(product: Product): boolean {
-  //     let hasPerm = this._permissionService.hasPermission(PERMISSIONS.UPDATE_PRODUCTS);
-  //     if (!hasPerm) {
-  //         return false;
-  //     } else if (this.managementEntity.type === "MARKET_LEVEL_ORGANIZATION") {
-  //         return true;
-  //     } else if (this.managementEntity.type === "COMPANY" && product.visibility === "PRIVATE") {
-  //         return true;
-  //     } else
-  //         return false;
-  // }
-
   trackByProperty(index: number, column: TableColumn<Field>) {
     return column.property;
   }
-
-
 }

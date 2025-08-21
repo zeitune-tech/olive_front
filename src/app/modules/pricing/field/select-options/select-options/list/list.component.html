@@ -12,29 +12,29 @@
       </p>
     </div>
 
-    <div class="flex items-center gap-2">
-      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
-        <span>{{ selectedBranch?.name || t('branch-selection.title') }}</span>
-        <button mat-button class="ml-4 bg-primary-600 text-white rounded-lg" (click)="openBranchSelection()">
-          {{ t('branch-selection.change') }}
-        </button>
-        @if (selectedBranch) {
-          <button mat-icon-button class="ml-2 text-red-500" (click)="clearBranchSelection()"
-                  [matTooltip]="t('branch-selection.clear')">
-            <mat-icon [svgIcon]="'fluent:dismiss'"></mat-icon>
-          </button>
-        }
-      </div>
+<!--    <div class="flex items-center gap-2">-->
+<!--      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">-->
+<!--        <span>{{ selectedBranch?.name || t('branch-selection.title') }}</span>-->
+<!--        <button mat-button class="ml-4 bg-primary-600 text-white rounded-lg" (click)="openBranchSelection()">-->
+<!--          {{ t('branch-selection.change') }}-->
+<!--        </button>-->
+<!--        @if (selectedBranch) {-->
+<!--          <button mat-icon-button class="ml-2 text-red-500" (click)="clearBranchSelection()"-->
+<!--                  [matTooltip]="t('branch-selection.clear')">-->
+<!--            <mat-icon [svgIcon]="'fluent:dismiss'"></mat-icon>-->
+<!--          </button>-->
+<!--        }-->
+<!--      </div>-->
 
-      @if (selectedBranch) {
-      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
-        <span>{{ selectedProduct?.name || t('product-selection.title') }}</span>
-        <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openSelection()">
-          {{ t('product-selection.change') }}
-        </button>
-      </div>
-      }
-    </div>
+<!--      @if (selectedBranch) {-->
+<!--      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">-->
+<!--        <span>{{ selectedProduct?.name || t('product-selection.title') }}</span>-->
+<!--        <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openSelection()">-->
+<!--          {{ t('product-selection.change') }}-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      }-->
+<!--    </div>-->
 
   </div>
 
@@ -47,11 +47,11 @@
       <input class="form-input" type="text" [placeholder]="t('form.fields.search')" [formControl]="searchCtrl">
     </div>
 
-    <div class="flex items-center gap-2">
-      <button mat-raised-button color="primary" class="text-white" (click)="onAdd()">
-        {{ t('form.actions.add') }}
-      </button>
-    </div>
+<!--    <div class="flex items-center gap-2">-->
+<!--      <button mat-raised-button color="primary" class="text-white" (click)="onAdd()">-->
+<!--        {{ t('form.actions.add') }}-->
+<!--      </button>-->
+<!--    </div>-->
 
   </div>
 
@@ -131,14 +131,14 @@
         </th>
         <td mat-cell *matCellDef="let element" class="border-l min-w-32">
           <div class="w-full h-full flex items-center justify-around">
-            <button mat-icon-button color="primary" (click)="onEdit(element)"
-              matTooltip="{{ t('form.actions.edit') }}">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="onDelete(element)"
-              matTooltip="{{ t('form.actions.delete') }}">
-              <mat-icon>delete</mat-icon>
-            </button>
+<!--            <button mat-icon-button color="primary" (click)="onEdit(element)"-->
+<!--              matTooltip="{{ t('form.actions.edit') }}">-->
+<!--              <mat-icon>edit</mat-icon>-->
+<!--            </button>-->
+<!--            <button mat-icon-button color="warn" (click)="onDelete(element)"-->
+<!--              matTooltip="{{ t('form.actions.delete') }}">-->
+<!--              <mat-icon>delete</mat-icon>-->
+<!--            </button>-->
           </div>
         </td>
       </ng-container>

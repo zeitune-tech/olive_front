@@ -5,8 +5,8 @@ import { ConstantService } from '@core/services/pricing/constant/constant.servic
 import { FieldService } from '@core/services/pricing/field/field.service';
 import { FormulaService } from '@core/services/pricing/formula/formula.service';
 import { VariableItemService } from '@core/services/pricing/variable-item/variable-item.service';
-import { SelectFieldOptionsService } from '@core/services/pricing/field/select-field-options/select-field-options.service';
-import { SelectFieldOptionValueService } from '@core/services/pricing/field/select-field-option-value/select-field-option-value.service';
+import { SelectFieldOptionsService } from '@core/services/pricing/field/select-field/select-field-options/select-field-options.service';
+import { SelectFieldOptionValueService } from '@core/services/pricing/field/select-field/select-field-option-value/select-field-option-value.service';
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +45,6 @@ export class PricingResolver implements Resolve<any> {
             // Constants
             this._constantService.getAll(),
             // Fields
-            this._fieldService.getAll(),
             // Formulas
             this._formulaService.getAll(),
             // Variable Items

@@ -81,13 +81,7 @@ export class PricingSelectionHeaderComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(pricingType => {
         this.selectedPricingType = pricingType;
-        if (pricingType) {
-          // this._coverageService.getByPricingType(pricingType.id)
-          //   .pipe(takeUntil(this._unsubscribeAll))
-          //   .subscribe(coverages => {
-          //     this.coverages = coverages || [];
-          //   });
-        }
+        if (pricingType) {}
       });
 
 

@@ -1164,7 +1164,7 @@
           "variableName": "Nom de variable",
           "coverage": "Garantie",
           "toReturn": "À retourner",
-          "type": "Type de champ",
+          "fieldType": "Type de champ",
           "options": "Options",
           "value": "Valeur",
           "required": "Obligatoire",
@@ -1478,7 +1478,7 @@
         "product": "Produit",
         "branch": "Branche",
         "coverageId": "Garantie",
-        "type": "Type de champ",
+        "fieldType": "Type de champ",
         "selectFieldOptions": "Options de sélection",
         "options": "Options",
         "value": "Valeur",
@@ -1620,7 +1620,7 @@
       "fields": {
         "id": "Identifiant",
         "label": "Libellé",
-        "name": "Nom",
+        "name": "Valeur",
         "group": "Groupe",
         "actions": "Actions"
       },

@@ -19,7 +19,7 @@ import {TableModule} from "@lhacksrt/components/table/table.module";
 import {LayoutService} from "./layout.service";
 import {ConstantListComponent} from "./list/list.component";
 import {ConstantService} from "@core/services/pricing/constant/constant.service";
-import {Constant} from "@core/services/pricing/constant/constant.interface";
+import {Constant} from "@core/services/pricing/constant/constant.model";
 import {ConstantFormComponent} from "./form/form.component";
 import {PricingSharedModule} from "../shared/pricing-shared.module";
 

@@ -33,14 +33,11 @@ import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-ty
 export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-
   tableOptions!: TableOptions<PricingType>;
-
   // Pour les mat-header-row
   groupHeader: string[] = [];
   subHeader: string[] = [];
   visibleColumns: string[] = [];
-
   dataSource = new MatTableDataSource<PricingType>([]); // Ajoute les données réelles ici
 
   doResolve() {
@@ -50,21 +47,18 @@ export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   loadValues() {
-    // Initialiser les branches
     this._branchService.branches$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: Branch[]) => {
         this.branches = data || [];
       });
 
-    // Initialiser les produits
     this._productService.products$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: Product[]) => {
         this.products = data || [];
       });
 
-    // S'abonner aux changements de sélection
     this._selectionService.selectedBranch$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(branch => {

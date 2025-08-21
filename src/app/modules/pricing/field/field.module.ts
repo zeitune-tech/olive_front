@@ -21,21 +21,19 @@ import {FieldService} from "@core/services/pricing/field/field.service";
 import {FieldListComponent} from "./list/list.component";
 import {
   SelectFieldOptionsService
-} from "@core/services/pricing/field/select-field-options/select-field-options.service";
-import {NumericFieldFormComponent} from "./numeric-form/form.component";
-import {SelectFieldFormComponent} from "./select-form/form.component";
+} from "@core/services/pricing/field/select-field/select-field-options/select-field-options.service";
 import {
   SelectFieldOptionValueService
-} from "@core/services/pricing/field/select-field-option-value/select-field-option-value.service";
+} from "@core/services/pricing/field/select-field/select-field-option-value/select-field-option-value.service";
 import {PricingSharedModule} from "../shared/pricing-shared.module";
 import {DeclarationFieldFormComponent} from "./declaration-form/form.component";
 import {AttributTarifiableService} from "@core/services/exploitation/attribut-tarifiable/attribut-tarifiable.service";
+import {NumericFieldService} from "@core/services/pricing/field/numeric-field/numeric-field.service";
+import {SelectFieldService} from "@core/services/pricing/field/select-field/select-field.service";
 
 @NgModule({
   declarations: [
     FieldListComponent,
-    NumericFieldFormComponent,
-    SelectFieldFormComponent,
     DeclarationFieldFormComponent
   ],
   imports: [
@@ -64,6 +62,8 @@ import {AttributTarifiableService} from "@core/services/exploitation/attribut-ta
   providers: [
     LayoutService,
     FieldService,
+    NumericFieldService,
+    SelectFieldService,
     SelectFieldOptionsService,
     SelectFieldOptionValueService,
     AttributTarifiableService

@@ -18,8 +18,8 @@ import { SelectDialogComponent } from "@shared/components/select-dialog/select-d
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options/select-field-options.service";
-import {SelectFieldOptions} from "@core/services/pricing/field/select-field-options/select-field-options.interface";
+import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field/select-field-options/select-field-options.service";
+import {SelectFieldOptions} from "@core/services/pricing/field/select-field/select-field-options/select-field-options.model";
 import {SelectFieldOptionsFormComponent} from "../form/form.component";
 import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-delete.component";
 
@@ -117,8 +117,7 @@ export class SelectFieldOptionsListComponent implements OnInit, AfterViewInit, O
               // value: number;
 
               { label: 'entities.select-field-options.fields.label', property: 'label', type: 'text', visible: true },
-              { label: 'entities.select-field-options.fields.name', property: 'name', type: 'text', visible: true },
-              { label: 'entities.select-field-options.fields.description', property: 'description', type: 'text', visible: true },
+              // { label: 'entities.select-field-options.fields.name', property: 'name', type: 'text', visible: true },
               { label: 'entities.select-field-options.fields.possibilities', property: 'possibilities', type: 'text', visible: true },
 
           ],

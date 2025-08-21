@@ -5,8 +5,6 @@ import {TranslocoService} from '@jsverse/transloco';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ManagementEntityService} from '@core/services/administration/management-entity/management-entity.service';
 import {ManagementEntity} from '@core/services/administration/management-entity/management-entity.interface';
-import {DeclarationField, Field, FieldType} from '@core/services/pricing/field/field.interface';
-import {FieldService} from "@core/services/pricing/field/field.service";
 import {FormMode} from '@shared/enum/form.enum';
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
@@ -14,7 +12,18 @@ import {Subject, takeUntil} from "rxjs";
 import {TariffableObject} from "@core/services/pricing/tariffable-attribut/tariffable-object.model";
 import {TariffableObjectService} from "@core/services/pricing/tariffable-attribut/tariffable-object.service";
 import {TariffableAttribut} from "@core/services/pricing/tariffable-attribut/tariffable-attribut.model";
-import {TypeOfVariable} from "@core/services/pricing/variable-item/variable-item.interface";
+import {NumericFieldService} from "@core/services/pricing/field/numeric-field/numeric-field.service";
+import {SelectFieldService} from "@core/services/pricing/field/select-field/select-field.service";
+import {FieldType} from "@core/services/pricing/enum/field-type.enum";
+import {NumericField} from "@core/services/pricing/field/numeric-field/numeric-field.model";
+import {SelectField} from "@core/services/pricing/field/select-field/select-field.model";
+import {
+  SelectFieldOptions
+} from "@core/services/pricing/field/select-field/select-field-options/select-field-options.model";
+import {DeclarationField} from "@core/services/pricing/field/declaration-field/declaration-field.model";
+import {
+  SelectFieldOptionValue
+} from "@core/services/pricing/field/select-field/select-field-option-value/select-field-option-value.model";
 
 @Component({
   selector: 'app-declaration-form',
@@ -32,12 +41,12 @@ export class DeclarationFieldFormComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DeclarationFieldFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DeclarationField,
-    private _fieldService: FieldService,
     private translocoService: TranslocoService,
     private snackBar: MatSnackBar,
-    private _managementEntityService: ManagementEntityService,
     private _coverageService: CoverageService,
-    private _tariffableObjectService: TariffableObjectService
+    private _tariffableObjectService: TariffableObjectService,
+    private _numericFieldService: NumericFieldService,
+    private _selectFieldService: SelectFieldService,
   ) {
   }
 
@@ -89,20 +98,17 @@ export class DeclarationFieldFormComponent implements OnInit {
     const type = (this.selectedTariffableAttribut!.type as string) == "NUMBER" ? FieldType.NUMBER : FieldType.SELECT;
     switch (type) {
       case FieldType.NUMBER:
-        const numericFormData:Field = {
+        const numericFormData:NumericField = {
           label: this.selectedTariffableAttribut!.label,
           description: this.selectedTariffableAttribut!.label,
           variableName: this.selectedTariffableAttribut!.controlName,
           toReturn: false,
-          controlName: this.selectedTariffableAttribut!.controlName,
           product: this.data.product,
           branch: this.data.branch,
           coverage: this.formGroup.get('coverage')?.value,
           pricingType: this.data.pricingType,
-          type: FieldType.NUMBER,
-          typeOfVariable: TypeOfVariable.NUMERIC_FIELD,
-        } as Field;
-        ((this.mode as FormMode) === FormMode.EDIT ? this._fieldService.update(numericFormData, this.data.id) : this._fieldService.create(numericFormData)).subscribe({
+        } as NumericField;
+        ((this.mode as FormMode) === FormMode.EDIT ? this._numericFieldService.update(numericFormData, this.data.id) : this._numericFieldService.create(numericFormData)).subscribe({
           next: () => {
             const successMessage = this.mode === FormMode.EDIT
               ? 'form.success.update'
@@ -125,22 +131,29 @@ export class DeclarationFieldFormComponent implements OnInit {
           }
         });
         break;
+
       case FieldType.SELECT:
-        const selectFormData:Field = {
+        const selectFormData:SelectField = {
           label: this.selectedTariffableAttribut!.label,
           description: this.selectedTariffableAttribut!.label,
           variableName: this.selectedTariffableAttribut!.controlName,
           toReturn: false,
-          controlName: this.selectedTariffableAttribut!.controlName,
           product: this.data.product,
           branch: this.data.branch,
           coverage: this.formGroup.get('coverage')?.value,
           pricingType: this.data.pricingType,
-          type: FieldType.SELECT,
-          typeOfVariable: TypeOfVariable.NUMERIC_FIELD,
-          options: null
-        } as Field;
-        ((this.mode as FormMode) === FormMode.EDIT ? this._fieldService.update(selectFormData, this.data.id) : this._fieldService.create(selectFormData)).subscribe({
+          options: new SelectFieldOptions({
+            label: this.selectedTariffableAttribut!.label,
+            name: this.selectedTariffableAttribut!.controlName,
+            description: this.selectedTariffableAttribut!.label,
+            possibilities: this.selectedTariffableAttribut!.options.map(option => new SelectFieldOptionValue({
+              label: option.label,
+              name: option.value,
+              group: 'DEFAULT',
+            }))
+          })
+        } as SelectField;
+        ((this.mode as FormMode) === FormMode.EDIT ? this._selectFieldService.update(selectFormData, this.data.id) : this._selectFieldService.create(selectFormData)).subscribe({
           next: () => {
             const successMessage = this.mode === FormMode.EDIT
               ? 'form.success.update'
@@ -164,40 +177,6 @@ export class DeclarationFieldFormComponent implements OnInit {
         });
         break;
     }
-
-    const formData = {
-      ...this.formGroup.getRawValue(), // Utiliser getRawValue() au lieu de value
-      product: this.data.product,
-      branch: this.data.branch,
-      pricingType: this.data.pricingType,
-      type: this.selectedTariffableAttribut!.type as FieldType,
-    };
-
-
-    console.log("Submitting form data:", formData);
-    return;
-    ((this.mode as FormMode) === FormMode.EDIT ? this._fieldService.update(formData, this.data.id) : this._fieldService.create(formData)).subscribe({
-      next: () => {
-        const successMessage = this.mode === FormMode.EDIT
-          ? 'form.success.update'
-          : 'form.success.creation';
-
-        this.snackBar.open(
-          this.translocoService.translate(successMessage),
-          undefined,
-          {duration: 3000, panelClass: 'snackbar-success'}
-        );
-        this.dialogRef.close(true);
-      },
-      error: () => {
-        this.snackBar.open(
-          this.translocoService.translate('form.errors.submission'),
-          undefined,
-          {duration: 3000, panelClass: 'snackbar-error'}
-        );
-        this.formGroup.enable();
-      }
-    });
   }
 
   onCancel(): void {

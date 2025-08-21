@@ -4,14 +4,19 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslocoService} from '@jsverse/transloco';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ManagementEntityService} from '@core/services/administration/management-entity/management-entity.service';
-import {ManagementEntity} from '@core/services/administration/management-entity/management-entity.interface';
-import {VariableCondition} from '@core/services/pricing/variable-condition/variable-condition.interface';
+import {VariableCondition} from '@core/services/pricing/variable-condition/variable-condition.model';
 import {VariableConditionService} from '@core/services/pricing/variable-condition/variable-condition.service';
 import {Rule} from '@core/services/pricing/variable-condition/rule/rule.interface';
 import {RuleService} from '@core/services/pricing/variable-condition/rule/rule.service';
 import {ConditionService} from '@core/services/pricing/variable-condition/conditions/condition.service';
-import {Field, FieldType} from '@core/services/pricing/field/field.interface';
-import {FieldService} from '@core/services/pricing/field/field.service';
+import {FieldType} from '@core/services/pricing/enum/field-type.enum';
+import {NumericFieldService} from "@core/services/pricing/field/numeric-field/numeric-field.service";
+import {SelectFieldService} from "@core/services/pricing/field/select-field/select-field.service";
+import {NumericField} from "@core/services/pricing/field/numeric-field/numeric-field.model";
+import {SelectField} from "@core/services/pricing/field/select-field/select-field.model";
+import {forkJoin, Subject, takeUntil} from "rxjs";
+import {Coverage} from "@core/services/settings/coverage/coverage.interface";
+import {CoverageService} from "@core/services/settings/coverage/coverage.service";
 
 @Component({
   selector: 'app-variable-condition-edit',
@@ -19,9 +24,14 @@ import {FieldService} from '@core/services/pricing/field/field.service';
 })
 export class VariableConditionFormComponent implements OnInit {
 
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
   formGroup!: FormGroup;
   message = '';
-  fields: Field[] = [];
+  numericFields: NumericField[] = [];
+  selectFields: SelectField[] = [];
+  fields: (NumericField | SelectField)[] = [];
+  coverages: Coverage[] = [];
+
   availableOperators: { [key: string]: string[] } = {
     'SELECT_FIELD': ['EQUALS', 'NOT_EQUALS'],
     'NUMERIC_FIELD': ['EQUALS', 'NOT_EQUALS', 'LESS_THAN', 'GREATER_THAN', 'LESS_OR_EQUAL', 'GREATER_OR_EQUAL']
@@ -36,21 +46,44 @@ export class VariableConditionFormComponent implements OnInit {
     private _variableConditionService: VariableConditionService,
     private _ruleService: RuleService,
     private _conditionService: ConditionService,
-    private _fieldService: FieldService,
     private _translocoService: TranslocoService,
     private snackBar: MatSnackBar,
-    private _managementEntityService: ManagementEntityService
+    private _managementEntityService: ManagementEntityService,
+    private _numericFieldService: NumericFieldService,
+    private _selectFieldService: SelectFieldService,
+    private _coverageService: CoverageService,
   ) {
   }
 
+
+
   ngOnInit(): void {
+
     this.mode = (this.data as any).mode;
     this.dialogRef.updateSize('800px', 'auto');
 
-    // Charger les champs disponibles
-    this._fieldService.getAll().subscribe((fields) => {
-      this.fields = fields;
-    });
+    // Récupérer les couvertures
+    this._coverageService.getByProduct(this.data.product)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((coverages: Coverage[]) => {
+        this.coverages = coverages || [];
+        console.log("Coverages loaded:", this.coverages);
+      });
+
+    // Récupérer les champs
+    forkJoin([
+      this._numericFieldService.getAll(),
+      this._selectFieldService.getAll()
+    ])
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(([numericFields, selectFields]) => {
+        this.numericFields = numericFields || [];
+        this.selectFields = selectFields || [];
+        this.fields = [...this.numericFields, ...this.selectFields];
+        console.log("Fields loaded:", this.fields);
+      });
+
+
 
     // Initialisation du formulaire
     const initialRules = this.data.rules?.length
@@ -59,6 +92,7 @@ export class VariableConditionFormComponent implements OnInit {
 
     this.formGroup = this.fb.group({
       // Section VariableItem
+      coverage: [{value: this.data.coverage || '', disabled: false}, Validators.required],
       label: [this.data.label || '', Validators.required],
       description: [this.data.description || '', Validators.required],
       variableName: [{value: this.data.variableName || '', disabled: true}, Validators.required],
@@ -163,10 +197,10 @@ export class VariableConditionFormComponent implements OnInit {
       const operatorKey = condition.operator;
       let valueStr = '';
 
-      if (field.type === FieldType.SELECT) {
-        const option = field.options?.possibilities?.find((opt: any) => opt.id === condition.value);
+      if (field.fieldType === FieldType.SELECT) {
+        const option = (field as SelectField).options?.possibilities?.find((opt: any) => opt.id === condition.value);
         valueStr = option ? option.label : condition.value;
-      } else if (field.type === FieldType.NUMBER) {
+      } else if (field.fieldType === FieldType.NUMBER) {
         if (condition.value) {
           valueStr = condition.value;
         } else if (condition.minValue && condition.maxValue) {
@@ -206,9 +240,9 @@ export class VariableConditionFormComponent implements OnInit {
       if (!field) return '';
 
       let valueStr = '';
-      if (field.type === FieldType.SELECT) {
+      if (field.fieldType === FieldType.SELECT) {
         valueStr = condition.value;
-      } else if (field.type === FieldType.NUMBER) {
+      } else if (field.fieldType === FieldType.NUMBER) {
         const rawValue = conditionGroup.get('value').value;
         const rawMinValue = conditionGroup.get('minValue').getRawValue();
         const rawMaxValue = conditionGroup.get('maxValue').getRawValue();
@@ -461,19 +495,19 @@ export class VariableConditionFormComponent implements OnInit {
     if (this.isReadOnly()) return [];
     const field = this.fields.find(f => f.id === fieldId);
     if (!field) return [];
-    return this.availableOperators[field.type] || [];
+    return this.availableOperators[field.fieldType] || [];
   }
 
   getFieldType(fieldId: string): FieldType {
     const field = this.fields.find(f => f.id === fieldId);
-    return field ? field.type : FieldType.NUMBER;
+    return field ? field.fieldType : FieldType.NUMBER;
   }
 
   getSelectFieldOptions(fieldId: string): any[] {
     if (this.isReadOnly()) return [];
     const field = this.fields.find(f => f.id === fieldId);
-    if (field?.type === FieldType.SELECT && field.options) {
-      return field.options.possibilities || [];
+    if (field?.fieldType === FieldType.SELECT && (field as SelectField).options) {
+      return (field as SelectField).options.possibilities || [];
     }
     return [];
   }
@@ -740,9 +774,10 @@ export class VariableConditionFormComponent implements OnInit {
       variableName: formData.variableName,
       toReturn: formData.toReturn,
       branch: formData.branch,
-      product: this.data.product,
       ruleIds: ruleIds,
-      coverage: this.data.coverage
+      product: this.data.product,
+      pricingType: this.data.pricingType,
+      coverage: this.data.coverage,
     };
   }
 
@@ -825,7 +860,7 @@ export class VariableConditionFormComponent implements OnInit {
    */
   private buildConditionPayload(conditionData: any): any {
     const field = this.fields.find(f => f.id === conditionData.field);
-    const conditionType = field?.type || FieldType.NUMBER;
+    const conditionType = field?.fieldType || FieldType.NUMBER;
 
     if (conditionType === FieldType.SELECT) {
       return {
@@ -969,8 +1004,9 @@ export class VariableConditionFormComponent implements OnInit {
       toReturn: formData.toReturn,
       branch: formData.branch,
       product: this.data.product,
+      pricingType: this.data.pricingType,
       ruleIds: ruleIds,
-      coverage: this.data.coverage
+      coverage: formData.coverage
     };
   }
 

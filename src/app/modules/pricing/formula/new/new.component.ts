@@ -11,7 +11,6 @@ import { ConstantFormComponent } from "../../constants/form/form.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ProductService } from "@core/services/settings/product/product.service";
 import { Subject, takeUntil } from "rxjs";
-import { NumericFieldFormComponent } from "../../field/numeric-form/form.component";
 import {VariableConditionFormComponent} from "../../variable-condition/form/form.component";
 import {Formula} from "@core/services/pricing/formula/formula.interface";
 import {FormulaService} from "@core/services/pricing/formula/formula.service";
@@ -22,12 +21,16 @@ import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
 import {FieldService} from "@core/services/pricing/field/field.service";
 import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
-import {Constant} from "@core/services/pricing/constant/constant.interface";
-import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.interface";
-import {NumericField} from "@core/services/pricing/field/field.interface";
-import {TypeOfVariable} from "@core/services/pricing/variable-item/variable-item.interface";
+import {Constant} from "@core/services/pricing/constant/constant.model";
+import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.model";
+import {TypeOfVariable} from "@core/services/pricing/variable-item/variable-item.model";
 import {SelectionService} from "../../shared/services/selection.service";
 import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
+import {NumericFieldService} from "@core/services/pricing/field/numeric-field/numeric-field.service";
+import {SelectFieldService} from "@core/services/pricing/field/select-field/select-field.service";
+import {NumericField} from "@core/services/pricing/field/numeric-field/numeric-field.model";
+import {DeclarationField} from "@core/services/pricing/field/declaration-field/declaration-field.model";
+import {DeclarationFieldFormComponent} from "../../field/declaration-form/form.component";
 
 @Component({
     selector: 'app-formula-new',
@@ -65,14 +68,22 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
       private snackBar: MatSnackBar,
       private _managementEntityService: ManagementEntityService,
       private _coverageService: CoverageService,
+      private _numericFieldService: NumericFieldService,
+      private _selectFieldService: SelectFieldService,
   ) {
   }
 
   doResolve () {
-    this._constantService.getAll().subscribe()
-    this._fieldService.getAll().subscribe();
-    this._variableConditionService.getAll().subscribe();
-    this._formulaService.getAll().subscribe();
+    this._constantService.getAll()
+      .subscribe()
+    this._variableConditionService.getAll()
+      .subscribe();
+    this._formulaService.getAll()
+      .subscribe();
+    this._numericFieldService.getAll()
+      .subscribe();
+    this._selectFieldService.getAll()
+      .subscribe();
   }
 
   loadValues() {
@@ -206,7 +217,7 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
       }
     )
 
-    this._fieldService.getNumericFields().subscribe(
+    this._numericFieldService.getAll().subscribe(
       (fields) => {
         this.numericFieldList = fields;
       }
@@ -257,7 +268,7 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
         });
     }
     else if (variable === "FIELD") {
-        this._dialog.open(NumericFieldFormComponent, {
+        this._dialog.open(DeclarationFieldFormComponent, {
             width: '600px',
             disableClose: true,
             data: {

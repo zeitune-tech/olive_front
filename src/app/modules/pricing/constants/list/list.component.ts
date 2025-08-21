@@ -15,7 +15,7 @@ import {animations} from "@lhacksrt/animations";
 import {TableOptions, TableColumn} from "@lhacksrt/components/table/table.interface";
 import {Subject, takeUntil} from "rxjs";
 import {SelectDialogComponent} from "@shared/components/select-dialog/select-dialog.component";
-import {Constant} from "@core/services/pricing/constant/constant.interface";
+import {Constant} from "@core/services/pricing/constant/constant.model";
 import {ConstantService} from "@core/services/pricing/constant/constant.service";
 import {Branch} from "@core/services/settings/branch/branch.interface";
 import {BranchService} from "@core/services/settings/branch/branch.service";
@@ -24,7 +24,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {ConfirmDeleteComponent} from "@shared/components/confirm-delete/confirm-delete.component";
 import {SelectionService} from "../../shared/services/selection.service";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
-import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.interface";
+import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.model";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
 import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
 
@@ -52,34 +52,13 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe();
   }
 
-  loadValues() {
-    // Initialiser les branches
-    this._branchService.branches$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Branch[]) => {
-        this.branches = data || [];
-      });
-
-    // Initialiser les produits
-    this._productService.products$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Product[]) => {
-        this.products = data || [];
-      });
-
+  setupSelectionService() {
     // S'abonner aux changements de sélection
     this._selectionService.selectedBranch$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(branch => {
         this.selectedBranch = branch;
-        if (branch) {
-          this._productService.getByBranchOrAll(branch.id)
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe();
-          this.filterPricingTypes();
-        }
       });
-
     this._selectionService.selectedProduct$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(product => {
@@ -93,7 +72,6 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.filterPricingTypes()
         }
       });
-
     this._selectionService.selectedPricingType$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(pricingType => {
@@ -128,18 +106,7 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.doResolve();
-
-    this.loadValues()
-
-    // Configuration du contrôle de recherche
-    this.searchCtrl.valueChanges
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(value => {
-        this.applyFilter(value);
-      });
-
     // Charger les données des constantes
     this._constantService.constants$
       .pipe(takeUntil(this._unsubscribeAll))
@@ -153,6 +120,14 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.filterPricingTypes()
       });
 
+    this.setupSelectionService();
+
+    // Configuration du contrôle de recherche
+    this.searchCtrl.valueChanges
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(value => {
+        this.applyFilter(value);
+      });
     // Initialisation de la configuration de la table
     this.tableOptions = {
       title: '',
@@ -161,8 +136,6 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         {label: 'entities.constant.fields.description', property: 'description', type: 'text', visible: true},
         {label: 'entities.constant.fields.variableName', property: 'variableName', type: 'text', visible: true},
         {label: 'entities.constant.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
-        // {label: 'entities.constant.fields.branch', property: 'branch', type: 'text', visible: false},
-        // {label: 'entities.constant.fields.product', property: 'product', type: 'text', visible: false},
         {label: 'entities.constant.fields.coverage', property: 'coverage', type: 'text', visible: true},
         {label: 'entities.constant.fields.value', property: 'value', type: 'text', visible: true},
       ],
@@ -173,19 +146,12 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (property === 'toReturn') {
           return element.toReturn ? 'Oui' : 'Non';
         }
-        if (property === 'branch') {
-          return this.branches.find(b => b.id === element.branch)?.name ?? '--';
-        }
-        if (property === 'product') {
-          return this.products.find(p => p.id === element.product)?.name ?? '--';
-        }
         if (property === 'coverage') {
           return this.coverages.find(c => c.id === element.coverage)?.reference.designation ?? '--';
         }
         return element[property] ?? '--';
       },
     };
-
     // Construction des lignes d’en-tête
     this.buildHeaderRows();
   }
@@ -207,19 +173,11 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
           (data.value?.toString().toLowerCase() || '').includes(searchText)
         );
 
-        // Recherche dans le nom de la branche
-        const branchName = this.branches.find(b => b.id === data.branch)?.name?.toLowerCase() || '';
-        const branchSearch = branchName.includes(searchText);
-
-        // Recherche dans le nom du produit
-        const productName = this.products.find(p => p.id === data.product)?.name?.toLowerCase() || '';
-        const productSearch = productName.includes(searchText);
-
         // Recherche dans la valeur booléenne toReturn
         const toReturnText = data.toReturn ? 'oui' : 'non';
         const toReturnSearch = toReturnText.includes(searchText);
 
-        return basicSearch || branchSearch || productSearch || toReturnSearch;
+        return basicSearch || toReturnSearch;
       };
     }
   }
@@ -338,11 +296,12 @@ export class ConstantListComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }).afterClosed().subscribe((result) => {
         if (result) {
-          this._constantService.getAll().subscribe(() => {
-            // Réappliquer le filtre après le rechargement des données
-            if (this.searchCtrl.value) {
-              this.applyFilter(this.searchCtrl.value);
-            }
+          this._constantService
+            .getAll()
+            .subscribe(() => {
+              if (this.searchCtrl.value) {
+                this.applyFilter(this.searchCtrl.value);
+              }
           });
         }
       });

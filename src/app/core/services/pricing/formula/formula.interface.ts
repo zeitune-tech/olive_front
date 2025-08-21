@@ -1,4 +1,4 @@
-import {VariableItem} from "@core/services/pricing/variable-item/variable-item.interface";
+import {VariableItem} from "@core/services/pricing/variable-item/variable-item.model";
 
 export class Formula extends VariableItem {
     /**

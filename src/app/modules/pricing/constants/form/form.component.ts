@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@jsverse/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Constant } from '@core/services/pricing/constant/constant.interface';
+import { Constant } from '@core/services/pricing/constant/constant.model';
 import { ConstantService } from '@core/services/pricing/constant/constant.service';
 import { ManagementEntityService } from '@core/services/administration/management-entity/management-entity.service';
 import { ManagementEntity } from '@core/services/administration/management-entity/management-entity.interface';

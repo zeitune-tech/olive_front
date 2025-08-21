@@ -21,7 +21,7 @@ import { LayoutService } from "./layout.service";
 import { FormulaService } from "@core/services/pricing/formula/formula.service";
 import { ConstantService } from "@core/services/pricing/constant/constant.service";
 import { FieldService } from "@core/services/pricing/field/field.service";
-import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field-options/select-field-options.service";
+import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field/select-field-options/select-field-options.service";
 import { VariableItemService } from "@core/services/pricing/variable-item/variable-item.service";
 import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
 import {FormulaNewComponent} from "./new/new.component";

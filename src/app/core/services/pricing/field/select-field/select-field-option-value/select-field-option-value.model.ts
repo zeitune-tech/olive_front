@@ -3,8 +3,8 @@ export class SelectFieldOptionValue {
   label: string;
   name: string;
   group: string;
-
-  constructor(response: any) {
+  constructor(response: Partial<SelectFieldOptionValue> = {}) {
+    Object.assign(this, response);
     this.id = response?.id ?? '';
     this.label = response?.label ?? '';
     this.name = response?.name ?? '';

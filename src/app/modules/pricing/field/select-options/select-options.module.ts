@@ -16,12 +16,12 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatTableModule } from "@angular/material/table";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TableModule } from "@lhacksrt/components/table/table.module";
-import { SelectFieldOptionValueService } from "@core/services/pricing/field/select-field-option-value/select-field-option-value.service";
+import { SelectFieldOptionValueService } from "@core/services/pricing/field/select-field/select-field-option-value/select-field-option-value.service";
 import {SelectFieldOptionValueListComponent} from "./select-option-value/list/list.component";
 import {SelectFieldOptionValueFormComponent} from "./select-option-value/form/form.component";
 import {SelectFieldOptionsListComponent} from "./select-options/list/list.component";
 import {SelectFieldOptionsFormComponent} from "./select-options/form/form.component";
-import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field-options/select-field-options.service";
+import {SelectFieldOptionsService} from "@core/services/pricing/field/select-field/select-field-options/select-field-options.service";
 
 @NgModule({
     declarations: [

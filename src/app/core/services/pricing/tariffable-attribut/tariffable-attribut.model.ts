@@ -1,4 +1,4 @@
-import {FieldType} from "@core/services/pricing/field/field.interface";
+import {FieldType} from "@core/services/pricing/enum/field-type.enum";
 
 export class AttributOption {
   value: string;

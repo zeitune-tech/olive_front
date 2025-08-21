@@ -1,23 +1,19 @@
 import { environment } from "@env/environment";
 import { ReplaySubject, Observable, catchError, of } from "rxjs";
-import { tap, map } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 import { RequestMetadata } from "@core/services/common.interface";
 import { HttpClient } from "@angular/common/http";
-import { Constant } from "../constant/constant.interface";
-import { NumericField, SelectField } from "../field/field.interface";
 import { Injectable } from "@angular/core";
-
-export type VariableItemResponse = Constant | NumericField | SelectField ;
+import {VariableItem} from "@core/services/pricing/variable-item/variable-item.model";
 
 @Injectable()
 export class VariableItemService {
-  
     baseUrl = environment.pricing_url + '/variable-items';
-    private _variableItem: ReplaySubject<VariableItemResponse> = new ReplaySubject<VariableItemResponse>(1);
-    private _variableItems: ReplaySubject<VariableItemResponse[]> = new ReplaySubject<VariableItemResponse[]>(1);
+    private _variableItem: ReplaySubject<VariableItem> = new ReplaySubject<VariableItem>(1);
+    private _variableItems: ReplaySubject<VariableItem[]> = new ReplaySubject<VariableItem[]>(1);
     private _metadata: ReplaySubject<RequestMetadata> = new ReplaySubject<RequestMetadata>(1);
 
-    set variableItem(value: VariableItemResponse) {
+    set variableItem(value: VariableItem) {
         this._variableItem.next(value);
     }
 
@@ -25,7 +21,7 @@ export class VariableItemService {
         return this._variableItem.asObservable();
     }
 
-    set variableItems(value: VariableItemResponse[]) {
+    set variableItems(value: VariableItem[]) {
         this._variableItems.next(value);
     }
 
@@ -45,26 +41,19 @@ export class VariableItemService {
         private _httpClient: HttpClient
     ) {}
 
-    getAll(): Observable<VariableItemResponse[]> {
+    getAll(): Observable<VariableItem[]> {
         return this._httpClient.get<any>(`${this.baseUrl}/all`)
         .pipe(
             tap((response: any) => {
-                // Extraire les variables depuis response.content ou utiliser response directement
                 const items = response?.content || response || [];
-                this.variableItems = Array.isArray(items) ? items.map((item: VariableItemResponse) => item) : [];
+                this.variableItems = Array.isArray(items) ? items.map((item: VariableItem) => item) : [];
                 this.metadata = response;
                 return items;
             }),
-            map((response: any) => {
-                // Retourner le tableau d'items au lieu de la réponse complète
-                const items = response?.content || response || [];
-                return Array.isArray(items) ? items : [];
-            }),
             catchError((error) => {
                 console.error('VariableItemService error:', error);
-                return of([] as VariableItemResponse[]);
+                return of([] as VariableItem[]);
             })
         );
     }
 }
-
