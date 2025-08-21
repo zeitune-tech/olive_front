@@ -93,7 +93,11 @@ export class EndorsementSuccessionComponent implements OnInit {
 
   /* ============ Actions globales ============ */
   resetToDefaults(): void {
-    this.service.resetToDefaults();
+    this.service.loadDefaults().pipe(takeUntil(this._destroy$)).subscribe((cfg: SuccessionConfig) => {
+      this.rules = cfg.rules;
+      this.ranks = cfg.ranks;
+      this.applyOrderFromRanks();
+    });
   }
 
   save(): void {
