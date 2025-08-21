@@ -1345,6 +1345,12 @@
         "variable-item-infos": "Informations de la variable",
         "rules": "Règles"
       },
+      "rules": {
+        "if": "Si",
+        "and": "Et",
+        "then": "Alors"
+
+      },
       "field-types": {
         "numeric": "Numérique",
         "select": "Sélection",

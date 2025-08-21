@@ -17,6 +17,7 @@ import {SelectField} from "@core/services/pricing/field/select-field/select-fiel
 import {forkJoin, Subject, takeUntil} from "rxjs";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
+import {isNumberObject} from "node:util/types";
 
 @Component({
   selector: 'app-variable-condition-edit',
@@ -55,7 +56,9 @@ export class VariableConditionFormComponent implements OnInit {
   ) {
   }
 
-
+  static isNumeric(value:any) {
+    return !isNaN(value) && !isNaN(parseFloat(value));
+  }
 
   ngOnInit(): void {
 
@@ -132,7 +135,11 @@ export class VariableConditionFormComponent implements OnInit {
 
     // Désactiver le formulaire en mode view
     if (this.mode === 'view') {
-      this.formGroup.disable();
+      // this.formGroup.disable();
+      this.formGroup.get('coverage')?.disable();
+      this.formGroup.get('rules')?.disable();
+      this.formGroup.get('toReturn')?.disable();
+
     }
 
   }
@@ -212,13 +219,13 @@ export class VariableConditionFormComponent implements OnInit {
         }
       }
 
-      return `${field.variableName} ${operatorKey} ${valueStr}`;
+      return `'${field.variableName}' ${operatorKey} ${VariableConditionFormComponent.isNumeric(valueStr) ? valueStr : `'${valueStr}'`}`;
     });
 
-    const if_name = this._translocoService.translate("form.variableCondition.if");
-    const and_name = this._translocoService.translate("form.variableCondition.and");
-    const then_name = this._translocoService.translate("form.variableCondition.then");
-    return `${if_name} (${conditionDescriptions.join(` ${and_name} `)}) ${and_name} ${ruleValue}`;
+    const if_name = this._translocoService.translate("entities.variable-condition.rules.if");
+    const and_name = this._translocoService.translate("entities.variable-condition.rules.and");
+    const then_name = this._translocoService.translate("entities.variable-condition.rules.then");
+    return `${if_name} (${conditionDescriptions.join(` ${and_name} `)}) ${then_name} ${ruleValue}`;
   }
 
   /**

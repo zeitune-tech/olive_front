@@ -1,235 +1,236 @@
 <div class="space-y-2 p-2 min-w-[800px] variable-condition-form" #dialogRef *transloco="let t;">
-    <div>
-        <h2 mat-dialog-title>
-            @if (mode === 'create') {
-                {{ t('entities.variable-condition.form.create.title') }}
-            } @else if (mode === 'edit') {
-                {{ t('entities.variable-condition.form.edit.title') }}
-            } @else {
-                {{ t('entities.variable-condition.form.view.title') }}
-            }
-        </h2>
-    </div>
-    <mat-divider></mat-divider>
+  <div>
+    <h2 mat-dialog-title>
+      @if (mode === 'create') {
+        {{ t('entities.variable-condition.form.create.title') }}
+      } @else if (mode === 'edit') {
+        {{ t('entities.variable-condition.form.edit.title') }}
+      } @else {
+        {{ t('entities.variable-condition.form.view.title') }}
+      }
+    </h2>
+  </div>
+  <mat-divider></mat-divider>
 
-    <mat-dialog-content class="py-4">
-        <form [formGroup]="formGroup" class="space-y-6">
+  <mat-dialog-content class="py-4">
+    <form [formGroup]="formGroup" class="space-y-6">
 
-            <!-- Section 1: Informations VariableItem -->
-            <div class="section-variable-item p-4 rounded-lg">
-                <h3 class="text-lg font-semibold mb-4 text-gray-700 section-header">
-                    <mat-icon class="mr-2 text-blue-600">info</mat-icon>
-                    {{ t('entities.variable-condition.sections.variable-item-info') }}
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Section 1: Informations VariableItem -->
+      <div class="section-variable-item p-4 rounded-lg">
+        <h3 class="text-lg font-semibold mb-4 text-gray-700 section-header">
+          <mat-icon class="mr-2 text-blue-600">info</mat-icon>
+          {{ t('entities.variable-condition.sections.variable-item-info') }}
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                  <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.constant.fields.coverage') }}</mat-label>
-                    <mat-select formControlName="coverage" required>
-                      <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
-                        {{ coverage.reference.designation }}
-                      </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
-                      {{ t('form.errors.required') }}
-                    </mat-error>
-                  </mat-form-field>
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.constant.fields.coverage') }}</mat-label>
+            <mat-select formControlName="coverage" required [disabled]="mode === 'view'">
+              <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
+                {{ coverage.reference.designation }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
 
-                    <mat-form-field class="w-full" appearance="outline">
-                        <mat-label>{{ t('entities.variable-condition.fields.label') }}</mat-label>
-                        <input matInput formControlName="label" required>
-                        <mat-error *ngIf="formGroup.get('label')?.hasError('required')">
-                            {{ t('form.errors.required') }}
-                        </mat-error>
-                    </mat-form-field>
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.variable-condition.fields.label') }}</mat-label>
+            <input matInput formControlName="label" required [readonly]="mode === 'view'">
+            <mat-error *ngIf="formGroup.get('label')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
 
-                    <mat-form-field class="w-full" appearance="outline">
-                        <mat-label>{{ t('entities.variable-condition.fields.variableName') }}</mat-label>
-                        <input matInput formControlName="variableName" required [disabled]="true">
-                        <mat-error *ngIf="formGroup.get('variableName')?.hasError('required')">
-                            {{ t('form.errors.required') }}
-                        </mat-error>
-                    </mat-form-field>
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.variable-condition.fields.variableName') }}</mat-label>
+            <input matInput formControlName="variableName" required [readonly]="true">
+            <mat-error *ngIf="formGroup.get('variableName')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
 
-                    <mat-form-field class="w-full md:col-span-2" appearance="outline">
-                        <mat-label>{{ t('entities.variable-condition.fields.description') }}</mat-label>
-                        <textarea matInput formControlName="description" required rows="3"></textarea>
-                        <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
-                            {{ t('form.errors.required') }}
-                        </mat-error>
-                    </mat-form-field>
+          <mat-form-field class="w-full md:col-span-2" appearance="outline">
+            <mat-label>{{ t('entities.variable-condition.fields.description') }}</mat-label>
+            <textarea matInput formControlName="description" required rows="3" [readonly]="mode === 'view'"></textarea>
+            <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
 
-                    <mat-form-field class="w-full" appearance="outline">
-                        <mat-label>{{ t('entities.variable-condition.fields.toReturn') }}</mat-label>
-                        <mat-select formControlName="toReturn" required>
-                            <mat-option [value]="true">{{ t('entities.variable-condition.options.toReturn.true') }}</mat-option>
-                            <mat-option [value]="false">{{ t('entities.variable-condition.options.toReturn.false') }}</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="formGroup.get('toReturn')?.hasError('required')">
-                            {{ t('form.errors.required') }}
-                        </mat-error>
-                    </mat-form-field>
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>{{ t('entities.variable-condition.fields.toReturn') }}</mat-label>
+            <mat-select formControlName="toReturn" required [disabled]="mode === 'view'">
+              <mat-option [value]="true">{{ t('entities.variable-condition.options.toReturn.true') }}</mat-option>
+              <mat-option [value]="false">{{ t('entities.variable-condition.options.toReturn.false') }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.get('toReturn')?.hasError('required')">
+              {{ t('form.errors.required') }}
+            </mat-error>
+          </mat-form-field>
 
-                </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Règles et Conditions -->
+      <div class="section-rules p-4 rounded-lg" formArrayName="rules">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-gray-700 section-header">
+            <mat-icon class="mr-2 text-green-600">rule</mat-icon>
+            {{ t('entities.variable-condition.sections.rules') }}
+          </h3>
+
+          <!-- bouton ajouter règle seulement si pas en view -->
+          <button *ngIf="mode !== 'view'" type="button" mat-raised-button color="primary" (click)="addRule()" class="add-button">
+            <mat-icon>add</mat-icon>
+            {{ t('actions.add-rule') }}
+          </button>
+        </div>
+
+        @for (ruleControl of rulesFormArray.controls; track $index; let ruleIndex = $index) {
+          <div [formGroupName]="ruleIndex" class="bg-white p-4 mb-4 rounded border rule-card">
+            <div class="flex justify-between items-center mb-3">
+              <h4 class="font-medium text-gray-600">
+                <mat-icon class="mr-2 text-orange-500">fact_check</mat-icon>
+                {{ ruleControl.get('label')?.value }}
+              </h4>
+
+              <!-- bouton supprimer règle seulement si pas en view -->
+              @if (rulesFormArray.length > 1 && mode !== 'view') {
+                <button type="button" mat-icon-button color="warn" (click)="removeRule(ruleIndex)" class="delete-button">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              }
             </div>
 
-            <!-- Section 2: Règles et Conditions -->
-            <div class="section-rules p-4 rounded-lg" formArrayName="rules">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold text-gray-700 section-header">
-                        <mat-icon class="mr-2 text-green-600">rule</mat-icon>
-                        {{ t('entities.variable-condition.sections.rules') }}
-                    </h3>
-                    <button type="button" mat-raised-button color="primary" (click)="addRule()" class="add-button">
-                        <mat-icon>add</mat-icon>
-                        {{ t('actions.add-rule') }}
-                    </button>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ t('entities.rule.fields.value') }}</mat-label>
+                <input matInput type="number" formControlName="value" required [readonly]="mode === 'view'">
+                <mat-error *ngIf="ruleControl.get('value')?.hasError('required')">
+                  {{ t('form.errors.required') }}
+                </mat-error>
+                <mat-error *ngIf="ruleControl.get('value')?.hasError('min')">
+                  {{ t('form.errors.min', {min: 0}) }}
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-                @for (ruleControl of rulesFormArray.controls; track $index; let ruleIndex = $index) {
-                    <div [formGroupName]="ruleIndex" class="bg-white p-4 mb-4 rounded border rule-card">
-                        <div class="flex justify-between items-center mb-3">
-                            <h4 class="font-medium text-gray-600">
-                                <mat-icon class="mr-2 text-orange-500">fact_check</mat-icon>
-                                {{ ruleControl.get('label')?.value }}
-                            </h4>
-                            @if (rulesFormArray.length > 1) {
-                                <button type="button" mat-icon-button color="warn" (click)="removeRule(ruleIndex)" class="delete-button">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            }
-                        </div>
+            <!-- Conditions -->
+            <div formArrayName="conditions" class="bg-gray-50 p-3 rounded">
+              <div class="flex justify-between items-center mb-3">
+                <h5 class="font-medium text-gray-600">
+                  <mat-icon class="mr-2 text-purple-500">filter_list</mat-icon>
+                  {{ t('entities.condition.title') }}
+                </h5>
 
-                        <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
-                            <mat-form-field appearance="outline">
-                                <mat-label>{{ t('entities.rule.fields.value') }}</mat-label>
-                                <input matInput type="number" formControlName="value" required>
-                                <mat-error *ngIf="ruleControl.get('value')?.hasError('required')">
-                                    {{ t('form.errors.required') }}
-                                </mat-error>
-                                <mat-error *ngIf="ruleControl.get('value')?.hasError('min')">
-                                    {{ t('form.errors.min', {min: 0}) }}
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
+                <!-- bouton ajouter condition seulement si pas en view -->
+                <button *ngIf="mode !== 'view'" type="button" mat-raised-button color="accent" (click)="addCondition(ruleIndex)" class="add-button">
+                  <mat-icon>add</mat-icon>
+                  {{ t('actions.add-condition') }}
+                </button>
+              </div>
 
-                        <!-- Conditions pour cette règle -->
-                        <div formArrayName="conditions" class="bg-gray-50 p-3 rounded">
-                            <div class="flex justify-between items-center mb-3">
-                                <h5 class="font-medium text-gray-600">
-                                    <mat-icon class="mr-2 text-purple-500">filter_list</mat-icon>
-                                    {{ t('entities.condition.title') }}
-                                </h5>
-                                <button type="button" mat-raised-button color="accent" (click)="addCondition(ruleIndex)" class="add-button">
-                                    <mat-icon>add</mat-icon>
-                                    {{ t('actions.add-condition') }}
-                                </button>
-                            </div>
-
-                            @for (conditionControl of getConditionsFormArray(ruleIndex).controls; track $index; let conditionIndex = $index) {
-                                <div [formGroupName]="conditionIndex" class="bg-white p-3 mb-3 rounded border border-gray-200 condition-card">
-                                    <div class="flex justify-between items-center mb-2">
+              @for (conditionControl of getConditionsFormArray(ruleIndex).controls; track $index; let conditionIndex = $index) {
+                <div [formGroupName]="conditionIndex" class="bg-white p-3 mb-3 rounded border border-gray-200 condition-card">
+                  <div class="flex justify-between items-center mb-2">
                                         <span class="text-sm font-medium text-gray-500">
                                             <mat-icon class="mr-1" style="font-size: 16px;">settings</mat-icon>
-                                            {{ t('entities.condition.title') }} {{ conditionIndex + 1 }}
+                                          {{ t('entities.condition.title') }} {{ conditionIndex + 1 }}
                                         </span>
-                                        @if (getConditionsFormArray(ruleIndex).length > 1) {
-                                            <button type="button" mat-icon-button color="warn" (click)="removeCondition(ruleIndex, conditionIndex)" class="delete-button">
-                                                <mat-icon>delete</mat-icon>
-                                            </button>
-                                        }
-                                    </div>
 
-                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                                        <!-- Sélection du Field -->
-                                        <mat-form-field appearance="outline">
-                                            <mat-label>{{ t('entities.condition.fields.field') }}</mat-label>
-                                            <mat-select formControlName="field" required (selectionChange)="onFieldSelectionChange(ruleIndex, conditionIndex, $event.value)">
-                                                @for (field of fields; track field.id) {
-                                                    <mat-option [value]="field.id">
-                                                        {{ field.label }} ({{ field.type }})
-                                                    </mat-option>
-                                                }
-                                            </mat-select>
-                                            <mat-error *ngIf="conditionControl.get('field')?.hasError('required')">
-                                                {{ t('form.errors.required') }}
-                                            </mat-error>
-                                        </mat-form-field>
+                    <!-- bouton supprimer condition seulement si pas en view -->
+                    @if (getConditionsFormArray(ruleIndex).length > 1 && mode !== 'view') {
+                      <button type="button" mat-icon-button color="warn" (click)="removeCondition(ruleIndex, conditionIndex)" class="delete-button">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    }
+                  </div>
 
-                                        <!-- Sélection de l'opérateur -->
-                                        <mat-form-field appearance="outline">
-                                            <mat-label>{{ t('entities.condition.fields.operator') }}</mat-label>
-                                            <mat-select formControlName="operator" required>
-                                                @for (operator of getAvailableOperators(conditionControl.get('field')?.value); track operator) {
-                                                    <mat-option [value]="operator">
-                                                        {{ t('entities.condition.operators.' + operator) }}
-                                                    </mat-option>
-                                                }
-                                            </mat-select>
-                                            <mat-error *ngIf="conditionControl.get('operator')?.hasError('required')">
-                                                {{ t('form.errors.required') }}
-                                            </mat-error>
-                                        </mat-form-field>
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <!-- Field -->
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{ t('entities.condition.fields.field') }}</mat-label>
+                      <mat-select formControlName="field" required [disabled]="mode === 'view'" (selectionChange)="onFieldSelectionChange(ruleIndex, conditionIndex, $event.value)">
+                        @for (field of fields; track field.id) {
+                          <mat-option [value]="field.id">
+                            {{ field.label }} ({{ field.type }})
+                          </mat-option>
+                        }
+                      </mat-select>
+                      <mat-error *ngIf="conditionControl.get('field')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                      </mat-error>
+                    </mat-form-field>
 
-                                        <!-- Valeur (pour SelectField ou NumericField) -->
-                                        @if (getFieldType(conditionControl.get('field')?.value) === FieldType.SELECT) {
-                                            <mat-form-field appearance="outline">
-                                                <mat-label>{{ t('entities.condition.fields.value') }}</mat-label>
-                                                <mat-select formControlName="value" required>
-                                                    @for (option of getSelectFieldOptions(conditionControl.get('field')?.value); track option.id) {
-                                                        <mat-option [value]="option.id">
-                                                            {{ option.label }}
-                                                        </mat-option>
-                                                    }
-                                                </mat-select>
-                                                <mat-error *ngIf="conditionControl.get('value')?.hasError('required')">
-                                                    {{ t('form.errors.required') }}
-                                                </mat-error>
-                                            </mat-form-field>
-                                        } @else if (getFieldType(conditionControl.get('field')?.value) === FieldType.NUMBER) {
-                                            <!-- Valeur pour NumericField -->
-                                            <mat-form-field appearance="outline">
-                                                <mat-label>{{ t('entities.condition.fields.value') }}</mat-label>
-                                                <input matInput type="number" formControlName="value"
-                                                       (change)="onNumericValueChange(ruleIndex, conditionIndex)">
-                                                <mat-hint>{{ t('entities.condition.hints.optional-if-minmax') }}</mat-hint>
-                                                <mat-error *ngIf="conditionControl.hasError('numericFieldRequired')">
-                                                    {{ t('entities.condition.errors.numeric-field-required') }}
-                                                </mat-error>
-                                            </mat-form-field>
+                    <!-- Operator -->
+                    <mat-form-field appearance="outline">
+                      <mat-label>{{ t('entities.condition.fields.operator') }}</mat-label>
+                      <mat-select formControlName="operator" required [disabled]="mode === 'view'">
+                        @for (operator of getAvailableOperators(conditionControl.get('field')?.value); track operator) {
+                          <mat-option [value]="operator">
+                            {{ t('entities.condition.operators.' + operator) }}
+                          </mat-option>
+                        }
+                      </mat-select>
+                      <mat-error *ngIf="conditionControl.get('operator')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                      </mat-error>
+                    </mat-form-field>
 
-                                            <!-- Valeur Min -->
-                                            <mat-form-field appearance="outline">
-                                                <mat-label>{{ t('entities.condition.fields.minValue') }}</mat-label>
-                                                <input matInput type="number" formControlName="minValue"
-                                                       (change)="onMinMaxValueChange(ruleIndex, conditionIndex)">
-                                            </mat-form-field>
+                    <!-- Valeur -->
+                    @if (getFieldType(conditionControl.get('field')?.value) === FieldType.SELECT) {
+                      <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.condition.fields.value') }}</mat-label>
+                        <mat-select formControlName="value" required [disabled]="mode === 'view'">
+                          @for (option of getSelectFieldOptions(conditionControl.get('field')?.value); track option.id) {
+                            <mat-option [value]="option.id">
+                              {{ option.label }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                        <mat-error *ngIf="conditionControl.get('value')?.hasError('required')">
+                          {{ t('form.errors.required') }}
+                        </mat-error>
+                      </mat-form-field>
+                    } @else if (getFieldType(conditionControl.get('field')?.value) === FieldType.NUMBER) {
+                      <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.condition.fields.value') }}</mat-label>
+                        <input matInput type="number" formControlName="value" [readonly]="mode === 'view'" (change)="onNumericValueChange(ruleIndex, conditionIndex)">
+                        <mat-hint>{{ t('entities.condition.hints.optional-if-minmax') }}</mat-hint>
+                        <mat-error *ngIf="conditionControl.hasError('numericFieldRequired')">
+                          {{ t('entities.condition.errors.numeric-field-required') }}
+                        </mat-error>
+                      </mat-form-field>
 
-                                            <!-- Valeur Max -->
-                                            <mat-form-field appearance="outline">
-                                                <mat-label>{{ t('entities.condition.fields.maxValue') }}</mat-label>
-                                                <input matInput type="number" formControlName="maxValue"
-                                                       (change)="onMinMaxValueChange(ruleIndex, conditionIndex)">
-                                            </mat-form-field>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
+                      <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.condition.fields.minValue') }}</mat-label>
+                        <input matInput type="number" formControlName="minValue" [readonly]="mode === 'view'" (change)="onMinMaxValueChange(ruleIndex, conditionIndex)">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline">
+                        <mat-label>{{ t('entities.condition.fields.maxValue') }}</mat-label>
+                        <input matInput type="number" formControlName="maxValue" [readonly]="mode === 'view'" (change)="onMinMaxValueChange(ruleIndex, conditionIndex)">
+                      </mat-form-field>
+                    }
+                  </div>
+                </div>
+              }
             </div>
+          </div>
+        }
+      </div>
 
-        </form>
-    </mat-dialog-content>
+    </form>
+  </mat-dialog-content>
 
-    <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
-        <button mat-button mat-flat-button color="basic" (click)="onCancel()">
-            {{ t('form.actions.cancel') }}
-        </button>
-        <button mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
-            (click)="onSubmit()">
-            {{ t('form.actions.save') }}
-        </button>
-    </mat-dialog-actions>
+  <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
+    <button mat-button mat-flat-button color="basic" (click)="onCancel()">
+      {{ t('form.actions.cancel') }}
+    </button>
+    <button *ngIf="mode !== 'view'" mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled" (click)="onSubmit()">
+      {{ t('form.actions.save') }}
+    </button>
+  </mat-dialog-actions>
 </div>
