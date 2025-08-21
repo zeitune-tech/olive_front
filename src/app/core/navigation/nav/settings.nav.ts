@@ -4,130 +4,130 @@ import {NavigationItem} from "@lhacksrt/components";
 import {PERMISSIONS} from "@core/permissions/permissions.data";
 
 export const defaultSettingsNavigation: NavigationItem[] = [
-  {
-    id: 'products',
-    title: 'sidebar.products.title',
-    type: 'collapsable',
-    icon: 'fluent:people-team',
-    link: '/parameters/dashboard',
-    permission: PERMISSIONS.VIEW_PRODUCTS,
-    children: [
-      {
-        id: 'coverages.list-referiential',
-        title: 'sidebar.coverages.referential',
-        type: 'basic',
+    {
+        id: 'products',
+        title: 'sidebar.products.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        link: '/parameters/coverages/referentials',
-        permission: PERMISSIONS.VIEW_COVERAGES
-      },
-      {
-        id: 'products.list',
-        title: 'sidebar.products.list',
-        type: 'basic',
+        link: '/parameters/dashboard',
+        permission: PERMISSIONS.VIEW_PRODUCTS,
+        children: [
+            {
+                id: 'coverages.list-referiential',
+                title: 'sidebar.coverages.referential',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/coverages/referentials',
+                permission: PERMISSIONS.VIEW_COVERAGES
+            },
+            {
+                id: 'products.list',
+                title: 'sidebar.products.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/products/list',
+                permission: PERMISSIONS.VIEW_PRODUCTS
+            },
+            {
+                id: 'coverages.list',
+                title: 'sidebar.coverages.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/coverages/list',
+                permission: PERMISSIONS.VIEW_COVERAGES
+            },
+            {
+                id: 'incompatible-coverages-list',
+                title: 'sidebar.incompatible_coverages.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/coverages/incompatibilities',
+                permission: PERMISSIONS.VIEW_COVERAGES
+            }
+        ]
+    },
+    {
+        id: 'coverage-durations',
+        title: 'sidebar.coverage_durations.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        link: '/parameters/products/list',
-        permission: PERMISSIONS.VIEW_PRODUCTS
-      },
-      {
-        id: 'coverages.list',
-        title: 'sidebar.coverages.list',
-        type: 'basic',
+        permission: PERMISSIONS.VIEW_COVERAGE_DURATIONS,
+        children: [
+            {
+                id: 'coverage-durations.list',
+                title: 'sidebar.coverage_durations.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/coverage-durations/list',
+                permission: PERMISSIONS.VIEW_COVERAGE_DURATIONS
+            },
+            {
+                id: 'duration-rates.list',
+                title: 'sidebar.duration_rates.list',
+                type: 'basic',
+                icon: 'fluent:people-team',
+                link: '/parameters/duration-rates/list',
+                // permission: PERMISSIONS.VIEW_DURATION_RATES
+            }
+        ]
+    },
+    {
+        id: 'endorsements',
+        title: 'sidebar.endorsement.title',
+        type: 'collapsable',
         icon: 'fluent:people-team',
-        link: '/parameters/coverages/list',
-        permission: PERMISSIONS.VIEW_COVERAGES
-      },
-      {
-        id: 'incompatible-coverages-list',
-        title: 'sidebar.incompatible_coverages.list',
-        type: 'basic',
-        icon: 'fluent:people-team',
-        link: '/parameters/coverages/incompatibilities',
-        permission: PERMISSIONS.VIEW_COVERAGES
-      }
-    ]
-  },
-  {
-    id: 'coverage-durations',
-    title: 'sidebar.coverage_durations.title',
-    type: 'collapsable',
-    icon: 'fluent:people-team',
-    permission: PERMISSIONS.VIEW_COVERAGE_DURATIONS,
-    children: [
-      {
-        id: 'coverage-durations.list',
-        title: 'sidebar.coverage_durations.list',
-        type: 'basic',
-        icon: 'fluent:people-team',
-        link: '/parameters/coverage-durations/list',
-        permission: PERMISSIONS.VIEW_COVERAGE_DURATIONS
-      },
-      {
-        id: 'duration-rates.list',
-        title: 'sidebar.duration_rates.list',
-        type: 'basic',
-        icon: 'fluent:people-team',
-        link: '/parameters/duration-rates/list',
-        // permission: PERMISSIONS.VIEW_DURATION_RATES
-      }
-    ]
-  },
-  {
-    id: 'endorsements',
-    title: 'sidebar.endorsement.title',
-    type: 'collapsable',
-    icon: 'fluent:people-team',
-    // permission: PERMISSIONS.VIEW_ENDORSEMENTS,
-    children: [
-      {
-        id: 'types-avenants',
-        title: 'sidebar.endorsement.types',
-        type: 'basic',
-        icon: 'fluent:document-bullet-list-24-regular',
-        link: '/parameters/endorsements/list',
-        // permission: PERMISSIONS.VIEW_TYPES_AVENANTS
-      },
-      {
-        id: 'succession-avenants',
-        title: 'sidebar.endorsement.succession',
-        type: 'basic',
-        icon: 'fluent:document-sync-24-regular',
-        link: '/parameters/succession-avenants',
-        // permission: PERMISSIONS.VIEW_SUCCESSION_AVENANTS
-      },
-      {
-        id: 'mode-fonctionnement-avenants',
-        title: 'sidebar.endorsement.modeFonctionnement',
-        type: 'basic',
-        icon: 'fluent:settings-24-regular',
-        link: '/parameters/mode-fonctionnement-avenants',
-        // permission: PERMISSIONS.VIEW_MODE_FONCTIONNEMENT_AVENANTS
-      },
-      {
-        id: 'ristourne',
-        title: 'sidebar.endorsement.ristourne',
-        type: 'basic',
-        icon: 'fluent:money-hand-24-regular',
-        link: '/parameters/ristourne',
-        // permission: PERMISSIONS.VIEW_RISTOURNE
-      },
-      {
-        id: 'motif-avenants-produit',
-        title: 'sidebar.endorsement.motifAvenantsProduit',
-        type: 'basic',
-        icon: 'fluent:notepad-24-regular',
-        link: '/parameters/motif-avenants-produit',
-        // permission: PERMISSIONS.VIEW_MOTIF_AVENANTS_PRODUIT
-      },
-      {
-        id: 'motif-annulation-produit',
-        title: 'sidebar.endorsement.motifAnnulationProduit',
-        type: 'basic',
-        icon: 'fluent:delete-24-regular',
-        link: '/parameters/motif-annulation-produit',
-        // permission: PERMISSIONS.VIEW_MOTIF_ANNULATION_PRODUIT
-      }
-    ]
-  },
+        // permission: PERMISSIONS.VIEW_ENDORSEMENTS,
+        children: [
+            {
+                id: 'types-avenants',
+                title: 'sidebar.endorsement.types',
+                type: 'basic',
+                icon: 'fluent:document-bullet-list-24-regular',
+                link: '/parameters/endorsements/list',
+                // permission: PERMISSIONS.VIEW_TYPES_AVENANTS
+            },
+            {
+                id: 'succession-avenants',
+                title: 'sidebar.endorsement.succession',
+                type: 'basic',
+                icon: 'fluent:document-sync-24-regular',
+                link: '/parameters/endorsements/successions',
+                // permission: PERMISSIONS.VIEW_SUCCESSION_AVENANTS
+            },
+            {
+                id: 'mode-fonctionnement-avenants',
+                title: 'sidebar.endorsement.modeFonctionnement',
+                type: 'basic',
+                icon: 'fluent:settings-24-regular',
+                link: '/parameters/endorsements/access',
+                // permission: PERMISSIONS.VIEW_MODE_FONCTIONNEMENT_AVENANTS
+            },
+            {
+                id: 'ristourne',
+                title: 'sidebar.endorsement.ristourne',
+                type: 'basic',
+                icon: 'fluent:money-hand-24-regular',
+                link: '/parameters/ristourne',
+                // permission: PERMISSIONS.VIEW_RISTOURNE
+            },
+            {
+                id: 'motif-avenants-produit',
+                title: 'sidebar.endorsement.motifAvenantsProduit',
+                type: 'basic',
+                icon: 'fluent:notepad-24-regular',
+                link: '/parameters/motif-avenants-produit',
+                // permission: PERMISSIONS.VIEW_MOTIF_AVENANTS_PRODUIT
+            },
+            {
+                id: 'motif-annulation-produit',
+                title: 'sidebar.endorsement.motifAnnulationProduit',
+                type: 'basic',
+                icon: 'fluent:delete-24-regular',
+                link: '/parameters/motif-annulation-produit',
+                // permission: PERMISSIONS.VIEW_MOTIF_ANNULATION_PRODUIT
+            }
+        ]
+    },
 
   {
     id: 'accessories',

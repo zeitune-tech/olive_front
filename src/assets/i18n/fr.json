@@ -662,6 +662,7 @@
       },
       "options": {
         "nature": {
+          "NEW_BUSINESS": "Affaire nouvelle",
           "MODIFICATION": "Modification standard",
           "RENEWAL": "Renouvellement",
           "SUSPENSION": "Suspension",
@@ -673,7 +674,8 @@
         }
       },
       "succession":{
-        "from": "Avenants"
+        "from": "Avenants",
+        "order": "Ordre des avenants"
       }
     },
     "commission": {
