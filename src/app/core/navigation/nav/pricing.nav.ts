@@ -109,14 +109,14 @@ export const defaultPricingNavigation: NavigationItem[] = [
             link: '/pricing/production/parameters/formula',
             // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
             children: [
-              {
-                id: 'pricing-formula-create',
-                title: 'sidebar.pricing.formula_create',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/pricing/production/parameters/formula/create',
-                // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
-              },
+              // {
+              //   id: 'pricing-formula-create',
+              //   title: 'sidebar.pricing.formula_create',
+              //   type: 'basic',
+              //   icon: 'fluent:people-team',
+              //   link: '/pricing/production/parameters/formula/create',
+              //   // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
+              // },
               {
                 id: 'pricing-formula',
                 title: 'sidebar.pricing.formula_list',
