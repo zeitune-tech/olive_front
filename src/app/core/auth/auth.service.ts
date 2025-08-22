@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, throwError, tap } from 'rxjs';
 import { AuthUtils } from './auth.utils';
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
 import { TokenService } from './token.service';
 import { AuthResponse, RegisterRequest, UserCredentials } from './auth.model';
 

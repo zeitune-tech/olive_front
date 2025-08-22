@@ -673,7 +673,7 @@
           "INCORPORATION": "Incorporation"
         }
       },
-      "succession":{
+      "succession": {
         "from": "Avenants",
         "order": "Ordre des avenants"
       }
@@ -819,7 +819,6 @@
         "description": "Liste des exonérations de taxes appliquées aux produits",
         "empty-state": "Aucune exonération de taxe trouvée"
       },
-
       "fields": {
         "name": "Nom de l'exonération",
         "taxes": "Taxes exonérées",
@@ -1351,7 +1350,6 @@
         "if": "Si",
         "and": "Et",
         "then": "Alors"
-
       },
       "field-types": {
         "numeric": "Numérique",
@@ -1502,6 +1500,14 @@
           "true": "Oui",
           "false": "Non"
         }
+      }
+    },
+    "declaration-field": {
+      "fields": {
+        "coverage": "Garantie",
+        "tariffableObject": "Objet tarifaire",
+        "tariffableAttribut": "Attribut tarifaire",
+        "tariffableAttributType": "Type d'attribut tarifaire"
       }
     },
     "numeric-field": {
@@ -2342,20 +2348,20 @@
     "pricing": {
       "title": "Module Tarification",
       "description": "Gestion des éléments de tarification et calcul des primes.",
-        "features": {
-          "formula": "Formules",
-          "formula_description": "Configuration et gestion des formules de calcul des primes.",
-          "variable_conditions": "Variables conditionnées",
-          "variable_conditions_description": "Gestion des conditions appliquées aux variables de tarification.",
-          "fields": "Champs",
-          "fields_description": "Configuration des champs utilisés dans la tarification.",
-          "constants": "Constantes",
-          "constants_description": "Définition des constantes utilisées dans les calculs de tarification.",
-          "caracteristics": "Caractéristiques",
-          "caracteristics_description": "Configuration des caractéristiques de tarification.",
-          "conditions": "Conditions",
-          "conditions_description": "Gestion des conditions de tarification et règles métier."
-        }
+      "features": {
+        "formula": "Formules",
+        "formula_description": "Configuration et gestion des formules de calcul des primes.",
+        "variable_conditions": "Variables conditionnées",
+        "variable_conditions_description": "Gestion des conditions appliquées aux variables de tarification.",
+        "fields": "Champs",
+        "fields_description": "Configuration des champs utilisés dans la tarification.",
+        "constants": "Constantes",
+        "constants_description": "Définition des constantes utilisées dans les calculs de tarification.",
+        "caracteristics": "Caractéristiques",
+        "caracteristics_description": "Configuration des caractéristiques de tarification.",
+        "conditions": "Conditions",
+        "conditions_description": "Gestion des conditions de tarification et règles métier."
+      }
     },
     "sinisters": {
       "title": "Module Sinistres",

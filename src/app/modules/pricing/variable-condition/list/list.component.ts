@@ -125,12 +125,12 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
       columns: [
         {label: 'entities.variable-condition.fields.label', property: 'label', type: 'text', visible: true},
         {label: 'entities.variable-condition.fields.description', property: 'description', type: 'text', visible: true},
-        {
-          label: 'entities.variable-condition.fields.variableName',
-          property: 'variableName',
-          type: 'text',
-          visible: true
-        },
+        // {
+        //   label: 'entities.variable-condition.fields.variableName',
+        //   property: 'variableName',
+        //   type: 'text',
+        //   visible: true
+        // },
         {label: 'entities.variable-condition.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
         {label: 'entities.variable-condition.fields.coverage', property: 'coverage', type: 'text', visible: true},
       ],
@@ -138,6 +138,9 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
       pageSizeOptions: [5, 6, 8],
       actions: [],
       renderItem: (element: VariableCondition, property: keyof VariableCondition) => {
+        if (property == "toReturn") {
+          return element.toReturn ? 'Oui' : 'Non';
+        }
         if (property === 'coverage')
           return this.coverages.find(c => c.id === element.coverage)?.reference.designation ?? '--';
         return element[property] ?? '--';

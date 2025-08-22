@@ -21,8 +21,6 @@ import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.mode
 import {DeclarationFieldFormComponent} from "../declaration-form/form.component";
 import {NumericFieldService} from "@core/services/pricing/field/numeric-field/numeric-field.service";
 import {SelectFieldService} from "@core/services/pricing/field/select-field/select-field.service";
-import {NumericField} from "@core/services/pricing/field/numeric-field/numeric-field.model";
-import {SelectField} from "@core/services/pricing/field/select-field/select-field.model";
 import {FieldType} from "@core/services/pricing/enum/field-type.enum";
 
 @Component({
@@ -158,8 +156,6 @@ export class FieldListComponent implements OnInit {
       columns: [
         {label: 'entities.pricing.field.fields.label', property: 'label', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.description', property: 'description', type: 'text', visible: true},
-        {label: 'entities.pricing.field.fields.variableName', property: 'variableName', type: 'text', visible: true},
-        {label: 'entities.pricing.field.fields.toReturn', property: 'toReturn', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.coverage', property: 'coverage', type: 'text', visible: true},
         {label: 'entities.pricing.field.fields.fieldType', property: 'fieldType', type: 'text', visible: true},
       ],
@@ -167,9 +163,6 @@ export class FieldListComponent implements OnInit {
       pageSizeOptions: [5, 6, 8],
       actions: [],
       renderItem: (element: Field, property: keyof Field) => {
-        if (property === 'toReturn') {
-          return element.toReturn ? 'Oui' : 'Non';
-        }
         if (property === 'fieldType') {
           return element.fieldType == FieldType.NUMBER ? 'Numérique' : 'Sélection';
         }
