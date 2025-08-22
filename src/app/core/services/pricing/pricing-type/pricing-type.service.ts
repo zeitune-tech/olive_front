@@ -3,12 +3,23 @@ import {PricingType} from "./pricing-type.model";
 import {environment} from "@env/environment";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {PricingTypeDetailed} from "@core/services/pricing/pricing-type/pricing-type-detailed.model";
+import {Constant} from "@core/services/pricing/constant/constant.model";
 
 @Injectable()
 export class PricingTypeService {
   baseUrl = environment.pricing_url + '/pricing-types';
   private _pricingType: ReplaySubject<PricingType> = new ReplaySubject<PricingType>(1);
+  private _pricingTypeDetailed: ReplaySubject<PricingTypeDetailed> = new ReplaySubject<PricingTypeDetailed>(1);
   private _pricingTypes: ReplaySubject<PricingType[]> = new ReplaySubject<PricingType[]>(1);
+
+  set pricingTypeDetailed(value: PricingTypeDetailed) {
+    this._pricingTypeDetailed.next(value);
+  }
+
+  get pricingTypeDetailed$() {
+    return this._pricingTypeDetailed.asObservable();
+  }
 
   set pricingType(value: PricingType) {
     this._pricingType.next(value);
@@ -39,6 +50,17 @@ export class PricingTypeService {
           return response;
         }),
         catchError(() => of({} as PricingType))
+      );
+  }
+
+  getDetailedById(id: string): Observable<PricingTypeDetailed> {
+    return this._httpClient.get<PricingTypeDetailed>(`${this.baseUrl}/${id}?withDetailed=true`, {})
+      .pipe(
+        tap((response: PricingTypeDetailed) => {
+          this.pricingTypeDetailed = new PricingTypeDetailed(response);
+          return this.pricingTypeDetailed;
+        }),
+        catchError(() => of({} as PricingTypeDetailed))
       );
   }
 

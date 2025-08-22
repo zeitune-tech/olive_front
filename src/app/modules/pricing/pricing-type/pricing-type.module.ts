@@ -22,11 +22,13 @@ import {PricingSharedModule} from "../shared/pricing-shared.module";
 import {PricingTypeFormComponent} from "./form/form.component";
 import {PricingTypeListComponent} from "./list/list.component";
 import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
+import {PricingTypeDetailedFormComponent} from "./detailed-form/form.component";
 
 @NgModule({
   declarations: [
     PricingTypeListComponent,
     PricingTypeFormComponent,
+    PricingTypeDetailedFormComponent
   ],
   imports: [
     RouterModule.forChild(routes),

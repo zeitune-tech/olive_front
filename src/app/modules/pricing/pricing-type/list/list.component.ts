@@ -24,6 +24,7 @@ import {CoverageService} from "@core/services/settings/coverage/coverage.service
 import {PricingTypeFormComponent} from "../form/form.component";
 import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
 import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
+import {PricingTypeDetailedFormComponent} from "../detailed-form/form.component";
 
 @Component({
   selector: "app-constant-list",
@@ -347,6 +348,23 @@ export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestro
 
   }
 
+  onView(pricingType: PricingType) {
+    this._dialog.open(PricingTypeDetailedFormComponent, {
+      width: '600px',
+      disableClose: true,
+      data: {
+        mode: 'view',
+        ...pricingType
+      }
+    }).afterClosed().subscribe((result) => {
+      if (result) {
+        this._pricingTypeService.getAll().subscribe(() => {
+          this.filterPricingTypes();
+        });
+      }
+    });
+  }
+
   /**
    * Edit Constant
    */
@@ -382,4 +400,6 @@ export class PricingTypeListComponent implements OnInit, AfterViewInit, OnDestro
   trackByProperty(index: number, column: TableColumn<PricingType>) {
     return column.property;
   }
+
+
 }

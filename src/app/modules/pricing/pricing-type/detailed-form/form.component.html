@@ -1,0 +1,48 @@
+<div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
+    <div>
+        <h2 mat-dialog-title>
+            @if (mode === 'create') {
+                {{ t('entities.pricing-type.form.create.title') }}
+            } @else if (mode === 'edit') {
+                {{ t('entities.pricing-type.form.edit.title') }}
+            } @else {
+                {{ t('entities.pricing-type.form.view.title') }}
+            }
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+
+    <mat-dialog-content class="py-4">
+        <form [formGroup]="formGroup" class="space-y-4">
+
+            <div class="flex flex-col gap-6">
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.pricing-type.fields.name') }}</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="formGroup.get('name')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full" appearance="outline">
+                    <mat-label>{{ t('entities.pricing-type.fields.description') }}</mat-label>
+                    <textarea matInput formControlName="description" required rows="3"></textarea>
+                    <mat-error *ngIf="formGroup.get('description')?.hasError('required')">
+                        {{ t('form.errors.required') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
+        <button mat-button mat-flat-button color="basic" (click)="onCancel()">
+            {{ t('form.actions.cancel') }}
+        </button>
+        <button mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
+            (click)="onSubmit()">
+            {{ t('form.actions.save') }}
+        </button>
+    </mat-dialog-actions>
+</div>
