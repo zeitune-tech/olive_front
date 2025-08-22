@@ -189,18 +189,13 @@ export class VariableConditionListComponent implements OnInit, AfterViewInit, On
 
     if (this.data) {
       let filteredData = [...this.data];
-      console.log(filteredData)
-
       // Appliquer les filtres pour branch et product
       filteredData = filteredData.filter(pt =>
         pt.branch === this.selectedBranch?.id &&
         pt.product === this.selectedProduct?.id &&
         pt.pricingType === this.selectedPricingType?.id
       );
-      console.log(filteredData)
-
       this.dataSource.data = filteredData;
-
       if (this.searchCtrl.value) {
         this.applyFilter(this.searchCtrl.value);
       }

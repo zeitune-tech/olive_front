@@ -1,70 +1,71 @@
 <div class="space-y-2 p-2 min-w-[480px]" #dialogRef *transloco="let t;">
-    <div>
-        <h2 mat-dialog-title>
-            @if (mode === 'create') {
-                {{ t('entities.declaration-field.form.create.title') }}
-            } @else if (mode === 'edit') {
-                {{ t('entities.declaration-field.form.edit.title') }}
-            } @else {
-                {{ t('entities.declaration-field.form.view.title') }}
-            }
-        </h2>
-    </div>
-    <mat-divider></mat-divider>
+  <div>
+    <h2 mat-dialog-title>
+      @if (mode === 'create') {
+        {{ t('entities.declaration-field.form.create.title') }}
+      } @else if (mode === 'edit') {
+        {{ t('entities.declaration-field.form.edit.title') }}
+      } @else {
+        {{ t('entities.declaration-field.form.view.title') }}
+      }
+    </h2>
+  </div>
+  <mat-divider></mat-divider>
 
-    <mat-dialog-content class="py-4">
-        <form [formGroup]="formGroup" class="space-y-4">
-            <div class="flex flex-col gap-6">
-              <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.declaration-field.fields.coverage') }}</mat-label>
-                <mat-select formControlName="coverage" required>
-                  <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
-                    {{ coverage.reference.designation }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
-                  {{ t('form.errors.required') }}
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.declaration-field.fields.tariffableObject') }}</mat-label>
-                <mat-select formControlName="tariffableObjectName" required>
-                  <mat-option *ngFor="let tariffableObject of tariffableObjects" [value]="tariffableObject.name">
-                    {{ tariffableObject.name }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formGroup.get('tariffableObject')?.hasError('required')">
-                  {{ t('form.errors.required') }}
-                </mat-error>
-              </mat-form-field>
+  <mat-dialog-content class="py-4">
+    <form [formGroup]="formGroup" class="space-y-4">
+      <div class="flex flex-col gap-6">
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.declaration-field.fields.coverage') }}</mat-label>
+          <mat-select formControlName="coverage" required>
+            <mat-option *ngFor="let coverage of coverages" [value]="coverage.id">
+              {{ coverage.reference.designation }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('coverage')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.declaration-field.fields.tariffableObject') }}</mat-label>
+          <mat-select formControlName="tariffableObjectName" required>
+            <mat-option *ngFor="let tariffableObject of tariffableObjects" [value]="tariffableObject.name">
+              {{ tariffableObject.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('tariffableObject')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
 
-              <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.declaration-field.fields.tariffableAttribut') }}</mat-label>
-                <mat-select formControlName="tariffableAttribut" required>
-                  <mat-option *ngFor="let tariffableAttribut of selectedTariffableObject?.attributs" [value]="tariffableAttribut.controlName">
-                    {{ tariffableAttribut.label }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="formGroup.get('tariffableAttribut')?.hasError('required')">
-                  {{ t('form.errors.required') }}
-                </mat-error>
-              </mat-form-field>
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.declaration-field.fields.tariffableAttribut') }}</mat-label>
+          <mat-select formControlName="tariffableAttribut" required>
+            <mat-option *ngFor="let tariffableAttribut of selectedTariffableObject?.attributs"
+                        [value]="tariffableAttribut.controlName">
+              {{ tariffableAttribut.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('tariffableAttribut')?.hasError('required')">
+            {{ t('form.errors.required') }}
+          </mat-error>
+        </mat-form-field>
 
-              <mat-form-field class="w-full" appearance="outline">
-                <mat-label>{{ t('entities.declaration-field.fields.tariffableAttribut.type') }}</mat-label>
-                <input matInput value="{{this.selectedTariffableAttribut?.type}}" required [readonly]="true">
-              </mat-form-field>
-            </div>
-        </form>
-    </mat-dialog-content>
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>{{ t('entities.declaration-field.fields.tariffableAttribut.type') }}</mat-label>
+          <input matInput value="{{this.selectedTariffableAttribut?.type}}" required [readonly]="true">
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
 
-    <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
-        <button mat-button mat-flat-button color="basic" (click)="onCancel()">
-            {{ t('form.actions.cancel') }}
-        </button>
-        <button mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
+  <mat-dialog-actions class="flex justify-end space-x-2 pt-4">
+    <button mat-button mat-flat-button color="basic" (click)="onCancel()">
+      {{ t('form.actions.cancel') }}
+    </button>
+    <button mat-button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
             (click)="onSubmit()">
-            {{ t('form.actions.save') }}
-        </button>
-    </mat-dialog-actions>
+      {{ t('form.actions.save') }}
+    </button>
+  </mat-dialog-actions>
 </div>

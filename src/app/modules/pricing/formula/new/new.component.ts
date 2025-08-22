@@ -1,25 +1,21 @@
-import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import { FormBuilder, UntypedFormGroup } from "@angular/forms";
 import {MatPaginator} from "@angular/material/paginator";
 import {Product} from "@core/services/settings/product/product.interface";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
 import {Branch} from "@core/services/settings/branch/branch.interface";
-import {BranchService} from "@core/services/settings/branch/branch.service";
 import { ConstantService } from "@core/services/pricing/constant/constant.service";
 import { ConstantFormComponent } from "../../constants/form/form.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ProductService } from "@core/services/settings/product/product.service";
-import { Subject, takeUntil } from "rxjs";
+import {forkJoin, Subject, takeUntil} from "rxjs";
 import {VariableConditionFormComponent} from "../../variable-condition/form/form.component";
 import {Formula} from "@core/services/pricing/formula/formula.interface";
 import {FormulaService} from "@core/services/pricing/formula/formula.service";
 import {TranslocoService} from "@jsverse/transloco";
-import {ManagementEntityService} from "@core/services/administration/management-entity/management-entity.service";
 import {ManagementEntity} from "@core/services/administration/management-entity/management-entity.interface";
 import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 import {CoverageService} from "@core/services/settings/coverage/coverage.service";
-import {FieldService} from "@core/services/pricing/field/field.service";
 import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
 import {Constant} from "@core/services/pricing/constant/constant.model";
 import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.model";
@@ -29,8 +25,17 @@ import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.mode
 import {NumericFieldService} from "@core/services/pricing/field/numeric-field/numeric-field.service";
 import {SelectFieldService} from "@core/services/pricing/field/select-field/select-field.service";
 import {NumericField} from "@core/services/pricing/field/numeric-field/numeric-field.model";
-import {DeclarationField} from "@core/services/pricing/field/declaration-field/declaration-field.model";
 import {DeclarationFieldFormComponent} from "../../field/declaration-form/form.component";
+import {SelectField} from "@core/services/pricing/field/select-field/select-field.model";
+import {DeclarationField} from "@core/services/pricing/field/declaration-field/declaration-field.model";
+
+type Variable = {
+  name: string,
+  description: string,
+  coverage: string,
+  formula: string,
+  variables: string[]
+}
 
 @Component({
     selector: 'app-formula-new',
@@ -45,72 +50,64 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<Formula>([]); // Ajoute les données réelles ici
 
   selectedBranch: Branch | undefined;
-  branches: Branch[] = [];
   selectedProduct: Product | undefined;
-  products: Product[] = [];
   coverages: Coverage[] = []
-  selectedPricingType: PricingType|undefined;
-
+  selectedCoverage: Coverage | undefined;
+  selectedPricingType: PricingType | undefined;
   managementEntity: ManagementEntity = new ManagementEntity({});
 
   constructor(
       private _formBuilder: FormBuilder,
       private _dialog: MatDialog,
-      private _branchService: BranchService,
-      private _productService: ProductService,
       private _selectionService: SelectionService,
       private _constantService: ConstantService,
-      private _fieldService: FieldService,
       private _variableConditionService: VariableConditionService,
       private _formulaService: FormulaService,
       private _snackBar: MatSnackBar,
       private translocoService: TranslocoService,
       private snackBar: MatSnackBar,
-      private _managementEntityService: ManagementEntityService,
       private _coverageService: CoverageService,
       private _numericFieldService: NumericFieldService,
       private _selectFieldService: SelectFieldService,
+      private dialogRef: MatDialogRef<FormulaNewComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: Variable,
   ) {
   }
 
-  doResolve () {
-    this._constantService.getAll()
-      .subscribe()
-    this._variableConditionService.getAll()
-      .subscribe();
-    this._formulaService.getAll()
-      .subscribe();
-    this._numericFieldService.getAll()
-      .subscribe();
-    this._selectFieldService.getAll()
-      .subscribe();
+  loadVariables(): void {
+    // Recharger les constantes, champs numériques et de séléction, conditions variables et formules
+    forkJoin([
+      this._constantService.getAll(),
+      this._numericFieldService.getAll(),
+      this._selectFieldService.getAll(),
+      this._variableConditionService.getAll(),
+      this._formulaService.getAll()
+    ])
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(([constants, numericFields, selectFields, variableConditions, formulas]) => {
+        this.constantList = constants;
+        this.numericFieldList = numericFields;
+        this.selectFieldList = selectFields;
+        this.variableConditionList = variableConditions;
+        this.formulaList = formulas;
+        // Combiner toutes les variables
+        this.variables = [
+          ...this.constantList,
+          ...this.numericFieldList,
+          ...this.selectFieldList,
+          ...this.variableConditionList,
+          ...this.formulaList
+        ];
+        console.log(this.variables);
+      });
   }
 
-  loadValues() {
-    // Initialiser les branches
-    this._branchService.branches$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Branch[]) => {
-        this.branches = data || [];
-      });
-
-    // Initialiser les produits
-    this._productService.products$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: Product[]) => {
-        this.products = data || [];
-      });
-
+  setupSelection() {
     // S'abonner aux changements de sélection
     this._selectionService.selectedBranch$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(branch => {
         this.selectedBranch = branch;
-        if (branch) {
-          this._productService.getByBranchOrAll(branch.id)
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe();
-        }
       });
 
     this._selectionService.selectedProduct$
@@ -134,14 +131,20 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.doResolve();
-    this.loadValues();
+
+    this.setupSelection();
+
     this.loadVariables();
+
     this.formGroup = this._formBuilder.group({
-        name: [''],
-        description: [''],
-        formula: ['']
+      name: [this.data.name || '', []],
+      description: [this.data.description || '', []],
+      coverage: [this.data.coverage || '', []],
+      formula: [this.data.formula || '', []],
+      variables: [this.data.variables || '', []],
     });
+
+    this.formula = this.data.formula || '';
   }
 
   ngOnDestroy(): void {
@@ -155,9 +158,10 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
 
   constantList: Constant[] = [];
   numericFieldList: NumericField[] = [];
+  selectFieldList: SelectField[] = [];
   variableConditionList: VariableCondition[] = [];
   formulaList: Formula[] = [];
-  variables: (Constant | NumericField | VariableCondition | Formula)[] = [];
+  variables: (Constant | NumericField | SelectField | VariableCondition | Formula)[] = [];
 
   append(value: string) {
     this.formula += value;
@@ -208,43 +212,6 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
     return this.filteredVariables().filter(variable => variable?.type === type);
   }
 
-  loadVariables(): void {
-    // Recharger les constantes, champs numériques, conditions variables et formules
-    this._constantService.constants$.subscribe(
-      (constants) => {
-        this.constantList = constants;
-        console.log('Constants loaded:', this.constantList);
-      }
-    )
-
-    this._numericFieldService.getAll().subscribe(
-      (fields) => {
-        this.numericFieldList = fields;
-      }
-    )
-
-    this._variableConditionService.variableConditions$.subscribe(
-      (conditions) => {
-        this.variableConditionList = conditions;
-      }
-    )
-
-    this._formulaService.formulas$.subscribe(
-      (formulas) => {
-        this.formulaList = formulas;
-      }
-    )
-
-    // Combiner toutes les variables
-    this.variables = [
-      ...this.constantList,
-      ...this.numericFieldList,
-      ...this.variableConditionList,
-      ...this.formulaList
-    ];
-
-    console.log(this.variables);
-  }
 
   onAddNewVariable(variable: "CONSTANT" | "FIELD" | "VARIABLE_CONDITION"): void {
 
@@ -329,21 +296,19 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
       managementEntity: this.managementEntity.id,
       product: this.selectedProduct!.id ,
       branch: this.selectedBranch!.id,
-      pricingType: "TODO",
-      coverage: "TODO",
+      pricingType: this.selectedPricingType!.id,
+      coverage: this.formGroup.get('coverage')?.value,
       expression: this.formula,
       variables: this.variables.filter(v => this.formula.includes(v.variableName) ).map(v => v.id) // Filtrer les variables qui doivent être retournées
     })
       .subscribe({
         next: () => {
           const successMessage = 'form.success.creation';
-
           this.snackBar.open(
             this.translocoService.translate(successMessage),
             undefined,
             { duration: 3000, panelClass: 'snackbar-success' }
           );
-
           this.resetForm();
           this.loadVariables();
         },
@@ -358,5 +323,12 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
       });
   }
 
+
+  onCancel() {
+    this.dialogRef.close(false);
+
+  }
+
   protected readonly TypeOfVariable = TypeOfVariable;
+
 }

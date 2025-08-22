@@ -1061,12 +1061,12 @@
           "empty_state": "Aucune formule de tarification trouvée"
         },
         "fields": {
-          "name": "Nom de la formule",
+          "label": "Nom de la formule",
           "description": "Description",
           "expression": "Expression",
-          "product": "Produit",
-          "managementEntity": "Entité de gestion",
-          "actions": "Actions"
+          "variableName": "Nom de variable",
+          "toReturn": "A retourner",
+          "coverage": "Garantie"
         },
         "sections": {
           "symbols": "Symboles",
@@ -1648,6 +1648,11 @@
         "title": "Formules de tarification",
         "description": "Liste des formules de calcul des primes",
         "empty_state": "Aucune formule de tarification trouvée"
+      },
+      "fields": {
+        "coverage": "Garantie",
+        "name": "Libellé",
+        "description": "Description"
       },
       "form": {
         "title": "Créer une formule de tarification",

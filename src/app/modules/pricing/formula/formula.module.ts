@@ -1,37 +1,45 @@
-import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { routes } from "./formula.routing";
-import { SharedModule } from "@shared/shared.module";
-import { MatInputModule } from "@angular/material/input";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import {NgModule} from "@angular/core";
+import {RouterModule} from "@angular/router";
+import {routes} from "./formula.routing";
+import {SharedModule} from "@shared/shared.module";
+import {MatInputModule} from "@angular/material/input";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {FormulaListComponent} from "./list/list.component";
-import { ReactiveFormsModule } from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatPaginatorModule } from "@angular/material/paginator";
-import { MatSelectModule } from "@angular/material/select";
-import { MatTableModule } from "@angular/material/table";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { TableModule } from "@lhacksrt/components/table/table.module";
-import { LayoutService } from "./layout.service";
-import { FormulaService } from "@core/services/pricing/formula/formula.service";
-import { ConstantService } from "@core/services/pricing/constant/constant.service";
-import { FieldService } from "@core/services/pricing/field/field.service";
-import { SelectFieldOptionsService } from "@core/services/pricing/field/select-field/select-field-options/select-field-options.service";
-import { VariableItemService } from "@core/services/pricing/variable-item/variable-item.service";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSelectModule} from "@angular/material/select";
+import {MatTableModule} from "@angular/material/table";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {TableModule} from "@lhacksrt/components/table/table.module";
+import {LayoutService} from "./layout.service";
+import {FormulaService} from "@core/services/pricing/formula/formula.service";
+import {ConstantService} from "@core/services/pricing/constant/constant.service";
+import {FieldService} from "@core/services/pricing/field/field.service";
+import {
+  SelectFieldOptionsService
+} from "@core/services/pricing/field/select-field/select-field-options/select-field-options.service";
+import {VariableItemService} from "@core/services/pricing/variable-item/variable-item.service";
 import {VariableConditionService} from "@core/services/pricing/variable-condition/variable-condition.service";
 import {FormulaNewComponent} from "./new/new.component";
 import {PricingSharedModule} from "../shared/pricing-shared.module";
+import {NumericFieldService} from "@core/services/pricing/field/numeric-field/numeric-field.service";
+import {SelectFieldService} from "@core/services/pricing/field/select-field/select-field.service";
+import {
+  SelectFieldOptionValueService
+} from "@core/services/pricing/field/select-field/select-field-option-value/select-field-option-value.service";
+import {RuleService} from "@core/services/pricing/variable-condition/rule/rule.service";
 
 @NgModule({
-    declarations: [
-        FormulaNewComponent,
-        FormulaListComponent
-    ],
+  declarations: [
+    FormulaNewComponent,
+    FormulaListComponent
+  ],
   imports: [
     RouterModule.forChild(routes),
     MatIconModule,
@@ -51,19 +59,22 @@ import {PricingSharedModule} from "../shared/pricing-shared.module";
     MatProgressSpinnerModule,
     PricingSharedModule,
   ],
-    exports: [],
-    providers: [
-        LayoutService,
-        FormulaService,
-        VariableConditionService,
-        ConstantService,
-        FieldService,
-        SelectFieldOptionsService,
-        VariableItemService,
-    ]
+  exports: [],
+  providers: [
+    LayoutService,
+    FormulaService,
+    VariableConditionService,
+    ConstantService,
+    NumericFieldService,
+    SelectFieldService,
+    SelectFieldOptionsService,
+    SelectFieldOptionValueService,
+    VariableItemService,
+    RuleService
+  ]
 })
 export class FormulaModule {
-    constructor() {
-        // Module initialization logic can go here
-    }
+  constructor() {
+    // Module initialization logic can go here
+  }
 }

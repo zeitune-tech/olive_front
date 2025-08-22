@@ -46,9 +46,10 @@ export class ConstantService {
   getAll(): Observable<Constant[]> {
     return this._httpClient.get<Constant[]>(`${this.baseUrl}`)
       .pipe(
-        tap((response: any) => {
-          this.constants = response?.content.map((item: Constant) => item);
-          return response;
+        map((response: any) => {
+          const content = response?.content.map((item: Constant) => item);
+          this._constants.next(content);
+          return content;
         }),
         catchError(() => of([]))
       );
