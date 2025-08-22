@@ -12,23 +12,31 @@ export const defaultPricingNavigation: NavigationItem[] = [
     link: '/pricing/production',
     // permission: PERMISSIONS.VIEW_PRICING_CONSTANTS,
     children: [
+      // {
+      //   id: 'pricing',
+      //   title: 'sidebar.pricing.production.pricing',
+      //   type: 'collapsable',
+      //   icon: 'fluent:people-team',
+      //   link: '/pricing/production/pricing',
+      //   // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
+      //   children: [
+      //     {
+      //       id: 'pricing-type',
+      //       title: 'sidebar.pricing.production.pricing_type',
+      //       type: 'basic',
+      //       icon: 'fluent:people-team',
+      //       link: '/pricing/production/pricing-type',
+      //       // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
+      //     },
+      //   ]
+      // },
       {
-        id: 'pricing',
-        title: 'sidebar.pricing.production.pricing',
-        type: 'collapsable',
+        id: 'pricing-type',
+        title: 'sidebar.pricing.production.pricing_type',
+        type: 'basic',
         icon: 'fluent:people-team',
-        link: '/pricing/production/pricing',
+        link: '/pricing/production/pricing-type',
         // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
-        children: [
-          {
-            id: 'pricing-type',
-            title: 'sidebar.pricing.production.pricing_type',
-            type: 'basic',
-            icon: 'fluent:people-team',
-            link: '/pricing/production/pricing-type',
-            // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
-          },
-        ]
       },
       {
         id: 'parameters',
@@ -101,32 +109,40 @@ export const defaultPricingNavigation: NavigationItem[] = [
             // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
             children: []
           },
+          // {
+          //   id: 'formula',
+          //   title: 'sidebar.pricing.formula',
+          //   type: 'collapsable',
+          //   icon: 'fluent:people-team',
+          //   link: '/pricing/production/parameters/formula',
+          //   // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
+          //   children: [
+          //     // {
+          //     //   id: 'pricing-formula-create',
+          //     //   title: 'sidebar.pricing.formula_create',
+          //     //   type: 'basic',
+          //     //   icon: 'fluent:people-team',
+          //     //   link: '/pricing/production/parameters/formula/create',
+          //     //   // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
+          //     // },
+          //     {
+          //       id: 'pricing-formula',
+          //       title: 'sidebar.pricing.formula_list',
+          //       type: 'basic',
+          //       icon: 'fluent:people-team',
+          //       link: '/pricing/production/parameters/formula/list',
+          //       // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
+          //     },
+          //   ]
+          // },
           {
-            id: 'formula',
-            title: 'sidebar.pricing.formula',
-            type: 'collapsable',
+            id: 'pricing-formula',
+            title: 'sidebar.pricing.formula_list',
+            type: 'basic',
             icon: 'fluent:people-team',
-            link: '/pricing/production/parameters/formula',
+            link: '/pricing/production/parameters/formula/list',
             // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
-            children: [
-              // {
-              //   id: 'pricing-formula-create',
-              //   title: 'sidebar.pricing.formula_create',
-              //   type: 'basic',
-              //   icon: 'fluent:people-team',
-              //   link: '/pricing/production/parameters/formula/create',
-              //   // permission: PERMISSIONS.CREATE_PRICING_FORMULA,
-              // },
-              {
-                id: 'pricing-formula',
-                title: 'sidebar.pricing.formula_list',
-                type: 'basic',
-                icon: 'fluent:people-team',
-                link: '/pricing/production/parameters/formula/list',
-                // permission: PERMISSIONS.VIEW_PRICING_FORMULA,
-              },
-            ]
-          },
+          }
         ]
       },
     ]

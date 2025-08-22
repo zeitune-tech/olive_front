@@ -1152,9 +1152,9 @@
           "subtitle": "Créer ou modifier un champ de tarification"
         },
         "table": {
-          "title": "Champs de tarification",
-          "description": "Liste des champs de tarification",
-          "empty_state": "Aucun champ de tarification trouvé."
+          "title": "Caractéristique de tarification",
+          "description": "Liste des caractéristiques de tarification",
+          "empty_state": "Aucune caractéristique de tarification trouvé."
         },
         "fields": {
           "branch": "Branche",
@@ -2073,10 +2073,10 @@
       "title": "Tarification",
       "formula": "Rubriques / Formules",
       "formula_create": "Créer une formule",
-      "formula_list": "Liste des rubriques / formules",
+      "formula_list": "Formules",
       "variable_condition": "Variables conditionnées",
-      "field": "Charactéristiques",
-      "field_list": "Liste des champs",
+      "field": "Caractéristiques",
+      "field_list": "Liste des caractéristiques",
       "select_field": "Champs de sélection",
       "select_field_option": "Options de champs de sélection",
       "select_field_option_value": "Valeurs des options de champs de sélection",
