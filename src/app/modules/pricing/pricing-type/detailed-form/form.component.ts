@@ -11,6 +11,7 @@ import {Cons} from 'rxjs';
 import {FormMode} from '@shared/enum/form.enum';
 import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
 import {PricingType} from "@core/services/pricing/pricing-type/pricing-type.model";
+import {PricingTypeDetailed} from "@core/services/pricing/pricing-type/pricing-type-detailed.model";
 
 @Component({
   selector: 'app-pricing-type-edit',
@@ -26,7 +27,7 @@ export class PricingTypeDetailedFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<PricingTypeDetailedFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: PricingType,
+    @Inject(MAT_DIALOG_DATA) public data: PricingTypeDetailed,
     private _pricingTypeService: PricingTypeService,
     private translocoService: TranslocoService,
     private snackBar: MatSnackBar,
@@ -43,12 +44,7 @@ export class PricingTypeDetailedFormComponent implements OnInit {
       });
 
     this.mode = (this.data as any).mode;
-    if (this.mode == FormMode.EDIT) {
-      this.dialogRef.updateSize('600px', 'auto');
-    } else {
-      // this.data = {} as Constant;
-      this.dialogRef.updateSize('600px', 'auto');
-    }
+    this.dialogRef.updateSize('1000px', 'auto');
 
     this._managementEntityService.entity$.subscribe((entity) => {
       this.managementEntity = entity;
@@ -57,6 +53,9 @@ export class PricingTypeDetailedFormComponent implements OnInit {
     this.formGroup = this.fb.group({
       name: [this.data.name || '', Validators.required],
       description: [this.data.description || '', Validators.required],
+      branch: [this.data.branch || '', Validators.required],
+      product: [this.data.product || '', Validators.required],
+      coverages: [this.data.coverages || '', Validators.required],
     });
 
   }

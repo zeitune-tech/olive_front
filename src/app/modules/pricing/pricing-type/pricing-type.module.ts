@@ -23,6 +23,8 @@ import {PricingTypeFormComponent} from "./form/form.component";
 import {PricingTypeListComponent} from "./list/list.component";
 import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
 import {PricingTypeDetailedFormComponent} from "./detailed-form/form.component";
+import {MatAccordion, MatExpansionModule} from "@angular/material/expansion";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import {PricingTypeDetailedFormComponent} from "./detailed-form/form.component";
     SharedModule,
     TableModule,
     MatProgressSpinnerModule,
-    PricingSharedModule
+    PricingSharedModule,
+    MatExpansionModule,
+    MatChipsModule,
 
   ],
   exports: [],
