@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 interface FormulaNode {
-  type: 'block' | 'operator' | 'text' | 'or';
+  type: 'block' | 'operator' | 'text' | 'or' | 'quoted';
   content: string;
   children?: FormulaNode[];
 }
@@ -24,9 +24,42 @@ export class FormulaViewerComponent implements OnInit {
     let currentText = '';
     let stack: FormulaNode[] = [];
     let currentBlock: FormulaNode | null = null;
+    let isInQuotes = false;
+    let quotedText = '';
 
     for (let i = 0; i < formula.length; i++) {
       const char = formula[i];
+
+      if (char === "'") {
+        if (isInQuotes) {
+          // Fin d'une citation
+          if (currentBlock) {
+            currentBlock.children?.push({ type: 'quoted', content: quotedText });
+          } else {
+            nodes.push({ type: 'quoted', content: quotedText });
+          }
+          quotedText = '';
+          isInQuotes = false;
+          continue;
+        } else {
+          // Début d'une citation
+          if (currentText.trim()) {
+            if (currentBlock) {
+              currentBlock.children?.push({ type: 'text', content: currentText.trim() });
+            } else {
+              nodes.push({ type: 'text', content: currentText.trim() });
+            }
+            currentText = '';
+          }
+          isInQuotes = true;
+          continue;
+        }
+      }
+
+      if (isInQuotes) {
+        quotedText += char;
+        continue;
+      }
 
       switch (char) {
         case '[':

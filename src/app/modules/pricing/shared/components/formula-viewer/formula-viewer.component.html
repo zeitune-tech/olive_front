@@ -18,6 +18,8 @@
         <mat-chip>OU</mat-chip>
       </div>
 
+      <span *ngSwitchCase="'quoted'" class="formula-quoted">'{{node.content}}'</span>
+
       <span *ngSwitchCase="'text'" class="formula-text">{{node.content}}</span>
 
     </ng-container>

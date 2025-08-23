@@ -57,3 +57,13 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+.formula-quoted {
+  background-color: rgba(103, 58, 183, 0.1);
+  border: 1px solid rgba(103, 58, 183, 0.3);
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: #673ab7;
+  font-weight: 500;
+  margin: 0 2px;
+}
