@@ -43,26 +43,35 @@
             <h3 class="text-lg font-semibold text-gray-700">
               {{ t('entities.pricing-type.fields.form.coverage-title') }}
             </h3>
-
             <div class="border rounded-2xl p-4 space-y-4 shadow-sm bg-gray-50">
-              <h3 class="text-lg font-semibold text-gray-700">
-                {{ t('entities.pricing-type.fields.form.formulas-title') }}
-              </h3>
-              <div *ngFor="let formula of coverage.formulas"
-                   class="border rounded-2xl p-4 space-y-4 shadow-sm bg-gray-50">
-                <h4 class="text-lg font-semibold text-gray-700">
-                  {{ t('entities.pricing-type.fields.form.formula-title') }}
-                </h4>
-                <div class="flex flex-col gap-6">
-                  <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.pricing-type.fields.formula.label') }}</mat-label>
-                    <input matInput [readonly]="true" value="{{formula.label}}" required>
-                  </mat-form-field>
-                  <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.pricing-type.fields.formula.expression') }}</mat-label>
-                    <input matInput [readonly]="true" value="{{formula.expression}}" required>
-                  </mat-form-field>
-                </div>
+              <div class="flex flex-col gap-6">
+                <h3 class="text-lg font-semibold text-gray-700">
+                  {{ t('entities.pricing-type.fields.form.formulas-title') }}
+                </h3>
+                <mat-accordion *ngIf="coverage.formulas.length > 0; else noFormulas">
+                  <mat-expansion-panel *ngFor="let formula of coverage.formulas" class="">
+                    <mat-expansion-panel-header class="">
+                      <mat-panel-title class="">
+                        {{ formula.label }}
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="p-4 bg-white">
+                      <div class="">
+                        <span class="">{{ t('entities.pricing-type.fields.form.formulas-expression') }} : </span>
+                        <div class="">
+                          <code class="">{{ formula.expression }}</code>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+                <ng-template #noFormulas>
+                  <div>
+                    <mat-icon>info_outline</mat-icon>
+                    <p>Aucune formule définie pour cette coverage</p>
+                  </div>
+                </ng-template>
               </div>
             </div>
 
@@ -70,25 +79,25 @@
               <h3 class="text-lg font-semibold text-gray-700">
                 {{ t('entities.pricing-type.fields.form.variables-title') }}
               </h3>
-              <div *ngFor="let variable of coverage.variables"
-                   class="border rounded-2xl p-4 space-y-4 shadow-sm bg-gray-50">
-                <h4 class="text-lg font-semibold text-gray-700">
-                  {{ t('entities.pricing-type.fields.form.variable-title') }}
-                </h4>
-                <div class="flex flex-col gap-6">
-                  <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.pricing-type.fields.variable.label') }}</mat-label>
-                    <input matInput [readonly]="true" value="{{variable.label}}" required>
-                  </mat-form-field>
-                  <mat-form-field class="w-full" appearance="outline">
-                    <mat-label>{{ t('entities.pricing-type.fields.variable.type') }}</mat-label>
-                    <input matInput [readonly]="true" value="{{variable.type}}" required>
-                  </mat-form-field>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div *ngFor="let variable of coverage.variables"
+                     class="border rounded-2xl p-4 space-y-4 shadow-sm bg-gray-50">
+                  <h4 class="text-lg font-semibold text-gray-700">
+                    {{ t('entities.pricing-type.fields.form.variable-title') }}
+                  </h4>
+                  <div class="flex flex-col gap-6">
+                    <mat-form-field class="w-full" appearance="outline">
+                      <mat-label>{{ t('entities.pricing-type.fields.variable.label') }}</mat-label>
+                      <input matInput [readonly]="true" value="{{variable.label}}" required>
+                    </mat-form-field>
+                    <mat-form-field class="w-full" appearance="outline">
+                      <mat-label>{{ t('entities.pricing-type.fields.variable.type') }}</mat-label>
+                      <input matInput [readonly]="true" value="{{variable.type}}" required>
+                    </mat-form-field>
+                  </div>
                 </div>
-
               </div>
             </div>
-
           </div>
         </div>
       </div>

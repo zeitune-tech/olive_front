@@ -1691,7 +1691,23 @@
         "name": "Nom",
         "description": "Description",
         "branch": "Branche",
-        "product": "Produit"
+        "product": "Produit",
+        "form": {
+          "coverages-title": "Garanties",
+          "coverage-title": "Garantie",
+          "formulas-title": "Formules",
+          "formula-title": "Formule",
+          "variables-title": "Variables",
+          "variable-title": "Variable"
+        },
+        "formula": {
+          "label": "Libellé",
+          "expression": "Expression"
+        },
+        "variable": {
+          "label": "Libellé",
+          "type": "Type"
+        }
       },
       "delete": {
         "title": "Supprimer le type de tarification",
