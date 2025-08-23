@@ -299,8 +299,8 @@ export class FormulaNewComponent implements OnInit, OnDestroy {
       pricingType: this.selectedPricingType!.id,
       coverage: this.formGroup.get('coverage')?.value,
       expression: this.formula,
-      variables: this.variables.filter(v => this.formula.includes(v.variableName) ).map(v => v.id) // Filtrer les variables qui doivent être retournées
-    })
+      variables: this.variables.filter(v => this.formula.includes(v.variableName) ) // Filtrer les variables qui doivent être retournées
+    } as Formula)
       .subscribe({
         next: () => {
           const successMessage = 'form.success.creation';

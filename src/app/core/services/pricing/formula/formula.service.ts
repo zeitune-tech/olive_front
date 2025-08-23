@@ -3,6 +3,7 @@ import {Formula} from "./formula.interface";
 import {environment} from "@env/environment";
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {VariableCondition} from "@core/services/pricing/variable-condition/variable-condition.model";
 
 @Injectable()
 export class FormulaService {
@@ -32,8 +33,15 @@ export class FormulaService {
   ) {
   }
 
+  mapToRequestPayload (formula: Formula) {
+    return {
+      ...formula,
+      variables: formula.variables.map(variable => variable.id),
+    };
+  }
+
   create(formula: Formula): Observable<Formula> {
-    return this._httpClient.post<Formula>(`${this.baseUrl}`, formula)
+    return this._httpClient.post<Formula>(`${this.baseUrl}`, this.mapToRequestPayload(formula))
       .pipe(
         map((response: Formula) => {
           const content = new Formula(response);

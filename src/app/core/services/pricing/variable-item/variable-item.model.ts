@@ -4,7 +4,6 @@ export enum TypeOfVariable {
   SELECT_FIELD = "SELECT_FIELD",       // Select field variable
   VARIABLE_CONDITION = "VARIABLE_CONDITION",       // Variable condition
   FORMULA = "FORMULA",                  // Formula variable
-  CHARACTERISTIC = "CHARACTERISTIC",             // Characteristic variable
 }
 
 export class VariableItem {

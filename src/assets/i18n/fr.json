@@ -1697,6 +1697,7 @@
           "coverage-title": "Garantie",
           "formulas-title": "Formules",
           "formula-title": "Formule",
+          "formulas-expression": "Expression",
           "variables-title": "Variables",
           "variable-title": "Variable"
         },

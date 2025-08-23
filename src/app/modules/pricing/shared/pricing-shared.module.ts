@@ -8,10 +8,13 @@ import { SelectionService } from "./services/selection.service";
 import { SharedModule } from "@shared/shared.module";
 import {MatDialogModule} from "@angular/material/dialog";
 import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-type.service";
+import { FormulaViewerComponent } from './components/formula-viewer/formula-viewer.component';
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
     declarations: [
-      PricingSelectionHeaderComponent
+      PricingSelectionHeaderComponent,
+      FormulaViewerComponent
     ],
     imports: [
       CommonModule,
@@ -19,10 +22,12 @@ import {PricingTypeService} from "@core/services/pricing/pricing-type/pricing-ty
       MatButtonModule,
       MatIconModule,
       MatTooltipModule,
+      MatChipsModule,
     ],
-    exports: [
-      PricingSelectionHeaderComponent
-    ],
+  exports: [
+    PricingSelectionHeaderComponent,
+    FormulaViewerComponent
+  ],
     providers: [
       SelectionService,
       PricingTypeService,

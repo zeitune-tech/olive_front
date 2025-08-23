@@ -1,0 +1,25 @@
+<div class="formula-container">
+  <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: parsedFormula }"></ng-container>
+</div>
+
+<ng-template #nodeTemplate let-nodes>
+  <ng-container *ngFor="let node of nodes">
+    <ng-container [ngSwitch]="node.type">
+
+      <div *ngSwitchCase="'block'" class="formula-block">
+        <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: node.children }"></ng-container>
+      </div>
+
+      <div *ngSwitchCase="'operator'" class="formula-operator">
+        <button mat-mini-fab color="primary">{{node.content}}</button>
+      </div>
+
+      <div *ngSwitchCase="'or'" class="formula-or">
+        <mat-chip>OU</mat-chip>
+      </div>
+
+      <span *ngSwitchCase="'text'" class="formula-text">{{node.content}}</span>
+
+    </ng-container>
+  </ng-container>
+</ng-template>
