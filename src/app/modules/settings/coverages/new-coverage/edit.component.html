@@ -80,7 +80,10 @@
       <!-- Prorata -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>{{ t('entities.coverage.fields.prorata') }}</mat-label>
-        <input matInput formControlName="prorata" />
+        <mat-select formControlName="prorata">
+          <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
+          <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <!-- Display Prime -->
@@ -93,13 +96,13 @@
       </mat-form-field>
 
       <!-- Generates Characteristic -->
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>{{ t('entities.coverage.fields.generatesCharacteristic') }}</mat-label>
-        <mat-select formControlName="generatesCharacteristic">
-          <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>
-          <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+<!--      <mat-form-field appearance="outline" class="w-full">-->
+<!--        <mat-label>{{ t('entities.coverage.fields.generatesCharacteristic') }}</mat-label>-->
+<!--        <mat-select formControlName="generatesCharacteristic">-->
+<!--          <mat-option [value]="true">{{ t('form.options.yes') }}</mat-option>-->
+<!--          <mat-option [value]="false">{{ t('form.options.no') }}</mat-option>-->
+<!--        </mat-select>-->
+<!--      </mat-form-field>-->
     </form>
   </mat-dialog-content>
 

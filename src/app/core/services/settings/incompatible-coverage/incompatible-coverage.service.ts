@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { catchError, Observable, of, ReplaySubject, tap } from "rxjs";
+import {catchError, map, Observable, of, ReplaySubject, tap} from "rxjs";
 import { environment } from "@env/environment";
 import { HttpClient } from "@angular/common/http";
 import { RequestMetadata } from "../../common.interface";
@@ -72,12 +72,12 @@ export class IncompatibleCoverageService {
     getAll(): Observable<IncompatibleCoverage[]> {
         return this._httpClient.get<IncompatibleCoverage[]>(`${this.baseUrl}`)
         .pipe(
-            tap((response : any) => {
+            map((response : any) => {
                 this.incompatibleCoverages = response?.content.map((incompatibleCoverage: IncompatibleCoverage) => {
                     return incompatibleCoverage;
                 });
                 this.metadata = response;
-                return response;
+                return response.content;
             }),
             catchError(() => of([] as IncompatibleCoverage[]))
         );

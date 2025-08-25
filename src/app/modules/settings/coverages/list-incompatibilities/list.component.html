@@ -10,7 +10,15 @@
                 {{ t('entities.incompatible_coverage.table.description') }}
             </p>
         </div>
+
+      <div class="flex items-center gap-2 bg-card p-2 px-4 rounded-lg border border-accent-300">
+        <span>{{ selectedProduct.getLabel() || t('product-selection.title') }}</span>
+        <button mat-button class="ml-4 bg-primary-500 text-white rounded-lg" (click)="openSelection()">
+          {{ t('product-selection.change') }}
+        </button>
+      </div>
     </div>
+
 
     <!-- --------------------------------------------- -->
   <!-- Barre de recherche                            -->
@@ -26,7 +34,11 @@
             {{ t('form.actions.add') }}
         </button>
         </div>
+
+
   </div>
+
+
 
     <div class="overflow-auto">
         <!-- Table -->
@@ -69,7 +81,7 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                     <!-- <button mat-icon-button color="accent" (click)="onView(element)" matTooltip="{{ t('entities.coverage_duration.actions.view') }}">
-                        <mat-icon>visibility</mat-icon> 
+                        <mat-icon>visibility</mat-icon>
                     </button> -->
                 </div>
             </td>

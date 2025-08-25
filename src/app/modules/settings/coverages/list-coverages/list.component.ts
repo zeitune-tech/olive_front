@@ -122,7 +122,8 @@ export class CoveragesListComponent {
 
       if (property === 'nature') {
         if (!element.nature || element.nature === 'null' || element.nature === 'undefined') {
-          return this._translateService.translate('entities.coverage.options.nature.OPTIONAL');
+          // return this._translateService.translate('entities.coverage.options.nature.OPTIONAL');
+          return '--';
         }
         return this._translateService.translate(`entities.coverage.options.nature.${element.nature}`);
       }
@@ -135,7 +136,7 @@ export class CoveragesListComponent {
         return element.isFree ? this._translateService.translate('form.options.yes') : this._translateService.translate('form.options.no');
       }
       if (property === 'isFixed') {
-        return element.isFixed ? this._translateService.translate('form.options.yes') : this._translateService.translate('form.options.no');
+        return element.calculationMode == 'FIXE' ? this._translateService.translate('form.options.yes') : this._translateService.translate('form.options.no');
       }
 
       if (property === 'prorata') {
@@ -285,7 +286,7 @@ export class CoveragesListComponent {
           // rechargement, toast, etc.
           this._coverageService.getAll().subscribe((data: Coverage[]) => {
             this.data = data;
-            this.dataSource.data = data;
+            this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
             this._changeDetectorRef.detectChanges();
           });
         });

@@ -151,9 +151,9 @@
           "VARIABLE": "Variable"
         },
         "nature": {
-          "OPTIONAL": "Facultative",
-          "MANDATORY": "Obligatoire",
-          "RECOMMANDED": "Recommandée"
+          "OPTIONAL": "Optionnelle",
+          "RECOMMENDED": "Proposée",
+          "REQUIRED": "Obligatoire"
         }
       }
     },
