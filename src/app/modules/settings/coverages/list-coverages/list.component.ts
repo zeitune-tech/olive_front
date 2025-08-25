@@ -137,6 +137,11 @@ export class CoveragesListComponent {
       if (property === 'isFixed') {
         return element.isFixed ? this._translateService.translate('form.options.yes') : this._translateService.translate('form.options.no');
       }
+
+      if (property === 'prorata') {
+        return element.prorata ? this._translateService.translate('form.options.yes') : this._translateService.translate('form.options.no');
+      }
+
       if (element[property] === null || element[property] === undefined) {
         return '--';
       }
