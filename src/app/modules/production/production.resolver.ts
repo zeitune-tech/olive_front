@@ -13,6 +13,7 @@ import { PointOfSaleService } from '@core/services/administration/point-of-sale/
 import { DurationRateService } from '@core/services/settings/duration-rate/duration-rate.service';
 import { ProductionRegistryService } from '@core/services/settings/production-registry/production-registry.service';
 import { CompanyService } from '@core/services/administration/company/company.service';
+import { ProductService } from '@core/services/settings/product/product.service';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,8 @@ export class ProductionResolver implements Resolve<any> {
         private _regimeService: TaxRegimeService,
         private _accessoireService: AccessoryService,
         private _pointsOfSaleService: PointOfSaleService,
-        private _durationRateService: DurationRateService
+        private _durationRateService: DurationRateService,
+        private _productService: ProductService
     ) {
         
     }
@@ -57,7 +59,7 @@ export class ProductionResolver implements Resolve<any> {
 
         const resolList: Observable<any>[] = [];
 
-        // resolList.push(this._companyService.getMyCompany());
+        resolList.push(this._companyService.getMyCompany());
 
         // // if (this._permissionService.hasPermission('VIEW_INSUREDS')) {
         //     resolList.push(this._insuredService.getAll());
@@ -91,9 +93,8 @@ export class ProductionResolver implements Resolve<any> {
         //     resolList.push(this._accessoireService.getAll());
         // // }
 
-        // // if (this._permissionService.hasPermission('VIEW_POINTS_OF_SALE')) {
-        //     resolList.push(this._pointsOfSaleService.getAll());
-        // // }
+        resolList.push(this._pointsOfSaleService.getAll());
+        resolList.push(this._productService.getAll());
 
         // // if (this._permissionService.hasPermission('VIEW_DURATION_RATES')) {
         //     resolList.push(this._durationRateService.getAll());
