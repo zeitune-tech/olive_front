@@ -15,6 +15,7 @@ import { TableOptions, TableColumn } from "@lhacksrt/components/table/table.inte
 import { Subject, takeUntil } from "rxjs";
 import { ProductEditComponent } from "../../products/edit/edit.component";
 import {animations} from "@lhacksrt/animations";
+import {Coverage} from "@core/services/settings/coverage/coverage.interface";
 
 @Component({
     selector: "app-coverages-form",
@@ -53,7 +54,7 @@ export class CoveragesFormComponent implements OnInit {
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<ProductEditComponent>,
         @Inject(MAT_DIALOG_DATA) public data: {
-            coverages: CoverageReference[];
+            coverages: Coverage[];
             product: Product;
             mode: 'add' | 'remove';
         },
@@ -62,8 +63,9 @@ export class CoveragesFormComponent implements OnInit {
         private snackBar: MatSnackBar
     ) {
         this.formGroup = this.formBuilder.group({
-            coverages: [[], Validators.required],
+            coverages: [this.data.coverages, Validators.required],
         });
+
     }
 
     @Output() formReady = new EventEmitter<UntypedFormGroup>();
@@ -78,9 +80,13 @@ export class CoveragesFormComponent implements OnInit {
 
                 this.selection.clear();
 
+              const selectedCoverageReferenceList = this.data.coverages
+                .filter(cov => cov.product.id == this.data.product.id)
+                .map(cov => cov.reference.id);
+
                 // If the data is not empty, set the selected coverages from the data
                 if (this.data.coverages && this.data.coverages.length > 0) {
-                    this.selection.select(...this.data.coverages);
+                    this.selection.select(...data.filter(coverageRef => selectedCoverageReferenceList.includes(coverageRef.id)));
                 }
 
                 this._changeDetectorRef.detectChanges();
@@ -193,5 +199,7 @@ export class CoveragesFormComponent implements OnInit {
 
     }
 
-    onCancel() {}
+    onCancel() {
+      this.dialogRef.close(false)
+    }
 }

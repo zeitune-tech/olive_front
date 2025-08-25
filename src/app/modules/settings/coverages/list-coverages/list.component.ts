@@ -155,6 +155,7 @@ export class CoveragesListComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   dataSource: MatTableDataSource<Coverage> = new MatTableDataSource();
+  coverages: Coverage[] = [];
   selection = new SelectionModel<Coverage>(true, []);
   searchInputControl: UntypedFormControl = new UntypedFormControl();
   selectedProduct: Product = new Product({}) as Product;
@@ -174,7 +175,7 @@ export class CoveragesListComponent {
     this._coverageService.coverages$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: Coverage[]) => {
-
+        this.coverages = data;
         this.products = data
           .map(coverage => coverage.product)
           .filter((product, index, self) =>
@@ -258,10 +259,15 @@ export class CoveragesListComponent {
       data: {
         mode: 'add',
         product: this.selectedProduct,
+        coverages: this.coverages
       }
     }).afterClosed().subscribe((result: Coverage) => {
       if (result) {
-
+        this._coverageService.getAll().subscribe((data: Coverage[]) => {
+          this.data = data;
+          this.dataSource.data = this.data.filter(coverage => coverage.product.id === this.selectedProduct.id);
+          this._changeDetectorRef.detectChanges();
+        });
       }
     })
   }
