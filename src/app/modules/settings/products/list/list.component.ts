@@ -63,7 +63,7 @@ export class ProductsListComponent implements OnInit {
             });
     }
 
-    
+
     data: Product[] = [];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -83,7 +83,8 @@ export class ProductsListComponent implements OnInit {
         this.tableOptions = {
             title: '',
             columns: [
-                { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
+              { label: 'entities.product.fields.code', property: 'code', type: 'text', visible: true, cssClasses: ['min-w-32']},
+              { label: 'entities.product.fields.name', property: 'name', type: 'text', visible: true, cssClasses: ['min-w-32']},
                 { label: 'entities.product.fields.branch', property: 'branch', type: 'text', visible: true },
                 { label: 'entities.product.fields.visibility', property: 'visibility', type: 'text', visible: true, cssClasses: ['min-w-32']},
                 {
@@ -153,7 +154,7 @@ export class ProductsListComponent implements OnInit {
             } else {
                 // Colonne simple (même valeur dans les 2 lignes)
                 this.groupHeader.push(col.property as string);
-                
+
                 this.visibleColumns.push(col.property as string);
             }
         });

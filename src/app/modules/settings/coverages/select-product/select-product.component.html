@@ -15,7 +15,7 @@
             <mat-icon matPrefix [svgIcon]="'fluent:search'" class="mr-2"></mat-icon>
             <input matInput [placeholder]="t('form.fields.search')" [formControl]="searchControl">
         </mat-form-field>
-        
+
     </div>
 
     <!-- Entity list -->
@@ -24,9 +24,9 @@
             <div class="flex items-center p-6 cursor-pointer hover:bg-hover"
                 (click)="selectEntity(product)"
                 [class.bg-primary-50]="data.selected.id === product.id">
-            
+
                 <mat-icon [svgIcon]="'fluent:people-product'" class="mr-3"></mat-icon>
-                <span>{{product.name}}</span>
+                <span>{{product.getLabel()}}</span>
                 <div class="flex-1">
 
                 </div>

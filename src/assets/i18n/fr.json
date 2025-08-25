@@ -256,7 +256,8 @@
         }
       },
       "fields": {
-        "name": "Nom du produit",
+        "code": "Code",
+        "name": "Nom",
         "description": "Description",
         "branch": "Branche",
         "visibility": "Visibilité",
