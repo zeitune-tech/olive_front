@@ -15,6 +15,7 @@ import { CoverageReferenceEditComponent } from "../edit-reference/edit.component
 import { ConfirmDeleteComponent } from "@shared/components/confirm-delete/confirm-delete.component";
 import { Router } from "@angular/router";
 import { CoverageReferenceNewComponent } from "../new-reference/new.component";
+import {TranslocoService} from "@jsverse/transloco";
 
 @Component({
     selector: "app-coverage-reference-list",
@@ -31,7 +32,8 @@ export class CoverageReferenceListComponent {
         columns: [
             { label: 'entities.coverage_reference.fields.designation', property: 'designation', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.family', property: 'family', type: 'text', visible: true },
-            { label: 'entities.coverage_reference.fields.accessCharacteristic', property: 'accessCharacteristic', type: 'text', visible: true },
+          { label: 'entities.coverage_reference.fields.accessCharacteristic', property: 'accessCharacteristic', type: 'text', visible: true },
+          { label: 'entities.coverage_reference.fields.tariffAccess', property: 'tariffAccess', type: 'text', visible: true },
             { label: 'entities.coverage_reference.fields.toShareOut', property: 'toShareOut', type: 'text', visible: true },
         ],
         pageSize: 8,
@@ -43,6 +45,9 @@ export class CoverageReferenceListComponent {
             }
             if (property === 'tariffAccess') {
                 return element.tariffAccess == false ? 'Non' : 'Oui';
+            }
+            if (property === 'toShareOut') {
+                return element.toShareOut == false ?  this._translateService.translate('form.options.no') :  this._translateService.translate('form.options.yes');
             }
             return element[property];
         },
@@ -61,6 +66,7 @@ export class CoverageReferenceListComponent {
         private _changeDetectorRef: ChangeDetectorRef,
         private _coverageService: CoverageReferenceService,
         private _dialog: MatDialog,
+        private _translateService: TranslocoService,
         private _router: Router
 
     ) { }
@@ -98,7 +104,12 @@ export class CoverageReferenceListComponent {
             autoFocus: false
         }).afterClosed().subscribe((result: boolean) => {
             if (result) {
-                this._coverageService.getAll();
+              this._coverageService.getAll()
+                .subscribe((coverages: CoverageReference[]) => {
+                  this.data = coverages;
+                  this.dataSource.data = this.data;
+                  this._changeDetectorRef.detectChanges();
+                })
             }
         })
     }
@@ -114,9 +125,15 @@ export class CoverageReferenceListComponent {
             autoFocus: false
         }).afterClosed().subscribe((result: boolean) => {
             if (result) {
-                this._coverageService.delete(coverageReference.id).subscribe({
+                this._coverageService.delete(coverageReference.id)
+                  .subscribe({
                     next: () => {
-                        this._coverageService.getAll();
+                      this._coverageService.getAll()
+                        .subscribe((coverages: CoverageReference[]) => {
+                          this.data = coverages;
+                          this.dataSource.data = this.data;
+                          this._changeDetectorRef.detectChanges();
+                        })
                     },
                     error: (error) => {
                         console.error('Error deleting coverage reference:', error);
@@ -142,6 +159,15 @@ export class CoverageReferenceListComponent {
             width: '600px',
             maxWidth: '90vw',
             data: { coverageDuration: this.searchCtrl.value }
+        }).afterClosed().subscribe((result: boolean) => {
+            if (result) {
+                this._coverageService.getAll()
+                  .subscribe((coverages: CoverageReference[]) => {
+                    this.data = coverages;
+                    this.dataSource.data = this.data;
+                    this._changeDetectorRef.detectChanges();
+                  });
+            }
         });
     }
 }

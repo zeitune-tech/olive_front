@@ -73,6 +73,9 @@
 
     <!-- bouton submit -->
     <div class="flex items-center justify-end gap-4 mt-4">
+      <button mat-button mat-flat-button color="basic" (click)="onCancel()">
+        {{ t('form.actions.cancel') }}
+      </button>
       <button mat-flat-button color="primary" [disabled]="formGroup.invalid || formGroup.disabled"
         (click)="onSubmit()">
         <span *ngIf="!formGroup.disabled">{{ t('form.actions.save') }}</span>

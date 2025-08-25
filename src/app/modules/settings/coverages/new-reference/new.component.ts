@@ -7,12 +7,13 @@ import { TranslocoService } from "@jsverse/transloco";
 import { CoverageService } from "@core/services/settings/coverage/coverage.service";
 import { ManagementEntityService } from "@core/services/administration/management-entity/management-entity.service";
 import { ManagementEntity } from "@core/services/administration/management-entity/management-entity.interface";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
     selector: "app-coverage-referentials-new",
     templateUrl: "./new.component.html",
 })
-export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
+export class  CoverageReferenceNewComponent implements OnInit, OnDestroy {
 
     formGroup!: UntypedFormGroup;
     entity: ManagementEntity | null = null;
@@ -27,6 +28,7 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
 
     constructor(
         private _formBuilder: FormBuilder,
+        private dialogRef: MatDialogRef<CoverageReferenceNewComponent>,
         private _coverageReferentialService: CoverageReferenceService,
         private _coverageService: CoverageService,
         private _translocoService: TranslocoService,
@@ -40,7 +42,7 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
         this._managementEntityService.entity$.pipe(takeUntil(this.destroy$)).subscribe({
             next: (entity) => {
                 this.entity = entity;
-                
+
                 if (entity && entity.type === 'COMPANY') {
                     this.formGroup.patchValue({
                         accessCharacteristic: true,
@@ -78,6 +80,8 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
                     this.formGroup.enable();
                     this.formGroup.reset();
                     this._coverageService.getAll().subscribe();
+                  this.dialogRef.close(true);
+
                 },
                 error: () => {
                     this.showSnackBar('form.errors.submission', 'error');
@@ -101,4 +105,8 @@ export class CoverageReferenceNewComponent implements OnInit, OnDestroy {
         this.destroy$.next();
         this.destroy$.complete();
     }
+
+  onCancel() {
+    this.dialogRef.close(false);
+  }
 }
